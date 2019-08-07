@@ -650,23 +650,4 @@ export const flattenJsonId = (data,arr) => {
       return config.context || 'leasing';
   }
 
-
-  export function testColumn(param){
-    param.push({
-        title: "会议总期数",
-        dataIndex: "allnper",
-        key: "allnper",
-        width: 120,
-        className: 'column-number-right',
-        render: (text, record, index) => {
-            return (<span>{(typeof text)==='number'? text.toFixed(0):""}</span>)
-        }
-    });
-    param.push({
-        title: "变更类型",
-        dataIndex: "change_type",
-        key: "change_type",
-        width: 120,
-    });
-    return param;
-  }
+  
