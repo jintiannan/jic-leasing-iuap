@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import SelectField from 'components/RowField/SelectField'
+import {Select} from "tinper-bee";
 import {enumConstant} from "utils/enums";
+import './index.less';
 
 class EnumModel extends Component {
     constructor(props) {
@@ -14,13 +15,13 @@ class EnumModel extends Component {
         let data = enumConstant(type);
         return (
             <div>
-                {record._edit ?
-                <Select
+                {record._edit ? <div className="enum_model">
+                <Select 
                     showSearch
                     placeholder="请选择..."
                     optionFilterProp="children"
                     data={data}
-                    /> : <div>{text ? text : ""}</div>}
+                    /></div> : <div>{text ? text : ""}</div>}
             </div>
             
         );

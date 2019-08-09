@@ -8,6 +8,13 @@ import Header from 'components/Header';
 import Button from 'components/Button';
 import {deepClone, getHeight, getSortMap} from "utils";
 import FormView from '../FormView/index'
+import EnumModel from 'components/GridCompnent/EnumModel';
+import StringModel from 'components/GridCompnent/StringModel';
+import NumberModel from 'components/GridCompnent/NumberModel';
+import DateModel from 'components/GridCompnent/DateModel';
+import TimeModel from 'components/GridCompnent/TimeModel';
+import RefModel from 'components/GridCompnent/RefModel';
+import PercentModel from 'components/GridCompnent/PercentModel';
 
 import './index.less';
 
@@ -45,7 +52,7 @@ class IndexView extends Component {
         if (!this.props.colFilterSelectdept && nextProps.colFilterSelectdept) {
             for (let i = 0, len = this.gridColumn.length; i<len; i++) {
                 let item = this.gridColumn[i];
-                if (item.key === 'dept') {
+                if (item.key === 'billstatus') {
                     item.filterDropdownData = nextProps.colFilterSelectdept;
                     break;
                 }
@@ -73,6 +80,15 @@ class IndexView extends Component {
         queryParam.sortMap = getSortMap(sortParam);
         actions.query.loadList(queryParam);
     }
+
+    /**
+     * 改变选中单元格的编辑态  record._edit赋值为true
+     */
+    onEdit = (record) =>{
+        debugger;
+       record['_edit']= true;
+    }
+
 
     /**
      *
@@ -260,49 +276,68 @@ class IndexView extends Component {
             dataIndex: "billstatus",
             key: "billstatus",
             width: 120,
-            filterType: "dropdown",
-            filterDropdown: "hide", //条件的下拉是否显示（string，number）
-            filterDropdownAuto: "manual", //是否自动和手动设置 filterDropdownData 属性
-            filterDropdownData: [{key: "9", value: "审核通过"}, {key: "20", value: "暂存"}],
+            // filterType: "dropdown",
+            // filterDropdown: "number", //条件的下拉是否显示（string，number）
+            // filterDropdownAuto: "manual", //是否自动和手动设置 filterDropdownData 属性
+            // filterDropdownData: [{key: "9", value: "审核通过"}, {key: "20", value: "暂存"}],
+            // render: (text, record, index) => {
+            //     return (<span>{record.value}</span>)
+            // }
             render: (text, record, index) => {
-                return (<span>{record.value}</span>)
+                return (<EnumModel text={text} record={record} index={index} type={'billstatus'} />)
             }
         },
         {
             title: "客户名称",
-            dataIndex: "pk_consumer",
-            key: "pk_consumer",
-            exportKey: "name",
-            width: 150,
-            filterType: "dropdown",
-            filterDropdown: "hide",
-            filterDropdownAuto: "manual",
-            filterDropdownData: this.props.colFilterSelectdept,
-            filterDropdownFocus: () => { //组件焦点的回调函数
-                if (!this.props.colFilterSelectdept) {
-                    let param = {
-                        distinctParams: ['pk_consumer']
-                    }
-                    actions.query.getListByCol(param); //获取所有部门
-                }
-
-            },
+            dataIndex: "pk_consumer.name",
+            key: "pk_consumer.name",
+            //exportKey: "name",
+            width: 120,
             render: (text, record, index) => {
-                return (<span>{record.name}</span>)
+                return (<RefModel text={text} record={record} index={index} />)
             }
+            // filterType: "dropdown",
+            // filterDropdown: "hide",
+            // filterDropdownAuto: "manual",
+            // filterDropdownData: this.props.colFilterSelectdept,
+            // filterDropdownFocus: () => { //组件焦点的回调函数
+            //     if (!this.props.colFilterSelectdept) {
+            //         let param = {
+            //             distinctParams: ['pk_consumer']
+            //         }
+            //         actions.query.getListByCol(param); //获取所有部门
+            //     }
+
+            // },
+            // render: (text, record, index) => {
+            //     return (<span>{record.name}</span>)
+            // }
         },
         //字符串
+        // {
+        //     title: "客户编码",
+        //     dataIndex: "pk_consumer.code",
+        //     key: "pk_consumer.code",
+        //     width: 120,
+        // },
         {
-            title: "客户编码",
-            dataIndex: "pk_consumer.code",
-            key: "pk_consumer.code",
+            title: "税率",
+            dataIndex: "tax_rate",
+            key: "tax_rate",
             width: 120,
+            render: (text, record, index) => {
+                debugger;
+                return (<PercentModel text={text} record={record} index={index} digit={2} />)
+            }
         },
         {
             title: "项目名称",
             dataIndex: "project_filing_name",
             key: "project_filing_name",
             width: 120,
+            render: (text, record, index) => {
+                return (<StringModel text={text} record={record} index={index}/>)
+            }
         },
         {
             title: "项目编码",
@@ -323,7 +358,8 @@ class IndexView extends Component {
             width: 120,
             className: 'column-number-right ', // 靠右对齐
             render: (text, record, index) => {
-                return (<span>{(typeof text)==='number'? text.toFixed(2):""}</span>)
+                //return (<span>{(typeof text)==='number'? text.toFixed(2):""}</span>)
+                return (<NumberModel text={text} record={record} index={index} digit={2}/>)
             }
 
         },
@@ -333,7 +369,8 @@ class IndexView extends Component {
             key: "operate_date",
             width: 100,
             render: (text, record, index) => {
-                return <div>{text ? moment(text).format("YYYY-MM-DD") : ""}</div>
+                //return <div>{text ? moment(text).format("YYYY-MM-DD") : ""}</div>
+                return (<DateModel text={text} record={record} index={index} dateFormat={"YYYY-MM-DD"} />)
             }
         },
         {
@@ -342,7 +379,8 @@ class IndexView extends Component {
             key: "operate_time",
             width: 100,
             render: (text, record, index) => {
-                return <div>{text ? moment(text).format("YYYY-MM-DD") : ""}</div>
+                //return <div>{text ? moment(text).format("YYYY-MM-DD") : ""}</div>
+                return (<TimeModel text={text} record={record} index={index} dateFormatTime={"YYYY-MM-DD HH:mm:ss"} />)
             }
         }
 
@@ -379,7 +417,7 @@ class IndexView extends Component {
                     <Button bordered className="ml8" colors="default"><Icon type='uf-search' onClick={this.onQuery}/>查询</Button>
                     <Button className="ml8" colors="primary" disabled><Icon type='uf-search' onClick={this.onQuery}/>表格操作</Button>
                     <Button className="ml8" style={{float:'right'}} colors="primary" onClick={this.onAdd}><Icon type='uf-search'/>新增</Button>
-                    <Button className="ml8" style={{float:'right'}} colors="primary"><Icon type='uf-search' onClick={this.onQuery}/>修改</Button>
+                    <Button className="ml8" style={{float:'right'}} colors="primary"><Icon type='uf-search' onClick={this.onEdit}/>修改</Button>
                     <Button className="ml8" style={{float:'right'}} colors="primary"><Icon type='uf-search' onClick={this.onQuery}/>提交</Button>
                     <Button className="ml8" style={{float:'right'}} colors="primary"><Icon type='uf-search' onClick={this.onQuery}/>审核</Button>
                     <Button className="ml8" style={{float:'right'}} colors="primary"><Icon type='uf-search' onClick={this.onQuery}/>查看</Button>
