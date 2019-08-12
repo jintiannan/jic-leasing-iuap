@@ -7,7 +7,6 @@ import mirror, { connect } from 'mirrorx';
 
 // 默认页面组件
 import IndexView from './components/IndexView';
-import ListView from './components/ListView';
 //引用模型
 import model from './model'
 

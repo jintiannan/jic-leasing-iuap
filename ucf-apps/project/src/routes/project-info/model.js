@@ -12,23 +12,21 @@ export default {
     // 设置当前 Model 所需的初始化 state
     initialState: {
         showLoading: false,
+        pageParams: {},
         queryParam: {
-            pageParams: {
-                pageIndex: 0,
-                pageSize: 25,
-            },
-            sortMap: [],
-            whereParams: [],
-        },
-        queryObj: {
-            list: [],
             pageIndex: 0,
-            pageSize: 25,
-            totalPages: 10,
-            total: 0,
+            pageSize: 50,
         },
+        //查询结果参数
+        queryObj: {},
+        //页面数据集
+        list: [],
+        //form表单绑定数据
         formObject:{},
+        //当前页选中的数据
         selectedList:[],
+        //按钮权限集
+        powerButton:[],
     },
     reducers: {
         /**
@@ -41,7 +39,7 @@ export default {
                 ...state,
                 ...deepClone(data)
             };
-        }
+        },
     },
     effects: {
 
@@ -55,28 +53,34 @@ export default {
             actions.projectInfo.updateState({showLoading: true});
             let data = processData(await api.getList(param));  // 调用 getList 请求数据
             let updateData = {showLoading: false};
-            let {pageParams} = param;
-            let queryObj = {list:data};
+            let queryObj = {
+                pageIndex:param.pageIndex,
+                pageSize:param.pageSize,
+                totalPages:Math.ceil(data.length/param.pageSize)
+            };
             updateData.queryObj = queryObj;
             updateData.queryParam = param;
+            updateData.list = data;
             actions.projectInfo.updateState(updateData); // 更新数据和查询条件
         },
 
         /**
-         * 绑定Form表单对象
-         * @param {} param 
+         * 更新界面单行数据,使用之前请对需要更新的对象进行深拷贝再传入!!
+         * @param {需要更新的记录} record 
+         * @param {顺序号} index 
          * @param {*} getState 
          */
-        async bindFromObj(param = {}, getState){
-            updateData.formObject = {};
-            updateData.formObject.push(param);
-            actions.projectInfo.updateState(updateData); 
+        async updateRowData(param={},getState){
+            let{index,record} = param;
+            let _list = deepClone(getState().projectInfo.list);
+            _list[index] = record;
+            actions.projectInfo.updateState({list:_list});
         },
 
-
-
-        
-        
-
+        async powerButton(param={},getState){
+            let index = {funcNode: 'projectInfo',user: '',org: ''};
+            let data = processData(await api.getPowerButton(index));
+            actions.projectInfo.updateState({powerButton : data});
+        },
     }
 };

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import EnumModel from 'components/GridCompnent/EnumModel';
-
+import {deepClone, Info} from "utils";
 const TYPE_STRING = '0';
 const TYPE_NUMBER = '1';
 const TYPE_PERCENT = '2';
@@ -19,7 +19,7 @@ const dateTimeFormat = "YYYY-MM-DD HH:mm:ss";
  */
 export function genGridColumn(param){
     let gridColumn = param.map(function(element,index,param){
-        let{type,title,key,width,digit,enumType,isEdit} = element;
+        let{type,title,key,width,digit,enumType} = element;
         if(width == null) width = 120;
         if(digit == null) digit = 0;
 
@@ -30,6 +30,13 @@ export function genGridColumn(param){
                     dataIndex:key,
                     key:key,
                     width: width,
+                    sorter: (pre, after) => {
+                        if(pre[key].length > after[key].length){
+                            return 1;
+                        } else {
+                            return pre[key].localeCompare(after[key],'zh-CN')
+                        }                      
+                    }, 
                 };
             case TYPE_NUMBER :
                 return {
@@ -37,6 +44,7 @@ export function genGridColumn(param){
                     dataIndex:key,
                     key:key,
                     width: width,
+                    sorter: (pre, after) => {return pre[key] - after[key]},
                     className:'column-number-right',
                     render: (text, record, index) => {
                         return (<span>{(typeof text)==='number'? text.toFixed(digit):""}</span>)
@@ -48,6 +56,7 @@ export function genGridColumn(param){
                     dataIndex:key,
                     key:key,
                     width: width,
+                    sorter: (pre, after) => {return pre[key] - after[key]},
                     className:'column-number-right',
                     render: (text, record, index) => {
                         return (<span>{(typeof text)==='number'? (text * 100).toFixed(digit).toString + '%':""}</span>)
@@ -59,6 +68,7 @@ export function genGridColumn(param){
                     dataIndex: key,
                     key: key,
                     width: width,
+                    sorter: (pre, after) => {return new Date(pre[key]).getTime() - new Date(after[key]).getTime()},
                     render: (text, record, index) => {
                         return <div>{text ? moment(text).format(dateFormat) : ""}</div>
     
@@ -70,6 +80,7 @@ export function genGridColumn(param){
                     dataIndex: key,
                     key: key,
                     width: width,
+                    sorter: (pre, after) => {return new Date(pre[key]).getTime() - new Date(after[key]).getTime()},
                     render: (text, record, index) => {
                         return <div>{text ? moment(text).format(dateTimeFormat) : ""}</div>
     
@@ -92,6 +103,13 @@ export function genGridColumn(param){
                     dataIndex: key,
                     key: key,
                     width: width,
+                    sorter: (pre, after) => {
+                        if(pre[key].length > after[key].length){
+                            return 1;
+                        } else {
+                            return pre[key].localeCompare(after[key],'zh-CN')
+                        }                      
+                    },
                     render: (text, record, index) => {
                         return (<EnumModel type={enumType} text={text} record={record} index={index}/>)
                     }
@@ -101,3 +119,21 @@ export function genGridColumn(param){
     });
     return gridColumn;
   }
+
+
+/*******************************常用业务校验函数************************************/
+
+export function checkListSelect(param = [],fn =(obj) => {}){
+    if(param && param.length > 0){
+        if(param.length > 1){
+            let msg = `您当前选中 ${param.length} 条数据,只能选择 1 条数据!`;
+            Info(msg);
+        } else {
+            console.log(param[0]);
+            fn(param[0])
+        }
+
+    } else {
+        Info("您当前选中 0 条数据,请选择 1 条数据后再进行操作!");
+    }
+}

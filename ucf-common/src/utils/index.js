@@ -3,19 +3,35 @@ import axios from "axios";
 import cloneDeep from 'clone-deep';
 
 export const success = (msg) => {
-    Message.create({content: msg, color: 'success', duration: 3});
+    Message.destroy();
+    Message.config({
+        top: 200,
+    });
+    Message.create({content: msg,color: 'success',duration: 3});
 }
 
 export const Error = (msg) => {
-    Message.create({content: msg, color: 'danger'});
+    Message.destroy();
+    Message.config({
+        top: 200,
+    });
+    Message.create({content: msg,color: 'danger'});
 }
 
 export const Warning = (msg) => {
-    Message.create({content: msg, color: 'warning', duration: 3});
+    Message.destroy();
+    Message.config({
+        top: 200,
+    });
+    Message.create({content: msg,color: 'warning',duration: 3});
 }
 
 export const Info = (msg) => {
-    Message.create({content: msg, color: 'info', duration: 3});
+    Message.destroy();
+    Message.config({
+        top: 100,
+    });
+    Message.create({content: msg,color: 'info',duration: 3});
 }
 /**
  * 数据返回统一处理函数

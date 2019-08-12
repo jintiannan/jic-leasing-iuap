@@ -53,8 +53,6 @@ class Grid extends Component {
             ? paginationObj.disabled
             : data.length === 0;
         let _exportData = exportData || data;
-        console.log('this.props');
-        console.log(this.props);
         return (
             <div className='demo-grid-wrapper'>
                 <BeeGrid
