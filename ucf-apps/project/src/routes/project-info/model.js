@@ -27,6 +27,13 @@ export default {
         selectedList:[],
         //按钮权限集
         powerButton:[],
+        //是否过滤按钮权限
+        ifPowerBtn:true,
+        //是否可编辑
+        isEdit:false,
+        //是否列表界面
+        isGrid:true,
+
     },
     reducers: {
         /**
@@ -72,15 +79,19 @@ export default {
          */
         async updateRowData(param={},getState){
             let{index,record} = param;
-            let _list = deepClone(getState().projectInfo.list);
-            _list[index] = record;
+            let list = getState().projectInfo.list;
+            let _list = deepClone(list);
+            if(index != undefined){
+                _list[index] = record;
+            } else {
+                for(let key of list){
+                    if(list[key]['pk'] == record['pk']){
+                        _list[key] = record;
+                        break;
+                    }
+                }                
+            }            
             actions.projectInfo.updateState({list:_list});
-        },
-
-        async powerButton(param={},getState){
-            let index = {funcNode: 'projectInfo',user: '',org: ''};
-            let data = processData(await api.getPowerButton(index));
-            actions.projectInfo.updateState({powerButton : data});
         },
     }
 };

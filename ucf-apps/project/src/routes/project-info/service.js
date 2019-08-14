@@ -17,16 +17,3 @@ export const getList = (params) => {
     return data;
 }
 
-/**
- * 获取按钮权限
- * @param {*} params 
- */
-export const getPowerButton = (params) => {
-
-    //测试数据,之后替换
-    let response = {
-        status: '200',
-        data : ['Query','Export','Save','Return','ViewFlow','Check','Submit','Edit','Add','View'],
-    }
-    return response;
-}

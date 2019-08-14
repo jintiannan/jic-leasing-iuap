@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import {Tooltip, Menu, Icon, Loading} from 'tinper-bee';
 import {actions} from 'mirrorx';
-import {checkListSelect} from "utils/service";
+import {singleRecordOper} from "utils/service";
 import {deepClone} from "utils";
 
 import ButtonGroup from './ButtonGroup';
@@ -17,25 +17,32 @@ import './index.less';
 class IndexView extends Component {
     constructor(props) {
         super(props);
+        //在路由时带出此节点权限按钮
+        /**临时测试数据 */
+        props.powerButton = ['Query','Export','Save','Return','ViewFlow','Check','Submit','Edit','Add','View'];
+        props.ifPowerBtn = true;
+        /**临时测试数据 */
         this.state = {
             showLoading : false, //加载状态
             showListView : '', //显示列表界面
             showFormView : 'none',//显示Form表单
             isEdit : false,//是否可编辑(卡片界面)
+            isGrid : true,//是否列表界面
             formObj: {},//当前卡片界面对象
             listObj: [],//列表对象
-            powerButton: [],//按钮权限列表            
+            ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
+            powerButton: props.powerButton,//按钮权限列表            
         };
     }
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
-    componentWillMount() {       
-        
+    componentWillMount() {
+        actions.projectInfo.updateState({powerButton:this.props.powerButton});
+        actions.projectInfo.updateState({ifPowerBtn:this.props.ifPowerBtn});
     }
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
-        actions.projectInfo.powerButton();
     }
 
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
@@ -51,7 +58,7 @@ class IndexView extends Component {
             showFormView:'none',
             formObj:{},
         })
-        actions.projectInfo.updateState({ formObject : {} });
+        actions.projectInfo.updateState({ formObject : {},isGrid : true,isEdit : false});
     }
 
     /**
@@ -64,7 +71,7 @@ class IndexView extends Component {
             showFormView:'',
             formObj:_formObj,
         })        
-        actions.projectInfo.updateState({ formObject : _formObj });
+        actions.projectInfo.updateState({ formObject : _formObj,isGrid : false,isEdit : false});
     }
 
     /**
@@ -75,6 +82,7 @@ class IndexView extends Component {
             isEdit:!this.state.isEdit,
         })
         this.state.formObj['_edit'] = this.state.formObj['_edit'] ? false : true;
+        actions.projectInfo.updateState({isEdit : !this.state.isEdit});
     }
 
     /**
@@ -88,7 +96,7 @@ class IndexView extends Component {
      * 修改按钮
      */
     onEdit = () =>{
-        checkListSelect(this.props.selectedList,(param) => {
+        singleRecordOper(this.props.selectedList,(param) => {
             this.switchToCardView(param);
             this.switchEdit();
         });        
@@ -98,14 +106,32 @@ class IndexView extends Component {
      * 查看按钮
      */
     onView = () =>{
-        checkListSelect(this.props.selectedList,(param) => {
+        singleRecordOper(this.props.selectedList,(param) => {
             this.switchToCardView(param);
+            actions.projectInfo.updateState({bt:false});
         });
     }
+
+    /**
+     * 返回按钮
+     */
+    onReturn = () =>{
+        if(this.state.isEdit){
+            this.switchEdit();
+        }
+        this.switchToListView();
+    }
+
+    onSave = () => {
+        console.log('save save')
+        this.switchEdit();
+    }
     
+
     render() {
         let ButtonPower = {
-            PowerButton : this.props.powerButton,
+            PowerButton : this.state.powerButton,
+            ifPowerBtn : this.state.ifPowerBtn,
             isGrid : this.state.isGrid,
             isEdit : this.state.isEdit,
         }
@@ -113,11 +139,17 @@ class IndexView extends Component {
 
             <div className='project-info'>
                 <Loading showBackDrop={true} show={this.state.showLoading} fullScreen={true}/>
-                <ButtonGroup
-                BtnPower= {ButtonPower}    
-                Query= {this.onQuery}
-                Edit= {this.onEdit}
-                />
+                <div>
+                    <ButtonGroup
+                        BtnPower= {ButtonPower}    
+                        Query= {this.onQuery}
+                        Edit= {this.onEdit}
+                        View={this.onView}
+                        Return={this.onReturn}
+                        Save={this.onSave}
+                        {...this.props}
+                    />
+                </div>
                 <div style={{display:this.state.showListView}}>
                     <ListView {...this.props}/>
                 </div>                

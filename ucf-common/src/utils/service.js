@@ -122,8 +122,12 @@ export function genGridColumn(param){
 
 
 /*******************************常用业务校验函数************************************/
-
-export function checkListSelect(param = [],fn =(obj) => {}){
+/**
+ * 单条业务数据操作
+ * @param {*} param 
+ * @param {*} fn 
+ */
+export function singleRecordOper(param = [],fn =(obj) => {}){
     if(param && param.length > 0){
         if(param.length > 1){
             let msg = `您当前选中 ${param.length} 条数据,只能选择 1 条数据!`;
@@ -135,5 +139,18 @@ export function checkListSelect(param = [],fn =(obj) => {}){
 
     } else {
         Info("您当前选中 0 条数据,请选择 1 条数据后再进行操作!");
+    }
+}
+
+/**
+ * 
+ * @param {页面对象} param 
+ * @param {状态权限集合} status
+ */
+export function checkBillStatus(param={},status=[]){
+    if(status && status.length > 0){
+        return status.includes(param['billstatus']);
+    } else {
+        return true;
     }
 }
