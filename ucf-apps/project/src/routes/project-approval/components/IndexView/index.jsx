@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {actions} from 'mirrorx';
-import {Tooltip, Menu, Icon, Loading} from 'tinper-bee';
+import {Tooltip, Menu, Icon, Loading,Modal,Form,Label,FormControl,Col, Row} from 'tinper-bee';
 import queryString from "query-string";
 import moment from 'moment'
 import Grid from 'components/Grid';
@@ -16,8 +16,11 @@ import TimeModel from 'components/GridCompnent/TimeModel';
 import RefModel from 'components/GridCompnent/RefModel';
 import PercentModel from 'components/GridCompnent/PercentModel';
 
+
 import './index.less';
 
+
+const FormItem = Form.FormItem;
 const {Item} = Menu;
 const format = "YYYY-MM-DD HH:mm:ss";
 const beginFormat = "YYYY-MM-DD 00:00:00";
@@ -29,14 +32,90 @@ class IndexView extends Component {
         super(props);
         this.state = {
             tableHeight: 0,
+            modalHeight:0,
             filterable: false,
             record: {}, // 存储关联数据信息
             isGrid:true,//是否列表界面 true:列表界面 false:卡片界面
             formView:'none',
-            listView:''
+            listView:'',
+            showModal: false,
+            modalViewCount:0,
+            modalView:{
+                first:'',
+                second:'none',
+                third:'none'
+            }
         }
 
     }
+
+
+    closemodal = () => {
+        let count = this.state.modalViewCount;
+        if(count==0){
+            this.setState({
+                showModal: false
+            });
+        }else if(count==1){
+            let data = Object.assign({}, this.state.modalView, {
+                second:'none',
+                first:''
+            });
+            this.setState({
+                modalView: data,
+                modalViewCount:0
+            });
+        }else if(count==2){
+            let data = Object.assign({}, this.state.modalView, {
+                second:'',
+                third:'none'
+            });
+            this.setState({
+                modalView: data,
+                modalViewCount:1,
+            });
+        }   
+    }
+
+    open = () => {
+        this.setState({
+            showModal: true
+        });
+    }
+
+    editmodal = () => {
+        let count = this.state.modalViewCount;
+        if(count==0){
+            let data = Object.assign({}, this.state.modalView, {
+                first: 'none',
+                second:''
+            });
+            this.setState({
+                modalView: data,
+                modalViewCount:1
+            });
+        }else if(count==1){
+            let data = Object.assign({}, this.state.modalView, {
+                second:'none',
+                third:''
+            });
+            this.setState({
+                modalView: data,
+                modalViewCount:2
+            });
+        }else if(count==2){
+            let data = Object.assign({}, this.state.modalView, {
+                third:'none',
+                first:''
+            });
+            this.setState({
+                modalView: data,
+                modalViewCount:0,
+                showModal:false
+            });
+        }  
+    }
+
 
     componentWillMount() {
         //计算表格滚动条高度
@@ -70,6 +149,14 @@ class IndexView extends Component {
         
     }
 
+    // open = () => {
+    //     if(this.state.modal == true){
+    //         this.setState({modal:false})
+    //     } else {
+    //         this.setState({modal:true})
+    //     }
+    // }
+
     /**
      *
      *排序属性设置
@@ -80,15 +167,6 @@ class IndexView extends Component {
         queryParam.sortMap = getSortMap(sortParam);
         actions.query.loadList(queryParam);
     }
-
-    /**
-     * 改变选中单元格的编辑态  record._edit赋值为true
-     */
-    onEdit = (record) =>{
-        debugger;
-       record['_edit']= true;
-    }
-
 
     /**
      *
@@ -247,10 +325,14 @@ class IndexView extends Component {
      */
     resetTableHeight = (isopen) => {
         let tableHeight = 0;
+        let modalHeight = 0;
         tableHeight = getHeight() - 200;
+        modalHeight = getHeight()*2/3 ;
         console.log("表格宽度");
         console.log(tableHeight);
+        console.log(modalHeight);
         this.setState({ tableHeight });
+        this.setState({ modalHeight });
     }
 
     onAdd = () =>{
@@ -326,7 +408,6 @@ class IndexView extends Component {
             key: "tax_rate",
             width: 120,
             render: (text, record, index) => {
-                debugger;
                 return (<PercentModel text={text} record={record} index={index} digit={2} />)
             }
         },
@@ -391,6 +472,7 @@ class IndexView extends Component {
         let {queryObj, showLoading, queryParam} = this.props;
         let {pageIndex, total, totalPages} = queryObj;
         let {filterable, record, tableHeight} = this.state;
+        const { getFieldProps, getFieldError } = this.props.form;
         console.log('approval-props');
         console.log(this.props);
 
@@ -424,6 +506,7 @@ class IndexView extends Component {
                     <Button className="ml8" style={{float:'right'}} colors="primary"><Icon type='uf-search' onClick={this.onQuery}/>查看流程图</Button>
                     <Button className="ml8" style={{float:'right'}} colors="primary"><Icon type='uf-search' onClick={this.onQuery}/>联查凭证</Button>
                     <Button className="ml8" style={{float:'right'}} colors="primary" onClick={this.onExport}>导出</Button>
+                    <Button className="ml8" style={{float:'right'}} colors="primary" onClick={this.open}>模态新增</Button>
                 </div>
                 <div className="grid-parent" style={{display:this.state.listView}}>
                     <Grid
@@ -446,12 +529,579 @@ class IndexView extends Component {
                         sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
                     />
                 </div>
-                <div style={{display:this.state.formView}}>
+                {/* <div style={{display:this.state.formView}}>
                     <FormView />
+                </div> */}
+                <Modal
+                    show={this.state.showModal}
+                    onHide={this.close}
+                    size="xlg"
+                    backdrop="static"
+                    maxHeight={this.state.modalHeight}
+                    width="1100"
+                    centered="true"
+                    dialogClassName="modal_form"
+                > 
+                 <div className="modal_header">
+                    <Modal.Header closeButton>
+                        <Modal.Title>
+                            新增立项申请信息
+                        </Modal.Title>
+                    </Modal.Header>
+                    </div>
+
+                    <Modal.Body>
+                        <div>
+                            <Form>
+                                <Row>
+                            <div style={{display:this.state.modalView.first}}>
+                            <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    业务类型
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    业务领域
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    客户名称
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    项目金额
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    是否新建企业
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    项目类型
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    项目来源
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    租赁方式
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    共同承租人
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    项目经理
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    租赁物类型
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    所属公司
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        </div>
+                        <div style={{display:this.state.modalView.second}}>
+                            <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    业务类型
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    业务领域
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    客户名称
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    项目金额
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    是否新建企业
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    项目类型
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    项目来源
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    租赁方式
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        </div>
+                        <div style={{display:this.state.modalView.third}}>
+                            <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    业务类型
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    业务领域
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    客户名称
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    项目金额
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    是否新建企业
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    项目类型
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    项目来源
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    租赁方式
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        <Col md={4} xs={4} sm={4}>
+                            <FormItem>
+                                <Label>
+                                    <Icon type="uf-mi" className='mast'></Icon>
+                                    共同承租人
+                                </Label>
+                                <FormControl
+                                    {
+                                    ...getFieldProps('project_filing_code', {
+                                        initialValue: '',
+                                        rules: [{
+                                            required: true, 
+                                        }],
+                                    })
+                                    }
+                                />
+                            </FormItem>
+                        </Col>
+                        </div>
+                        
+                        </Row>
+                            </Form>
+                        </div>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button  colors="info" style={{ marginRight: 8 }} onClick={this.closemodal}>
+                        {this.state.modalViewCount==0 ? '取消' : '上一步'}
+                        </Button>
+                        <Button colors="primary" onClick={this.editmodal}>
+                            {this.state.modalViewCount==2 ? '保存' : '下一步'}
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
                 </div>
-            </div>
+            
         )
     }
 }
 
-export default IndexView;
+//export default IndexView;
+export default Form.createForm()(IndexView);
