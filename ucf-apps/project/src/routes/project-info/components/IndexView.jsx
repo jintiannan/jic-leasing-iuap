@@ -43,10 +43,16 @@ class IndexView extends Component {
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
+
     }
 
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
     componentWillReceiveProps(nextProps) {
+    }
+
+    //绑定子组件
+    onRef = (ref) => {
+        this.child = ref;        
     }
 
     /**
@@ -90,7 +96,9 @@ class IndexView extends Component {
      */
     onQuery = (queryParam) =>{        
         // actions.projectInfo.loadList(queryParam);  
+        console.log(this.props.list);
     }
+
 
     /**
      * 修改按钮
@@ -124,7 +132,14 @@ class IndexView extends Component {
 
     onSave = () => {
         console.log('save save')
+        let obj = this.child.submit();
+        let _formObj = deepClone(this.props.formObject);
+        Object.assign(_formObj,obj);
+        console.log('save form');
+        console.log(_formObj);
+        actions.projectInfo.updateRowData({'record':_formObj});
         this.switchEdit();
+
     }
     
 
@@ -154,7 +169,7 @@ class IndexView extends Component {
                     <ListView {...this.props}/>
                 </div>                
                 <div style={{display:this.state.showFormView}}>
-                    <FormView {...this.props} formObj={this.state.formObj}/>
+                    <FormView {...this.props} onRef={this.onRef}/>
                 </div>
             </div>
             

@@ -83,9 +83,16 @@ export default {
             let _list = deepClone(list);
             if(index != undefined){
                 _list[index] = record;
+            } else if(record._index != undefined){
+                _list[record._index] = record;
             } else {
                 for(let key of list){
-                    if(list[key]['pk'] == record['pk']){
+                    // if(key['pk'] == record['pk']){
+                    //     key = record;
+                    //     break;
+                    // }
+ 
+                    if(key['_index'] == record._index){
                         _list[key] = record;
                         break;
                     }

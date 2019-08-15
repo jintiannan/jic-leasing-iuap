@@ -69,6 +69,7 @@ class ListView extends Component {
      * #关闭功能,如果有页面特殊要求再打开#
      */
     onRowSelect = (record, index, event) => {
+        // console.log('行点击事件');
         // let _record = deepClone(record);
         // _record._checked = _record._checked ? false : true;
         // let param = {
@@ -84,6 +85,8 @@ class ListView extends Component {
         // actions.projectInfo.updateRowData(param,index);
         // actions.projectInfo.updateState({ selectedList : _selectedList });
         
+        
+        
     }
 
     /**
@@ -94,6 +97,7 @@ class ListView extends Component {
         let { list } = this.props;
         let _list = deepClone(list);
         let _selectedList = deepClone(selectedList);
+        let _formObj = {};
         if (index != undefined) {
             _list[index]['_checked'] = !_list[index]['_checked'];
         } else {
@@ -111,9 +115,15 @@ class ListView extends Component {
                 });
             }            
         }
-
-        actions.projectInfo.updateState({ list : _list });
-        actions.projectInfo.updateState({ selectedList : _selectedList });
+        if(_selectedList && _selectedList.length == 1){
+            _formObj = deepClone(_selectedList[0]);
+        }
+        console.log('let me list');
+        console.log(_list);
+        console.log(_formObj);
+        console.log(list);
+        console.log(_selectedList);
+        actions.projectInfo.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj});
     }
     /**
      * 重置表格高度计算回调
@@ -146,7 +156,7 @@ class ListView extends Component {
                         ref={(el) => this.grid = el} //存模版
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组
-                        rowKey={(r, i) => i} //生成行的key
+                        rowKey={(r, i) => {r._index = i; return i}} //生成行的key
                         multiSelect={true}  //false 单选，默认多选                        
                         scroll={{y: tableHeight}} //滚动轴高度
                         height={28} //行高度

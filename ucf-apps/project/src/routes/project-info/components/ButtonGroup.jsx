@@ -12,7 +12,7 @@ class ButtonGroup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            power:props.BtnPower,            
+            power:props.BtnPower,          
          };
     }
 
@@ -77,8 +77,6 @@ class ButtonGroup extends Component {
      * 不可编辑状态 =>可用
      */
     powerDisabledUnEdit = (param) =>{
-        console.log('btn 123');
-        console.log(param);
         let isEdit = param.isEdit;
         return isEdit;
     }
@@ -107,7 +105,7 @@ class ButtonGroup extends Component {
     }
 
     render() {
-
+        console.log('加载 Button 组建');
         let _props = this.props;
         let _this = this;
         const tableMenu = (
