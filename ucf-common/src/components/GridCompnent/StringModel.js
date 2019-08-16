@@ -8,6 +8,10 @@ class StringModel extends Component {
         this.state = {  };
     }
 
+    handleChange =(value)=>{
+        debugger;
+    }
+
 
     render() {
         let {text,record,index} = this.props;
@@ -16,6 +20,8 @@ class StringModel extends Component {
                 {record._edit ?<div className="string_model">
                 <FormControl
                     placeholder="请输入..."
+                    defaultValue={text}
+                    onChange={this.handleChange}
                     /></div> : <div>{text ? text : ""}</div>}
             </div>
             

@@ -8,6 +8,7 @@ const TYPE_DATE = '3';
 const TYPE_TIME = '4';
 const TYPE_REF = '5';
 const TYPE_ENUM = '6';
+import StringModel from 'components/GridCompnent/StringModel'
 
 const dateFormat = "YYYY-MM-DD";
 const dateTimeFormat = "YYYY-MM-DD HH:mm:ss";
@@ -37,6 +38,9 @@ export function genGridColumn(param){
                             return pre[key].localeCompare(after[key],'zh-CN')
                         }                      
                     }, 
+                    render: (text, record, index) => {
+                        return <StringModel text={text} record={record} index={index}/>
+                    }
                 };
             case TYPE_NUMBER :
                 return {
