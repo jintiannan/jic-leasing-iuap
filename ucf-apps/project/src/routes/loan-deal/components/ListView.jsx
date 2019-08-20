@@ -236,11 +236,6 @@ class ListView extends Component {
             _selectedPlanList=deepClone(_selectedList[0].loanplan);
             _selectedPayList=deepClone(_selectedList[0].payaccount);
         }
-        console.log('let me list');
-        console.log(_list);
-        console.log(_formObj);
-        console.log(list);
-        console.log(_selectedList);
         actions.loandeal.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj,loanplanList:_selectedPlanList,payaccountList:_selectedPayList});
     }
 

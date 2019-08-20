@@ -83,7 +83,6 @@ class IndexView extends Component {
         this.setState({
             isEdit:!this.state.isEdit,
         })
-        debugger;
         let _loanplanList=deepClone(this.props.loanplanList);
         let _payaccountList= deepClone(this.props.payaccountList);
         this.state.formObj['_edit'] = this.state.formObj['_edit'] ? false : true;
@@ -97,7 +96,9 @@ class IndexView extends Component {
                 item['_edit']=item['_edit']?false:true;
             });
         }
-        actions.loandeal.updateState({isEdit : !this.state.isEdit,loanplanList:_loanplanList,payaccountList:_payaccountList});
+        let _queryParam = deepClone(this.props.queryParam);
+        _queryParam['_edit']=_queryParam['_edit']?false:true;
+        actions.loandeal.updateState({isEdit : !this.state.isEdit,loanplanList:_loanplanList,payaccountList:_payaccountList,queryParam:_queryParam});
     }
 
     /**
@@ -125,7 +126,6 @@ class IndexView extends Component {
     onView = () =>{
         singleRecordOper(this.props.selectedList,(param) => {
             this.switchToCardView(param);
-            debugger;
             actions.loandeal.updateState({bt:false});
         });
     }

@@ -146,6 +146,7 @@ export default {
                         let endindex =(newObj.pageIndex)*newObj.pageSize-1;
                         if(endindex>=sondata.loanplan.length)  endindex=sondata.loanplan.length-1;
                         for(var i=startindex;i<=endindex;i++){
+                            sondata.loanplan[i]['_edit']=param['_edit'];
                             reallist.push(sondata.loanplan[i]);
                         }
                         updateData.loanplanList = reallist;
@@ -162,6 +163,7 @@ export default {
                         let endindex =(newObj.pageIndex)*newObj.pageSize-1;
                         if(endindex>=sondata.payaccount.length)  endindex=sondata.payaccount.length-1;
                         for(var i=startindex;i<=endindex;i++){
+                            sondata.payaccount[i]['_edit']=param['_edit'];
                             reallist.push(sondata.payaccount[i]);
                         }
                         updateData.payaccountList = reallist;  
