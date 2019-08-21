@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Form, Icon, Button, Label, Switch, Checkbox, DatePicker, Radio, Select, Col, Row, FormControl, Collapse } from 'tinper-bee';
+import { Form, Icon, Button, Label, Switch, Checkbox, DatePicker, Radio, Select, Col, Row, FormControl, Collapse, Tabs } from 'tinper-bee';
 import { deepClone } from "utils";
 import { SelectField } from 'components/RowField/SelectField'
 import FormSplitHeader from 'components/FormSplitHeader'
 import InputNumber from 'bee-input-number';
+import ChildListView from './ChildListView';
+
+const {TabPane} = Tabs;
 
 import './index.less';
 
@@ -17,7 +20,6 @@ class FormView extends Component {
             open: true,
             open2: true,
             open3: true,
-
         };
     }
 
@@ -52,14 +54,21 @@ class FormView extends Component {
         return this.props.form.getFieldsValue();
     }
 
+    onChange = (activeKey) => {
+        console.log(`onChange ${activeKey} o-^-o`);
+        this.setState({
+            activeKey,
+        });
+    }
+
     render() {
         const { getFieldProps, getFieldError } = this.props.form;
         let formObj = this.props.formObject;
         let _formObj = deepClone(formObj);
         let _props = this.props;
         return (
-                <div className='form'>
-                    <div>
+            <div className='form'>
+                <div>
                 <span onClick={ ()=> this.setState({ open: !this.state.open })} >
                     <FormSplitHeader title={'主表信息'} />
                 </span>
@@ -80,7 +89,7 @@ class FormView extends Component {
                                 <Select 
                                  
                                     disabled={!_props.isEdit}
-                                    onChange={this.handleChange}
+                                    onChange={this.handCleChange}
                                     data={[{key:'通过',value:'9'},{key:'暂存',value:'20'}]}
                                     {...getFieldProps('billstatus', {
                                         initialValue: '通过',                                        
@@ -100,6 +109,7 @@ class FormView extends Component {
                                     会议期数
                                 </Label>
                                 <InputNumber
+                                    disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('meetingnper', {
                                         initialValue: formObj.meetingnper,
@@ -117,12 +127,12 @@ class FormView extends Component {
                                             <FormItem>
                                                 <Label>
                                                     <Icon type="uf-mi" className='mast'></Icon>
-                                                    项目编号
+                                                    承租人名称
                                                 </Label>
                                                 <FormControl disabled = {!_props.isEdit}
                                                     {
-                                                        ...getFieldProps('project_filing_code', {
-                                                            initialValue: '',
+                                                        ...getFieldProps('pk_consumer', {
+                                                            initialValue: formObj.pk_consumer?formObj.pk_consumer.name:"",
                                                             rules: [{
                                                                 required: true,
                                                             }],
@@ -136,12 +146,12 @@ class FormView extends Component {
                                             <FormItem>
                                                 <Label>
                                                     <Icon type="uf-mi" className='mast'></Icon>
-                                                    项目编号
+                                                    承租人编码
                                                 </Label>
                                                 <FormControl disabled = {!_props.isEdit}
                                                     {
-                                                        ...getFieldProps('project_filing_code', {
-                                                            initialValue: '',
+                                                        ...getFieldProps('pk_consumer', {
+                                                            initialValue: formObj.pk_consumer?formObj.pk_consumer.code:"",
                                                             rules: [{
                                                                 required: true,
                                                             }],
@@ -164,8 +174,8 @@ class FormView extends Component {
                                                 </Label>
                                                 <FormControl disabled = {!_props.isEdit}
                                                     {
-                                                        ...getFieldProps('project_filing_name', {
-                                                            initialValue: '',
+                                                        ...getFieldProps('project_name', {
+                                                            initialValue: formObj.project_name,
                                                             rules: [{
                                                                 required: true,
                                                             }],
@@ -174,7 +184,7 @@ class FormView extends Component {
                                                 />
                                                 <span className='error'>
                                     {
-                                        getFieldError('project_filing_code')
+                                        getFieldError('project_name')
                                     }
                                 </span>
                                             </FormItem>
@@ -184,12 +194,12 @@ class FormView extends Component {
                                             <FormItem>
                                                 <Label>
                                                     <Icon type="uf-mi" className='mast'></Icon>
-                                                    项目编号
+                                                    项目编码
                                                 </Label>
                                                 <FormControl disabled = {!_props.isEdit}
                                                     {
-                                                        ...getFieldProps('project_filing_code', {
-                                                            initialValue: '',
+                                                        ...getFieldProps('project_code', {
+                                                            initialValue: formObj.project_code,
                                                             rules: [{
                                                                 required: true,
                                                             }],
@@ -198,7 +208,7 @@ class FormView extends Component {
                                                 />
                                                 <span className='error'>
                                     {
-                                        getFieldError('project_filing_code')
+                                        getFieldError('project_code')
                                     }
                                 </span>
                                             </FormItem>
@@ -728,7 +738,21 @@ class FormView extends Component {
 
                     </Collapse>
                 </div>
+                <div>
+                <br/>
+                <Tabs
+                    defaultActiveKey="1"
+                    onChange={this.onChange}
+                    className="demo1-tabs"
+                >
+                    <TabPane tab='客户信息' key="1"> <ChildListView /></TabPane>
+                    <TabPane tab='项目信息' key="2"> <ChildListView /></TabPane>
+                    <TabPane tab='合同信息' key="3"> <ChildListView /></TabPane>
+                </Tabs>
                 </div>
+            </div>
+
+                
               
         );
     }
