@@ -127,6 +127,7 @@ class ButtonGroup extends Component {
                 <Dropdown trigger={['click']} overlay={tableMenu} animation="slide-up">
                     <Button visible={_this.powerView(_props,'Export') && _props.isGrid} className="ml8" colors="primary"><Icon type='uf-symlist'/>导出</Button>
                 </Dropdown>
+                <Button visible={_this.powerView(_props,'Switch')}   className="ml8 yl-r-b" colors="primary" onClick={_props.Switch}><Icon type='uf-add-c-o'/>切换</Button>
                 <Button visible={_props.isEdit} disabled={_this.powerDisabledEdit(_props)} className="ml8" colors="primary" onClick={_props.Save}><Icon type='uf-search'/>保存</Button>
                 <Button visible={!_props.isGrid}  className="ml8" colors="primary" onClick={_props.Return}><Icon type='uf-search'/>返回</Button>
                 <Button visible={_this.powerView(_props,'ViewFlow')} disabled={_this.powerDisabledSingle(_props,['204','9'])} className="ml8 yl-r-b" colors="primary" onClick={_props.ViewFlow}><Icon type='uf-setting-c-o'/>查看流程图</Button>

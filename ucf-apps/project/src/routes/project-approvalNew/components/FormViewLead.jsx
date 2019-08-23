@@ -708,17 +708,451 @@ class FormView extends Component {
 
                     </Collapse>
                 </div>
+
                 <div>
-                    <br />
-                <Tabs
-                    defaultActiveKey="1"
-                    onChange={this.onChange}
-                    className="demo1-tabs"
-                >
-                    <TabPane tab='报价方案' key="1"> <ChildListView /></TabPane>
-                    <TabPane tab='账户信息' key="2"> <ChildListView /></TabPane>
-                </Tabs>
+                    <span onClick={() => this.setState({ open3: !this.state.open3 })} >
+                    <FormSplitHeader title={'报价信息'} />
+                </span>
+
+                    <Collapse in={this.state.open3}>
+
+                    <Form>
+                            <Collapse
+                                in={this.state.open}>
+                                <div>
+                                   
+                                        <Col md={4} xs={4} sm={4}>
+                          <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                报价名称
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('pk_consumer', {
+                                                        initialValue: formObj.pk_consumer ? formObj.pk_consumer.name : "",
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                            </FormItem>
+                                
+                    
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                        <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    报价编码
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('pk_consumer', {
+                                                        initialValue: formObj.pk_consumer ? formObj.pk_consumer.code : "",
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    限额方案
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('pk_consumer', {
+                                                        initialValue: formObj.pk_consumer ? formObj.pk_consumer.name : "",
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    租赁期限(月)
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('billstatus', {
+                                                        initialValue: formObj.billstatus ? formObj.billstatus : "",
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                                <span className='error'>
+                                    {
+                                        getFieldError('billstatus')
+                                    }
+                                </span>
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    报价类型
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('client_rating', {
+                                                            initialValue: formObj.client_rating,
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                                <span className='error'>
+                                    {
+                                        getFieldError('client_rating')
+                                    }
+                                </span>
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    年化天数
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('project_batch', {
+                                                            initialValue: formObj.project_batch,
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                                <span className='error'>
+                                    {
+                                        getFieldError('project_batch')
+                                    }
+                                </span>
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    投放金额
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('purchase_total_amount', {
+                                                            initialValue: formObj.purchase_total_amount,
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                                <span className='error'>
+                                    {
+                                        getFieldError('purchase_total_amount')
+                                    }
+                                </span>
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    首付款总额
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('release_amount', {
+                                                            initialValue: formObj.release_amount,
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                                <span className='error'>
+                                    {
+                                        getFieldError('release_amount')
+                                    }
+                                </span>
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    本金总结记
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('purchase_total_amount', {
+                                                            initialValue: formObj.purchase_total_amount,
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                                <span className='error'>
+                                    {
+                                        getFieldError('purchase_total_amount')
+                                    }
+                                </span>
+                                            </FormItem>
+                                        </Col>
+                                
+                                </div>
+                            </Collapse>
+
+                        </Form>
+
+                    </Collapse>
                 </div>
+
+                <div>
+                    <span onClick={() => this.setState({ open3: !this.state.open3 })} >
+                    <FormSplitHeader title={'账户信息'} />
+                </span>
+
+                    <Collapse in={this.state.open3}>
+
+                    <Form>
+                            <Collapse
+                                in={this.state.open}>
+                                <div>
+                                   
+                                        <Col md={4} xs={4} sm={4}>
+                          <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    出租方账户
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('pk_consumer', {
+                                                        initialValue: formObj.pk_consumer ? formObj.pk_consumer.name : "",
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                            </FormItem>
+                                
+                    
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                        <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    税务登记号
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('pk_consumer', {
+                                                        initialValue: formObj.pk_consumer ? formObj.pk_consumer.code : "",
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    纳税人名称
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('pk_consumer', {
+                                                        initialValue: formObj.pk_consumer ? formObj.pk_consumer.name : "",
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    税种
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('pk_consumer', {
+                                                        initialValue: formObj.pk_consumer ? formObj.pk_consumer.code : "",
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                                <span className='error'>
+                                    {
+                                        getFieldError('project_filing_code')
+                                    }
+                                </span>
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    承租方账户
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('project_name', {
+                                                            initialValue: formObj.project_name,
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                                <span className='error'>
+                                    {
+                                        getFieldError('project_name')
+                                    }
+                                </span>
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    承租方账号
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('project_code', {
+                                                            initialValue: formObj.project_code,
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                                <span className='error'>
+                                    {
+                                        getFieldError('project_code')
+                                    }
+                                </span>
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    联系人
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('pk_cust_help', {
+                                                            initialValue: formObj.pk_cust_help,
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                                <span className='error'>
+                                    {
+                                        getFieldError('pk_cust_help')
+                                    }
+                                </span>
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    法人代表
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('pk_cust_main', {
+                                                            initialValue: formObj.pk_cust_main,
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                                <span className='error'>
+                                    {
+                                        getFieldError('pk_cust_main')
+                                    }
+                                </span>
+                                            </FormItem>
+
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    法定代表人
+                                                </Label>
+                                                <FormControl disabled={!_props.isEdit}
+                                                    {
+                                                        ...getFieldProps('pk_cust_main', {
+                                                            initialValue: formObj.pk_cust_main,
+                                                            rules: [{
+                                                                required: true,
+                                                            }],
+                                                        })
+                                                    }
+                                                />
+                                                <span className='error'>
+                                    {
+                                        getFieldError('pk_cust_main')
+                                    }
+                                </span>
+                                            </FormItem>
+                                        </Col>
+                               
+                                </div>
+                            </Collapse>
+
+                        </Form>
+
+                    </Collapse>
+                </div>
+                
             </div>
 
                 

@@ -21,8 +21,11 @@ export default {
         queryObj: {},
         //页面数据集
         list: [],
+        list2: [],
         //form表单绑定数据
         formObject:{},
+        //新增页form表单绑定数据
+        formObjAdd:{},
         //当前页选中的数据
         selectedList:[],
         //按钮权限集
@@ -72,6 +75,28 @@ export default {
             updateData.list = data;
             actions.projectApprovalNew.updateState(updateData); // 更新数据和查询条件
         },
+
+        /**
+         * 加载子列表数据
+         * @param {*} param
+         * @param {*} getState
+         */
+        async loadChildList(param = {}, getState) {
+            // 正在加载数据，显示加载 Loading 图标
+            actions.projectApprovalNew.updateState({showLoading: true});
+            let data = processData(await api.getList(param));  // 调用 getList 请求数据
+            let updateData = {showLoading: false};
+            let queryObj = {
+                pageIndex:param.pageIndex,
+                pageSize:param.pageSize,
+                totalPages:Math.ceil(data.length/param.pageSize)
+            };
+            updateData.queryObj = queryObj;
+            updateData.queryParam = param;
+            updateData.list2 = data;
+            actions.projectApprovalNew.updateState(updateData); // 更新数据和查询条件
+        },
+
 
         /**
          * 更新界面单行数据,使用之前请对需要更新的对象进行深拷贝再传入!!

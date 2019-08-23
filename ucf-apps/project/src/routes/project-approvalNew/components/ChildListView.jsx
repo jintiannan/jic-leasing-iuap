@@ -25,6 +25,8 @@ const dataSource = [
         isLeaf: "true",
         refname: "财务二科"
       },
+      e: "10次",
+      f: "等额本金",
       key: "1"
     },
     {
@@ -43,6 +45,8 @@ const dataSource = [
         isLeaf: "true",
         refname: "财务二科"
       },
+      e: "10次",
+      f: "等额本金",
       key: "2"
     },
     {
@@ -61,6 +65,8 @@ const dataSource = [
         isLeaf: "true",
         refname: "财务一科"
       },
+      e: "10次",
+      f: "等额本金",
       key: "3"
     }
   ];
@@ -70,12 +76,12 @@ const dataSource = [
       super(props);
       this.columns = [
         {
-          title: "员工编号",
+          title: "报价编号",
           dataIndex: "a",
           key: "a"
         },
         {
-          title: "名字",
+          title: "限额方案",
           dataIndex: "b",
           key: "b",
           render: (text, record, index) => (
@@ -87,7 +93,7 @@ const dataSource = [
           )
         },
         {
-          title: "性别",
+          title: "租赁期限",
           dataIndex: "c",
           key: "c",
           width: 100,
@@ -99,7 +105,7 @@ const dataSource = [
           )
         },
         {
-          title: "部门",
+          title: "报价类型",
           dataIndex: "d",
           key: "d",
           width: 215,
@@ -107,6 +113,30 @@ const dataSource = [
             <RefEditCell
               value={record}
               onChange={this.onCellChange(index, "d")}
+            />
+          )
+        },
+        {
+          title: "还款频率",
+          dataIndex: "e",
+          key: "e",
+          width: 215,
+          render: (text, record, index) => (
+            <RefEditCell
+              value={record}
+              onChange={this.onCellChange(index, "e")}
+            />
+          )
+        },
+        {
+          title: "计算方式",
+          dataIndex: "f",
+          key: "f",
+          width: 215,
+          render: (text, record, index) => (
+            <RefEditCell
+              value={record}
+              onChange={this.onCellChange(index, "f")}
             />
           )
         },
@@ -126,12 +156,13 @@ const dataSource = [
         dataSource[index][key] = value;
         this.setState({ dataSource }, () => console.dir(this.state.dataSource));
       };
+      
     };
   
     render() {
       return (
         <div className="demo0502 u-editable-table">
-          <Table data={this.state.dataSource} columns={this.columns} height={40}/>
+          <Table data={this.state.dataSource} columns={this.columns} headerHeight={40} height={40}/>
         </div>
       );
     }
