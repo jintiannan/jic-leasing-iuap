@@ -17,7 +17,8 @@ module.exports = (env, argv) => {
             "home",
             "project",
             "testdemo",
-            "contract"
+            "contract",
+            "settings"
         ],
         // 代理的配置
         proxy: [
@@ -84,7 +85,7 @@ module.exports = (env, argv) => {
         },
         // 加载器Loader
         loader: [
-            
+
         ],
         // 调试服务需要运行的插件
         devPlugins: [],

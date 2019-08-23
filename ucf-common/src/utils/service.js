@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import EnumModel from 'components/GridCompnent/EnumModel';
 import {deepClone, Info} from "utils";
 const TYPE_STRING = '0';
@@ -36,8 +37,8 @@ export function genGridColumn(param){
                             return 1;
                         } else {
                             return pre[key].localeCompare(after[key],'zh-CN')
-                        }                      
-                    }, 
+                        }
+                    },
                     render: (text, record, index) => {
                         return <StringModel text={text} record={record} index={index}/>
                     }
@@ -75,7 +76,7 @@ export function genGridColumn(param){
                     sorter: (pre, after) => {return new Date(pre[key]).getTime() - new Date(after[key]).getTime()},
                     render: (text, record, index) => {
                         return <div>{text ? moment(text).format(dateFormat) : ""}</div>
-    
+
                     }
                 };
             case TYPE_TIME :
@@ -87,7 +88,7 @@ export function genGridColumn(param){
                     sorter: (pre, after) => {return new Date(pre[key]).getTime() - new Date(after[key]).getTime()},
                     render: (text, record, index) => {
                         return <div>{text ? moment(text).format(dateTimeFormat) : ""}</div>
-    
+
                     }
                 };
             case TYPE_REF :
@@ -98,7 +99,7 @@ export function genGridColumn(param){
                     width: width,
                     render: (text, record, index) => {
                         return <div>{text ? moment(text).format(dateTimeFormat) : ""}</div>
-    
+
                     }
                 };
             case TYPE_ENUM :
@@ -112,7 +113,7 @@ export function genGridColumn(param){
                             return 1;
                         } else {
                             return pre[key].localeCompare(after[key],'zh-CN')
-                        }                      
+                        }
                     },
                     render: (text, record, index) => {
                         return (<EnumModel type={enumType} text={text} record={record} index={index}/>)
@@ -128,8 +129,8 @@ export function genGridColumn(param){
 /*******************************常用业务校验函数************************************/
 /**
  * 单条业务数据操作
- * @param {*} param 
- * @param {*} fn 
+ * @param {*} param
+ * @param {*} fn
  */
 export function singleRecordOper(param = [],fn =(obj) => {}){
     if(param && param.length > 0){
@@ -147,8 +148,8 @@ export function singleRecordOper(param = [],fn =(obj) => {}){
 }
 
 /**
- * 
- * @param {页面对象} param 
+ *
+ * @param {页面对象} param
  * @param {状态权限集合} status
  */
 export function checkBillStatus(param={},status=[]){
