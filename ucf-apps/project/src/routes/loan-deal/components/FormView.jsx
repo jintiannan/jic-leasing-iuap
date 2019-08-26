@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Form, Icon,Tabs, Button, Label, Switch, Checkbox, DatePicker, Radio, Select, Col, Row, FormControl, Collapse } from 'tinper-bee';
+import {Panel, PanelGroup ,Form, Icon,Tabs, Button, Label, Switch, Checkbox, DatePicker, Radio, Select, Col, Row, FormControl, Collapse } from 'tinper-bee';
 import { deepClone } from "utils";
 import {actions} from 'mirrorx';
 import FormSplitHeader from 'components/FormSplitHeader'
@@ -19,13 +19,16 @@ class FormView extends Component {
             formObj: {},
             planIndex: 0,   //业务申请单索引
             accountIndex: 0,  //付款账户索引
+            activeKey: '1',
+            open1:true,
+            open2:true,
         };
     }
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
         // this.plangridColumn = [...genGridColumn(this.plangrid)];
-        this.accountgridColumn = [...genGridColumn(this.accountgrid)];
+        // this.accountgridColumn = [...genGridColumn(this.accountgrid)];
     }
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
@@ -87,6 +90,14 @@ class FormView extends Component {
                 queryParam.accountIndex = 1;
             }
             actions.loandeal.loadSubList(queryParam);
+        }
+    }
+
+    handleSelect = (key)=> {
+        if(key =='1')
+            this.setState({open1:!this.state.open1});
+        else if(key=='2'){
+            this.setState({open2:!this.state.open2});
         }
     }
 
@@ -399,8 +410,11 @@ class FormView extends Component {
         return (
 
                 <div className='form'>
+                    <div className = 'panelform'>
+                    <PanelGroup activeKey={this.state.activeKey} >
+                    <Panel header="基本信息" eventKey="1" collapsible defaultExpanded="true" expanded={this.state.open1} onSelect={this.handleSelect.bind(this,'1')} >
                     <Form>
-                    <Row>                       
+                    <Row> 
                         <Col md={4} xs={4} sm={4}>
                             <FormItem>
                                 <Label>
@@ -408,7 +422,7 @@ class FormView extends Component {
                                     单据状态
                                 </Label>
                                 
-                                <FormControl 
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     // data={[{key:'审核通过',value:'9'},{key:'暂存',value:'20'},{key:'审核中',value='204'},{key:'初始',value='99'}]}
                                     {...getFieldProps('billstatus', {
@@ -417,7 +431,16 @@ class FormView extends Component {
                                             required: true, message: '请选择单据状态!',
                                         }],
                                     })}  
-                                />                            
+                                />):(<FormControl
+                                disabled={!_props.isEdit}
+                                // data={[{key:'审核通过',value:'9'},{key:'暂存',value:'20'},{key:'审核中',value='204'},{key:'初始',value='99'}]}
+                                {...getFieldProps('billstatus', {
+                                    initialValue: formObj.billstatus,                                        
+                                    rules: [{
+                                        required: true, message: '请选择单据状态!',
+                                    }],
+                                })} 
+                                />)}                           
                             </FormItem>
                         </Col>
                         <Col md={4} xs={4} sm={4}>
@@ -426,7 +449,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     付款申请编号
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('loan_code', {
@@ -436,7 +459,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('loan_code', {
+                                        initialValue: formObj.loan_code,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -445,7 +479,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     付款类别
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl   style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('pay_type', {
@@ -455,7 +489,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl  
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('pay_type', {
+                                        initialValue: formObj.pay_type,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col>
                         <Col md={4} xs={4} sm={4}>
@@ -464,7 +509,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     收款方名称
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('gather_name', {
@@ -474,7 +519,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('gather_name', {
+                                        initialValue: formObj.gather_name,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -483,7 +539,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     收款账号
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('gather_account', {
@@ -493,16 +549,34 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('gather_account', {
+                                        initialValue: formObj.gather_account,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
+                        </Row>                                
+                        </Form>
+                        </Panel>
+                        <Panel header="立项详情" eventKey="2" collapsible defaultExpanded="true" expanded={this.state.open2} onSelect={this.handleSelect.bind(this,'2')} >
+                        <Form>
+                        <Row>                                
+                    
                         <Col md={4} xs={4} sm={4}>
                             <FormItem>
                                 <Label>
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     收款账户
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('gather_cust', {
@@ -512,7 +586,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('gather_cust', {
+                                        initialValue: formObj.gather_cust,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col>                                 
                         <Col md={4} xs={4} sm={4}>
@@ -521,7 +606,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     客户名称
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('customer_name', {
@@ -531,7 +616,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('customer_name', {
+                                        initialValue: formObj.customer_name,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -540,7 +636,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     合同编号
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('cont_code', {
@@ -550,7 +646,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('cont_code', {
+                                        initialValue: formObj.cont_code,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -559,7 +666,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     部门
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('pk_dept', {
@@ -569,7 +676,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('pk_dept', {
+                                        initialValue: formObj.pk_dept,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -578,7 +696,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     实际支付金额
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('fact_pay_amount', {
@@ -588,7 +706,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('fact_pay_amount', {
+                                        initialValue: formObj.fact_pay_amount,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -597,7 +726,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     项目类型
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('project_type', {
@@ -607,7 +736,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('project_type', {
+                                        initialValue: formObj.project_type,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -616,7 +756,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     签约主体
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('pk_mainorg', {
@@ -626,7 +766,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('pk_mainorg', {
+                                        initialValue: formObj.pk_mainorg,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -635,7 +786,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     机构
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('pk_org', {
@@ -645,7 +796,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('pk_org', {
+                                        initialValue: formObj.pk_org,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -654,7 +816,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     租赁方式
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('rent_type', {
@@ -664,7 +826,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('rent_type', {
+                                        initialValue: formObj.rent_type,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -673,7 +846,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     合同管理人
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('cont_manager', {
@@ -683,7 +856,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('cont_manager', {
+                                        initialValue: formObj.cont_manager,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -692,7 +876,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     币种
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('currency', {
@@ -702,7 +886,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('currency', {
+                                        initialValue: formObj.currency,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -711,7 +906,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     客户规模
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('customer_scale', {
@@ -721,7 +916,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('customer_scale', {
+                                        initialValue: formObj.customer_scale,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col> 
                         <Col md={4} xs={4} sm={4}>
@@ -730,7 +936,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     租赁物门类
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('renting_type', {
@@ -740,7 +946,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('renting_type', {
+                                        initialValue: formObj.renting_type,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col>
                         <Col md={4} xs={4} sm={4}>
@@ -749,7 +966,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     保证金金额
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('deposit', {
@@ -759,7 +976,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('deposit', {
+                                        initialValue: formObj.deposit,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col>
                         <Col md={4} xs={4} sm={4}>
@@ -768,7 +996,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     手续费金额
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('srvfee', {
@@ -778,7 +1006,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('srvfee', {
+                                        initialValue: formObj.srvfee,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col>
                         <Col md={4} xs={4} sm={4}>
@@ -787,7 +1026,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     付款申请人
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('pk_operator', {
@@ -797,7 +1036,18 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('pk_operator', {
+                                        initialValue: formObj.pk_operator,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col>
                         <Col md={4} xs={4} sm={4}>
@@ -806,7 +1056,7 @@ class FormView extends Component {
                                     <Icon type="uf-mi" className='mast'></Icon>
                                     新增测试人
                                 </Label>
-                                <FormControl
+                                {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
                                     ...getFieldProps('pk_operator', {
@@ -816,16 +1066,29 @@ class FormView extends Component {
                                         }],
                                     })
                                     }
-                                />
+                                />):(<FormControl
+                                    disabled={!_props.isEdit}
+                                    {
+                                    ...getFieldProps('pk_operator', {
+                                        initialValue: formObj.pk_operator,
+                                        rules: [{
+                                            required: true,
+                                        }],
+                                    })
+                                    }
+                                />)}
+                                
                             </FormItem>
                         </Col>
+                        </Row>                                
+                        </Form>
+                        </Panel>
+                    </PanelGroup>      
 
-                    </Row>                                
-                    </Form>
-                    <div  >
+                    </div>
+                    <div>
                     <Tabs
                         defaultActiveKey={_props.tabKey}
-                        tabBarStyle="upborder"
                         onChange={this.onChangeTab}
                         extraContent={
                             <div className="initbtn" >

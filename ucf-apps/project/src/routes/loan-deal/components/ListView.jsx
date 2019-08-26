@@ -304,7 +304,6 @@ class ListView extends Component {
                 <div>
                     <Tabs
                         defaultActiveKey={tabKey}
-                        tabBarStyle="upborder"
                         onChange={this.onChangeTab}
                     >
                         <TabPane tab='业务资金付款申请单' key="loanplan">

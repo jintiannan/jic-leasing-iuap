@@ -8,7 +8,7 @@ import {processData, structureObj, initStateObj,deepClone} from "utils";
 
 export default {
     // 确定 Store 中的数据模型作用域
-    name: "contract",
+    name: "calculator",
     // 设置当前 Model 所需的初始化 state
     initialState: {
         showLoading: false,
@@ -33,7 +33,6 @@ export default {
         isEdit:false,
         //是否列表界面
         isGrid:true,
-
     },
     reducers: {
         /**
@@ -49,7 +48,6 @@ export default {
         },
     },
     effects: {
-
         /**
          * 加载列表数据
          * @param {*} param
@@ -57,7 +55,7 @@ export default {
          */
         async loadList(param = {}, getState) {
             // 正在加载数据，显示加载 Loading 图标
-            actions.contract.updateState({showLoading: true});
+            actions.calculator.updateState({showLoading: true});
             let data = processData(await api.getList(param));  // 调用 getList 请求数据
             let updateData = {showLoading: false};
             let queryObj = {
@@ -68,37 +66,7 @@ export default {
             updateData.queryObj = queryObj;
             updateData.queryParam = param;
             updateData.list = data;
-            actions.contract.updateState(updateData); // 更新数据和查询条件
-        },
-
-        /**
-         * 更新界面单行数据,使用之前请对需要更新的对象进行深拷贝再传入!!
-         * @param {需要更新的记录} record 
-         * @param {顺序号} index 
-         * @param {*} getState 
-         */
-        async updateRowData(param={},getState){
-            let{index,record} = param;
-            let list = getState().contract.list;
-            let _list = deepClone(list);
-            if(index != undefined){
-                _list[index] = record;
-            } else if(record._index != undefined){
-                _list[record._index] = record;
-            } else {
-                for(let key of list){
-                    // if(key['pk'] == record['pk']){
-                    //     key = record;
-                    //     break;
-                    // }
- 
-                    if(key['_index'] == record._index){
-                        _list[key] = record;
-                        break;
-                    }
-                }                
-            }            
-            actions.contract.updateState({list:_list});
+            actions.calculator.updateState(updateData); // 更新数据和查询条件
         },
     }
 };
