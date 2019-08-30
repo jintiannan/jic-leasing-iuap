@@ -53,6 +53,10 @@ export default {
         isEdit:false,
         //是否列表界面
         isGrid:true,
+        //模态框是否显示
+        showModal:false,
+        //新增页form表单绑定数据
+        formObjAdd:{},
     },
     reducers: {
         /**

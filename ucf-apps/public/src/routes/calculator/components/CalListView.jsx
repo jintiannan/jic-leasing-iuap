@@ -6,7 +6,7 @@ import {genGridColumn,checkListSelect} from "utils/service";
 
 import './index.less';
 
-class ListView extends Component {
+class CalListView extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,37 +25,11 @@ class ListView extends Component {
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
-        actions.contract.loadList(this.props.queryParam);
     }
 
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
     componentWillReceiveProps(nextProps) {
         
-    }
-
-    /**
-     * 跳转到指定页数据
-     * @param {Number} pageIndex 跳转指定页数
-     */
-    freshData = (pageIndex) => {
-        let queryParam = deepClone(this.props.queryParam); // 深拷贝查询条件从 action 里
-        queryParam['pageIndex'] = pageIndex;
-        actions.contract.loadList(queryParam);
-    }
-
-    /**
-     * 设置每页显示行数
-     * @param {Number} index 跳转指定页数
-     * @param {Number} value 设置一页数据条数
-     */
-    onDataNumSelect = (index, value) => {
-        let queryParam = deepClone(this.props.queryParam); // 深拷贝查询条件从 action 里
-        queryParam['pageSize'] = value;
-        queryParam['pageIndex'] = 0;
-        if (value && value.toString().toLowerCase() === "all") { // 对分页 pageSize 为 all 进行处理，前后端约定
-            pageSize = 1;
-        }
-        actions.contract.loadList(queryParam);
     }
 
     /**
@@ -78,10 +52,7 @@ class ListView extends Component {
         //     _selectedList.splice(_selectedList.findIndex(item => item.pk === record.pk), 1)
         // }
         // actions.contract.updateRowData(param,index);
-        // actions.contract.updateState({ selectedList : _selectedList });
-        
-        
-        
+        // actions.contract.updateState({ selectedList : _selectedList });  
     }
 
     /**
@@ -89,10 +60,9 @@ class ListView extends Component {
      * 绑定选中数据数组到数据模型中
      */
     getSelectedDataFunc = (selectedList,record,index) => {
-        let { list } = this.props;
-        let {callist} =this.props;
-        let _list = deepClone(list);
-        let _callist= deepClone(callist);
+        debugger
+        let {callist} = this.props;
+        let _list = deepClone(callist);
         let _selectedList = deepClone(selectedList);
         let _formObj = {};
         if (index != undefined) {
@@ -114,14 +84,8 @@ class ListView extends Component {
         }
         if(_selectedList && _selectedList.length == 1){
             _formObj = deepClone(_selectedList[0]);
-            _callist = deepClone(_selectedList[0].pk_cal);
         }
-        console.log('let me list');
-        console.log(_list);
-        console.log(_formObj);
-        console.log(list);
-        console.log(_selectedList);
-        actions.contract.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj,callist:_callist});
+        actions.contract.updateState({ callist : _list,selectedCalList : _selectedList,CalformObject : _formObj});
     }
     /**
      * 重置表格高度计算回调
@@ -136,12 +100,27 @@ class ListView extends Component {
 
     //列属性定义
     grid = [
-        {title:'会议期数',key:'meetingnper',type:'1'},
-        {title:'承租人名称',key:'pk_consumer.name',type:'0'},
-        {title:'承租人编码',key:'pk_consumer.code',type:'0'},
-        {title:'单据状态',key:'billstatus',type:'6',enumType:'billstatus'},
-        {title:'项目名称',key:'project_name',type:'0'},
-        {title:'项目编号',key:'project_code',type:'0'},
+        {title:'报价名称',key:'quote_name',type:'0'},
+        {title:'报价编号',key:'quote_code',type:'0'},
+        {title:'限额方案',key:'pk_limit_plan',type:'0'},
+        {title:'税种',key:'tax_mode',type:'0'},
+        {title:'租赁方式',key:'lease_method',type:'0'},
+        {title:'租金税率',key:'rent_tax_rate',type:'0'},
+        {title:'投放日期',key:'plan_date_loan',type:'0'},
+        {title:'投放金额',key:'plan_loan_cash',type:'0'},
+        {title:'首付款金额',key:'down_payment',type:'0'},
+        {title:'首付款比例',key:'down_payment_ratio',type:'0'},
+        {title:'保证金收取方式',key:'deposit_method',type:'0'},
+        {title:'保证金比例',key:'deposit_ratio',type:'0'},
+        {title:'保证金金额(元)',key:'deposit_cash',type:'0'},
+        {title:'保证金退回方式',key:'return_method_depos',type:'0'},
+        {title:'手续费收取方式',key:'srvfee_method',type:'0'},
+        {title:'手续费计算基数',key:'srvfee_base',type:'0'},
+        {title:'手续费比例',key:'srvfee_ratio_in',type:'0'},
+        {title:'租赁期限',key:'lease_times',type:'0'},
+        {title:'计划收租日',key:'plan_date_loan',type:'0'},
+        {title:'先付后付标志',key:'prepare_or_not',type:'0'},
+        {title:'计息金额计算方式',key:'cal_method_spec',type:'0'},
     ]
     //列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
@@ -151,9 +130,9 @@ class ListView extends Component {
         return (            
             <div className="grid-parent" style={{display:this.state.listView}}>
                     <Grid
-                        ref="contractgrid" //存模版
+                        ref="calgrid" //存模版
                         columns={this.gridColumn} //字段定义
-                        data={this.props.list} //数据数组
+                        data={this.props.callist} //数据数组
                         rowKey={(r, i) => {r._index = i; return i}} //生成行的key
                         multiSelect={true}  //false 单选，默认多选                        
                         scroll={{y: tableHeight}} //滚动轴高度
@@ -172,14 +151,7 @@ class ListView extends Component {
                         }}
                         //分页对象
                         paginationObj = {{
-                            activePage : this.props.queryParam.pageIndex,//活动页
-                            total : this.props.list.length,//总条数
-                            items: this.props.queryObj.totalPages,//总页数
-                            freshData: this.freshData, //活动页改变,跳转指定页数据
-                            dataNumSelect:['5','25','50','100'],
-                            dataNum:2,
-                            onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
-                            verticalPosition:'bottom'
+                            verticalPosition:'none'
                         }}
                         rowClassName={(record,index,indent)=>{
                             if (record._checked) {
@@ -190,11 +162,10 @@ class ListView extends Component {
                         }}
                         onRowClick={this.onRowSelect}
                         getSelectedDataFunc={this.getSelectedDataFunc}
-
                     />
             </div>            
         );
     }
 }
 
-export default ListView;
+export default CalListView;

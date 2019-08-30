@@ -110,8 +110,8 @@ class FormView extends Component {
                                 {!_props.isEdit ? (<FormControl style = {{'background-color':'transparent','border':0}}
                                     disabled={!_props.isEdit}
                                     {
-                                    ...getFieldProps('project_name', {
-                                        initialValue: '审核通过',
+                                    ...getFieldProps('billstatus', {
+                                        initialValue: _formObj.billstatus,
                                         rules: [{
                                             required: true,
                                         }],
@@ -122,7 +122,7 @@ class FormView extends Component {
                                     onChange={this.handleChange}
                                     data={[{key:'通过',value:'9'},{key:'暂存',value:'20'}]}
                                     {...getFieldProps('billstatus', {
-                                        initialValue: '审核通过',                                        
+                                        initialValue: _formObj.billstatus,                                        
                                         rules: [{
                                             required: true, message: '请选择单据状态!',
                                         }],

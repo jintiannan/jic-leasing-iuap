@@ -15,7 +15,7 @@ export default {
         pageParams: {},
         queryParam: {
             pageIndex: 0,
-            pageSize: 50,
+            pageSize: 5,
         },
         //查询结果参数
         queryObj: {},
@@ -26,14 +26,23 @@ export default {
         //当前页选中的数据
         selectedList:[],
         //按钮权限集
-        powerButton:[],
+        powerButton:['Query','Export','Save','Return','ViewFlow','Check','Submit','Edit','Add','View'],
+        //主表单按钮集
+        MainButton:['Export','Save','ViewFlow','Submit','Edit'],
+        //报价表单按钮集
+        CalButton:['Add','Export','Save','Edit'],
         //是否过滤按钮权限
         ifPowerBtn:true,
         //是否可编辑
         isEdit:false,
         //是否列表界面
         isGrid:true,
-
+        //对应报价所需数据
+        callist:[],
+        CalformObject:{},
+        selectedCalList:[],
+        isCalGrid:true,
+        isCalEdit:false,
     },
     reducers: {
         /**

@@ -7,6 +7,7 @@ import {deepClone} from "utils";
 import ButtonGroup from './ButtonGroup';
 import ListView from './ListView';
 import FormView from './FormView';
+import ModalView from './ModalView'
 import './index.less';
 
 
@@ -48,7 +49,11 @@ class IndexView extends Component {
 
     //绑定子组件
     onRef = (ref) => {
-        this.child = ref;        
+        this.listchild = ref;        
+    }
+
+    onmodalRef = (ref) =>{
+        this.modalchild = ref;
     }
 
     /**
@@ -142,9 +147,9 @@ class IndexView extends Component {
 
     onSave = () => {
         console.log('save save')
-        let obj = this.child.submit();
-        let loanlist= this.child.tableonesubmit();
-        let accountlist= this.child.tabletwosubmit();
+        let obj = this.listchild.submit();
+        let loanlist= this.listchild.tableonesubmit();
+        let accountlist= this.listchild.tabletwosubmit();
         let _formObj = deepClone(this.props.formObject);
         Object.assign(_formObj,obj);
         Object.assign(_formObj.loanplan,loanlist);
@@ -152,6 +157,15 @@ class IndexView extends Component {
         actions.loandeal.updateRowData({'record':_formObj});
         this.switchEdit(); 
 
+    }
+
+    onAdd = () => {
+        let objectForm = localStorage.getItem("addKey");
+        if(objectForm){
+            let _formObj = deepClone(JSON.parse(objectForm));
+            actions.loandeal.updateState({formObjAdd:_formObj});
+        }
+        actions.loandeal.updateState({showModal:true});
     }
     
 
@@ -174,6 +188,7 @@ class IndexView extends Component {
                         View={this.onView}
                         Return={this.onReturn}
                         Save={this.onSave}
+                        Add={this.onAdd}
                         {...this.props}
                     />
                 </div>
@@ -182,6 +197,9 @@ class IndexView extends Component {
                 </div>                
                 <div style={{display:this.state.showFormView}}>
                     <FormView {...this.props} onRef={this.onRef}/>
+                </div>
+                <div>
+                    <ModalView {...this.props} onRef={this.onmodalRef}  />
                 </div>
             </div>
             

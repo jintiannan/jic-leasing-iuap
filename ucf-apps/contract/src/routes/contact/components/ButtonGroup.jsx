@@ -52,17 +52,22 @@ class ButtonGroup extends Component {
      * 权限 && Form界面
      */
     powerFormView = (param,name) =>{
+        let power=true;
         let ifPower = param.ifPowerBtn;
         let isGrid = param.isGrid;
         //过滤后台按钮权限
         if(ifPower){
-            if(param.powerButton && param.powerButton.length > 0){
-                power = param.powerButton.includes(name);
-            } else {
+            if(isGrid){
                 power = false;
+            }else{
+                if(param.mainButton && param.mainButton.length > 0){
+                    power = param.mainButton.includes(name);
+                } else {
+                    power = false;
+                }
             }
         }
-        return power && !isGrid;        
+        return power;        
     }
 
     /**
@@ -85,10 +90,19 @@ class ButtonGroup extends Component {
      * 不可编辑状态 && 单条数据 && 符合状态集合 =>可用
      */
     powerDisabledSingle = (param,status=[]) =>{
+        let isGrid = param.isGrid;
         let isEdit = param.isEdit;
         let selectList = param.selectedList;
         if(selectList && selectList.length == 1){
-            return isEdit && !checkBillStatus(selectList[0],status);
+            if(isGrid){
+                return isGrid&&!checkBillStatus(selectList[0],status);
+            }else{
+                if(isEdit){
+                    return true;
+                }else{
+                    return !checkBillStatus(selectList[0],status);
+                }
+            }
         } else {
             return true;
         }
@@ -128,12 +142,12 @@ class ButtonGroup extends Component {
                     <Button visible={_this.powerView(_props,'Export') && _props.isGrid} className="ml8" colors="primary"><Icon type='uf-symlist'/>导出</Button>
                 </Dropdown>
                 <Button visible={_props.isEdit} disabled={_this.powerDisabledEdit(_props)} className="ml8" colors="primary" onClick={_props.Save}><Icon type='uf-search'/>保存</Button>
-                <Button visible={!_props.isGrid} disabled={_this.powerDisabledUnEdit(_props)} className="ml8" colors="primary" onClick={_props.Return}><Icon type='uf-search'/>返回</Button>
-                <Button visible={_this.powerView(_props,'ViewFlow')} disabled={_this.powerDisabledSingle(_props,['204','9'])} className="ml8 yl-r-b" colors="primary" onClick={_props.ViewFlow}><Icon type='uf-setting-c-o'/>查看流程图</Button>
-                <Button visible={_this.powerView(_props,'Check')} disabled={_this.powerDisabledSingle(_props,['204'])} className="ml8 yl-r-b" colors="primary" onClick={_props.Check}><Icon type='uf-seal'/>审核</Button>
-                <Button visible={_this.powerView(_props,'Submit')} disabled={_this.powerDisabledSingle(_props,['20','99'])} className="ml8 yl-r-b" colors="primary" onClick={_props.Submit}><Icon type='uf-flow-o'/>提交</Button>
+                <Button visible={_this.powerFormView(_props,'Return')} disabled={_this.powerDisabledUnEdit(_props)} className="ml8" colors="primary" onClick={_props.Return}><Icon type='uf-search'/>返回</Button>
+                <Button visible={_this.powerView(_props,'ViewFlow')} disabled={_this.powerDisabledSingle(_props,[204,9])} className="ml8 yl-r-b" colors="primary" onClick={_props.ViewFlow}><Icon type='uf-setting-c-o'/>查看流程图</Button>
+                <Button visible={_this.powerView(_props,'Check')} disabled={_this.powerDisabledSingle(_props,[204])} className="ml8 yl-r-b" colors="primary" onClick={_props.Check}><Icon type='uf-seal'/>审核</Button>
+                <Button visible={_this.powerView(_props,'Submit')} disabled={_this.powerDisabledSingle(_props,[20,99])} className="ml8 yl-r-b" colors="primary" onClick={_props.Submit}><Icon type='uf-flow-o'/>提交</Button>
                 <Button visible={_this.powerView(_props,'Edit')} disabled={_this.powerDisabledUnEdit(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Edit}><Icon type='uf-pencil-s'/>修改</Button>
-                <Button visible={_this.powerView(_props,'Add')} disabled={_this.powerDisabledUnEdit(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Add}><Icon type='uf-add-c-o'/>新增</Button>
+                <Button visible={_this.powerFormView(_props,'Add')} disabled={_this.powerDisabledUnEdit(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Add}><Icon type='uf-add-c-o'/>新增</Button>
                 <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.View}><Icon type='uf-files-o'/>查看</Button>
             </div>
             

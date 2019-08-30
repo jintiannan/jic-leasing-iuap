@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react';
 import {Tooltip, Menu, Icon, Loading,Tabs} from 'tinper-bee';
+import Button from 'components/Button';
 import {actions} from 'mirrorx';
 import {singleRecordOper} from "utils/service";
 import {deepClone} from "utils";
@@ -11,8 +12,7 @@ import {deepClone} from "utils";
 import ButtonGroup from './ButtonGroup';
 import ListView from './ListView';
 import FormView from './FormView';
-import CalFormView from '../../../../../public/src/routes/calculator/components/CalFormView'
-
+import CalIndexView from '../../../../../public/src/routes/calculator/components/CalIndexView'
 
 import './index.less';
 
@@ -23,30 +23,18 @@ class IndexView extends Component {
     constructor(props) {
         super(props);
         //在路由时带出此节点权限按钮
-        /**临时测试数据 */
-        props.powerButton = ['Query','Export','Save','Return','ViewFlow','Check','Submit','Edit','Add','View'];
-        props.ifPowerBtn = true;
-        /**临时测试数据 */
         this.state = {
             showLoading : false, //加载状态
             showListView : '', //显示列表界面
             showFormView : 'none',//显示Form表单
-            isEdit : false,//是否可编辑(卡片界面)
-            isGrid : true,//是否列表界面
             formObj: {},//当前卡片界面对象
-            listObj: [],//列表对象
-            ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
-            powerButton: props.powerButton,//按钮权限列表  
-            activeKey: "1",
-            start: 0,     
+            activeKey: "2",    
             tabBarPosition: "left",     
         };
     }
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
-        actions.contract.updateState({powerButton:this.props.powerButton});
-        actions.contract.updateState({ifPowerBtn:this.props.ifPowerBtn});
     }
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
@@ -61,9 +49,6 @@ class IndexView extends Component {
     //绑定子组件
     onconRef = (ref) => {
         this.conchild = ref;        
-    }
-    oncalRef = (ref) => {
-        this.calchild = ref;        
     }
 
     /**
@@ -148,10 +133,6 @@ class IndexView extends Component {
         let obj = this.conchild.submit();
         let _formObj = deepClone(this.props.formObject);
         Object.assign(_formObj,obj);
-        if(this.calchild!=undefined){
-            let calobj = this.calchild.submit();
-            Object.assign(_formObj.pk_cal,calobj);
-        }
         console.log('save form');
         console.log(_formObj);
         actions.contract.updateRowData({'record':_formObj});
@@ -160,9 +141,16 @@ class IndexView extends Component {
 
 
     onChange = (activeKey) => {
-        this.setState({
-            activeKey,
-        });
+        if(activeKey == 1){
+            if(this.state.isEdit){
+                this.switchEdit();
+            }
+            this.switchToListView();
+        }else{
+            this.setState({
+                activeKey,
+            });
+        }
     }
 
     onTabClick = (key) => {
@@ -176,16 +164,21 @@ class IndexView extends Component {
 
     render() {
         let ButtonPower = {
-            PowerButton : this.state.powerButton,
-            ifPowerBtn : this.state.ifPowerBtn,
-            isGrid : this.state.isGrid,
-            isEdit : this.state.isEdit,
+            PowerButton : this.props.powerButton,
+            ifPowerBtn : this.props.ifPowerBtn,
+            isGrid : this.props.isGrid,
+            isEdit : this.props.isEdit,
+        }
+        let MainButtonPower = {
+            PowerButton : this.props.mainButton,
+            ifPowerBtn : this.props.ifPowerBtn,
+            isGrid : this.props.isGrid,
+            isEdit : this.props.isEdit,
         }
         return (            
-
             <div className='contract'>
                 <Loading showBackDrop={true} show={this.state.showLoading} fullScreen={true}/>
-                <div>
+                <div style={{display:this.state.showListView}}>
                     <ButtonGroup
                         BtnPower= {ButtonPower}    
                         Query= {this.onQuery}
@@ -195,8 +188,6 @@ class IndexView extends Component {
                         Save={this.onSave}
                         {...this.props}
                     />
-                </div>
-                <div style={{display:this.state.showListView}}>
                     <ListView {...this.props}/>
                 </div>                
                 <div style={{display:this.state.showFormView}}>
@@ -204,26 +195,34 @@ class IndexView extends Component {
                     activeKey={this.state.activeKey}
                     tabBarPosition={this.state.tabBarPosition}
                     onChange={this.onChange}
-                    defaultActiveKey="1"
+                    defaultActiveKey="2"
                     className="demo4-tabs"
                 >
-                    <TabPane tab='合同制作' key="1">
+                    <TabPane tab={<span><Icon type="uf-back"></Icon>返回</span>} key="1">
+                    </TabPane>
+                    <TabPane tab='合同制作' key="2">
+                        <ButtonGroup
+                            BtnPower= {MainButtonPower}    
+                            Edit= {this.onEdit}
+                            Save={this.onSave}
+                            {...this.props}
+                        />
                         <FormView {...this.props} onRef={this.onconRef}/>
                     </TabPane>
-                    <TabPane tab='报价方案' key="2">
-                        <CalFormView {...this.props} onRef={this.oncalRef}/>
+                    <TabPane tab='报价方案' key="3">
+                        <CalIndexView {...this.props} />
                     </TabPane>
-                    <TabPane tab='承租方信息' key="3">Content of Tab Pane 3</TabPane>
-                    <TabPane tab='供应商信息' key="4">Content of Tab Pane 4</TabPane>
-                    <TabPane tab='出租人信息' key="5">Content of Tab Pane 5</TabPane>
-                    <TabPane tab='来源信息' key="6">Content of Tab Pane 6</TabPane>
-                    <TabPane tab='担保信息' key="7">Content of Tab Pane 7</TabPane>
-                    <TabPane tab='保险信息' key="8">Content of Tab Pane 8</TabPane>
-                    <TabPane tab='收付各方' key="9">Content of Tab Pane 9</TabPane>
-                    <TabPane tab='付款条件' key="10">Content of Tab Pane 10</TabPane>
-                    <TabPane tab='起租条件' key="11">Content of Tab Pane 11</TabPane>
-                    <TabPane tab='开票信息' key="12">Content of Tab Pane 12</TabPane>
-                    <TabPane tab='收票信息' key="13">Content of Tab Pane 13</TabPane>
+                    <TabPane tab='承租方信息' key="4">Content of Tab Pane 3</TabPane>
+                    <TabPane tab='供应商信息' key="5">Content of Tab Pane 4</TabPane>
+                    <TabPane tab='出租人信息' key="6">Content of Tab Pane 5</TabPane>
+                    <TabPane tab='来源信息' key="7">Content of Tab Pane 6</TabPane>
+                    <TabPane tab='担保信息' key="8">Content of Tab Pane 7</TabPane>
+                    <TabPane tab='保险信息' key="9">Content of Tab Pane 8</TabPane>
+                    <TabPane tab='收付各方' key="10">Content of Tab Pane 9</TabPane>
+                    <TabPane tab='付款条件' key="11">Content of Tab Pane 10</TabPane>
+                    <TabPane tab='起租条件' key="12">Content of Tab Pane 11</TabPane>
+                    <TabPane tab='开票信息' key="13">Content of Tab Pane 12</TabPane>
+                    <TabPane tab='收票信息' key="14">Content of Tab Pane 13</TabPane>
                 </Tabs>
                     
                 </div>
