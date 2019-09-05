@@ -10,9 +10,7 @@ import {deepClone} from "utils";
 
 import ButtonGroup from './ButtonGroup';
 import ListView from './ListView';
-import ListViewLead from './ListViewLead';
 import FormView from './FormView';
-import FormViewLead from './FormViewLead';
 import AddFormView from './AddFormView';
 import './index.less';
 const FormItem = Form.FormItem;
@@ -32,8 +30,9 @@ class IndexView extends Component {
             showFormView : 'none',//显示Form表单
             showFormViewLead : 'none',//显示Form表单
             isEdit : false,//是否可编辑(卡片界面)
+            showForm:false, //是否加载 详情修改页
             isGrid : true,//是否列表界面
-            formObj: {},//当前卡片界面对象
+            formObject: {},//当前卡片界面对象
             listObj: [],//列表对象
             ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
             powerButton: props.powerButton,//按钮权限列表            
@@ -42,8 +41,8 @@ class IndexView extends Component {
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
-        actions.projectApprovalNew.updateState({powerButton:this.props.powerButton});
-        actions.projectApprovalNew.updateState({ifPowerBtn:this.props.ifPowerBtn});
+        actions.calculatorNormalzt.updateState({powerButton:this.props.powerButton});
+        actions.calculatorNormalzt.updateState({ifPowerBtn:this.props.ifPowerBtn});
         
     }
 
@@ -70,9 +69,9 @@ class IndexView extends Component {
         this.setState({
             showListView:'',
             showFormView:'none',
-            formObj:{},
+            formObject:{},
         })
-        actions.projectApprovalNew.updateState({ formObject : {},isGrid : true,isEdit : false});
+        actions.calculatorNormalzt.updateState({ formObject : {},isGrid : true,isEdit : false, showForm : false});
     }
 
     /**
@@ -83,10 +82,10 @@ class IndexView extends Component {
         this.setState({
             showListView:'none',
             showFormView:'',
-            formObj:_formObj,
+            formObject:_formObj,
         }) 
               
-        actions.projectApprovalNew.updateState({ formObject : _formObj,isGrid : false,isEdit : false});
+        actions.calculatorNormalzt.updateState({ formObject : _formObj,isGrid : false,isEdit : false, showForm : true});
     }
 
     /**
@@ -96,15 +95,14 @@ class IndexView extends Component {
         this.setState({
             isEdit:!this.state.isEdit,
         })
-        this.state.formObj['_edit'] = this.state.formObj['_edit'] ? false : true;
-        actions.projectApprovalNew.updateState({isEdit : !this.state.isEdit});
+        this.state.formObject['_edit'] = this.state.formObject['_edit'] ? false : true;
+        actions.calculatorNormalzt.updateState({isEdit : !this.state.isEdit});
     }
 
     /**
      * 查询方法
      */
     onQuery = (queryParam) =>{        
-        // actions.projectApprovalNew.loadList(queryParam);  
         console.log(this.props.list);
     }
 
@@ -115,52 +113,18 @@ class IndexView extends Component {
         console.log("点击新增");
         let objectForm = localStorage.getItem("addKey");
         if(objectForm){
-            let _formObj = deepClone(JSON.parse(objectForm));
-            //this.props.form.setFieldsValue(_formObj);
-            actions.projectApprovalNew.updateState({formObjAdd:_formObj});
+            let _formObject = deepClone(JSON.parse(objectForm));
+            actions.calculatorNormalzt.updateState({formObject:_formObject});
         }else{
             //新增完成清空form表单
-            actions.projectApprovalNew.updateState({formObjAdd:{}});
+            actions.calculatorNormalzt.updateState({formObject:{}});
         }
-        console.log(this.props.formObjAdd + "初始化");
-        actions.projectApprovalNew.updateState({showModal : true}); 
+        //填出新增窗口
+        actions.calculatorNormalzt.updateState({showModal : true});
+
         // singleRecordOper(param => {
         //     this.switchToCardView(param);
         // });        
-    }
-     /**
-     * 切换
-     */
-    onSwitch = () =>{
-        console.log("切换");
-       if(this.state.showListView == 'none'){
-        this.setState({
-            showListView:'',
-            showListViewLead:'none',
-        })
-       }else{
-        this.setState({
-            showListView:'none',
-            showListViewLead:'',
-        })
-       }
-       if(this.state.showListView == 'none' && this.state.showListViewLead == 'none'){
-        if(this.state.showFormView == 'none'){
-            this.setState({
-                showFormView:'',
-                showFormViewLead:'none',
-                showListView:'none',
-                showListViewLead:'none',
-            })
-           }else{
-            this.setState({
-                showFormView:'none',
-                showFormViewLead:'',
-                showListView:'none',
-                showListViewLead:'none',
-            })
-           }
-       }
     }
 
 
@@ -180,7 +144,7 @@ class IndexView extends Component {
     onView = () =>{
         singleRecordOper(this.props.selectedList,(param) => {
             this.switchToCardView(param);
-            actions.projectApprovalNew.updateState({bt:false});
+            actions.calculatorNormalzt.updateState({bt:false});
         });
     }
 
@@ -201,7 +165,7 @@ class IndexView extends Component {
         Object.assign(_formObj,obj);
         console.log('save form');
         console.log(_formObj);
-        actions.projectApprovalNew.updateRowData({'record':_formObj});
+        actions.calculatorNormalzt.updateRowData({'record':_formObj});
         this.switchEdit();
 
     }
@@ -229,24 +193,17 @@ class IndexView extends Component {
                         View={this.onView}
                         Return={this.onReturn}
                         Save={this.onSave}
-                        Switch={this.onSwitch}
                         {...this.props}
                     />
                 </div>
                 <div style={{display:this.state.showListView}}>
                     <ListView {...this.props}/>
-                </div>
-                <div style={{display:this.state.showListViewLead}}>
-                    <ListViewLead {...this.props}/>
-                </div>        
+                </div>      
                 <div style={{display:this.state.showFormView}}>
                     <FormView {...this.props} onRef={this.onRef}/>
                 </div>
-                <div style={{display:this.state.showFormViewLead}}>
-                    <FormViewLead {...this.props} onRef={this.onRef}/>
-                </div>
                 <div>
-                    <AddFormView { ...this.props } ref="addFormView"/>
+                    <AddFormView { ...this.props } />
                 </div> 
             </div>
             

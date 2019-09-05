@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Form, Icon, Button, Label, Switch, Checkbox, DatePicker, Radio, Select, Col, Row, FormControl, Collapse, Tabs } from 'tinper-bee';
+import { Form, Icon, Button, Label, Switch, Checkbox, DatePicker, Radio, Select, Col, Row, FormControl, Collapse, Tabs, ButtonGroup } from 'tinper-bee';
 import { deepClone } from "utils";
 import { SelectField } from 'components/RowField/SelectField'
 import FormSplitHeader from 'components/FormSplitHeader'
 import InputNumber from 'bee-input-number';
 import ChildListView from './ChildListView';
+import TableRef from './TableRef';
 
 const { TabPane } = Tabs;
 
@@ -67,41 +68,34 @@ class FormView extends Component {
         let _formObj = deepClone(formObj);
         let _props = this.props;
         return (
+            <div>
             <div className='form'>
                 <div>
                     <span onClick={() => this.setState({ open: !this.state.open })} >
                     <FormSplitHeader title={'项目信息'} />
-                </span>
+                    </span>
 
                 <Collapse in={this.state.open}>
                         <Form>
                             <Collapse
                                 in={this.state.open}>
-                                <div>
+                                    <div>
+                                        
                                         <Col md={4} xs={4} sm={4}>
                                             <FormItem>
+                                            <div className="tableRef">
+                                                <div className="lableRef">
                                                 <Label>
                                                     <Icon type="uf-mi" className='mast'></Icon>
                                                     项目名称
                                                 </Label>
-                                                <FormControl disabled={!_props.isEdit}
-                                                    {
-                                                        ...getFieldProps('project_name', {
-                                                            initialValue: formObj.project_name,
-                                                            rules: [{
-                                                                required: true,
-                                                            }],
-                                                        })
-                                                    }
-                                                />
-                                                <span className='error'>
-                                    {
-                                        getFieldError('project_name')
-                                    }
-                                </span>
+                                                </div>
+                                                <TableRef {...this.props}></TableRef>
+                                            </div>
                                             </FormItem>
 
                                         </Col>
+                                       
                                         <Col md={4} xs={4} sm={4}>
                                             <FormItem>
                                                 <Label>
@@ -274,7 +268,7 @@ class FormView extends Component {
 
                     <Form>
                             <Collapse
-                                in={this.state.open}>
+                                in={this.state.open2}>
                                 <div>
                                   
                                         <Col md={4} xs={4} sm={4}>
@@ -496,7 +490,7 @@ class FormView extends Component {
 
                     <Form>
                             <Collapse
-                                in={this.state.open}>
+                                in={this.state.open3}>
                                 <div>
                                     
                                         <Col md={4} xs={4} sm={4}>
@@ -708,21 +702,29 @@ class FormView extends Component {
 
                     </Collapse>
                 </div>
-                <div>
-                    <br />
+                </div>
+
+                <div className="childListView">
                 <Tabs
                     defaultActiveKey="1"
                     onChange={this.onChange}
                     className="demo1-tabs"
+                    extraContent={
+                        <div className="addAndDelChildList demoPadding" >
+                             <ButtonGroup style={{ margin: 10 }}>
+                                <Button shape='border'><Icon type='uf-navmenu' /></Button>
+                                <Button shape='border'><Icon type='uf-file' /></Button>
+                                <Button shape='border'><Icon type='uf-pencil' /></Button>
+                                <Button shape='border'><Icon type='uf-del' /></Button>
+                              </ButtonGroup>
+                        </div>
+                        }
                 >
                     <TabPane tab='报价方案' key="1"> <ChildListView /></TabPane>
                     <TabPane tab='账户信息' key="2"> <ChildListView /></TabPane>
                 </Tabs>
                 </div>
-            </div>
-
-                
-              
+            </div>  
         );
     }
 }

@@ -14,27 +14,21 @@ import './index.less';
 const Steps = Step.Steps;
 
 const addTitle = "合同制作" ;
-const steps =  [{
-                        title: '项目信息'
-                    }, {
-                        title: '合同信息'
-                    }, {
-                        title: '客户信息'
-                    },
-                    {
-                        title: '报价方案'
-                    },
-                    {
-                        title: '账户信息'
-                    }] ;
+const steps = [
+                {title: '项目信息'}, 
+                {title: '合同信息'}, 
+                {title: '客户信息'},
+                {title: '报价方案'},
+                {title: '账户信息'}
+              ] ;
 
 class AddFormView extends Component {
   constructor(props) {
+      
     super(props);
     this.state = {
       current: 0,
       // showModal: false,
-      modalDropup: true,
       modalSize: '',
       showProject: '',
       showCont: 'none',
@@ -45,18 +39,21 @@ class AddFormView extends Component {
     this.close = this.close.bind(this);
     this.changeSize = this.changeSize.bind(this);
     this.changeDropup = this.changeDropup.bind(this);
-
+    console.log("constructor");
   }
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
+        console.log("componentWillMount");
     }
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
+        console.log("componentDidMount");
     }
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
     componentWillReceiveProps(nextProps) {
+        console.log("componentWillReceiveProps");
     }
 
     //将新增数据存入缓存
@@ -164,13 +161,26 @@ class AddFormView extends Component {
       }
     }
 
+    initDiv=()=>{
+        this.setState({
+            current: 0,
+            modalDropup: true,
+            showProject: '',
+            showCont: 'none',
+            showCustomer: 'none',
+            showQuot: 'none',
+            showLessor: 'none',
+          });
+    }
+
     alertDone() {
       Message.create({content: '完成', color: 'successlight'});
       localStorage.removeItem("addKey");
+      this.initDiv();
     }
     close() {
       actions.projectApprovalNew.updateState({showModal : false});
-      this.saveCache();
+      this.initDiv();
     }
 
   changeDropup(state) {

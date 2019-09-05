@@ -18,7 +18,8 @@ module.exports = (env, argv) => {
             "project",
             "testdemo",
             "contract",
-            "settings"
+            "settings",
+            "calculator"
         ],
         // 代理的配置
         proxy: [

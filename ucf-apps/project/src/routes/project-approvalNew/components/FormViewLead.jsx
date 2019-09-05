@@ -132,21 +132,19 @@ class FormView extends Component {
                                                     <Icon type="uf-mi" className='mast'></Icon>
                                                     单据状态
                                                 </Label>
-                                                <FormControl disabled={!_props.isEdit}
-                                                    {
-                                                        ...getFieldProps('project_approve_result', {
-                                                            initialValue: formObj.project_approve_result,
-                                                            rules: [{
-                                                                required: true,
-                                                            }],
-                                                        })
-                                                    }
-                                                />
-                                                <span className='error'>
-                                    {
-                                        getFieldError('project_approve_result')
-                                    }
-                                </span>
+                                                
+                                                <Select 
+                                    disabled={!_props.isEdit}
+                                   
+                                    data={[{key:'通过',value:'9'},{key:'暂存',value:'20'}]}
+                                    {...getFieldProps('project_approve_result', {
+                                        initialValue: formObj.project_approve_result,                                    
+                                        rules: [{
+                                            required: true, message: '请选择单据状态!',
+                                        }],
+                                    })}  
+                                >
+                                </Select>   
                                             </FormItem>
 
                                         </Col>
@@ -166,11 +164,7 @@ class FormView extends Component {
                                                         })
                                                     }
                                                 />
-                                                <span className='error'>
-                                    {
-                                        getFieldError('release_amount')
-                                    }
-                                </span>
+                                                
                                             </FormItem>
 
                                         </Col>

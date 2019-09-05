@@ -25,7 +25,7 @@ class MdmRefComp extends Component {
             title: '',
             fullclassname: '',
             pk_gd: '',
-            type: '',
+            type: 'grid',
             pk_entityitem: '',
             refPkGd: '',
             pkField: '',

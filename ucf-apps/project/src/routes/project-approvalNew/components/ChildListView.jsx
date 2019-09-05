@@ -117,16 +117,18 @@ const dataSource = [
           )
         },
         {
-          title: "还款频率",
+          title: "限额方案",
           dataIndex: "e",
           key: "e",
           width: 215,
           render: (text, record, index) => (
-            <RefEditCell
-              value={record}
+            <StringEditCell
+            colName="限额方案"
+              value={text}
               onChange={this.onCellChange(index, "e")}
             />
           )
+          
         },
         {
           title: "计算方式",
@@ -134,8 +136,9 @@ const dataSource = [
           key: "f",
           width: 215,
           render: (text, record, index) => (
-            <RefEditCell
-              value={record}
+            <StringEditCell
+            colName="计算方式"
+              value={text}
               onChange={this.onCellChange(index, "f")}
             />
           )
