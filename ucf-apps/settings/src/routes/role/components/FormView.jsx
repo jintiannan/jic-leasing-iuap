@@ -31,20 +31,14 @@ class FormView extends Component {
     }
 
     handleChange = (value) =>{
-        console.log('value');
-        console.log(value);
         if(value == '暂存'){
             this.props.form.setFieldsValue({'meetingnper':555});
         }
     };
 
-    submit = () => {
-        console.log(this.props.form.getFieldsValue());
-        return this.props.form.getFieldsValue();
-    };
-
     render() {
         const { getFieldProps, getFieldError } = this.props.form;
+        let _formObject = deepClone(this.props.formObject);
         return (
 
                 <div className='form'>
@@ -56,10 +50,11 @@ class FormView extends Component {
                                         <Icon type="uf-mi" className='mast'></Icon>
                                         角色编号
                                     </Label>
-                                    <FormControl
+                                    <FormControl disabled={!this.props.isEdit}
                                         {
                                             ...getFieldProps('role_code', {
-                                                initialValue: '',
+                                                initialValue: _formObject.role_code,
+
                                                 rules: [{
                                                     required: true,
                                                 }],
@@ -76,10 +71,10 @@ class FormView extends Component {
                                         <Icon type="uf-mi" className='mast'></Icon>
                                         角色名称
                                     </Label>
-                                    <FormControl
+                                    <FormControl disabled={!this.props.isEdit}
                                         {
                                             ...getFieldProps('role_name', {
-                                                initialValue: '',
+                                                initialValue: _formObject.role_name,
                                                 rules: [{
                                                     required: true,
                                                 }],
@@ -87,7 +82,6 @@ class FormView extends Component {
                                         }
                                     />
                                 </FormItem>
-
                             </Col>
                             <Col md={4} xs={4} sm={4}>
                                 <FormItem>
@@ -95,10 +89,10 @@ class FormView extends Component {
                                         <Icon type="uf-mi" className='mast'></Icon>
                                         角色备注
                                     </Label>
-                                    <FormControl
+                                    <FormControl disabled={!this.props.isEdit}
                                         {
                                             ...getFieldProps('memo', {
-                                                initialValue: '',
+                                                initialValue: _formObject.memo,
                                                 rules: [{
                                                     required: true,
                                                 }],

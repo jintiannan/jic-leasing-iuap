@@ -2,11 +2,12 @@
  * 服务请求类
  */
 import request from 'ucf-request';
+import * as mock from "./mock";
 //定义接口地址
 const URL = {
-    "LIST":  `${GROBAL_HTTP_CTX}/role/list`,
-    "SAVE": `${GROBAL_HTTP_CTX}/role/saveOrUpdate`,
-    "DELETE": `${GROBAL_HTTP_CTX}/role/delete`,
+    "LIST":  `${GROBAL_HTTP_CTX}/customerCorpApply/list`,
+    "SAVE": `${GROBAL_HTTP_CTX}/customerCorpApply/saveOrUpdate`,
+    "DELETE": `${GROBAL_HTTP_CTX}/customerCorpApply/delete`,
 };
 
 /**
@@ -37,5 +38,13 @@ export const requestDelete = (id) =>  {
         method : "post",
         params : {id: id}
     });
+};
+
+/**
+ * 获取树列表
+ * @param {*} params
+ */
+export const getTreeNodes = (params) => {
+    return mock.mockData(mock.treeData);
 };
 

@@ -12,6 +12,7 @@ import ListView from './ListView';
 import FormView from './FormView';
 import './index.less';
 import AddFormView from './AddFormView';
+import {Col, FormControl, Label, Row} from "../../../../../project/src/routes/project-approvalNew/components/IndexView";
 
 class IndexView extends Component {
     constructor(props) {
@@ -30,14 +31,13 @@ class IndexView extends Component {
             listObj: [],//列表对象
             ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
             powerButton: props.powerButton,//按钮权限列表
-            treeData:[]
         };
     }
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
-        actions.role.updateState({powerButton:this.props.powerButton});
-        actions.role.updateState({ifPowerBtn:this.props.ifPowerBtn});
+        actions.customerPersonApply.updateState({powerButton:this.props.powerButton});
+        actions.customerPersonApply.updateState({ifPowerBtn:this.props.ifPowerBtn});
     }
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
@@ -63,7 +63,7 @@ class IndexView extends Component {
             showFormView:'none',
             formObj:{},
         });
-        actions.role.updateState({ formObject : {},isGrid : true,isEdit : false});
+        actions.customerPersonApply.updateState({ formObject : {},isGrid : true,isEdit : false});
     };
 
     /**
@@ -76,7 +76,7 @@ class IndexView extends Component {
             showFormView:'',
             formObj :_formObj,
         });
-        actions.role.updateState({ formObject : _formObj,isGrid : false,isEdit : false});
+        actions.customerPersonApply.updateState({ formObject : _formObj,isGrid : false,isEdit : false});
     };
 
     /**
@@ -87,15 +87,15 @@ class IndexView extends Component {
             isEdit:!this.state.isEdit,
         });
         this.state.formObj['_edit'] = this.state.formObj['_edit'] ? false : true;
-        actions.role.updateState({isEdit : !this.state.isEdit});
+        actions.customerPersonApply.updateState({isEdit : !this.state.isEdit});
     };
 
     /**
      * 查询方法
      */
     onQuery = (queryParam) =>{
-        // actions.projectInfo.loadList(queryParam);
-        console.log(this.props.list);
+
+
     };
 
 
@@ -116,7 +116,7 @@ class IndexView extends Component {
     onView = () =>{
         singleRecordOper(this.props.selectedList,(param) => {
             this.switchToCardView(param);
-            actions.role.updateState({bt:false});
+            actions.customerPersonApply.updateState({bt:false});
         });
     };
 
@@ -131,14 +131,14 @@ class IndexView extends Component {
     };
 
     onSave = () => {
-        actions.role.saveOrUpdate(this.props.formObject);
+        actions.customerPersonApply.saveOrUpdate(this.props.formObject);
 
     };
 
     onDelete = () => {
         singleRecordOper(this.props.selectedList,(param) => {
             let _selected = deepClone(param);
-            actions.role.delete(_selected.role_code);
+            actions.customerPersonApply.delete(_selected.role_code);
         });
     };
 
@@ -146,7 +146,7 @@ class IndexView extends Component {
      * 新增按钮
      */
     onAdd = () =>{
-        actions.role.updateState({showModal : true});
+        actions.customerPersonApply.updateState({showModal : true});
     };
     render() {
         const { getFieldProps, getFieldError } = this.props.form;
@@ -182,7 +182,6 @@ class IndexView extends Component {
                 </div>
                 <div>
                     <AddFormView { ...this.props } onRef={this.onRef}/>
-                    {/*<AddFormModel {...this.props} onRef={this.onRef}/>*/}
                 </div>
 
 

@@ -8,7 +8,7 @@ import {processData, structureObj, initStateObj,deepClone} from "utils";
 
 export default {
     // 确定 Store 中的数据模型作用域
-    name: "role",
+    name: "customerCorpApply",
     // 设置当前 Model 所需的初始化 state
     initialState: {
         showLoading: false,
@@ -59,7 +59,7 @@ export default {
          */
         async loadList(param = {}, getState) {
             // 正在加载数据，显示加载 Loading 图标
-            actions.role.updateState({showLoading: true});
+            actions.customerCorpApply.updateState({showLoading: true});
             let data = processData(await api.getList(param));  // 调用 getList 请求数据
             let updateData = {showLoading: false};
 
@@ -71,7 +71,7 @@ export default {
             updateData.queryParam = param;
             updateData.list = data;
 
-            actions.role.updateState(updateData); // 更新数据和查询条件
+            actions.customerCorpApply.updateState(updateData); // 更新数据和查询条件
         },
 
         /**
@@ -97,20 +97,20 @@ export default {
                     }
                 }
             }
-            actions.role.updateState({list:_list});
+            actions.customerCorpApply.updateState({list:_list});
         },
         async saveOrUpdate(formObj) {
-            actions.role.updateState({showLoading: true});
+            actions.customerCorpApply.updateState({showLoading: true});
             let data = processData(await api.save({data: formObj}));  // 调用 getList 请求数据
-            actions.role.updateState({showLoading: false, isEdit: false});
+            actions.customerCorpApply.updateState({showLoading: false, isEdit: false});
 
         },
 
 
         async delete (id) {
-            actions.role.updateState({showLoading: true});
+            actions.customerCorpApply.updateState({showLoading: true});
             let data = processData(await api.requestDelete({id: id}));  // 调用 getList 请求数据
-            actions.role.updateState({showLoading: false});
+            actions.customerCorpApply.updateState({showLoading: false});
             if (data.success) {
 
             }

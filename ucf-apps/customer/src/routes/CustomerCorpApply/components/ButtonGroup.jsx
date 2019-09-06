@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Icon,Dropdown, Menu} from 'tinper-bee';
-import Button from 'components/Button';
+import {Icon,Dropdown, Menu, Button} from 'tinper-bee';
+
 import './index.less';
 import 'styles/yl-public.less';
 import {checkBillStatus} from "utils/service";

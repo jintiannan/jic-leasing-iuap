@@ -4,9 +4,9 @@
 import request from 'ucf-request';
 //定义接口地址
 const URL = {
-    "LIST":  `${GROBAL_HTTP_CTX}/role/list`,
-    "SAVE": `${GROBAL_HTTP_CTX}/role/saveOrUpdate`,
-    "DELETE": `${GROBAL_HTTP_CTX}/role/delete`,
+    "LIST":  `${GROBAL_HTTP_CTX}/customerSource/list`,
+    "SAVE": `${GROBAL_HTTP_CTX}/customerSource/saveOrUpdate`,
+    "DELETE": `${GROBAL_HTTP_CTX}/customerSource/delete`,
 };
 
 /**
@@ -38,4 +38,3 @@ export const requestDelete = (id) =>  {
         params : {id: id}
     });
 };
-

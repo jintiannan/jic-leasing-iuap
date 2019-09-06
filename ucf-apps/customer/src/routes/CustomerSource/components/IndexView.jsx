@@ -7,11 +7,14 @@ import {actions} from 'mirrorx';
 import {singleRecordOper} from "utils/service";
 import {deepClone} from "utils";
 
+
 import ButtonGroup from './ButtonGroup';
 import ListView from './ListView';
 import FormView from './FormView';
+import AddFormView from './AddFormView'
 import './index.less';
-import AddFormView from './AddFormView';
+import {Row} from "../../CustomerCorpModify/components/FormView";
+
 
 class IndexView extends Component {
     constructor(props) {
@@ -26,18 +29,18 @@ class IndexView extends Component {
             showFormView : 'none',//显示Form表单
             isEdit : false,//是否可编辑(卡片界面)
             isGrid : true,//是否列表界面
-            formObj: {},//当前卡片界面对象
+            formObject: {},//当前卡片界面对象
             listObj: [],//列表对象
             ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
             powerButton: props.powerButton,//按钮权限列表
-            treeData:[]
+
         };
     }
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
-        actions.role.updateState({powerButton:this.props.powerButton});
-        actions.role.updateState({ifPowerBtn:this.props.ifPowerBtn});
+        actions.customerSource.updateState({powerButton:this.props.powerButton});
+        actions.customerSource.updateState({ifPowerBtn:this.props.ifPowerBtn});
     }
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
@@ -63,7 +66,7 @@ class IndexView extends Component {
             showFormView:'none',
             formObj:{},
         });
-        actions.role.updateState({ formObject : {},isGrid : true,isEdit : false});
+        actions.customerSource.updateState({ formObject : {},isGrid : true,isEdit : false});
     };
 
     /**
@@ -74,9 +77,9 @@ class IndexView extends Component {
         this.setState({
             showListView:'none',
             showFormView:'',
-            formObj :_formObj,
+            formObject :_formObj,
         });
-        actions.role.updateState({ formObject : _formObj,isGrid : false,isEdit : false});
+        actions.customerSource.updateState({ formObject : _formObj,isGrid : false,isEdit : false});
     };
 
     /**
@@ -86,16 +89,16 @@ class IndexView extends Component {
         this.setState({
             isEdit:!this.state.isEdit,
         });
-        this.state.formObj['_edit'] = this.state.formObj['_edit'] ? false : true;
-        actions.role.updateState({isEdit : !this.state.isEdit});
+        this.state.formObject['_edit'] = this.state.formObject['_edit'] ? false : true;
+        actions.customerSource.updateState({isEdit : !this.state.isEdit});
     };
 
     /**
      * 查询方法
      */
     onQuery = (queryParam) =>{
-        // actions.projectInfo.loadList(queryParam);
-        console.log(this.props.list);
+
+
     };
 
 
@@ -116,7 +119,7 @@ class IndexView extends Component {
     onView = () =>{
         singleRecordOper(this.props.selectedList,(param) => {
             this.switchToCardView(param);
-            actions.role.updateState({bt:false});
+            actions.customerSource.updateState({bt:false});
         });
     };
 
@@ -131,14 +134,14 @@ class IndexView extends Component {
     };
 
     onSave = () => {
-        actions.role.saveOrUpdate(this.props.formObject);
+        actions.customerSource.saveOrUpdate(this.props.formObject);
 
     };
 
     onDelete = () => {
         singleRecordOper(this.props.selectedList,(param) => {
             let _selected = deepClone(param);
-            actions.role.delete(_selected.role_code);
+            actions.customerSource.delete(_selected.role_code);
         });
     };
 
@@ -146,19 +149,18 @@ class IndexView extends Component {
      * 新增按钮
      */
     onAdd = () =>{
-        actions.role.updateState({showModal : true});
+        actions.customerSource.updateState({showModal : true, isEdit: true});
     };
     render() {
-        const { getFieldProps, getFieldError } = this.props.form;
-
         let ButtonPower = {
             PowerButton : this.state.powerButton,
             ifPowerBtn : this.state.ifPowerBtn,
             isGrid : this.state.isGrid,
             isEdit : this.state.isEdit,
         };
-        return (
 
+        return (
+            this.props.parentProps.subForm === 'source'?
             <div>
                 <Loading showBackDrop={true} show={this.props.showLoading} fullScreen={true}/>
                 <div>
@@ -174,6 +176,9 @@ class IndexView extends Component {
                         {...this.props}
                     />
                 </div>
+                <Row>
+                    <div className=''>客户名称： {this.props.parentProps.role_name}</div>
+                </Row>
                 <div style={{display:this.state.showListView}}>
                     <ListView {...this.props}/>
                 </div>
@@ -182,11 +187,10 @@ class IndexView extends Component {
                 </div>
                 <div>
                     <AddFormView { ...this.props } onRef={this.onRef}/>
-                    {/*<AddFormModel {...this.props} onRef={this.onRef}/>*/}
                 </div>
 
 
-            </div>
+            </div>:<div></div>
 
         );
     }

@@ -19,8 +19,6 @@ class ListView extends Component {
             selectList:[],
         }
     }
-
-
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
         //计算表格滚动条高度
@@ -30,7 +28,7 @@ class ListView extends Component {
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
-        actions.role.loadList(this.props.queryParam);
+        actions.customerSource.loadList(this.props.queryParam);
     }
 
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
@@ -45,7 +43,7 @@ class ListView extends Component {
     freshData = (pageIndex) => {
         let queryParam = deepClone(this.props.queryParam); // 深拷贝查询条件从 action 里
         queryParam['pageIndex'] = pageIndex;
-        actions.role.loadList(queryParam);
+        actions.customerSource.loadList(queryParam);
     };
 
     /**
@@ -60,7 +58,7 @@ class ListView extends Component {
         if (value && value.toString().toLowerCase() === "all") { // 对分页 pageSize 为 all 进行处理，前后端约定
             pageSize = 1;
         }
-        actions.role.loadList(queryParam);
+        actions.customerSource.loadList(queryParam);
     };
 
     /**
@@ -119,7 +117,7 @@ class ListView extends Component {
             _formObj = deepClone(_selectedList[0]);
         }
 
-        actions.role.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj});
+        actions.customerSource.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj});
     };
     /**
      * 重置表格高度计算回调
@@ -127,19 +125,16 @@ class ListView extends Component {
      * @param {Boolean} isopen 是否展开
      */
     resetTableHeight = (isopen) => {
-        let tableHeight = 0;
-        tableHeight = getHeight() - 155;
+        let tableHeight = getHeight() - 155;
         this.setState({ tableHeight });
     };
 
     //列属性定义
     grid = [
-        {title:'角色名称',key:'role_name',type:'0'},
-        {title:'角色编码',key:'role_code',type:'0'},
-        {title:'角色备注',key:'memo',type:'0'},
-        {title:'创建时间',key:'ts',type:'0'},
-        {title:'是否有效',key:'dr',type:'6',enumType:'yesOrNo'},
-
+        {title: '单据状态', key: 'billstatus', type: '0'},
+        {title: '客户编号', key: 'customer_code', type: '0'},
+        {title: '客户名称', key: 'customer_name', type: '0'},
+        {title: '组织机构代码证', key: 'identity_no', type: '0'},
     ];
     //列属性定义=>通过前端service工具类自动生成
     gridColumn = [];

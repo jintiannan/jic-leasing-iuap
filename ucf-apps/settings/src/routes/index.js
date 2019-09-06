@@ -5,14 +5,14 @@
 
 import React from "react";
 import { Route } from "mirrorx";
-import { FunctionRegister } from "./function-register/container";
 import {Role} from "./role/container";
+import {Menu} from "./menu/container";
 
 export default () => (
 
     <div className="route-content">
-        <Route exact path="/function-register" component={FunctionRegister} />
         <Route exact path="/role" component={Role} />
+        <Route exact path="/menu" component={Menu} />
     </div>
 
 );
