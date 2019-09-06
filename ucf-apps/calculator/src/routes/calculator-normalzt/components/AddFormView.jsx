@@ -5,10 +5,12 @@
 *
 */
 import React, { Component } from 'react';
-import { Step, Button, Message, Modal, Form,Icon, Label, Col, Row, FormControl } from 'tinper-bee';
+import { Step, Button, Message, Modal, Form,Icon, Label, Col, Row, Select, FormControl } from 'tinper-bee';
 import {actions} from 'mirrorx';
 import TableFormRef from 'components/FormRef/TableFormRef';
-
+import RefMdmComp from 'components/RefMdmComp';
+import { deepClone } from "utils";
+import DatePicker from "tinper-bee/lib/Datepicker";
 
 const FormItem = Form.FormItem;
 
@@ -34,12 +36,12 @@ class AddFormView extends Component {
       current: 0,
       // showModal: false,
       modalSize: '',
-      showDiv01: '',
-      showDiv02: 'none',
-      showDiv03: 'none',
-      showDiv04: 'none',
-      showDiv05: 'none',
-      showDiv06: 'none',
+      showDiv1: '',
+      showDiv2: 'none',
+      showDiv3: 'none',
+      showDiv4: 'none',
+      showDiv5: 'none',
+      showDiv6: 'none',
     };
     this.close = this.close.bind(this);
     this.changeSize = this.changeSize.bind(this);
@@ -83,127 +85,38 @@ class AddFormView extends Component {
 
     //控制下一步 显示那个div
     nextController = () =>{
-      if(0 == this.state.current){
-        this.setState({
-          showDiv01: 'none',
-          showDiv02: '',
-          showDiv03: 'none',
-          showDiv04: 'none',
-          showDiv05: 'none',
-          showDiv06: 'none',
-        })
-      }else if(1 == this.state.current){
-        this.setState({
-          showProject: 'none',
-          showDiv02: 'none',
-          showDiv03: '',
-          showDiv04: 'none',
-          showDiv05: 'none',
-          showDiv06: 'none',
-        })
-
-      }else if(2 == this.state.current){
-        this.setState({
-          showProject: 'none',
-          showDiv02: 'none',
-          showDiv03: 'none',
-          showDiv04: '',
-          showDiv05: 'none',
-          showDiv06: 'none',
-        })
-
-      }else if(3 == this.state.current){
-        this.setState({
-          showDiv01: 'none',
-          showDiv02: 'none',
-          showDiv03: 'none',
-          showDiv04: 'none',
-          showDiv05: '',
-          showDiv06: 'none',
-        })
-
-      }else if(4 == this.state.current){
-        this.setState({
-          showDiv01: 'none',
-          showDiv02: 'none',
-          showDiv03: 'none',
-          showDiv04: 'none',
-          showDiv05: 'none',
-          showDiv06: '',
-        })
-      }else{
-        this.setState({
-          showDiv01: '',
-          showDiv02: 'none',
-          showDiv03: 'none',
-          showDiv04: 'none',
-          showDiv05: 'none',
-          showDiv06: 'none',
-        })
-      }
+        let key = 'showDiv';
+        let num = this.state.current + 2;
+        let showDiv = key + num;
+        let noneDiv = key + (num -1);
+        let map = {};
+        map[showDiv] = '';
+        map[noneDiv] = 'none';
+        this.setState(map)
     }
 
     //控制上一步 显示那个div
     prevController = () =>{
-      if(2 == this.state.current){
-        this.setState({
-          showDiv01: 'none',
-          showDiv02: '',
-          showDiv03: 'none',
-          showDiv04: 'none',
-          showDiv05: 'none',
-          showDiv06: 'none',
-        })
-      }else if(3 == this.state.current){
-        this.setState({
-          showDiv01: 'none',
-          showDiv02: 'none',
-          showDiv03: '',
-          showDiv04: 'none',
-          showDiv05: 'none',
-          showDiv06: 'none',
-        })
-
-      }else if(4 == this.state.current){
-        this.setState({
-          showDiv01: 'none',
-          showDiv02: 'none',
-          showDiv03: 'none',
-          showDiv04: '',
-          showDiv05: 'none',
-          showDiv06: 'none',
-        })
-      }else if(5 == this.state.current){
-        this.setState({
-          showDiv01: 'none',
-          showDiv02: 'none',
-          showDiv03: 'none',
-          showDiv04: 'none',
-          showDiv05: '',
-          showDiv06: 'none',
-        })
-      }else{
-        this.setState({
-          showDiv01: '',
-          showDiv02: 'none',
-          showDiv03: 'none',
-          showDiv04: 'none',
-          showDiv05: 'none',
-          showDiv06: 'none',
-        })
-      }
-    }
+        let key = 'showDiv';
+        let num = this.state.current;
+        let showDiv = key + num;
+        let noneDiv = key + (num + 1);
+        let map = {};
+        map[showDiv] = '';
+        map[noneDiv] = 'none';
+        this.setState(map)
+     }
 
     initDiv=()=>{
         this.setState({
             current: 0,
             modalDropup: true,
-            showDiv01: '',
-            showDiv02: 'none',
-            showDiv03: 'none',
-            showDiv04: 'none',
-            showDiv05: 'none',
-            showDiv06: 'none',
+            showDiv1: '',
+            showDiv2: 'none',
+            showDiv3: 'none',
+            showDiv4: 'none',
+            showDiv5: 'none',
+            showDiv6: 'none',
           });
     }
 
@@ -234,11 +147,22 @@ class AddFormView extends Component {
    this.child = ref;        
  }
 
+ onChangeTotalAmountEquipment = () =>{
+    //  let obj = this.props.formObject;
+    //  let value = this.props.formObject.total_amount_equipment;
+    //  let map = {}
+    //  if(value != undefined && value != ""){
+        
+    //  }
+    // actions.calculatorNormalzt.updateState({formObject[total_amount_equipment] : ""});
+    alert(this.props.formObject.total_amount_equipment);
+ }
+
   render() {
     const { current } = this.state;
     const { getFieldProps, getFieldError } = this.props.form;
-    let formObject = this.props.formObject;
-
+    let _formObject = this.props.formObject;
+    let formObject = deepClone(_formObject);
     if(this.props.showModal == false){
         return <div></div>;
     }else{
@@ -262,7 +186,7 @@ class AddFormView extends Component {
               
               <div className="steps-content">
               <Form>
-              <div style={{display:this.state.showDiv01}}>
+              <div style={{display:this.state.showDiv1}}>
                                   
                                   <Row>
                               <Col md={4} xs={4} sm={4}>
@@ -286,20 +210,7 @@ class AddFormView extends Component {
                               </Col>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
-                                      {/* <Label>
-                                          <Icon type="uf-mi" className='mast'></Icon>
-                                          限额方案
-                                      </Label>
-                                      <FormControl
-                                          {
-                                          ...getFieldProps('pk_limit_plan', {
-                                              initialValue: formObject.pk_limit_plan,
-                                              rules: [{
-                                                  required: true, 
-                                              }],
-                                          })
-                                          }
-                                      /> */}
+
                                
                                              <div> 
                                                 
@@ -309,7 +220,9 @@ class AddFormView extends Component {
                                                     </Label>
                                                 
                                                 <div className="tableRefAdd" >
-                                                <TableFormRef {...this.props} isEdit={true} 
+                                                <TableFormRef
+                                                {...this.props}
+                                                isEdit={true} 
                                                 ref="tableRefAdd" 
                                                 title={"限额方案"} 
                                                 name = {"pk_limit_plan"} 
@@ -338,16 +251,18 @@ class AddFormView extends Component {
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           租赁方式
                                       </Label>
-                                       <FormControl
-                                          {
-                                          ...getFieldProps('lease_method', {
-                                              initialValue: formObject.lease_method,
-                                              rules: [{
-                                                  required: true, 
-                                              }],
-                                          })
-                                          }
-                                      /> 
+                                    
+                                      <Select 
+                                    //onChange={this.handleChange}
+                                    data={[{key:'直租',value:'0'},{key:'回租',value:'1'}]}
+                                    {...getFieldProps('lease_method', {
+                                        initialValue: formObject.lease_method,                                        
+                                        rules: [{
+                                            required: true, message: '请选择',
+                                        }],
+                                    })}  
+                                />
+                                      
                                       
                                   </FormItem>
       
@@ -360,16 +275,18 @@ class AddFormView extends Component {
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           本金是否开票
                                       </Label>
-                                      <FormControl
-                                          {
-                                          ...getFieldProps('if_corpus_tickets', {
-                                              initialValue: formObject.project_filing_from,
-                                              rules: [{
-                                                  required: true, 
-                                              }],
-                                          })
-                                          }
-                                      />
+                                      
+                                      <Select 
+                                    //onChange={this.handleChange}
+                                    data={[{key:'是',value:'0'},{key:'否',value:'1'}]}
+                                    {...getFieldProps('if_corpus_tickets', {
+                                        initialValue: formObject.if_corpus_tickets,                                       
+                                        rules: [{
+                                            required: true, message: '请选择',
+                                        }],
+                                    })}  
+                                />
+                                   
                                       
                                   </FormItem>
       
@@ -380,16 +297,18 @@ class AddFormView extends Component {
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           租金税率
                                       </Label>
-                                      <FormControl
-                                          {
-                                          ...getFieldProps('rent_tax_rate', {
-                                              initialValue: formObject.rent_tax_rate ,
-                                              rules: [{
-                                                  required: true, 
-                                              }],
-                                          })
-                                          }
-                                      />                               
+                                      
+                                      <Select 
+                                    //onChange={this.handleChange}
+                                    data={[{key:'0%',value:'0'},{key:'3%',value:'3'},{key:'6%',value:'6'},{key:'10%',value:'10'}]}
+                                    {...getFieldProps('rent_tax_rate', {
+                                        initialValue: formObject.rent_tax_rate,                                        
+                                        rules: [{
+                                            required: true, message: '请选择',
+                                        }],
+                                    })}  
+                                />
+                                    
                                   </FormItem>
       
                               </Col>
@@ -399,16 +318,17 @@ class AddFormView extends Component {
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           税种
                                       </Label>
-                                      <FormControl
-                                          {
-                                          ...getFieldProps('pk_currtype', {
-                                              initialValue: formObject.pk_currtype ,
-                                              rules: [{
-                                                  required: true, 
-                                              }],
-                                          })
-                                          }
-                                      />
+                                      <Select 
+                                    //onChange={this.handleChange}
+                                    data={[{key:'增值税',value:'1'},{key:'营业税',value:'2'},{key:'复合税',value:'3'},{key:'无',value:'0'}]}
+                                    {...getFieldProps('pk_currtype', {
+                                        initialValue: formObject.pk_currtype,                                   
+                                        rules: [{
+                                            required: true, message: '请选择',
+                                        }],
+                                    })}  
+                                />
+                                      
                                   </FormItem>
       
                               </Col>
@@ -416,21 +336,30 @@ class AddFormView extends Component {
                                   <Row>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
+                                  <div>
+                                      
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           投放日期
                                       </Label>
-                                      <FormControl
-                                          {
-                                          ...getFieldProps('plan_date_loan', {
-                                              initialValue: formObject.plan_date_loan,
-                                              rules: [{
-                                                  required: true, 
-                                              }],
-                                          })
-                                          }
+                                      <div className="DatePicker">
+                                      <DatePicker
+                                      {
+                                        ...getFieldProps('plan_date_loan', {
+                                            initialValue: formObject.plan_date_loan,
+                                            rules: [{
+                                                required: true, 
+                                            }],
+                                        })
+                                        }
+                                        format={'YYYY-MM-DD'}
+                                        // onSelect={this.onSelect}
+                                        // onChange={this.onChange}
+                                        // onClick={this.onClick}
+                                        // onDateInputBlur={this.onDateInputBlur}
                                       />
-                                      
+                                </div>
+                                </div>  
                                   </FormItem>
       
                               </Col>
@@ -441,9 +370,11 @@ class AddFormView extends Component {
                                           投放金额
                                       </Label>
                                       <FormControl
+                                            type = 'number'
+                                            onChange = {this.onChangeTotalAmountEquipment}
                                           {
                                           ...getFieldProps('total_amount_equipment', {
-                                              initialValue: formObject.total_amount_equipment ,
+                                              initialValue: formObject.total_amount_equipment + '.00' ,
                                               rules: [{
                                                   required: true, 
                                               }],
@@ -516,7 +447,7 @@ class AddFormView extends Component {
                                   </Row>
                           
                               </div>
-                              <div style={{display:this.state.showDiv02}}>
+                              <div style={{display:this.state.showDiv2}}>
                               <Row>
                           <Col md={4} xs={4} sm={4}>
                               <FormItem>
@@ -579,7 +510,7 @@ class AddFormView extends Component {
                               </Row>
                                   
                           </div>
-                          <div style={{display:this.state.showDiv03}}>
+                          <div style={{display:this.state.showDiv3}}>
                                  
                                   <Row>
                               <Col md={4} xs={4} sm={4}>
@@ -786,7 +717,7 @@ class AddFormView extends Component {
                                   </Row>
                                 
                               </div>
-                              <div style={{display:this.state.showDiv04}}>
+                              <div style={{display:this.state.showDiv4}}>
                                  
                                  <Row>
                              <Col md={4} xs={4} sm={4}>
@@ -912,7 +843,7 @@ class AddFormView extends Component {
                                 
                              </div>
      
-                             <div style={{display:this.state.showDiv05}}>
+                             <div style={{display:this.state.showDiv5}}>
                                 
                                  <Row>
                              <Col md={4} xs={4} sm={4}>
@@ -1123,7 +1054,7 @@ class AddFormView extends Component {
                             
      
                             
-                              <div style={{display:this.state.showDiv06}}>
+                              <div style={{display:this.state.showDiv6}}>
                                  
                                   <Row>
                               <Col md={4} xs={4} sm={4}>

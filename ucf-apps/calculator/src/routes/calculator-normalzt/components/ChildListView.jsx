@@ -84,7 +84,7 @@ import RefEditCell from 'components/FormRef/RefEditCell';
               width: 215,
               render: (text, record, index) => (
                 <StringEditCell
-                colName="限额方案"
+                  colName="限额方案"
                   value={text}
                   onChange={this.onCellChange(index, "e")}
                 />

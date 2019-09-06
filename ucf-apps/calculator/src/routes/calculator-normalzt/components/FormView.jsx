@@ -3,10 +3,11 @@ import { Form, Icon, Button, Label, Switch, Checkbox, DatePicker, Radio, Select,
 import { deepClone } from "utils";
 import { SelectField } from 'components/RowField/SelectField'
 import FormSplitHeader from 'components/FormSplitHeader'
-import InputNumber from 'bee-input-number';
+
 import ChildListView from './ChildListView';
 import TableFormRef from 'components/FormRef/TableFormRef';
-
+//参照组件职级
+import { RefWalsinLevel } from 'components/RefViews';
 const { TabPane } = Tabs;
 
 import './index.less';
@@ -133,16 +134,32 @@ class FormView extends Component {
                                                     <TableFormRef {...this.props}
                                                      
                                                      title={"项目名称"} 
-                                                     name = {"project_name"}
+                                                     name = {"project_name1"}
                                                      {
-                                                         ...getFieldProps('project_name', {
-                                                             initialValue: formObject.project_name,
+                                                         ...getFieldProps('project_name1', {
+                                                             initialValue: formObject.project_name1,
                                                              rules: [{
                                                                  required: true, 
                                                              }],
                                                          })
                                                       }
                                                     ></TableFormRef>
+                                                {/* <RefWalsinLevel 
+                                                title= '限额方案'
+                                                strictMode={true}
+                                                backdrop = {false}
+                                                param = {{//url请求参数
+                                                    refCode:'post_level',//test_common||test_grid||test_tree||test_treeTable
+                                                }}
+                                                refModelUrl = {{
+                                                    tableBodyUrl:`${GROBAL_HTTP_CTX}/menu/funcMenu/blobRefTreeGrid`,//表体请求
+                                                    refInfo:`${GROBAL_HTTP_CTX}/menu/funcMenu/refInfo`,//表头请求
+                                                }}
+                                                valueField="refpk"
+                                                displayField="{refcode}"
+                                                disabled={!_props.isEdit}
+                                                {...this.props}
+                                                /> */}
                                                 </div>
                                                 </FormItem>
     
