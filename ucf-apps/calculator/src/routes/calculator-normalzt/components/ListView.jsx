@@ -4,6 +4,7 @@ import Grid from 'components/Grid';
 import { Tabs } from 'tinper-bee';
 import {deepClone, getHeight} from "utils";
 import {genGridColumn,checkListSelect} from "utils/service";
+import GridMain from 'components/GridMain';
 
 const { TabPane } = Tabs;
 import './index.less';
@@ -271,43 +272,17 @@ class ListView extends Component {
         return (            
             <div className="grid-parent" style={{display:this.state.listView}}>
                 <div>
-                <Grid
-                        ref={(el) => this.grid = el} //存模版
+                <GridMain
                         columns={this.gridColumn} //字段定义
-                        data={this.props.list} //数据数组
-                        rowKey={(r, i) => {r._index = i; return i}} //生成行的key
-                        multiSelect={true}  //false 单选，默认多选                        
-                        scroll={{y: tableHeight}} //滚动轴高度
-                        height={28} //行高度
-                        bordered //表格有边界
-                        headerDisplayInRow={true}//表头换行用...来表示
-                        bodyDisplayInRow={true}//表体换行用...来表示
-                        headerHeight={40} //表头高度
-                        bodyStyle={{'height':tableHeight,'background-color':'rgb(241, 242, 245)'}} //表体样式
-                        sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
-                        hideHeaderScroll={false} //无数据时是否显示表头
-                        //排序属性设置
-                        sort={{
-                            mode: 'multiple', //多列排序
-                            backSource: false, //前端排序
-                        }}
+                        data={this.props.list} //数据数组                     
+                        tableHeight={1} //表格高度 1主表 2字表
                         //分页对象
                         paginationObj = {{
                             activePage : this.props.queryParam.pageIndex,//活动页
                             total : this.props.list.length,//总条数
                             items: this.props.queryObj.totalPages,//总页数
                             freshData: this.freshData, //活动页改变,跳转指定页数据
-                            dataNumSelect:['5','25','50','100'],
-                            dataNum:2,
                             onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
-                            verticalPosition:'bottom'
-                        }}
-                        rowClassName={(record,index,indent)=>{
-                            if (record._checked) {
-                                return 'selected';
-                            } else {
-                                return '';
-                            }
                         }}
                         onRowClick={this.onRowSelect}
                         getSelectedDataFunc={this.getSelectedDataFunc}
@@ -323,138 +298,48 @@ class ListView extends Component {
                     
                     <TabPane tab='投放计划' key="1">
                     <div>
-                <Grid
-                        ref={(el) => this.gridOnTheLoan = el} //存模版
+                <GridMain
+                        ref={(el) => this.grid = el} //存模版
                         columns={this.gridColumnOnTheLoan} //字段定义
                         data={this.props.list2} //数据数组
-                        rowKey={(r, i) => {r._index = i; return i}} //生成行的key
-                        multiSelect={true}  //false 单选，默认多选                        
-                        scroll={{y: tableHeight2}} //滚动轴高度
-                        height={28} //行高度
-                        bordered //表格有边界
-                        headerDisplayInRow={true}//表头换行用...来表示
-                        bodyDisplayInRow={true}//表体换行用...来表示
-                        headerHeight={40} //表头高度
-                        bodyStyle={{'height':tableHeight2,'background-color':'rgb(241, 242, 245)'}} //表体样式
-                        sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
-                        hideHeaderScroll={false} //无数据时是否显示表头
-                        //排序属性设置
-                        sort={{
-                            mode: 'multiple', //多列排序
-                            backSource: false, //前端排序
-                        }}
                         //分页对象
                         paginationObj = {{
-                            // activePage : this.props.queryParam.pageIndex,//活动页
-                            // total : this.props.list2.length,//总条数
-                            // items: this.props.queryObj.totalPages,//总页数
-                            // freshData: this.freshData, //活动页改变,跳转指定页数据
-                            // dataNumSelect:['5','25','50','100'],
-                            // dataNum:2,
-                            // onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
                             verticalPosition:'none'
                         }}
-                        rowClassName={(record,index,indent)=>{
-                            if (record._checked) {
-                                return 'selected';
-                            } else {
-                                return '';
-                            }
-                        }}
                         onRowClick={this.onRowSelect}
-                        getSelectedDataFunc={this.getSelectedDataFunc}
+                        // getSelectedDataFunc={this.getSelectedDataFunc}
 
                     />
                 </div>
                     </TabPane>
                     <TabPane tab='保证金计划' key="2">
                     <div>
-                <Grid
+                <GridMain
                         ref={(el) => this.gridMarginLoan = el} //存模版
                         columns={this.gridColumnMarginLoan} //字段定义
-                        data={this.props.list2} //数据数组
-                        rowKey={(r, i) => {r._index = i; return i}} //生成行的key
-                        multiSelect={true}  //false 单选，默认多选                        
-                        scroll={{y: tableHeight2}} //滚动轴高度
-                        height={28} //行高度
-                        bordered //表格有边界
-                        headerDisplayInRow={true}//表头换行用...来表示
-                        bodyDisplayInRow={true}//表体换行用...来表示
-                        headerHeight={40} //表头高度
-                        bodyStyle={{'height':tableHeight2,'background-color':'rgb(241, 242, 245)'}} //表体样式
-                        sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
-                        hideHeaderScroll={false} //无数据时是否显示表头
-                        //排序属性设置
-                        sort={{
-                            mode: 'multiple', //多列排序
-                            backSource: false, //前端排序
-                        }}
+                        data={this.props.list2} //数据数组                  
                         //分页对象
                         paginationObj = {{
-                            // activePage : this.props.queryParam.pageIndex,//活动页
-                            // total : this.props.list2.length,//总条数
-                            // items: this.props.queryObj.totalPages,//总页数
-                            // freshData: this.freshData, //活动页改变,跳转指定页数据
-                            // dataNumSelect:['5','25','50','100'],
-                            // dataNum:2,
-                            // onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
                             verticalPosition:'none'
                         }}
-                        rowClassName={(record,index,indent)=>{
-                            if (record._checked) {
-                                return 'selected';
-                            } else {
-                                return '';
-                            }
-                        }}
                         onRowClick={this.onRowSelect}
-                        getSelectedDataFunc={this.getSelectedDataFunc}
 
                     />
                 </div>
                     </TabPane>
                     <TabPane tab='手续费计划' key="3">
                     <div>
-                <Grid
+                <GridMain
                         ref={(el) => this.gridCommissionLoan = el} //存模版
                         columns={this.gridColumnCommissionLoan} //字段定义
-                        data={this.props.list2} //数据数组
-                        rowKey={(r, i) => {r._index = i; return i}} //生成行的key
-                        multiSelect={true}  //false 单选，默认多选                        
-                        scroll={{y: tableHeight2}} //滚动轴高度
-                        height={28} //行高度
-                        bordered //表格有边界
-                        headerDisplayInRow={true}//表头换行用...来表示
-                        bodyDisplayInRow={true}//表体换行用...来表示
-                        headerHeight={40} //表头高度
-                        bodyStyle={{'height':tableHeight2,'background-color':'rgb(241, 242, 245)'}} //表体样式
-                        sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
-                        hideHeaderScroll={false} //无数据时是否显示表头
-                        //排序属性设置
-                        sort={{
-                            mode: 'multiple', //多列排序
-                            backSource: false, //前端排序
-                        }}
+                        data={this.props.list2} //数据数组                   
                         //分页对象
                         paginationObj = {{
-                            // activePage : this.props.queryParam.pageIndex,//活动页
-                            // total : this.props.list2.length,//总条数
-                            // items: this.props.queryObj.totalPages,//总页数
-                            // freshData: this.freshData, //活动页改变,跳转指定页数据
-                            // dataNumSelect:['5','25','50','100'],
-                            // dataNum:2,
-                            // onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
+                            
                             verticalPosition:'none'
                         }}
-                        rowClassName={(record,index,indent)=>{
-                            if (record._checked) {
-                                return 'selected';
-                            } else {
-                                return '';
-                            }
-                        }}
+                        
                         onRowClick={this.onRowSelect}
-                        getSelectedDataFunc={this.getSelectedDataFunc}
 
                     />
                 </div>
@@ -464,46 +349,15 @@ class ListView extends Component {
 
                     <TabPane tab='中间费用支出计划' key="4">
                     <div>
-                <Grid
+                <GridMain
                         ref={(el) => this.gridMiddleCostLoan = el} //存模版
                         columns={this.gridColumnMiddleCostLoan} //字段定义
                         data={this.props.list2} //数据数组
-                        rowKey={(r, i) => {r._index = i; return i}} //生成行的key
-                        multiSelect={true}  //false 单选，默认多选                        
-                        scroll={{y: tableHeight2}} //滚动轴高度
-                        height={28} //行高度
-                        bordered //表格有边界
-                        headerDisplayInRow={true}//表头换行用...来表示
-                        bodyDisplayInRow={true}//表体换行用...来表示
-                        headerHeight={40} //表头高度
-                        bodyStyle={{'height':tableHeight2,'background-color':'rgb(241, 242, 245)'}} //表体样式
-                        sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
-                        hideHeaderScroll={false} //无数据时是否显示表头
-                        //排序属性设置
-                        sort={{
-                            mode: 'multiple', //多列排序
-                            backSource: false, //前端排序
-                        }}
                         //分页对象
                         paginationObj = {{
-                            // activePage : this.props.queryParam.pageIndex,//活动页
-                            // total : this.props.list2.length,//总条数
-                            // items: this.props.queryObj.totalPages,//总页数
-                            // freshData: this.freshData, //活动页改变,跳转指定页数据
-                            // dataNumSelect:['5','25','50','100'],
-                            // dataNum:2,
-                            // onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
                             verticalPosition:'none'
                         }}
-                        rowClassName={(record,index,indent)=>{
-                            if (record._checked) {
-                                return 'selected';
-                            } else {
-                                return '';
-                            }
-                        }}
                         onRowClick={this.onRowSelect}
-                        getSelectedDataFunc={this.getSelectedDataFunc}
 
                     />
                 </div>
@@ -513,46 +367,16 @@ class ListView extends Component {
 
                     <TabPane tab='其他收支计划' key="5">
                     <div>
-                <Grid
+                <GridMain
                         ref={(el) => this.gridOtherLoan = el} //存模版
                         columns={this.gridColumnOtherLoan} //字段定义
-                        data={this.props.list2} //数据数组
-                        rowKey={(r, i) => {r._index = i; return i}} //生成行的key
-                        multiSelect={true}  //false 单选，默认多选                        
-                        scroll={{y: tableHeight2}} //滚动轴高度
-                        height={28} //行高度
-                        bordered //表格有边界
-                        headerDisplayInRow={true}//表头换行用...来表示
-                        bodyDisplayInRow={true}//表体换行用...来表示
-                        headerHeight={40} //表头高度
-                        bodyStyle={{'height':tableHeight2,'background-color':'rgb(241, 242, 245)'}} //表体样式
-                        sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
-                        hideHeaderScroll={false} //无数据时是否显示表头
-                        //排序属性设置
-                        sort={{
-                            mode: 'multiple', //多列排序
-                            backSource: false, //前端排序
-                        }}
+                        data={this.props.list2} //数据数组                       
+                        tableHeight={2} //滚动轴高度
                         //分页对象
                         paginationObj = {{
-                            // activePage : this.props.queryParam.pageIndex,//活动页
-                            // total : this.props.list2.length,//总条数
-                            // items: this.props.queryObj.totalPages,//总页数
-                            // freshData: this.freshData, //活动页改变,跳转指定页数据
-                            // dataNumSelect:['5','25','50','100'],
-                            // dataNum:2,
-                            // onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
                             verticalPosition:'none'
                         }}
-                        rowClassName={(record,index,indent)=>{
-                            if (record._checked) {
-                                return 'selected';
-                            } else {
-                                return '';
-                            }
-                        }}
                         onRowClick={this.onRowSelect}
-                        getSelectedDataFunc={this.getSelectedDataFunc}
 
                     />
                 </div>
@@ -562,47 +386,15 @@ class ListView extends Component {
 
                     <TabPane tab='租金计划表' key="6">
                     <div>
-                <Grid
+                <GridMain
                         ref={(el) => this.gridRentLoan = el} //存模版
                         columns={this.gridColumnRentLoan} //字段定义
                         data={this.props.list2} //数据数组
-                        rowKey={(r, i) => {r._index = i; return i}} //生成行的key
-                        multiSelect={true}  //false 单选，默认多选                        
-                        scroll={{y: tableHeight2}} //滚动轴高度
-                        height={28} //行高度
-                        bordered //表格有边界
-                        headerDisplayInRow={true}//表头换行用...来表示
-                        bodyDisplayInRow={true}//表体换行用...来表示
-                        headerHeight={40} //表头高度
-                        bodyStyle={{'height':tableHeight2,'background-color':'rgb(241, 242, 245)'}} //表体样式
-                        sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
-                        hideHeaderScroll={false} //无数据时是否显示表头
-                        //排序属性设置
-                        sort={{
-                            mode: 'multiple', //多列排序
-                            backSource: false, //前端排序
-                        }}
                         //分页对象
                         paginationObj = {{
-                            // activePage : this.props.queryParam.pageIndex,//活动页
-                            // total : this.props.list2.length,//总条数
-                            // items: this.props.queryObj.totalPages,//总页数
-                            // freshData: this.freshData, //活动页改变,跳转指定页数据
-                            // dataNumSelect:['5','25','50','100'],
-                            // dataNum:2,
-                            // onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
                             verticalPosition:'none'
                         }}
-                        rowClassName={(record,index,indent)=>{
-                            if (record._checked) {
-                                return 'selected';
-                            } else {
-                                return '';
-                            }
-                        }}
                         onRowClick={this.onRowSelect}
-                        getSelectedDataFunc={this.getSelectedDataFunc}
-
                     />
                 </div>
 

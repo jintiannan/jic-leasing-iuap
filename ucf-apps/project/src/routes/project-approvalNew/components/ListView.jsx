@@ -153,7 +153,7 @@ class ListView extends Component {
         this.setState({ tableHeight });
 
         let tableHeight2 = 0;
-        tableHeight2 = getHeight() - 530;
+        tableHeight2 = getHeight() - 500;
         this.setState({ tableHeight2 });
     }
 
@@ -273,14 +273,14 @@ class ListView extends Component {
                         }}
                         //分页对象
                         paginationObj = {{
-                            activePage : this.props.queryParam.pageIndex,//活动页
-                            total : this.props.list2.length,//总条数
-                            items: this.props.queryObj.totalPages,//总页数
-                            freshData: this.freshData, //活动页改变,跳转指定页数据
-                            dataNumSelect:['5','25','50','100'],
-                            dataNum:2,
-                            onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
-                            verticalPosition:'bottom'
+                            // activePage : this.props.queryParam.pageIndex,//活动页
+                            // total : this.props.list2.length,//总条数
+                            // items: this.props.queryObj.totalPages,//总页数
+                            // freshData: this.freshData, //活动页改变,跳转指定页数据
+                            // dataNumSelect:['5','25','50','100'],
+                            // dataNum:2,
+                            // onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
+                            verticalPosition:'none'
                         }}
                         rowClassName={(record,index,indent)=>{
                             if (record._checked) {

@@ -21,9 +21,9 @@ class TableFormRef extends Component {
       showLoading: false,
       showModal: false,
       matchData: [
-        //this.props.formObject[this.props.name]?this.props.formObject[this.props.name]:{} //参照中选中的对象
+        this.props.formObject[this.props.name]?this.props.formObject[this.props.name]:{} //参照中选中的对象
       ],
-      value: ""//this.props.formObject[this.props.name]?JSON.stringify(this.props.formObject[this.props.name]):"", //表单页显示的值
+      value: this.props.formObject[this.props.name]?JSON.stringify(this.props.formObject[this.props.name]):"", //表单页显示的值
     };
     this.page = {
       pageCount: 0,
@@ -98,7 +98,7 @@ class TableFormRef extends Component {
           {"rownum_":5,"code":"005","mobile":"15011430235","name":"人员5","refcode":"005","refpk":"5e3a85ec-5e14-4734-8b3a-1e6168426c89","id":"5e3a85ec-5e14-4734-8b3a-1e6168426c89","refname":"人员5","email":"55@26.com"},
           
         ],
-        "page":{"pageSize":10,"currPageIndex":0,"pageCount":2,"totalElements":17},
+        "page":{"pageSize":10,"currPageIndex":0,"pageCount":2,"totalElements":15},
     } 
     };
     this.launchTableHeader(data.columnsData);
