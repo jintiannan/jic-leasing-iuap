@@ -102,6 +102,17 @@ class FormView extends Component {
         this.child = ref;        
     }
 
+    mainForm = [
+        {label:'项目名称',field:'project_name1',com:TableFormRef,required:true},
+        {label:'项目编码',field:'project_code',com:FormControl,required:true},
+        {label:'单据状态',field:'project_approve_result',com:FormControl,required:true},
+        {label:'项目金额',field:'release_amount',com:FormControl,required:true},
+        {label:'币种',field:'granting_currency',com:FormControl,required:true},
+        {label:'项目来源',field:'project_source',com:FormControl,required:true},
+        {label:'项目类别',field:'leaseback_type',com:FormControl,required:true},
+        {label:'项目批次',field:'adjust_time',com:FormControl,required:true},
+    ]
+
     render() {
         const { getFieldProps, getFieldError } = this.props.form;
         let _formObject = this.props.formObject;
@@ -121,205 +132,34 @@ class FormView extends Component {
                                 <Collapse
                                     in={this.state.open}>
                                         <div>
+                                            {
+                                                this.mainForm.map((value,key) => {
+                                                    return (
+                                                    <Col md={4} xs={4} sm={4}>
+                                                        <FormItem>
+                                                            <Label>
+                                                                <Icon type="uf-mi" className='mast'></Icon>
+                                                                {value.label}
+                                                            </Label>
+                                                            <value.com {...this.props}                                               
+                                                                title={value.label} 
+                                                                name = {value.field}
+                                                                {
+                                                                    ...getFieldProps(value.field, {
+                                                                        initialValue: formObject[value.field],
+                                                                        rules: [{
+                                                                            required: true, 
+                                                                        }],
+                                                                    })
+                                                                }>
+                                                            </value.com>
+                                                        </FormItem>    
+                                                    </Col>)
+                                                })
+                                            }
                                             
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                <div className="tableRef">
-                                                    <div className="lableRef">
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        项目名称
-                                                    </Label>
-                                                    </div>
-                                                    <TableFormRef {...this.props}
-                                                     
-                                                     title={"项目名称"} 
-                                                     name = {"project_name1"}
-                                                     {
-                                                         ...getFieldProps('project_name1', {
-                                                             initialValue: formObject.project_name1,
-                                                             rules: [{
-                                                                 required: true, 
-                                                             }],
-                                                         })
-                                                      }
-                                                    ></TableFormRef>
-                                                {/* <RefWalsinLevel 
-                                                title= '限额方案'
-                                                strictMode={true}
-                                                backdrop = {false}
-                                                param = {{//url请求参数
-                                                    refCode:'post_level',//test_common||test_grid||test_tree||test_treeTable
-                                                }}
-                                                refModelUrl = {{
-                                                    tableBodyUrl:`${GROBAL_HTTP_CTX}/menu/funcMenu/blobRefTreeGrid`,//表体请求
-                                                    refInfo:`${GROBAL_HTTP_CTX}/menu/funcMenu/refInfo`,//表头请求
-                                                }}
-                                                valueField="refpk"
-                                                displayField="{refcode}"
-                                                disabled={!_props.isEdit}
-                                                {...this.props}
-                                                /> */}
-                                                </div>
-                                                </FormItem>
-    
-                                            </Col>
                                            
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        项目编码
-                                                    </Label>
-                                                    <FormControl disabled={!_props.isEdit}
-                                                        {
-                                                            ...getFieldProps('project_code', {
-                                                                initialValue: formObject.project_code,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                    <span className='error'>
-                                        {
-                                            getFieldError('project_code')
-                                        }
-                                    </span>
-                                                </FormItem>
-    
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        单据状态
-                                                    </Label>
-                                                    <FormControl disabled={!_props.isEdit}
-                                                        {
-                                                            ...getFieldProps('project_approve_result', {
-                                                                initialValue: formObject.project_approve_result,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                    <span className='error'>
-                                        {
-                                            getFieldError('project_approve_result')
-                                        }
-                                    </span>
-                                                </FormItem>
-    
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        项目金额
-                                                    </Label>
-                                                    <FormControl disabled={!_props.isEdit}
-                                                        {
-                                                            ...getFieldProps('release_amount', {
-                                                                initialValue: formObject.release_amount,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                    <span className='error'>
-                                        {
-                                            getFieldError('release_amount')
-                                        }
-                                    </span>
-                                                </FormItem>
-    
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        币种
-                                                    </Label>
-                                                    <FormControl disabled={!_props.isEdit}
-                                                        {
-                                                            ...getFieldProps('granting_currency', {
-                                                                initialValue: formObject.granting_currency,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                    <span className='error'>
-                                        {
-                                            getFieldError('granting_currency')
-                                        }
-                                    </span>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                              <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        项目来源
-                                                    </Label>
-                                                    <FormControl disabled={!_props.isEdit}
-                                                        {
-                                                            ...getFieldProps('project_source', {
-                                                            initialValue: formObject.project_source ? formObject.project_source : "",
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-                                    
-                        
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                            <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        项目类别
-                                                    </Label>
-                                                    <FormControl disabled={!_props.isEdit}
-                                                        {
-                                                            ...getFieldProps('leaseback_type', {
-                                                            initialValue: formObject.leaseback_type ? formObject.leaseback_type : "",
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-    
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        项目批次
-                                                    </Label>
-                                                    <FormControl disabled={!_props.isEdit}
-                                                        {
-                                                            ...getFieldProps('adjust_time', {
-                                                            initialValue: formObject.adjust_time ? formObject.adjust_time : "",
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-    
-                                            </Col>
-                                           
-                                    </div>
+                                        </div>
                                 </Collapse>
     
                             </Form>

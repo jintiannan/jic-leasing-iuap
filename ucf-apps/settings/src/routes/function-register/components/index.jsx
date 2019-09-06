@@ -13,10 +13,9 @@ import {
     Row,
     FormControl,
     Collapse,
-    Tree
+    Tree,
+    PageLayout
 } from 'tinper-bee';
-import PageLayout from 'bee-page-layout';
-import 'bee-page-layout/build/PageLayout.css';
 import FormSplitHeader from 'components/FormSplitHeader'
 import {actions} from 'mirrorx';
 import './index.less';
