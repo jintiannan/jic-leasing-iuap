@@ -9,12 +9,13 @@ class StringModel extends Component {
     }
 
     handleChange =(value)=>{
+        
         debugger;
     }
 
 
     render() {
-        let {text,record,index} = this.props;
+        let {text,record,index,dataIndex} = this.props;
         return (
             <div>
                 {record._edit ?<div className="string_model">

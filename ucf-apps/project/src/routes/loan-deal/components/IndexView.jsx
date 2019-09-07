@@ -8,6 +8,7 @@ import ButtonGroup from './ButtonGroup';
 import ListView from './ListView';
 import FormView from './FormView';
 import ModalView from './ModalView'
+import SearchPanel from './SearchPanel'
 import './index.less';
 
 
@@ -23,6 +24,7 @@ class IndexView extends Component {
             showLoading : false, //加载状态
             showListView : '', //显示列表界面
             showFormView : 'none',//显示Form表单
+            showSearchPanel: false, //显示查询表单
             isEdit : false,//是否可编辑(卡片界面)
             isGrid : true,//是否列表界面
             formObj: {},//当前卡片界面对象
@@ -54,6 +56,10 @@ class IndexView extends Component {
 
     onmodalRef = (ref) =>{
         this.modalchild = ref;
+    }
+
+    searchRef = (ref) =>{
+        this.serachRef = ref;
     }
 
     /**
@@ -110,8 +116,11 @@ class IndexView extends Component {
      * 查询方法
      */
     onQuery = (queryParam) =>{        
-        actions.loandeal.loadList(queryParam);  
-        console.log(this.props.list);
+        // actions.loandeal.loadList(queryParam);  
+        // console.log(this.props.list);
+        this.setState({
+            showSearchPanel:true
+        })
     }
 
 
@@ -167,6 +176,16 @@ class IndexView extends Component {
         }
         actions.loandeal.updateState({showModal:true});
     }
+
+    oncloseSearch = ()=>{
+        this.setState({
+            showSearchPanel:false,
+        })
+    }
+
+    onalterSearch = ()=>{
+        
+    }
     
 
     render() {
@@ -200,6 +219,9 @@ class IndexView extends Component {
                 </div>
                 <div>
                     <ModalView {...this.props} onRef={this.onmodalRef}  />
+                </div>
+                <div>
+                    <SearchPanel {...this.props} IfShow = {this.state.showSearchPanel} onRef = {this.serachRef} closeSearch={this.oncloseSearch} alterSerach={this.onalterSearch}/>
                 </div>
             </div>
             

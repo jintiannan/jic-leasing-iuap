@@ -18,6 +18,8 @@ export function enumConstant(type) {
             break;
         case 'yesOrNo':
             return [{value: "0", key: '是'}, {value: '1', key: '否'}];
+        case 'compareCon':
+            return [{value: "0", key: '等于'}, {value: '1', key: '小于'},{value: '2', key: '大于'},{value:'3',key:'大于等于'},{value:'4',key:'包含'},{value:'5',key:'小于等于'}];
         default:
             break;
     }
