@@ -7,11 +7,12 @@ import React from "react";
 import { Route } from "mirrorx";
 import { ConnectedHome } from "./home/container";
 import { ConnectedContact } from "./contact/container";
+import {ConnectedVouchTemplate} from "./vouchTemplate/container";
 
 
 export default () => (
     <div className="route-content">
-        <Route exact path="/" component={ConnectedHome} />
+        <Route exact path="/vouchTemplate" component={ConnectedVouchTemplate} />
         <Route exact path="/home" component={ConnectedHome} />
         <Route exact path="/contact" component={ConnectedContact} />
     </div>
