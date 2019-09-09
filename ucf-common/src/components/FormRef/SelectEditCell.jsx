@@ -13,7 +13,7 @@ class SelectEditCell extends Component {
     super(props);
     this.state = {
       value: this.props.value,
-      editable: false
+      editable: this.props.editable
     };
   }
 
@@ -22,18 +22,21 @@ class SelectEditCell extends Component {
   };
 
   commitChange = () => {
-    this.setState({ editable: false });
+    //this.setState({ editable: false });
     if (this.props.onChange) {
       this.props.onChange(this.state.value);
     }
   };
 
   edit = () => {
-    this.setState({ editable: true });
+    if(this.state.editable){
+      this.setState({ editable: true });
+    }
   };
 
   render() {
-    const { value, editable } = this.state;
+    const { value } = this.state;
+    const { editable } = this.props;
     return (
       <div className="editable-cell">
         {editable ? (
@@ -53,8 +56,8 @@ class SelectEditCell extends Component {
             </Select>
           </div>
         ) : (
-          <div className="editable-cell-text-wrapper" onDoubleClick={this.edit}>
-            {value || " "}
+          <div className="editable-cell-text-wrapper" onDoubleClick={this.edit.bind(this)}>
+            {this.props.value || ""}
           </div>
         )}
       </div>

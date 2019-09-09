@@ -67,7 +67,7 @@ class GridMain extends Component {
         //计算表格滚动条高度
         this.resetTableHeight(false);
     }
-
+    
     render() {
         const {paginationObj, columns, tableHeight, data, ...otherProps} = this.props;
         const _paginationObj = {...defualtPaginationParam, ...paginationObj};
@@ -79,7 +79,7 @@ class GridMain extends Component {
                     columns={columns} //字段定义
                     data={data} //数据数组
                     rowKey={(r, i) => {r._index = i; return i}} //生成行的key
-                    multiSelect={true}  //false 单选，默认多选
+                    multiSelect={true}  //false 单选，默认多选                        
                     scroll={{y: tableHeight==1?tableHeightMain:tableHeightChild}} //滚动轴高度
                     height={28} //行高度
                     bordered //表格有边界

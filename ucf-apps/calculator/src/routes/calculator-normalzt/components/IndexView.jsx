@@ -149,6 +149,14 @@ class IndexView extends Component {
     }
 
     /**
+     * 导出数据按钮
+     *
+     */
+    onClickExport = () => {
+        this.grid.exportExcel();
+    }
+
+    /**
      * 返回按钮
      */
     onReturn = () =>{
@@ -180,6 +188,8 @@ class IndexView extends Component {
             isEdit : this.state.isEdit,
         }
 
+
+
         return (            
 
             <div className='project-info'>
@@ -204,7 +214,7 @@ class IndexView extends Component {
                 </div>
                 <div>
                     <AddFormView { ...this.props } />
-                </div> 
+                </div>
             </div>
             
         );

@@ -161,6 +161,7 @@ class ListView extends Component {
         let tableHeight2 = 0;
         tableHeight2 = getHeight() - 480;
         this.setState({ tableHeight2 });
+
     }
 
     //主表  列属性定义

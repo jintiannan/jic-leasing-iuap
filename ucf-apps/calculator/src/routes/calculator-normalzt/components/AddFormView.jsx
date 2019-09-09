@@ -5,13 +5,15 @@
 *
 */
 import React, { Component } from 'react';
-import { Step, Button, Message, Modal, Form,Icon, Label, Col, Row, Select, FormControl } from 'tinper-bee';
+import { Step, Button, Message, Modal, Form,Icon,InputNumber, Label, Col, Row, Select, FormControl,Tabs, ButtonGroup  } from 'tinper-bee';
 import {actions} from 'mirrorx';
 import TableFormRef from 'components/FormRef/TableFormRef';
 import RefMdmComp from 'components/RefMdmComp';
 import { deepClone } from "utils";
 import DatePicker from "tinper-bee/lib/Datepicker";
 
+import ChildListView from './ChildListView';
+const { TabPane } = Tabs;
 const FormItem = Form.FormItem;
 
 import './index.less';
@@ -34,7 +36,6 @@ class AddFormView extends Component {
     super(props);
     this.state = {
       current: 0,
-      // showModal: false,
       modalSize: '',
       showDiv1: '',
       showDiv2: 'none',
@@ -147,16 +148,27 @@ class AddFormView extends Component {
    this.child = ref;        
  }
 
- onChangeTotalAmountEquipment = () =>{
-    //  let obj = this.props.formObject;
-    //  let value = this.props.formObject.total_amount_equipment;
-    //  let map = {}
-    //  if(value != undefined && value != ""){
-        
-    //  }
-    // actions.calculatorNormalzt.updateState({formObject[total_amount_equipment] : ""});
-    alert(this.props.formObject.total_amount_equipment);
- }
+ //onChange方法
+handleChange = (rule, value, callback) =>{
+    
+}
+
+//格式化百分数 比例字段
+formatDepositRatio = (value) => {
+    if(value != undefined){
+        let v= Number(value) + 1;
+        return v;
+    }
+}
+
+
+//子表切换子标签
+onChange = (activeKey) => {
+    console.log(`onChange ${activeKey} o-^-o`);
+    this.setState({
+        activeKey,
+    });
+}
 
   render() {
     const { current } = this.state;
@@ -170,7 +182,7 @@ class AddFormView extends Component {
             <div>
              
               <Modal
-                          className="demo4-modal"
+                          className="calculatorNormalztAddmodal"
                           show={ this.props.showModal }
                           backdrop="static" //关闭遮罩事件
                           size={"xlg"} //大号模态框
@@ -365,41 +377,71 @@ class AddFormView extends Component {
                               </Col>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
+                                      <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           投放金额
                                       </Label>
-                                      <FormControl
-                                            type = 'number'
-                                            onChange = {this.onChangeTotalAmountEquipment}
+                                      {/* <FormControl
                                           {
                                           ...getFieldProps('total_amount_equipment', {
-                                              initialValue: formObject.total_amount_equipment + '.00' ,
+                                              validateTrigger: 'onBlur',
+                                              initialValue: formObject.total_amount_equipment ,                                            
                                               rules: [{
                                                   required: true, 
-                                              }],
+                                              }, {
+                                                validator: this.handleChange //类似于onChange方法
+                                            }],
                                           })
                                           }
-                                      />                               
+                                      /> */}
+                                      <div className="InputNumberAdd" >
+                                      <InputNumber
+                                        iconStyle="one"
+                                        toThousands = {true}  //是否显示千分位
+                                        precision = {2}
+                                        // min={0}
+                                        // max={999999}
+                                        {
+                                            ...getFieldProps('total_amount_equipment', {
+                                                initialValue: formObject.total_amount_equipment,                                            
+                                                rules: [{
+                                                    required: true, 
+                                                }],
+                                            })
+                                            }
+                                        />
+                                        </div>
+                                        </div>
                                   </FormItem>
       
                               </Col>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
+                                      
+                                       <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           租赁本金
                                       </Label>
-                                      <FormControl
-                                          {
-                                          ...getFieldProps('fact_cash_loan', {
-                                              initialValue: formObject.fact_cash_loan,
-                                              rules: [{
-                                                  required: true, 
-                                              }],
-                                          })
-                                          }
-                                      />
+                                      <div className="InputNumberAdd" >
+                                      <InputNumber
+                                        iconStyle="one"
+                                        toThousands = {true}  //是否显示千分位
+                                        precision = {2}
+                                        // min={0}
+                                        // max={999999}
+                                        {
+                                            ...getFieldProps('fact_cash_loan', {
+                                                initialValue: formObject.fact_cash_loan,                                            
+                                                rules: [{
+                                                    required: true, 
+                                                }],
+                                            })
+                                            }
+                                        />
+                                        </div>
+                                        </div>
                                   </FormItem>
       
                               </Col>
@@ -411,7 +453,7 @@ class AddFormView extends Component {
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           净融资比例
                                       </Label>
-                                      <FormControl
+                                      <FormControl disabled={true}
                                           {
                                           ...getFieldProps('project_manager', {
                                               initialValue: formObject.project_manager,
@@ -427,20 +469,30 @@ class AddFormView extends Component {
 
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
+                                      
+                                      <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           净融资额(元)
                                       </Label>
-                                      <FormControl
-                                          {
-                                          ...getFieldProps('net_finance_cash', {
-                                              initialValue: formObject.net_finance_cash,
-                                              rules: [{
-                                                  required: true, 
-                                              }],
-                                          })
-                                          }
-                                      />
+                                      <div className="InputNumberAdd" >
+                                      <InputNumber
+                                        iconStyle="one"
+                                        toThousands = {true}  //是否显示千分位
+                                        precision = {2}
+                                        // min={0}
+                                        // max={999999}
+                                        {
+                                            ...getFieldProps('net_finance_cash', {
+                                                initialValue: formObject.net_finance_cash,                                            
+                                                rules: [{
+                                                    required: true, 
+                                                }],
+                                            })
+                                            }
+                                        />
+                                        </div>
+                                        </div>
                                   </FormItem>
       
                               </Col>
@@ -455,7 +507,7 @@ class AddFormView extends Component {
                                       <Icon type="uf-mi" className='mast'></Icon>
                                       留购价款(元)
                                   </Label>
-                                  <FormControl
+                                  <FormControl disabled={true}
                                       {
                                       ...getFieldProps('nominal_price', {
                                           initialValue: formObject.nominal_price,
@@ -471,20 +523,31 @@ class AddFormView extends Component {
                           </Col>
                           <Col md={4} xs={4} sm={4}>
                               <FormItem>
-                                  <Label>
-                                      <Icon type="uf-mi" className='mast'></Icon>
-                                      保证金比例
-                                  </Label>
-                                  <FormControl
-                                      {
-                                      ...getFieldProps('deposit_ratio', {
-                                          initialValue: formObject.deposit_ratio,
-                                          rules: [{
-                                              required: true, 
-                                          }],
-                                      })
-                                      }
-                                  />                               
+                                  
+                                  <div>
+                                      <Label>
+                                          <Icon type="uf-mi" className='mast'></Icon>
+                                          保证金比例
+                                      </Label>
+                                      <div className="InputNumberAdd" >
+                                      <InputNumber
+                                        iconStyle="one"
+                                        toThousands = {true}  //是否显示千分位
+                                        precision = {4}
+                                        format = {this.formatDepositRatio.bind(this)}
+                                        // min={0}
+                                        // max={999999}
+                                        {
+                                            ...getFieldProps('deposit_ratio', {
+                                                initialValue: formObject.deposit_ratio,                                            
+                                                rules: [{
+                                                    required: true, 
+                                                }],
+                                            })
+                                            }
+                                        />
+                                        </div>
+                                        </div>
                               </FormItem>
       
                           </Col>
@@ -1177,8 +1240,33 @@ class AddFormView extends Component {
       
                               </Col>
                                   </Row>
+
+                                  
                                  
                               </div>
+
+                    {/* <div className="childListView">
+                    <Tabs
+                        defaultActiveKey="1"
+                        onChange={this.onChange}
+                        className="demo1-tabs"
+                        extraContent={
+                            <div className="addAndDelChildList demoPadding"  >
+                                 <ButtonGroup style={{ margin: 1 }}>
+                                    <Button shape='border' onClick={this.add}><Icon type='uf-add-c-o' /></Button>
+                                    <Button shape='border' onClick={this.del}><Icon type='uf-reduce-c-o' /></Button>
+                                  </ButtonGroup>
+                            </div>
+                            }
+                    >
+                        <TabPane tab='投放计划' key="1"> <ChildListView { ...this } ref="onTheLoan" onRef={this.onRef}/></TabPane>
+                        <TabPane tab='保证金计划' key="2"> <ChildListView { ...this } ref="marginLoan" onRef={this.onRef}/></TabPane>
+                        <TabPane tab='手续费计划' key="3"> <ChildListView { ...this } ref="commissionLoan" onRef={this.onRef}/></TabPane>
+                        <TabPane tab='中间费用支出计划' key="4"> <ChildListView { ...this } ref="middleCostLoan" onRef={this.onRef}/></TabPane>
+                        <TabPane tab='其他收支计划' key="5"> <ChildListView { ...this } ref="otherLoan" onRef={this.onRef}/></TabPane>
+                        <TabPane tab='租金计划' key="6"> <ChildListView { ...this } ref="rentLoan" onRef={this.onRef}/></TabPane>
+                    </Tabs>
+                    </div> */}
       
                               
                               </Form>
@@ -1211,6 +1299,10 @@ class AddFormView extends Component {
                               
                           </Modal.Footer> */}
                       </Modal>
+
+                      <div>
+                    
+                </div> 
             </div>
           );
     }

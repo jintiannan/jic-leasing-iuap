@@ -21,29 +21,7 @@ class FormView extends Component {
             open: true, //各个标签
             open2: true,
             open3: true,
-            dataSource: [
-                {
-                    a: "1",
-                    b: "小红",
-                    c: "女",
-                    d: {
-                      code: "dept1_1",
-                      entityType: "subEntity",
-                      organization_id: "a4cf0601-51e6-4012-9967-b7a64a4b2d47",
-                      name: "财务一科",
-                      pid: "95b60f35-ed0b-454e-b948-fb45ae30b911",
-                      refcode: "dept1_1",
-                      refpk: "9711d912-3184-4063-90c5-1facc727813c",
-                      id: "9711d912-3184-4063-90c5-1facc727813c",
-                      isLeaf: "true",
-                      refname: "财务一科"
-                    },
-                    e: "10次",
-                    f: "等额本金",
-                    key: "3"
-                  
-                  }
-            ] //字表数据
+            
         };
     }
 
@@ -78,23 +56,32 @@ class FormView extends Component {
 
     //字表添加数据
     add=()=>{
-        let dataSource = deepClone(this.state.dataSource);
-        let index = dataSource.length+1;
+        let dataSource = deepClone(this.child.state.dataSource);
+        let index = dataSource.length + 1;
         let newData = {
-            a: index  
+            a: index,  //序号
+            editable: true,
+            cIsEdit: true, //转为c字段提供 可不可编辑判断
         };
         dataSource.push(newData);
-        this.setState({
+        this.child.setState({
             dataSource:dataSource
         });
     }
     //字表删除数据
     del=(key)=>{
-        let dataSource = deepClone(this.state.dataSource);
+        let dataSource = deepClone(this.child.state.dataSource);
         dataSource.splice(dataSource.length-1,1);
-        this.setState({
+        this.child.setState({
             dataSource:dataSource
         });
+    }
+
+    //onChange事件
+    handleChange = (value) =>{
+        if(value == '01'){
+            
+        }
     }
 
     //绑定子组件
@@ -121,7 +108,7 @@ class FormView extends Component {
         if(_props.showForm){
             return (
                 <div>
-                <div className='form'>
+                <div className='calculatorNormalztForm'>
                     <div>
                         <span onClick={() => this.setState({ open: !this.state.open })} >
                         <FormSplitHeader title={'项目信息'} />
@@ -129,8 +116,7 @@ class FormView extends Component {
     
                     <Collapse in={this.state.open}>
                             <Form>
-                                <Collapse
-                                    in={this.state.open}>
+                           
                                         <div>
                                             {
                                                 this.mainForm.map((value,key) => {
@@ -158,9 +144,207 @@ class FormView extends Component {
                                                 })
                                             }
                                             
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                <div className="tableRef">
+                                                    <div className="lableRef">
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目名称
+                                                    </Label>
+                                                    </div>
+                                                    <TableFormRef {...this.props}
+                                                     
+                                                     title={"项目名称"} 
+                                                     name = {"project_name1"}
+                                                     {
+                                                         ...getFieldProps('project_name1', {
+                                                             initialValue: formObject.project_name1,
+                                                             rules: [{
+                                                                 required: true, 
+                                                             }],
+                                                         })
+                                                      }
+                                                    ></TableFormRef>
+                                                {/* <RefWalsinLevel 
+                                                title= '限额方案'
+                                                strictMode={true}
+                                                backdrop = {false}
+                                                param = {{//url请求参数
+                                                    refCode:'post_level',//test_common||test_grid||test_tree||test_treeTable
+                                                }}
+                                                refModelUrl = {{
+                                                    tableBodyUrl:`${GROBAL_HTTP_CTX}/menu/funcMenu/blobRefTreeGrid`,//表体请求
+                                                    refInfo:`${GROBAL_HTTP_CTX}/menu/funcMenu/refInfo`,//表头请求
+                                                }}
+                                                valueField="refpk"
+                                                displayField="{refcode}"
+                                                disabled={!_props.isEdit}
+                                                {...this.props}
+                                                /> */}
+                                                </div>
+                                                </FormItem>
+    
+                                            </Col>
                                            
-                                        </div>
-                                </Collapse>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目编码
+                                                    </Label>
+                                                    <FormControl disabled={!_props.isEdit}
+                                                        {
+                                                            ...getFieldProps('project_code', {
+                                                                //validateTrigger: 'onBlur',
+                                                                onChange:this.handleChange.bind(this), //类似于onChange方法
+                                                                initialValue: formObject.project_code,
+                                                                rules: [{
+                                                                    required: true,
+                                                                }],
+                                                            })
+                                                        }
+                                                    />
+                                                    <span className='error'>
+                                        {
+                                            getFieldError('project_code')
+                                        }
+                                    </span>
+                                                </FormItem>
+    
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        单据状态
+                                                    </Label>
+                                                    <FormControl disabled={!_props.isEdit}
+                                                        {
+                                                            ...getFieldProps('project_approve_result', {
+                                                                initialValue: formObject.project_approve_result,
+                                                                rules: [{
+                                                                    required: true,
+                                                                }],
+                                                            })
+                                                        }
+                                                    />
+                                                    <span className='error'>
+                                        {
+                                            getFieldError('project_approve_result')
+                                        }
+                                    </span>
+                                                </FormItem>
+    
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目金额
+                                                    </Label>
+                                                    <FormControl disabled={!_props.isEdit}
+                                                        {
+                                                            ...getFieldProps('release_amount', {
+                                                                initialValue: formObject.release_amount,
+                                                                rules: [{
+                                                                    required: true,
+                                                                }],
+                                                            })
+                                                        }
+                                                    />
+                                                    <span className='error'>
+                                        {
+                                            getFieldError('release_amount')
+                                        }
+                                    </span>
+                                                </FormItem>
+    
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        币种
+                                                    </Label>
+                                                    <FormControl disabled={!_props.isEdit}
+                                                        {
+                                                            ...getFieldProps('granting_currency', {
+                                                                initialValue: formObject.granting_currency,
+                                                                rules: [{
+                                                                    required: true,
+                                                                }],
+                                                            })
+                                                        }
+                                                    />
+                                                    <span className='error'>
+                                        {
+                                            getFieldError('granting_currency')
+                                        }
+                                    </span>
+                                                </FormItem>
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                              <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目来源
+                                                    </Label>
+                                                    <FormControl disabled={!_props.isEdit}
+                                                        {
+                                                            ...getFieldProps('project_source', {
+                                                            initialValue: formObject.project_source ? formObject.project_source : "",
+                                                                rules: [{
+                                                                    required: true,
+                                                                }],
+                                                            })
+                                                        }
+                                                    />
+                                                </FormItem>
+                                    
+                        
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目类别
+                                                    </Label>
+                                                    <FormControl disabled={!_props.isEdit}
+                                                        {
+                                                            ...getFieldProps('leaseback_type', {
+                                                            initialValue: formObject.leaseback_type ? formObject.leaseback_type : "",
+                                                                rules: [{
+                                                                    required: true,
+                                                                }],
+                                                            })
+                                                        }
+                                                    />
+                                                </FormItem>
+    
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目批次
+                                                    </Label>
+                                                    <FormControl disabled={!_props.isEdit}
+                                                        {
+                                                            ...getFieldProps('adjust_time', {
+                                                            initialValue: formObject.adjust_time ? formObject.adjust_time : "",
+                                                                rules: [{
+                                                                    required: true,
+                                                                }],
+                                                            })
+                                                        }
+                                                    />
+                                                </FormItem>
+    
+                                            </Col>
+                                           
+                                    </div>
+                            
     
                             </Form>
     
@@ -176,8 +360,7 @@ class FormView extends Component {
                         <Collapse in={this.state.open2}>
     
                         <Form>
-                                <Collapse
-                                    in={this.state.open2}>
+                           
                                     <div>
                                       
                                             <Col md={4} xs={4} sm={4}>
@@ -383,7 +566,7 @@ class FormView extends Component {
                                             </Col>
                                     
                                     </div>
-                                </Collapse>
+                          
     
                             </Form>
     
@@ -398,8 +581,7 @@ class FormView extends Component {
                         <Collapse in={this.state.open3}>
     
                         <Form>
-                                <Collapse
-                                    in={this.state.open3}>
+                              
                                     <div>
                                         
                                             <Col md={4} xs={4} sm={4}>
@@ -605,7 +787,7 @@ class FormView extends Component {
                                             </Col>
                                      
                                     </div>
-                                </Collapse>
+                      
     
                             </Form>
     
@@ -621,18 +803,18 @@ class FormView extends Component {
                         extraContent={
                             <div className="addAndDelChildList demoPadding" style={{display:_props.isEdit?'':'none'}} >
                                  <ButtonGroup style={{ margin: 1 }}>
-                                    <Button shape='border' onClick={this.add}><Icon type='uf-add-c-o' /></Button>
-                                    <Button shape='border' onClick={this.del}><Icon type='uf-reduce-c-o' /></Button>
+                                    <Button shape='border' onClick={this.add.bind(this)}><Icon type='uf-add-c-o' /></Button>
+                                    <Button shape='border' onClick={this.del.bind(this)}><Icon type='uf-reduce-c-o' /></Button>
                                   </ButtonGroup>
                             </div>
                             }
                     >
                         <TabPane tab='投放计划' key="1"> <ChildListView { ...this } ref="onTheLoan" onRef={this.onRef}/></TabPane>
-                        <TabPane tab='保证金计划' key="2"> <ChildListView { ...this } ref="marginLoan" onRef={this.onRef}/></TabPane>
-                        <TabPane tab='手续费计划' key="3"> <ChildListView { ...this } ref="commissionLoan" onRef={this.onRef}/></TabPane>
-                        <TabPane tab='中间费用支出计划' key="4"> <ChildListView { ...this } ref="middleCostLoan" onRef={this.onRef}/></TabPane>
-                        <TabPane tab='其他收支计划' key="5"> <ChildListView { ...this } ref="otherLoan" onRef={this.onRef}/></TabPane>
-                        <TabPane tab='租金计划' key="6"> <ChildListView { ...this } ref="rentLoan" onRef={this.onRef}/></TabPane>
+                        <TabPane tab='保证金计划' key="2"> <ChildListView { ...this } ref="marginLoan" /></TabPane>
+                        <TabPane tab='手续费计划' key="3"> <ChildListView { ...this } ref="commissionLoan" /></TabPane>
+                        <TabPane tab='中间费用支出计划' key="4"> <ChildListView { ...this } ref="middleCostLoan" /></TabPane>
+                        <TabPane tab='其他收支计划' key="5"> <ChildListView { ...this } ref="otherLoan" /></TabPane>
+                        <TabPane tab='租金计划' key="6"> <ChildListView { ...this } ref="rentLoan" /></TabPane>
                     </Tabs>
                     </div>
                 </div>  

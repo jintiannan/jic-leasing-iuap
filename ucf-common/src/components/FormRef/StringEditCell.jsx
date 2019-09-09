@@ -10,21 +10,22 @@ class StringEditCell extends Component {
     super(props);
     this.state = {
       value: this.props.value,
-      editable: false,
+      editable: this.props.editable
     };
     this.editWarp = React.createRef();
   }
 
   commitChange = () => {
     if (this.state.value === "") return;
-    this.setState({ editable: false });
     if (this.props.onChange) {
       this.props.onChange(this.state.value);
     }
   };
 
   edit = () => {
-    this.setState({ editable: true });
+    if(this.state.editable){
+      this.setState({ editable: true });
+    }
   };
 
   handleKeydown = event => {
@@ -39,8 +40,10 @@ class StringEditCell extends Component {
   };
 
   render() {
-    const { value, editable } = this.state;
+    const { value } = this.state;
+    const { editable } = this.props;
     return (
+      
       <div className="editable-cell">
         {editable ? (
           <div ref={el => this.editWarp = el} className="editable-cell-input-wrapper">
@@ -70,7 +73,7 @@ class StringEditCell extends Component {
           </div>
         ) : (
           <div className="editable-cell-text-wrapper" onDoubleClick={this.edit}>
-            {value || " "}
+            {this.props.value || " "}
           </div>
         )}
       </div>

@@ -64,7 +64,7 @@ module.exports = (env, argv) => {
             'process.env.NODE_ENV': JSON.stringify(env),
             'process.env.STATIC_HTTP_PATH': env == 'development' ? JSON.stringify("static") : JSON.stringify("../static"),
             'process.env.NODE_ENV': JSON.stringify("production"),
-            GROBAL_HTTP_CTX: JSON.stringify("/jic"),
+            GROBAL_HTTP_CTX: JSON.stringify("/jic/menu"),
             //前台默认上下文
             GROBAL_PORTAL_ID: JSON.stringify("leasing"),
             GROBAL_PORTAL_CTX: JSON.stringify("/jic"),
