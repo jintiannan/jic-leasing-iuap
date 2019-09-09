@@ -40,7 +40,7 @@ export function genGridColumn(param){
                         }
                     },
                     render: (text, record, index) => {
-                        return <StringModel text={text} record={record} index={index}/>
+                        return <StringModel text={text} record={record} index={index} dataIndex={key}/>
                     }
                 };
             case TYPE_NUMBER :

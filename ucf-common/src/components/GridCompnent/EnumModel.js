@@ -21,6 +21,7 @@ class EnumModel extends Component {
                     placeholder="请选择..."
                     optionFilterProp="children"
                     data={data}
+                    defaultValue={data[0].key}
                     /></div> : <div>{text ? text : ""}</div>}
             </div>
             

@@ -28,18 +28,11 @@
   }
   //input 大小
   .u-form-control {
-    width: 70% ;
-  }
-
-  .ref-input-wrap {
-    width:70%!important;  
-        .u-form-control{
-          width:100%; 
-        }
+    width: 70% !important;
   }
   //行距
   .u-form-item {
-    min-height: 30px ;
+    min-height: 42px ;
   }
   //详情页 高度自适应
   .u-form {
@@ -51,8 +44,8 @@
 
 .tableRef {
   .lableRef {
-     float: left;
-     padding-top: 7px;
+    float: left;
+  padding-top: 7px;
   }
   .ref-input-wrap {
     width: 70% !important;
@@ -63,8 +56,6 @@
   }
 }
 
-
-
   //新增form样式
   .steps-content {
     margin-top: 16px;
@@ -72,11 +63,9 @@
     border-radius: 6px;
     background-color: #fafafa;
     min-height: 200px;
-    text-align: right;
+    text-align: center;
     //padding-top: 80px;
   }
-
-
 
   .steps-action {
     margin-top: 24px;
@@ -87,12 +76,6 @@
   //   margin: 5px 15px;
   // }
   .demo4-modal{
-     //新增页面弹出层
-    .u-modal-content {
-      touch-action: none;
-      transform: translate(-12%, 0px) !important;
-      width: 130%;
-    }
     .u-modal-body{
       background: #f7f9fb;
     }
@@ -101,46 +84,14 @@
       overflow: auto;
     }
     //input 大小
-    // .u-form-control {
-    //   width: 70% !important;
-    // }
+    .u-form-control {
+      width: 70% !important;
+    }
     //行距
     .u-form-item {
       min-height: 42px ;
     }
-    .u-label {
-      padding-top: 6px;
-    }
-      //下拉框
-    .u-select-enabled {
-      width: 52%!important;
-    }
-    //单选下拉框 value
-    .u-select-selection-selected-value {
-      text-align: left;
-      width: 90%;
-    }
-    //时间插件
-    .datepicker-container {
-      width: 95%;
-      .u-form-control {
-        width: 100%;
-      }
-    }
-    .DatePicker {
-      float: right;
-    }
-    .tableRefAdd {
-      float: right;
-      //input 大小
-      .u-form-control {
-        width: 100% !important;
-      }
-    
-    }
   }
-
-
 
   .grayDeep{
     background-color: rgb(241, 238, 238)
@@ -160,6 +111,12 @@
   //   float: right;
 
   // }
+  .u-modal .u-modal-content {
+  touch-action: none;
+  transform: translate(-5%, 0px) !important;
+  width: 110%;
+  }
+
 
 
 //---------------标签页
@@ -244,15 +201,11 @@
   height: auto!important;
 }
 
-//form修改页面 字表加减按钮
+//---子表小按钮
 .addAndDelChildList {
   .u-button-icon + .u-button i{
     padding-left: 0;
   }
 
-  padding-right: 25px;
-  //form修改页面 字表加减按钮去边框
-  .u-button-border{
-    border: 0px solid #a5adba !important;
-  }
+  padding-right: 15px;
 }
