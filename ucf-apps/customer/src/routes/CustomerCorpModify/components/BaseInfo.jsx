@@ -16,7 +16,6 @@ import {deepClone} from "utils";
 import {actions} from "mirrorx";
 import moment from "moment";
 import DatePicker from "tinper-bee/lib/Datepicker";
-import ButtonGroup from "./ButtonGroup";
 import './index.less';
 const format = "YYYY-MM-DD";
 
@@ -51,16 +50,7 @@ class BaseInfo extends  Component{
         let _formObject = deepClone(this.props.formObject);
         return (
             <div className="form">
-                <div style={{display:this.state.showListView}}>
-                    <ButtonGroup
-                        BtnPower= {this.props.ButtonPower}
-                        Query= {this.onQuery}
-                        View={this.props.onView}
-                        Return={this.props.onReturn}
-                        Save={this.props.onSave}
-                        {...this.props}
-                    />
-                </div>
+
                 <div>
                     <div> <span onClick={() => this.setState({open: !this.state.open})}>
                                         <FormSplitHeader title={'客户基本信息'}/>

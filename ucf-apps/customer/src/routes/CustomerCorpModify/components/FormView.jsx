@@ -23,8 +23,8 @@ import {SelectField} from 'components/RowField/SelectField'
 import './index.less';
 import BaseInfo from "./BaseInfo";
 import {CustomerSource} from "../../CustomerSource/container";
+import ButtonGroup from "./ButtonGroup";
 
-const Header = PageLayout.Header;
 const Content = PageLayout.Content;
 const LeftContent = PageLayout.LeftContent;
 const RightContent = PageLayout.RightContent;
@@ -54,25 +54,29 @@ class FormView extends Component {
     componentWillReceiveProps(nextProps) {
     }
 
-    //绑定子组件
-    onFromRef = (ref) => {
-        this.child = ref;
-    };
-
     onSelect = (info, node) => {
         let selectedNode = node.node.props.ext;
         if (selectedNode) {
             actions.customerCorpModify.updateState({subForm:selectedNode.url});
-            // this.setState({
-            //     subForm: selectedNode.url
-            // })
         }
 
+    };
+    /**
+     * 返回按钮
+     */
+    onReturn = () =>{
+        if(this.props.parent.state.isEdit){
+            this.props.parent.switchEdit();
+        }
+        this.props.parent.switchToListView();
     };
 
     render() {
 
-        let _props = this.props;
+        let customer = {
+            name: this.props.formObject.customer_name,
+            code: this.props.formObject.customer_code
+        };
 
         const loop = data => data.map((item) => {
             if (item.children) {
@@ -95,21 +99,21 @@ class FormView extends Component {
                             </Tree>
                         </LeftContent>
                         <RightContent md={10} xs={10} sm={10}>
-                            {/*<Row style={{display: (this.props.subForm === 'baseInfo' ? "none" : '')}}>*/}
-                                {/*<div className='cust-name'>客户名称： {this.props.formObject. role_name}</div>*/}
-                            {/*</Row>*/}
-                            {/*<div className="cust-name" style={{display: (this.props.subForm === 'baseInfo' ? "none" : '')}}>*/}
-                                {/*客户名称： {this.props.formObject. role_name}*/}
-                            {/*</div>*/}
-
-
                             <div style={{display: (this.props.subForm === 'baseInfo' ? "" : 'none')}}>
-                                <BaseInfo {...this.props} onRef={this.onFromRef}/>
+                                <div style={{display:this.state.showListView}}>
+                                    <ButtonGroup
+                                        BtnPower= {this.props.ButtonPower}
+                                        Query= {this.onQuery}
+                                        Save={this.onSave}
+                                        Return={this.onReturn}
+                                        {...this.props}
+                                    />
+                                </div>
+                                <BaseInfo {...this.props}/>
                             </div>
                             <div style={{display: (this.props.subForm === 'source' ? "" : 'none')}}>
-                                <CustomerSource onRef={this.onFromRef}/>
+                                <CustomerSource  customer={customer} subForm={this.props.subForm}/>
                             </div>
-
                         </RightContent>
                     </Content>
                 </PageLayout>

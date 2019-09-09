@@ -19,6 +19,8 @@ class ListView extends Component {
             selectList:[],
         }
     }
+
+
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
         //计算表格滚动条高度
@@ -125,16 +127,19 @@ class ListView extends Component {
      * @param {Boolean} isopen 是否展开
      */
     resetTableHeight = (isopen) => {
-        let tableHeight = getHeight() - 155;
+        let tableHeight = 0;
+        tableHeight = getHeight() - 155;
         this.setState({ tableHeight });
     };
 
     //列属性定义
     grid = [
-        {title: '单据状态', key: 'billstatus', type: '0'},
-        {title: '客户编号', key: 'customer_code', type: '0'},
-        {title: '客户名称', key: 'customer_name', type: '0'},
-        {title: '组织机构代码证', key: 'identity_no', type: '0'},
+        {title:'关联中介名称',key:'role_name',type:'0'},
+        {title:'关联中介编号',key:'role_code',type:'0'},
+        {title:'客户关系',key:'memo',type:'0'},
+        {title:'来源方式',key:'ts',type:'0'},
+        {title:'备注',key:'dr',type:'6',enumType:'yesOrNo'},
+
     ];
     //列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
@@ -142,6 +147,7 @@ class ListView extends Component {
     render() {
         let { tableHeight} = this.state;
         return (
+            this.props.subForm === 'source'?
             <div className="grid-parent" style={{display:this.state.listView}}>
                     <Grid
                         ref={(el) => this.grid = el} //存模版
@@ -165,7 +171,7 @@ class ListView extends Component {
                         }}
                         //分页对象
                         paginationObj = {{
-                            activePage : this.props.queryParam.pageIndex,//活动页
+                            //activePage : this.props.queryParam.pageIndex,//活动页
                             total : this.props.list.length,//总条数
                             items: this.props.queryObj.totalPages,//总页数
                             freshData: this.freshData, //活动页改变,跳转指定页数据
@@ -185,7 +191,7 @@ class ListView extends Component {
                         getSelectedDataFunc={this.getSelectedDataFunc}
 
                     />
-            </div>
+            </div>: <div></div>
         );
     }
 }

@@ -38,7 +38,9 @@ export default {
         // 树节点
         treeData: [],
         //子页面
-        subForm: 'baseInfo'
+        subForm: 'baseInfo',
+        //
+        customer: {}
     },
     reducers: {
         /**

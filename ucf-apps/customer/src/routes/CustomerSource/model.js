@@ -34,9 +34,8 @@ export default {
         //是否列表界面
         isGrid:true,
         // 模态框
-        showModal: false,
-        // 树节点
-        treeData: [],
+        showModal: false
+
     },
     reducers: {
         /**
@@ -83,7 +82,7 @@ export default {
          */
         async updateRowData(param={},getState){
             let{index,record} = param;
-            let list = getState().role.list;
+            let list = getState().customerSource.list;
             let _list = deepClone(list);
             if(index != undefined){
                 _list[index] = record;

@@ -64,7 +64,6 @@ class IndexView extends Component {
         });
         actions.customerCorpModify.updateState({ formObject : {},isGrid : true,isEdit : false});
     };
-
     /**
      * 切换为卡片界面
      */
@@ -75,7 +74,7 @@ class IndexView extends Component {
             showFormView:'',
             formObject :_formObj,
         });
-        actions.customerCorpModify.updateState({ formObject : _formObj,isGrid : false,isEdit : false});
+        actions.customerCorpModify.updateState({ formObject : _formObj,isGrid : false,isEdit : false, customer: {name: _formObj.customer_name}});
     };
 
     /**
@@ -88,7 +87,6 @@ class IndexView extends Component {
         this.state.formObject['_edit'] = this.state.formObject['_edit'] ? false : true;
         actions.customerCorpModify.updateState({isEdit : !this.state.isEdit});
     };
-
     /**
      * 查询方法
      */
@@ -119,15 +117,7 @@ class IndexView extends Component {
         });
     };
 
-    /**
-     * 返回按钮
-     */
-    onReturn = () =>{
-        if(this.state.isEdit){
-            this.switchEdit();
-        }
-        this.switchToListView();
-    };
+
 
     onSave = () => {
         actions.customerCorpModify.saveOrUpdate(this.props.formObject);
@@ -164,8 +154,6 @@ class IndexView extends Component {
                         Query= {this.onQuery}
                         Edit= {this.onEdit}
                         View={this.onView}
-                        Return={this.onReturn}
-                        Save={this.onSave}
                         Add={this.onAdd}
                         Delete={this.onDelete}
                         {...this.props}
@@ -175,7 +163,7 @@ class IndexView extends Component {
                     <ListView {...this.props}/>
                 </div>
                 <div style={{display:this.state.showFormView}}>
-                    <FormView {...this.props} buttonPower={ButtonPower} onRef={this.onRef}/>
+                    <FormView {...this.props} parent={this} buttonPower={ButtonPower} onRef={this.onRef}/>
                 </div>
                 <div>
                     <AddFormView { ...this.props } onRef={this.onRef}/>

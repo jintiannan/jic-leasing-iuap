@@ -8,6 +8,7 @@ import { Route } from "mirrorx";
 import {CustomerCorpApply} from "./CustomerCorpApply/container";
 import {CustomerPersonApply} from "./CustomerPersonApply/container";
 import {CustomerCorpModify} from "./CustomerCorpModify/container";
+import {CustomerSource} from "./CustomerSource/container";
 
 export default () => (
 
@@ -15,6 +16,7 @@ export default () => (
         <Route exact path="/customerCorp" component={CustomerCorpApply} />
         <Route exact path="/customerPerson" component={CustomerPersonApply} />
         <Route exact path="/customerCorpModify" component={CustomerCorpModify} />
+        <Route exact path='/customerSource' component={CustomerSource} />
     </div>
 
 );
