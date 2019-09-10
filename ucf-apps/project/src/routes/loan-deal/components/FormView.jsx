@@ -277,19 +277,14 @@ class FormView extends Component {
     ];
 
     submit = () => {
-        // console.log(this.props.form.getFieldsValue());
         return this.props.form.getFieldsValue();
     }
 
     tableonesubmit = ()=>{
-        console.log("打印字表数据1")
-        console.log(this.props.loanplanList);
         return this.props.loanplanList;
     }
 
     tabletwosubmit = ()=>{
-        console.log("打印字表数据1")
-        console.log(this.props.payaccountList);
         return this.props.payaccountList;
     }
 
@@ -1132,8 +1127,6 @@ class FormView extends Component {
 
                                     }}
                                     onRowClick={(record, index) => {
-                                        console.log('record on row click');
-                                        console.log(record);
                                         this.setState({planIndex: index});
                                     }}
                                     rowClassName={(record, index, indent) => {

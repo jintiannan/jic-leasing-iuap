@@ -146,7 +146,6 @@ class ModalView extends Component {
     }
 
     submit = () => {
-        // console.log(this.props.form.getFieldsValue());
         return this.props.form.getFieldsValue();
     }
 

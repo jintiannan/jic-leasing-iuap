@@ -2,84 +2,191 @@ import React, { Component } from 'react';
 import {Tree,Table,Modal, Icon, Button, Transfer } from 'tinper-bee';
 import StringModel from 'components/GridCompnent/StringModel'
 import EnumModel from 'components/GridCompnent/EnumModel'
+import DateModel from 'components/GridCompnent/DateModel'
 import {deepClone} from "utils";
 
 
 
 const TreeNode = Tree.TreeNode;
-const dataSource = [
-    {
-      title: "合同日期",
-      key: "cont_date",
-      _edit:true,
-      fixcon:true,
-    },
-    {
-      title: "合同编号",
-      key: "cont_code",
-      _edit:true,
-      fixcon:true,
-    },
-    {
-      title: "项目编号",
-      key: "project_code",
-      _edit:true,
-      fixcon:true,
-    }
-  ];
+const transData = [
+      {
+        title: "本币汇率",
+        key: "currency_rate",
+        _edit:true,
+        type:'String',
+        between:false,
+      },
+      {
+        title: "币种",
+        key: "current_type",
+        _edit:true,
+        type:'String',
+        between:false,
+      },
+      {
+        title: "现金流量项目",
+        key: "currency_code",
+        _edit:true,
+        type:'String',
+        between:false,
+      },
+      {
+        title: "合同日期",
+        key: "cont_date",
+        _edit:true,
+        type:'Date',
+        between:false,
+      },
+      {
+        title: "合同编号",
+        key: "cont_code",
+        _edit:true,
+        fixcon:true,
+        type:'String',
+        between:false,
+      },
+      {
+        title: "项目编号",
+        key: "project_code",
+        _edit:true,
+        fixcon:true,
+        type:'String',
+        between:false,
+      },
+      {
+        title: "项目名称",
+        key: "project_name",
+        _edit:true,
+        fixcon:true,
+        type:'String',
+        between:false,
+      },
+      {
+        title: "项目经理",
+        key: "project_manager",
+        _edit:true,
+        type:'String',
+        between:false,
+      },
+      {
+        title: "借款单号",
+        key: "loan_bill_code",
+        _edit:true,
+        type:'String',
+        between:false,
+      },
+      {
+        title: "项目金额",
+        key: "old_currency_amount",
+        _edit:true,
+        type:'String',
+        between:false,
+      }
+
+];
+
+const dataSource = [];
 
 class SearchPanel extends React.Component {
     constructor(props) {
         super(props);
         this.columns = [
-            {   title: "",dataIndex: "fixcon",key: "fixcon",width: 30, 
-                render: (text, record, index) => {
-                    return (
-                            <div>
-                                {record.fixcon ?<div><a><Icon type="uf-correct"></Icon></a></div>
-                                :<div><a href="javascript:void(0)" onClick={()=> this.oncancelTable(record,index)}><Icon type="uf-close"></Icon></a></div>} 
-                            </div>
-                    )
-                }
-            },
-            {
-              title: "条件名称",
-              dataIndex: "title",
-              key: "title",
-              width:100,
-            },
-            {
-              title: "比较条件",
-              dataIndex: "key",
-              key: "key",
-              width:100,
-              render: (text, record, index) => (
-                <EnumModel text={text} record={record} index={index} type={'compareCon'} />
-              )
-            },
-            {
-              title: "条件内容",
-              dataIndex: "content",
-              key: "content",
-              width: 100,
-              render: (text, record, index) => (
-                <StringModel text={text} record={record} index={index} />
-              )
-            },
-          ];
+          {
+          title: "",dataIndex: "fixcon",key: "fixcon",width: 30, 
+              render: (text, record, index) => {
+                  return (
+                    <div>
+                        {record.fixcon ?<div><a><Icon type="uf-correct"></Icon></a></div>
+                        :<div><a href="javascript:void(0)" onClick={()=> this.oncancelTable(record,index)}><Icon type="uf-close"></Icon></a></div>} 
+                    </div>
+                  )
+              }
+          },
+          {
+            title: "条件名称",
+            dataIndex: "title",
+            key: "title",
+            width:100,
+          },
+          {
+            title: "比较条件",
+            dataIndex: "key",
+            key: "key",
+            width:100,
+            render: (text, record, index) => {
+              //字符串数值不存在介于区间   参照类型只有等于选择     日期类型存在介于区间  此处分类处理
+              if(record.type=='String'){
+                return <EnumModel text={text} record={record} index={index} type={'compareCon'} dataIndex = {'condition'} onChange={this.onCellChange(index, "key")} />
+              }else if(record.type=='Date'){
+                return <EnumModel text={text} record={record} index={index} type={'datecompareCon'} dataIndex = {'condition'} onChange={this.onCellChange(index, "key")} />
+              }else if(record.type=='Ref'){
+                return <EnumModel text={text} record={record} index={index} type={'compareCon'} dataIndex = {'condition'} onChange={this.onCellChange(index, "key")} />
+              }
+              
+            }
+          },
+          {
+            title: "条件内容",
+            dataIndex: "content",
+            key: "content",
+            width: 100,
+            render: (text, record, index) => {
+              if(record.type=='String'){
+                return <StringModel  record={record} index={index} dataIndex={'content'}/>
+              }else if(record.type=='Date'&&!record.between){
+                return <DateModel  record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content'}  />
+              }else if(record.type=='Date'&&record.between){
+                return <div className = "between_model"><DateModel  record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content'}  /><span>-</span>
+                  <DateModel  record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content1'}  /></div>
+              }
+            }
+          },
+];
           this.state = {
-            dataSource: dataSource
+            dataSource: dataSource,
+            transData:transData,
+            columns:this.columns,
           };
     }
+
+    //组件生命周期方法-在渲染前调用,在客户端也在服务端
+    componentWillMount() {
+      this.state.transData.map((value,key)=>{
+        if(value.fixcon){
+          this.state.dataSource.push({
+            _edit:true,
+            title:value.title,
+            key:value.key,
+            fixcon:true,
+            type:value.type,
+            between:value.between,
+            condition:0,
+            content:'',
+          })
+          this.setState({ dataSource });
+        }
+    })
+    }
+
+    //组件生命周期方法-在第一次渲染后调用，只在客户端
+    componentDidMount() {
+      this.props.onRef(this);
+    }
     
-    // onCellChange = (index, key) => {
-    //     debugger
-    //     return value => {
-    //       const { dataSource } = this.state;
-    //       dataSource[index][key] = value;
-    //       this.setState({ dataSource }, () => console.dir(this.state.dataSource));
-    //     };
-    //   };
+    onCellChange = (index, key) => {
+        return value => {
+          const _dataSource = deepClone(this.state.dataSource);
+          if(key=='key'){
+            if(value=='6'){
+              _dataSource[index]['between']=true;
+              this.setState({ dataSource:_dataSource});
+            }else{
+              _dataSource[index]['between']=false;
+              this.setState({ dataSource:_dataSource});
+            } 
+          }
+        };
+      };
     onDoubleClick = (checkedKeys, e)=>{
         const currentIndex = this.state.dataSource.length;
         this.state.dataSource.push({
@@ -87,13 +194,21 @@ class SearchPanel extends React.Component {
             _edit:true,
             title:e.node.props.title.props.children,
             key:checkedKeys,
+            type:e.node.props.ext.type,
+            between:e.node.props.ext.between,
+            condition:0,
+            content:'',
         })
-        this.setState({ dataSource }, () => console.dir(this.state.dataSource));
+        this.setState({ dataSource });
     }
 
     oncancelTable = (record,index) =>{
         this.state.dataSource.splice(index,1);
-        this.setState({ dataSource }, () => console.dir(this.state.dataSource));
+        this.setState({ dataSource });
+    }
+
+    alterSerach = ()=>{
+      return this.state.dataSource;
     }
     
 
@@ -123,6 +238,7 @@ class SearchPanel extends React.Component {
                     <Tree
                         defaultExpandAll ={true}
                         showIcon 
+                        showLine
                         openIcon={<Icon type="uf-minus" />}
                         closeIcon={<Icon type="uf-plus" />}  
                         getScrollContainer={() => {
@@ -130,23 +246,17 @@ class SearchPanel extends React.Component {
                         }}
                         onDoubleClick = {this.onDoubleClick}
 	                >
-	        <TreeNode title="所有条件" key="0-0" icon={<Icon type="uf-treefolder" />}>
-                <TreeNode title={<span>本币汇率</span>} key="currency_rate" icon={<Icon type="uf-list-s-o" />} />
-                <TreeNode title={<span>币种</span>} key="current_type" icon={<Icon type="uf-list-s-o" />} />
-                <TreeNode title={<span>现金流量项目</span>} key="currency_code" icon={<Icon type="uf-list-s-o" />} />
-                <TreeNode title={<span>合同日期</span>} key="cont_date" icon={<Icon type="uf-list-s-o" />} />
-                <TreeNode title={<span>合同编号</span>} key="cont_code" icon={<Icon type="uf-list-s-o" />} />
-                <TreeNode title={<span>项目编号</span>} key="project_code" icon={<Icon type="uf-list-s-o" />} />
-                <TreeNode title={<span>项目名称</span>} key="project_name" icon={<Icon type="uf-list-s-o" />} />
-                <TreeNode title={<span>合同名称</span>} key="cont_name" icon={<Icon type="uf-list-s-o" />} />
-                <TreeNode title={<span>项目经理</span>} key="project_manager" icon={<Icon type="uf-list-s-o" />} />
-                <TreeNode title={<span>借款单号</span>} key="loan_bill_code" icon={<Icon type="uf-list-s-o" />} />
-                <TreeNode title={<span>原币金额</span>} key="old_currency_amount" icon={<Icon type="uf-list-s-o" />} />
+          <TreeNode title="所有条件" key="all_condition" icon={<Icon type="uf-treefolder" />}>
+                {
+                  this.state.transData.map((value,key)=>{
+                    return <TreeNode title={<span>{value.title}</span>} key={value.key} icon={<Icon type="uf-list-s-o" />}  ext={{'type':value.type,'between':value.between}} />
+                  })
+                }
             </TreeNode>
           </Tree>
           </div>
                     <div className="search_from_right">
-                        <Table data={this.state.dataSource} columns={this.columns} height={30}/>
+                        <Table data={this.state.dataSource} columns={this.state.columns} height={30}/>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>

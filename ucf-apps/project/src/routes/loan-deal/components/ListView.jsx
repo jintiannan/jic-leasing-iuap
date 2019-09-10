@@ -51,7 +51,6 @@ class ListView extends Component {
         let tableHeight = 0;
         tableHeight = getHeight() - 405;
         this.setState({ tableHeight});
-        console.log(tableHeight);
     }
 
 
@@ -126,9 +125,8 @@ class ListView extends Component {
      * #关闭功能,如果有页面特殊要求再打开#
      */
     onRowSelect = (record, index, event) => {
-        console.log('行点击事件');
-        actions.loandeal.updateState({loandealIndex: index});
-        actions.loandeal.loadSubList(this.props.queryParam);
+        //actions.loandeal.updateState({loandealIndex: index});
+        //actions.loandeal.loadSubList(this.props.queryParam);
         // console.log('行点击事件');
         // let _record = deepClone(record);
         // _record._checked = _record._checked ? false : true;
@@ -249,8 +247,6 @@ class ListView extends Component {
             loandealObj, loanplanObj, payaccountObj, showLoading,
             showPlanLoading, showAccountLoading, tabKey, loandealIndex
         } = this.props;
-        console.log(loandealObj);
-        console.log(this.props);
 
         let { tableHeight} = this.state;
         return (
