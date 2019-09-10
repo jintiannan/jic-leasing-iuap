@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {Tree,Table,Modal, Icon, Button, Transfer } from 'tinper-bee';
-import StringModel from 'components/GridCompnent/StringModel'
-import EnumModel from 'components/GridCompnent/EnumModel'
-import DateModel from 'components/GridCompnent/DateModel'
+import StringModel from 'components/GridCompnent/StringModel';
+import EnumModel from 'components/GridCompnent/EnumModel';
+import DateModel from 'components/GridCompnent/DateModel';
+import RefModel from 'components/GridCompnent/RefModel'
 import {deepClone} from "utils";
 
 
@@ -65,7 +66,7 @@ const transData = [
         title: "项目经理",
         key: "project_manager",
         _edit:true,
-        type:'String',
+        type:'Ref',
         between:false,
       },
       {
@@ -97,7 +98,7 @@ class SearchPanel extends React.Component {
                   return (
                     <div>
                         {record.fixcon ?<div><a><Icon type="uf-correct"></Icon></a></div>
-                        :<div><a href="javascript:void(0)" onClick={()=> this.oncancelTable(record,index)}><Icon type="uf-close"></Icon></a></div>} 
+                        :<div><a href="javascript:void(0)" onClick={()=> this.oncancelTable(index)}><Icon type="uf-close"></Icon></a></div>} 
                     </div>
                   )
               }
@@ -138,6 +139,8 @@ class SearchPanel extends React.Component {
               }else if(record.type=='Date'&&record.between){
                 return <div className = "between_model"><DateModel  record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content'}  /><span>-</span>
                   <DateModel  record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content1'}  /></div>
+              }else if(record.type=='Ref'){
+                return <div className = "ref_model"><RefModel  record={record} index={index} dataIndex={'content'}/></div>
               }
             }
           },
@@ -189,7 +192,8 @@ class SearchPanel extends React.Component {
       };
     onDoubleClick = (checkedKeys, e)=>{
         const currentIndex = this.state.dataSource.length;
-        this.state.dataSource.push({
+        const _dataSource = deepClone(this.state.dataSource);
+        _dataSource.push({
             index:currentIndex,
             _edit:true,
             title:e.node.props.title.props.children,
@@ -199,12 +203,13 @@ class SearchPanel extends React.Component {
             condition:0,
             content:'',
         })
-        this.setState({ dataSource });
+        this.setState({ dataSource:_dataSource });
     }
 
-    oncancelTable = (record,index) =>{
-        this.state.dataSource.splice(index,1);
-        this.setState({ dataSource });
+    oncancelTable = (index) =>{
+        const _dataSource = deepClone(this.state.dataSource);
+        _dataSource.splice(index,1);
+        this.setState({ dataSource:_dataSource});
     }
 
     alterSerach = ()=>{
