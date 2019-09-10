@@ -19,9 +19,7 @@ const addTitle = "新增客户来源";
 class AddFormView extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-
-        };
+        this.state = {};
         this.close = this.close.bind(this);
     }
 
@@ -74,9 +72,9 @@ class AddFormView extends Component {
                                                     <Icon type="uf-mi" className='mast'></Icon>
                                                     客户名称
                                                 </Label>
-                                                <FormControl
+                                                <FormControl disabled={true}
                                                     {
-                                                        ...getFieldProps('customer_code', {
+                                                        ...getFieldProps('customer_name', {
                                                             initialValue: formObjAdd.customer_name,
                                                             rules: [{
                                                                 required: true,
@@ -92,9 +90,9 @@ class AddFormView extends Component {
                                                     <Icon type="uf-mi" className='mast'></Icon>
                                                     客户编码
                                                 </Label>
-                                                <FormControl
+                                                <FormControl disabled={true}
                                                     {
-                                                        ...getFieldProps('role_name', {
+                                                        ...getFieldProps('customer_code', {
                                                             initialValue: formObjAdd.customer_code,
                                                             rules: [{
                                                                 required: true,
@@ -103,28 +101,28 @@ class AddFormView extends Component {
                                                     }
                                                 />
                                             </FormItem>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        来源方式
-                                                    </Label>
-                                                    <Select
-                                                        style={{ width: 195 }}
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    来源方式
+                                                </Label>
+                                                <Select
+                                                    style={{width: 195}}
 
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
+                                                    showSearch={true}
+                                                    allowClear={true}
+                                                >
+                                                    <Option value="all">全部</Option>
+                                                    <Option value="confirming">待确认</Option>
+                                                    <Option value="executing">执行中</Option>
+                                                    <Option value="completed">
+                                                        已办结
+                                                    </Option>
+                                                    <Option value="termination">终止</Option>
+                                                </Select>
+                                            </FormItem>
                                         </Col>
 
                                     </Row>
@@ -139,7 +137,7 @@ class AddFormView extends Component {
                                                     中介类别
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+                                                    style={{width: 195}}
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -161,7 +159,7 @@ class AddFormView extends Component {
                                                     关联中介名称
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+                                                    style={{width: 195}}
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -184,7 +182,7 @@ class AddFormView extends Component {
                                                     关联中介编号
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+                                                    style={{width: 195}}
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -225,7 +223,7 @@ class AddFormView extends Component {
                         </div>
                     </Modal.Body>
                     <Modal.Footer className="text-center">
-                        <Button colors="primary" style={{ marginRight: 8 }} onClick={this.onSubSave.bind(this)}>
+                        <Button colors="primary" style={{marginRight: 8}} onClick={this.onSubSave.bind(this)}>
                             保存
                         </Button>
                         <Button bordered onClick={this.close}>

@@ -18,6 +18,7 @@ import moment from "moment";
 import DatePicker from "tinper-bee/lib/Datepicker";
 import './index.less';
 const format = "YYYY-MM-DD";
+const format_time = "YYYY-MM-DD HH:mm:ss";
 
 const dateInputPlaceholder = "选择日期";
 
@@ -49,7 +50,7 @@ class BaseInfo extends  Component{
         const {getFieldProps, getFieldError} = this.props.form;
         let _formObject = deepClone(this.props.formObject);
         return (
-            <div className="form">
+            <div className="common-form">
 
                 <div>
                     <div> <span onClick={() => this.setState({open: !this.state.open})}>
@@ -154,7 +155,6 @@ class BaseInfo extends  Component{
                                             是否授权征信客户
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -176,7 +176,7 @@ class BaseInfo extends  Component{
                                             客户性质
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
+
 
                                             showSearch={true}
                                             allowClear={true}
@@ -202,7 +202,7 @@ class BaseInfo extends  Component{
                                             客户性质(内部)
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
+
                                             showSearch={true}
                                             allowClear={true}>
                                             <Option value="all">全部</Option>
@@ -222,7 +222,6 @@ class BaseInfo extends  Component{
                                             客户类型
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -244,7 +243,6 @@ class BaseInfo extends  Component{
                                             经济性质
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -302,7 +300,6 @@ class BaseInfo extends  Component{
                                             行业门类
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -324,7 +321,7 @@ class BaseInfo extends  Component{
                                             行业门类(大类)
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
+
 
                                             showSearch={true}
                                             allowClear={true}
@@ -346,7 +343,6 @@ class BaseInfo extends  Component{
                                             行业门类(中类)
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -370,7 +366,6 @@ class BaseInfo extends  Component{
                                             行业门类(小类)
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -458,7 +453,6 @@ class BaseInfo extends  Component{
                                             学校等级
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -480,7 +474,6 @@ class BaseInfo extends  Component{
                                             医院等级
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -504,7 +497,6 @@ class BaseInfo extends  Component{
                                             企业规模(人行)
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -526,7 +518,6 @@ class BaseInfo extends  Component{
                                             企业规模(内部管理)
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -548,7 +539,6 @@ class BaseInfo extends  Component{
                                             企业规模(四部委)
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -581,7 +571,6 @@ class BaseInfo extends  Component{
                                             注册登记号类型
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -621,7 +610,6 @@ class BaseInfo extends  Component{
                                             证件类型
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
                                             showSearch={true}
                                             allowClear={true}>
                                             <Option value="all">全部</Option>
@@ -661,18 +649,11 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             证件有效期(开始)
                                         </Label>
-                                        <Select
-                                            style={{width: 195}}
-                                            showSearch={true}
-                                            allowClear={true}>
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
-                                        </Select>
+                                        <DatePicker
+                                            format={format}
+                                            defaultValue={moment()}
+                                            placeholder={dateInputPlaceholder}
+                                        />
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
@@ -681,18 +662,11 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             证件有效期(截止)
                                         </Label>
-                                        <Select
-                                            style={{width: 195}}
-                                            showSearch={true}
-                                            allowClear={true}>
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
-                                        </Select>
+                                        <DatePicker
+                                            format={format}
+                                            defaultValue={moment()}
+                                            placeholder={dateInputPlaceholder}
+                                        />
                                     </FormItem>
                                 </Col>
                             </Row>
@@ -703,19 +677,11 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             最新年检日期
                                         </Label>
-                                        <Select
-                                            style={{width: 195}}
-                                            showSearch={true}
-                                            allowClear={true}
-                                        >
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
-                                        </Select>
+                                        <DatePicker
+                                            format={format}
+                                            defaultValue={moment()}
+                                            placeholder={dateInputPlaceholder}
+                                        />
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
@@ -743,19 +709,11 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             贷款卡最新年审时间
                                         </Label>
-                                        <Select
-                                            style={{width: 195}}
-                                            showSearch={true}
-                                            allowClear={true}
-                                        >
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
-                                        </Select>
+                                        <DatePicker
+                                            format={format_time}
+                                            defaultValue={moment()}
+                                            placeholder={dateInputPlaceholder}
+                                        />
                                     </FormItem>
                                 </Col>
 
@@ -768,7 +726,6 @@ class BaseInfo extends  Component{
                                             贷款卡是否有效
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
                                             showSearch={true}
                                             allowClear={true}
                                         >
@@ -789,7 +746,6 @@ class BaseInfo extends  Component{
                                             贷款卡最新年审结果
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
                                             showSearch={true}
                                             allowClear={true}
                                         >
@@ -850,20 +806,11 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             成立日期
                                         </Label>
-                                        <Select
-                                            style={{width: 195}}
-
-                                            showSearch={true}
-                                            allowClear={true}
-                                        >
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
-                                        </Select>
+                                        <DatePicker
+                                            format={format}
+                                            defaultValue={moment()}
+                                            placeholder={dateInputPlaceholder}
+                                        />
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
@@ -872,20 +819,11 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             营业执照登记日
                                         </Label>
-                                        <Select
-                                            style={{width: 195}}
-
-                                            showSearch={true}
-                                            allowClear={true}
-                                        >
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
-                                        </Select>
+                                        <DatePicker
+                                            format={format}
+                                            defaultValue={moment()}
+                                            placeholder={dateInputPlaceholder}
+                                        />
                                     </FormItem>
                                 </Col>
                             </Row>
@@ -896,20 +834,11 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             营业执照到期日
                                         </Label>
-                                        <Select
-                                            style={{width: 195}}
-
-                                            showSearch={true}
-                                            allowClear={true}
-                                        >
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
-                                        </Select>
+                                        <DatePicker
+                                            format={format}
+                                            defaultValue={moment()}
+                                            placeholder={dateInputPlaceholder}
+                                        />
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
@@ -918,20 +847,11 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             营业执照最新年审日
                                         </Label>
-                                        <Select
-                                            style={{width: 195}}
-
-                                            showSearch={true}
-                                            allowClear={true}
-                                        >
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
-                                        </Select>
+                                        <DatePicker
+                                            format={format}
+                                            defaultValue={moment()}
+                                            placeholder={dateInputPlaceholder}
+                                        />
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
@@ -965,7 +885,6 @@ class BaseInfo extends  Component{
                                             法定代表人
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -987,7 +906,6 @@ class BaseInfo extends  Component{
                                             证件类型
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1055,7 +973,6 @@ class BaseInfo extends  Component{
                                             实际控制人
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1077,7 +994,6 @@ class BaseInfo extends  Component{
                                             证件类型
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1126,7 +1042,6 @@ class BaseInfo extends  Component{
                                             注册资本币种
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1173,7 +1088,6 @@ class BaseInfo extends  Component{
                                             实收资本币种
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1325,7 +1239,6 @@ class BaseInfo extends  Component{
                                             是否集团公司(母公司)
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1347,7 +1260,6 @@ class BaseInfo extends  Component{
                                             有无进出口经营
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1369,7 +1281,6 @@ class BaseInfo extends  Component{
                                             是否上市公司
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1393,7 +1304,6 @@ class BaseInfo extends  Component{
                                             是否政府融资背景
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1416,7 +1326,6 @@ class BaseInfo extends  Component{
                                             是否科技型企业
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1438,7 +1347,6 @@ class BaseInfo extends  Component{
                                             科技型企业类型
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1462,7 +1370,6 @@ class BaseInfo extends  Component{
                                             是否环保行业企业
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1484,7 +1391,6 @@ class BaseInfo extends  Component{
                                             是否重点监测客户
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1518,7 +1424,6 @@ class BaseInfo extends  Component{
                                             所在国家(地区)
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1540,7 +1445,6 @@ class BaseInfo extends  Component{
                                             区域
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1562,7 +1466,6 @@ class BaseInfo extends  Component{
                                             注册地隶属
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1586,7 +1489,6 @@ class BaseInfo extends  Component{
                                             地区(省)
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1608,7 +1510,6 @@ class BaseInfo extends  Component{
                                             地区(市)
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1630,7 +1531,6 @@ class BaseInfo extends  Component{
                                             地区(区/县)
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1790,7 +1690,6 @@ class BaseInfo extends  Component{
                                             实际办公地所有权
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1851,7 +1750,6 @@ class BaseInfo extends  Component{
                                             客户洗钱风险评级
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -1976,8 +1874,6 @@ class BaseInfo extends  Component{
                                             开票说明
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
-
                                             showSearch={true}
                                             allowClear={true}
                                         >
@@ -2009,7 +1905,6 @@ class BaseInfo extends  Component{
                                             部门名称
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -2031,7 +1926,6 @@ class BaseInfo extends  Component{
                                             客户经理
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -2057,7 +1951,6 @@ class BaseInfo extends  Component{
                                             操作人
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -2095,17 +1988,11 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             操作时间
                                         </Label>
-                                        <FormControl disabled={!this.props.isEdit}
-                                                     {
-                                                         ...getFieldProps('operate_time', {
-                                                             initialValue: _formObject.operate_time,
-
-                                                             rules: [{
-                                                                 required: true,
-                                                             }],
-                                                         })
-                                                     }
-                                        />
+                                            <DatePicker
+                                                format={format_time}
+                                                defaultValue={moment()}
+                                                placeholder={dateInputPlaceholder}
+                                            />
 
                                     </FormItem>
                                 </Col>
@@ -2118,7 +2005,6 @@ class BaseInfo extends  Component{
                                             最新变更人
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
 
                                             showSearch={true}
                                             allowClear={true}
@@ -2139,20 +2025,11 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             最新变更日期
                                         </Label>
-                                        <Select
-                                            style={{width: 195}}
-
-                                            showSearch={true}
-                                            allowClear={true}
-                                        >
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
-                                        </Select>
+                                        <DatePicker
+                                            format={format}
+                                            defaultValue={moment()}
+                                            placeholder={dateInputPlaceholder}
+                                        />
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
@@ -2161,16 +2038,10 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             最新变更时间
                                         </Label>
-                                        <FormControl disabled={!this.props.isEdit}
-                                                     {
-                                                         ...getFieldProps('operate_time_lst', {
-                                                             initialValue: _formObject.operate_time_lst,
-
-                                                             rules: [{
-                                                                 required: true,
-                                                             }],
-                                                         })
-                                                     }
+                                        <DatePicker
+                                            format={format_time}
+                                            defaultValue={moment()}
+                                            placeholder={dateInputPlaceholder}
                                         />
                                     </FormItem>
                                 </Col>
@@ -2183,8 +2054,6 @@ class BaseInfo extends  Component{
                                             审核人
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
-
                                             showSearch={true}
                                             allowClear={true}
                                         >
@@ -2204,20 +2073,11 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             审核日期
                                         </Label>
-                                        <Select
-                                            style={{width: 195}}
-
-                                            showSearch={true}
-                                            allowClear={true}
-                                        >
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
-                                        </Select>
+                                        <DatePicker
+                                            format={format}
+                                            defaultValue={moment()}
+                                            placeholder={dateInputPlaceholder}
+                                        />
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
@@ -2226,16 +2086,10 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             审核时间
                                         </Label>
-                                        <FormControl disabled={!this.props.isEdit}
-                                                     {
-                                                         ...getFieldProps('check_time', {
-                                                             initialValue: _formObject.check_time,
-
-                                                             rules: [{
-                                                                 required: true,
-                                                             }],
-                                                         })
-                                                     }
+                                        <DatePicker
+                                            format={format_time}
+                                            defaultValue={moment()}
+                                            placeholder={dateInputPlaceholder}
                                         />
 
                                     </FormItem>
@@ -2249,8 +2103,6 @@ class BaseInfo extends  Component{
                                             机构
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
-
                                             showSearch={true}
                                             allowClear={true}
                                         >
@@ -2271,8 +2123,6 @@ class BaseInfo extends  Component{
                                             二级业务领域
                                         </Label>
                                         <Select
-                                            style={{width: 195}}
-
                                             showSearch={true}
                                             allowClear={true}
                                         >

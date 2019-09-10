@@ -168,8 +168,6 @@ class IndexView extends Component {
                 <div>
                     <AddFormView { ...this.props } onRef={this.onRef}/>
                 </div>
-
-
             </div>
 
         );
