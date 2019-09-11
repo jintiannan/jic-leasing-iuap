@@ -184,6 +184,10 @@ class IndexView extends Component {
     onalterSearch = ()=>{
         const dataSource = this.serachRef.alterSerach();
         console.log(dataSource);
+        localStorage.setItem('loandealsearch',JSON.stringify(dataSource));
+        this.setState({
+            showSearchPanel:false,
+        })
     }
     
 

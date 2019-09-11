@@ -174,6 +174,16 @@ class SearchPanel extends React.Component {
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
       this.props.onRef(this);
+      let _dataSource = deepClone(this.state.dataSource);
+      let store = JSON.parse(localStorage.getItem('loandealsearch'));
+      if(store!=undefined&&store!=null&&store.length>0){
+      store.map((item,key)=>{
+          if(!item.fixcon){
+            _dataSource.push(item);
+          }
+      });
+      this.setState({dataSource:_dataSource});
+    }
     }
     
     onCellChange = (index, key) => {
