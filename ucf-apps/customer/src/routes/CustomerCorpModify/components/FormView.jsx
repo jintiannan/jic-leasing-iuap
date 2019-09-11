@@ -13,9 +13,9 @@ import {
     Row,
     FormControl,
     Collapse,
-    Tree
+    Tree,
+    PageLayout
 } from 'tinper-bee';
-import PageLayout from 'bee-page-layout';
 import {actions} from 'mirrorx';
 import {SelectField} from 'components/RowField/SelectField'
 

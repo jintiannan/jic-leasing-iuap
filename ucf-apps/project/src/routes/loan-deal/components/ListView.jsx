@@ -49,7 +49,9 @@ class ListView extends Component {
 
     resetTableHeight = (isopen) => {
         let tableHeight = 0;
-        tableHeight = getHeight() - 405;
+        tableHeight = getHeight()*0.5;
+        console.log(getHeight());
+        console.log(tableHeight);
         this.setState({ tableHeight});
     }
 
@@ -311,7 +313,7 @@ class ListView extends Component {
                                     columns={this.plangridColumn}
                                     showHeaderMenu={true}
                                     multiSelect={true}  //false 单选，默认多选                        
-                                    scroll={{y: 100}} //滚动轴高度 //滚动轴高度
+                                    scroll={{y: 90}} //滚动轴高度 //滚动轴高度
                                     height={28} //行高度
                                     bordered //表格有边界
                                     headerDisplayInRow={true}//表头换行用...来表示
@@ -360,7 +362,7 @@ class ListView extends Component {
                                     columns={this.accountgridColumn}
                                     showHeaderMenu={true}
                                     multiSelect={true}  //false 单选，默认多选                        
-                                    scroll={{y: 100}} //滚动轴高度
+                                    scroll={{y: 90}} //滚动轴高度
                                     height={28} //行高度
                                     bordered //表格有边界
                                     headerDisplayInRow={true}//表头换行用...来表示

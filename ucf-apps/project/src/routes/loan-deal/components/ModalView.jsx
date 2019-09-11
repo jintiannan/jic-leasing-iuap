@@ -160,8 +160,6 @@ class ModalView extends Component {
         const { getFieldProps, getFieldError } = this.props.form;
         let formObjAdd = this.props.formObjAdd;
         return (
-
-                <div className='form'>
                 <Modal
                 show={this.props.showModal}
                 onHide={this.close}
@@ -632,8 +630,6 @@ class ModalView extends Component {
                     </div>
                 </Modal.Footer>
             </Modal>
-                                
-                </div>
                 
               
         );
