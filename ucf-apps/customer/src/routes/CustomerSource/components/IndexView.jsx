@@ -146,7 +146,8 @@ class IndexView extends Component {
      * 新增按钮
      */
     onAdd = () =>{
-        actions.customerSource.updateState({showModal : true});
+
+        actions.customerSource.updateState({showModal : true, formObject: this.props.customer});
     };
     render() {
         const { getFieldProps, getFieldError } = this.props.form;
@@ -169,7 +170,7 @@ class IndexView extends Component {
                         View={this.onView}
                         Return={this.onReturn}
                         Save={this.onSave}
-                        Add={this.onAdd}
+                        Add={this.onAdd.bind(this)}
                         Delete={this.onDelete}
                         {...this.props}
                     />

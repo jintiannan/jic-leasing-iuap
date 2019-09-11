@@ -75,6 +75,8 @@ class FormView extends Component {
 
         let customer = {
             name: this.props.formObject.customer_name,
+            customer_name: this.props.formObject.customer_name,
+            customer_code: this.props.formObject.customer_code,
             code: this.props.formObject.customer_code
         };
 

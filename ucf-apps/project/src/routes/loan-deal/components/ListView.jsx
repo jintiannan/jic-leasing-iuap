@@ -49,9 +49,10 @@ class ListView extends Component {
 
     resetTableHeight = (isopen) => {
         let tableHeight = 0;
-        tableHeight = getHeight() - 405;
-        this.setState({ tableHeight});
+        tableHeight = getHeight()*0.5;
+        console.log(getHeight());
         console.log(tableHeight);
+        this.setState({ tableHeight});
     }
 
 
@@ -126,9 +127,8 @@ class ListView extends Component {
      * #关闭功能,如果有页面特殊要求再打开#
      */
     onRowSelect = (record, index, event) => {
-        console.log('行点击事件');
-        actions.loandeal.updateState({loandealIndex: index});
-        actions.loandeal.loadSubList(this.props.queryParam);
+        //actions.loandeal.updateState({loandealIndex: index});
+        //actions.loandeal.loadSubList(this.props.queryParam);
         // console.log('行点击事件');
         // let _record = deepClone(record);
         // _record._checked = _record._checked ? false : true;
@@ -249,8 +249,6 @@ class ListView extends Component {
             loandealObj, loanplanObj, payaccountObj, showLoading,
             showPlanLoading, showAccountLoading, tabKey, loandealIndex
         } = this.props;
-        console.log(loandealObj);
-        console.log(this.props);
 
         let { tableHeight} = this.state;
         return (
@@ -315,7 +313,7 @@ class ListView extends Component {
                                     columns={this.plangridColumn}
                                     showHeaderMenu={true}
                                     multiSelect={true}  //false 单选，默认多选                        
-                                    scroll={{y: 100}} //滚动轴高度 //滚动轴高度
+                                    scroll={{y: 90}} //滚动轴高度 //滚动轴高度
                                     height={28} //行高度
                                     bordered //表格有边界
                                     headerDisplayInRow={true}//表头换行用...来表示
@@ -364,7 +362,7 @@ class ListView extends Component {
                                     columns={this.accountgridColumn}
                                     showHeaderMenu={true}
                                     multiSelect={true}  //false 单选，默认多选                        
-                                    scroll={{y: 100}} //滚动轴高度
+                                    scroll={{y: 90}} //滚动轴高度
                                     height={28} //行高度
                                     bordered //表格有边界
                                     headerDisplayInRow={true}//表头换行用...来表示

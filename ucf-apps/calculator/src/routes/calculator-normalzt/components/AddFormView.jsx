@@ -161,6 +161,10 @@ formatDepositRatio = (value) => {
     }
 }
 
+aformat=(value)=>{
+    value =  value + 1;
+}
+
 
 //子表切换子标签
 onChange = (activeKey) => {
@@ -400,6 +404,7 @@ onChange = (activeKey) => {
                                         iconStyle="one"
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2}
+                                        //format = {this.aformat.bind(this)}
                                         // min={0}
                                         // max={999999}
                                         {

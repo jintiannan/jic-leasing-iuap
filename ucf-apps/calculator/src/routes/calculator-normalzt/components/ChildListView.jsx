@@ -7,6 +7,10 @@ import { Icon, Select, Tooltip, Form, Table } from "tinper-bee";
 import SelectEditCell from 'components/FormRef/SelectEditCell';
 import StringEditCell from 'components/FormRef/StringEditCell';
 import RefEditCell from 'components/FormRef/RefEditCell';
+import TableFormRef from 'components/FormRef/TableFormRefChild';
+import NumberEditCell from 'components/FormRef/NumberEditCell';
+
+
 import { deepClone } from "utils";
   class ChildListView extends Component {
     constructor(props, context) {
@@ -32,7 +36,8 @@ import { deepClone } from "utils";
                   refname: "财务一科"
                 },
                 e: "10次",
-                f: "等额本金",
+                f: {"refname":"人员1","refpk":"cc791b77-bd18-49ab-b3ec-ee83cd40012a"},
+                g: "10000",
                 key: "3",
                 editable: this.props.props.isEdit,
                 
@@ -49,6 +54,7 @@ import { deepClone } from "utils";
             title: "名字",
             dataIndex: "b",
             key: "b",
+            width: 215,
             render: (text, record, index) => (
               <StringEditCell
               colName="名字"
@@ -67,8 +73,22 @@ import { deepClone } from "utils";
               <SelectEditCell
                 value={text}
                 editable = {record.editable}
+                selectSource = {[{"name":"男","value":"0"}, {"name":"女","value":"1"}]}
                 onChange={this.onCellChange(index, "c")}
                 />
+            )
+          },
+          {
+            title: "报价类型",
+            dataIndex: "d",
+            key: "d",
+            width: 215,
+            render: (text, record, index) => (
+              <RefEditCell
+                value={text}
+                editable = {record.editable}
+                onChange={this.onCellChange(index, "d")}
+              />
             )
           },
           {
@@ -97,16 +117,30 @@ import { deepClone } from "utils";
               
           },
           {
-            title: "计算方式",
+            title: "表参照",
             dataIndex: "f",
             key: "f",
             width: 215,
             render: (text, record, index) => (
-              <SelectEditCell
+              <TableFormRef
                 value={text}
-                editable = {record.editable}
+                editable = {record.editable} //是否可编辑
+                title={"表参照"} 
                 onChange={this.onCellChange(index, "f")}
               />
+            )
+          },
+          {
+            title: "金额",
+            dataIndex: "g",
+            key: "g",
+            width: 215,
+            render: (text, record, index) => (
+              <NumberEditCell
+              value={text}
+              editable = {record.editable}
+              onChange={this.onCellChange(index, "g").bind(this)}
+            />
             )
           },
           {
@@ -128,14 +162,14 @@ import { deepClone } from "utils";
       return value => {
         let dataSource = this.state.dataSource;
         dataSource[index][key] = value;
-        //this.setState({ dataSource }, () => console.dir(this.state.dataSource));
+        
         if(key = "c" && value == "男"){
           dataSource[index].cIsEdit = false;
           dataSource[index].e = "不可编辑"; //联动
         }else if(key = "c" && value != "男"){
           dataSource[index].cIsEdit = true;
         }
-        this.setState({ dataSource });
+        this.setState({ dataSource }, () => console.dir(this.state.dataSource));
       };
       
     };

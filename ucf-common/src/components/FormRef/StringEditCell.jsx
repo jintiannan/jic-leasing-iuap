@@ -35,7 +35,7 @@ class StringEditCell extends Component {
   };
 
   handleChange = e => {
-    if (e.target.value === "") this.editWarp.className += " verify-cell";
+    //if (e.target.value === "") this.editWarp.className += " verify-cell"; //加一个样式 短了点 腾出地方当错误提示
     this.setState({ value: e.target.value });
   };
 
@@ -56,7 +56,7 @@ class StringEditCell extends Component {
               onChange={this.handleChange}
               onBlur={this.commitChange}
             />
-            {value === "" ? (
+            {/* {value === "" ? (
               <Tooltip
                 inverse
                 className="u-editable-table-tp"
@@ -69,7 +69,7 @@ class StringEditCell extends Component {
               >
                 <Icon className="uf-exc-t require" />
               </Tooltip>
-            ) : null}
+            ) : null} */}
           </div>
         ) : (
           <div className="editable-cell-text-wrapper" onDoubleClick={this.edit}>

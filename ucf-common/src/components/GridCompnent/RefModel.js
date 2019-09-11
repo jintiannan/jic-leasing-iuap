@@ -45,8 +45,6 @@ class RefModel extends Component {
       request(refModelUrl.tableBodyUrl, { method: 'get' }), //表体数据
     ];
     Promise.all(requestList).then(([columnsData, bodyData]) => {
-    //const columnsData = [{"refUIType":"RefTable","refCode":"new_bd_staff","defaultFieldCount":4,"strFieldCode":["code","name","email","mobile"],"strFieldName":["人员编码","人员名称","人员邮箱","人员电话"],"rootName":"人员-平台表","refName":"人员-平台表","refClientPageInfo":{"pageSize":100,"currPageIndex":0,"pageCount":0,"totalElements":0},"refVertion":"NewRef"}];
-    //const bodyData =[{"status":1,"data":[{"rownum_":1,"code":"001","mobile":"15011430230","name":"人员1","refcode":"001","refpk":"cc791b77-bd18-49ab-b3ec-ee83cd40012a","id":"cc791b77-bd18-49ab-b3ec-ee83cd40012a","refname":"人员1","email":"11@11.com"},{"rownum_":2,"code":"002","mobile":"15011323234","name":"人员2","refcode":"002","refpk":"de2d4d09-51ec-4108-8def-d6a6c5393c3b","id":"de2d4d09-51ec-4108-8def-d6a6c5393c3b","refname":"人员2","email":"22@11.com"},{"rownum_":3,"code":"003","mobile":"15011430232","name":"人员3","refcode":"003","refpk":"004989bb-a705-45ce-88f3-662f87ee6e52","id":"004989bb-a705-45ce-88f3-662f87ee6e52","refname":"人员3","email":"33@33.com"},{"rownum_":4,"code":"004","mobile":"15011430234","name":"人员4","refcode":"004","refpk":"3570cbde-0d43-49ce-ad53-ab27ee6ee7dd","id":"3570cbde-0d43-49ce-ad53-ab27ee6ee7dd","refname":"人员4","email":"33@34.com"},{"rownum_":5,"code":"005","mobile":"15011430235","name":"人员5","refcode":"005","refpk":"5e3a85ec-5e14-4734-8b3a-1e6168426c89","id":"5e3a85ec-5e14-4734-8b3a-1e6168426c89","refname":"人员5","email":"55@26.com"},{"rownum_":6,"code":"006","mobile":"15011323232","name":"人员6","refcode":"006","refpk":"112621b9-b7ae-41b9-9428-61779334c5d6","id":"112621b9-b7ae-41b9-9428-61779334c5d6","refname":"人员6","email":"66@516.com"},{"rownum_":7,"code":"007","mobile":"15011234567","name":"人员7","refcode":"007","refpk":"394bba90-ed0f-4794-a44e-fd9ce6e9257d","id":"394bba90-ed0f-4794-a44e-fd9ce6e9257d","refname":"人员7","email":"55@4.com"},{"rownum_":8,"code":"008","mobile":"15011327890","name":"人员8","refcode":"008","refpk":"a9f4c869-ca0b-4d12-847e-00eca08bfef6","id":"a9f4c869-ca0b-4d12-847e-00eca08bfef6","refname":"人员8","email":"55@556.com"},{"rownum_":9,"code":"A11","mobile":"13111111111","name":"A11","refcode":"A11","refpk":"5febff8b-c272-49e7-904e-954c5bda38a7","id":"5febff8b-c272-49e7-904e-954c5bda38a7","refname":"A11","email":"huangyu@qq.com"},{"rownum_":10,"code":"bpm01","mobile":"18777777777","name":"张一","refcode":"bpm01","refpk":"0dc47840-873a-4ed3-8ae7-c2335a76b385","id":"0dc47840-873a-4ed3-8ae7-c2335a76b385","refname":"张一","email":"shixtf@yonyou.com"}],"page":{"pageSize":10,"currPageIndex":0,"pageCount":2,"totalElements":17},"allpks":null}];
       this.launchTableHeader(columnsData.data);
       this.launchTableData(bodyData.data);
       this.setState({
@@ -178,7 +176,7 @@ class RefModel extends Component {
   render() {
     let { showLoading, showModal, matchData,value } = this.state;
     let { columnsData, tableData, page } = this;
-    let {text,record,index} = this.props;
+    let {text,record,index,dataIndex} = this.props;
     options = {
       miniSearch: true,
       multiple: false,

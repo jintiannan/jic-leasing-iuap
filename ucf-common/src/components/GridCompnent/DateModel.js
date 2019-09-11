@@ -8,16 +8,20 @@ class DateModel extends Component {
         this.state = {  };
     }
 
+    handleChange = (dataIndex,dateFormat,value)=>{
+        this.props.record[dataIndex] = moment(value).format(dateFormat);
+    }
+
 
     render() {
-        let {text,record,index,dateFormat} = this.props;
+        let {text,record,index,dateFormat,dataIndex} = this.props;
         return (
             <div>
                 {record._edit ?<div className = "date_model">
                 <DatePicker
                     format={dateFormat}
-                    defaultValue={moment()}
                     placeholder="选择日期..."
+                    onSelect={this.handleChange.bind(this,dataIndex,dateFormat)}
                     /></div> : <div>{text ? moment(text).format(dateFormat) : ""}</div>}
             </div>
             
