@@ -192,6 +192,7 @@ class ListView extends Component {
         {title:'税额(元)',key:'tax_cash',type:'1'},
         {title:'投放付款方式',key:'pay_method_loan',type:'0'},
         {title:'银票开票日期',key:'make_date_draft',type:'4'},
+        {title:'银票到期日期',key:'end_date_loan',type:'4'},
         {title:'银票保证金比例',key:'deposit_ratio4draft',type:'2'},
         {title:'银票保证金利率',key:'interrate_ratio4draft',type:'1'},
         {title:'计息金额计算方式',key:'calinter_amount_style',type:'0'},

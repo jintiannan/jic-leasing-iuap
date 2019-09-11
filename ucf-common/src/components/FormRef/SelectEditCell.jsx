@@ -34,7 +34,7 @@ class SelectEditCell extends Component {
 
   render() {
     const { value } = this.state;
-    const { editable, selectSource } = this.props;
+    const { editable, data } = this.props;
     return (
       <div className="editable-cell">
         {editable ? (
@@ -46,7 +46,7 @@ class SelectEditCell extends Component {
               onBlur={this.commitChange}
               autoFocus
             >
-              {selectSource.map((item, index) => (
+              {data.map((item, index) => (
                 <Option key={index} value={item.value}>
                   {item.name}
                 </Option>

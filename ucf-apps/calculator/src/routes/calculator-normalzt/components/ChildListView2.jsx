@@ -9,7 +9,7 @@ import StringEditCell from 'components/FormRef/StringEditCell';
 import RefEditCell from 'components/FormRef/RefEditCell';
 import TableFormRef from 'components/FormRef/TableFormRefChild';
 import NumberEditCell from 'components/FormRef/NumberEditCell';
-import DatePickerEditCell from 'components/FormRef/DatePickerEditCell';
+
 
 import { deepClone } from "utils";
   class ChildListView extends Component {
@@ -73,7 +73,7 @@ import { deepClone } from "utils";
               <SelectEditCell
                 value={text}
                 editable = {record.editable}
-                data = {[{"name":"男","value":"0"}, {"name":"女","value":"1"}]}
+                selectSource = {[{"name":"男","value":"0"}, {"name":"女","value":"1"}]}
                 onChange={this.onCellChange(index, "c")}
                 />
             )
@@ -140,19 +140,6 @@ import { deepClone } from "utils";
               value={text}
               editable = {record.editable}
               onChange={this.onCellChange(index, "g").bind(this)}
-            />
-            )
-          },
-          {
-            title: "日期",
-            dataIndex: "h",
-            key: "h",
-            width: 215,
-            render: (text, record, index) => (
-              <DatePickerEditCell
-              value={text}
-              editable = {record.editable}
-              onChange={this.onCellChange(index, "h").bind(this)}
             />
             )
           },
