@@ -7,9 +7,9 @@ import { Icon, Select, Tooltip, Form, Table } from "tinper-bee";
 import { RefTreeWithInput } from "ref-tree";
 
 const option = {
-    title: "树",
-    searchable: true,
-    multiple: false,
+    title: "树", //标题
+    searchable: true, //搜索
+    multiple: false, //多选
     param: {
       refCode: "neworganizition_tree"
     },
@@ -22,12 +22,12 @@ const option = {
       return record.refname;
     }, //显示内容的键
     valueField: "refpk", //真实 value 的键
-    refModelUrl: {
-      treeUrl: "https://mock.yonyoucloud.com/mock/358/blobRefTree",
-      treeUrl: "/pap_basedoc/common-ref/blobRefTree"
-    },
-    matchUrl: "/pap_basedoc/common-ref/matchPKRefJSON",
-    filterUrl: "/pap_basedoc/common-ref/filterRefJSON",
+    // refModelUrl: {
+    //   treeUrl: "https://mock.yonyoucloud.com/mock/358/blobRefTree",
+    //   treeUrl: "/pap_basedoc/common-ref/blobRefTree"
+    // },
+    // matchUrl: "/pap_basedoc/common-ref/matchPKRefJSON",
+    // filterUrl: "/pap_basedoc/common-ref/filterRefJSON",
     lazyModal: false,
     strictMode: true,
     lang: "zh_CN",
@@ -167,8 +167,8 @@ const option = {
       constructor(props, context) {
         super(props, context);
         this.state = {
-          value: this.props.value.d,
-          editable: false
+          value: this.props.value,
+          editable: this.props.editable
         };
         this.refWarp = React.createRef();
       }
@@ -182,7 +182,7 @@ const option = {
       };
   
       commitChange = () => {
-        this.setState({ editable: false });
+        //this.setState({ editable: false });
         if (this.props.onChange) {
           this.props.onChange(this.state.value);
         }
@@ -198,7 +198,8 @@ const option = {
   
       render() {
         const { getFieldProps, getFieldError } = this.props.form;
-        const { value, editable } = this.state;
+        const { value } = this.state;
+        const { editable } = this.props;
         return editable ? (
           <div
             ref={el => (this.refWarp = el)}
@@ -220,12 +221,12 @@ const option = {
                 ]
               })}
             />
-            <span
+            {/* <span
               className="error"
               style={{ display: "block", color: "#f53c32" }}
             >
               {getFieldError("code1")}
-            </span>
+            </span> */}
           </div>
         ) : (
           <div className="editable-cell-text-wrapper" onDoubleClick={this.edit}>

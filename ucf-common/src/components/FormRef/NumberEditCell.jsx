@@ -1,23 +1,22 @@
 /**
- * 下拉框
+ * 金额 千分位
  */
 import React, { Component } from "react";
 import {  } from 'tinper-bee';
-import { Icon, Select, Tooltip, Form } from "tinper-bee";
-const Option = Select.Option;
+import { Icon, InputNumber, Tooltip, Form } from "tinper-bee";
 
-class SelectEditCell extends Component {
+class NumberEditCell extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
-      value: this.props.value,
+      value: parseInt(this.props.value),
       editable: this.props.editable
     };
   }
 
-  handleSelect = value => {
-    this.setState({ value });
-  };
+  // handleSelect = value => {
+  //   this.setState({ value });
+  // };
 
   commitChange = () => {
     //this.setState({ editable: false });
@@ -34,28 +33,27 @@ class SelectEditCell extends Component {
 
   render() {
     const { value } = this.state;
-    const { editable, selectSource } = this.props;
+    const { editable } = this.props;
     return (
       <div className="editable-cell">
         {editable ? (
           <div className="editable-cell-input-wrapper">
-            <Select
-              defaultValue={this.props.value}
+            <InputNumber
+              defaultValue={this.props.value?parseInt(this.props.value):0}
               value={value}
-              onSelect={this.handleSelect}
+              //onSelect={this.handleSelect}
               onBlur={this.commitChange}
               autoFocus
-            >
-              {selectSource.map((item, index) => (
-                <Option key={index} value={item.value}>
-                  {item.name}
-                </Option>
-              ))}
-            </Select>
+              iconStyle="one"
+              toThousands = {true}  //是否显示千分位
+              precision = {2}
+              // min={0}
+              // max={999999}
+            />
           </div>
         ) : (
           <div className="editable-cell-text-wrapper" onDoubleClick={this.edit.bind(this)}>
-            {this.props.value || ""}
+            {this.props.value?parseInt(this.props.value):0 || ""}
           </div>
         )}
       </div>
@@ -63,4 +61,4 @@ class SelectEditCell extends Component {
   }
 }
 
-export default Form.createForm()(SelectEditCell);
+export default Form.createForm()(NumberEditCell);
