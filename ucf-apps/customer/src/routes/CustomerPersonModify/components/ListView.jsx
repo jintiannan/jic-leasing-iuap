@@ -30,7 +30,7 @@ class ListView extends Component {
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
-        actions.customerPersonApply.loadList(this.props.queryParam);
+        actions.customerPersonModify.loadList(this.props.queryParam);
     }
 
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
@@ -45,7 +45,7 @@ class ListView extends Component {
     freshData = (pageIndex) => {
         let queryParam = deepClone(this.props.queryParam); // 深拷贝查询条件从 action 里
         queryParam['pageIndex'] = pageIndex;
-        actions.customerPersonApply.loadList(queryParam);
+        actions.customerPersonModify.loadList(queryParam);
     };
 
     /**
@@ -60,7 +60,7 @@ class ListView extends Component {
         if (value && value.toString().toLowerCase() === "all") { // 对分页 pageSize 为 all 进行处理，前后端约定
             pageSize = 1;
         }
-        actions.customerPersonApply.loadList(queryParam);
+        actions.customerPersonModify.loadList(queryParam);
     };
 
     /**
@@ -82,8 +82,8 @@ class ListView extends Component {
         // } else {
         //     _selectedList.splice(_selectedList.findIndex(item => item.pk === record.pk), 1)
         // }
-        // actions.customerPersonApply.updateRowData(param,index);
-        // actions.customerPersonApply.updateState({ selectedList : _selectedList });
+        // actions.projectInfo.updateRowData(param,index);
+        // actions.projectInfo.updateState({ selectedList : _selectedList });
 
 
 
@@ -119,7 +119,7 @@ class ListView extends Component {
             _formObj = deepClone(_selectedList[0]);
         }
 
-        actions.customerPersonApply.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj});
+        actions.customerPersonModify.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj});
     };
     /**
      * 重置表格高度计算回调
@@ -163,7 +163,7 @@ class ListView extends Component {
                         headerDisplayInRow={true}//表头换行用...来表示
                         bodyDisplayInRow={true}//表体换行用...来表示
                         headerHeight={40} //表头高度
-                        bodyStyle={{'height':tableHeight,'background-color':'rgb(241, 242, 245)'}} //表体样式
+                        bodyStyle={{'height':tableHeight ,'background-color':'rgb(241, 242, 245)'}} //表体样式
                         sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
                         hideHeaderScroll={false} //无数据时是否显示表头
                         //排序属性设置
@@ -173,7 +173,7 @@ class ListView extends Component {
                         }}
                         //分页对象
                         paginationObj = {{
-                            //activePage : this.props.queryParam.pageIndex,//活动页
+                            activePage : this.props.queryParam.pageIndex,//活动页
                             total : this.props.list.length,//总条数
                             items: this.props.queryObj.totalPages,//总页数
                             freshData: this.freshData, //活动页改变,跳转指定页数据
@@ -191,6 +191,7 @@ class ListView extends Component {
                         }}
                         onRowClick={this.onRowSelect}
                         getSelectedDataFunc={this.getSelectedDataFunc}
+
                     />
             </div>
         );

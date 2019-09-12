@@ -21,7 +21,7 @@ class FormView extends Component {
             open: true, //各个标签
             open2: true,
             open3: true,
-            
+
         };
     }
 
@@ -80,13 +80,13 @@ class FormView extends Component {
     //onChange事件
     handleChange = (value) =>{
         if(value == '01'){
-            
+
         }
     }
 
     //绑定子组件
     onRef = (ref) => {
-        this.child = ref;        
+        this.child = ref;
     }
 
     mainForm = [
@@ -113,10 +113,10 @@ class FormView extends Component {
                         <span onClick={() => this.setState({ open: !this.state.open })} >
                         <FormSplitHeader title={'项目信息'} />
                         </span>
-    
+
                     <Collapse in={this.state.open}>
                             <Form>
-                           
+
                                         <div>
                                             {
                                                 this.mainForm.map((value,key) => {
@@ -127,42 +127,41 @@ class FormView extends Component {
                                                                 <Icon type="uf-mi" className='mast'></Icon>
                                                                 {value.label}
                                                             </Label>
-                                                            <value.com {...this.props}                                               
-                                                                title={value.label} 
+                                                            <value.com {...this.props}
+                                                                title={value.label}
                                                                 name = {value.field}
                                                                 {
                                                                     ...getFieldProps(value.field, {
                                                                         initialValue: formObject[value.field],
                                                                         rules: [{
-                                                                            required: true, 
+                                                                            required: true,
                                                                         }],
                                                                     })
                                                                 }>
                                                             </value.com>
-                                                        </FormItem>    
+                                                        </FormItem>
                                                     </Col>)
                                                 })
                                             }
-                                            
+
                                            </div>
-    
                             </Form>
-    
+
                     </Collapse>
                     </div>
-    
-    
+
+
                     <div>
                         <span onClick={() => this.setState({ open2: !this.state.open2 })} >
                         <FormSplitHeader title={'合同信息'} />
                     </span>
-    
+
                         <Collapse in={this.state.open2}>
-    
+
                         <Form>
-                           
+
                                     <div>
-                                      
+
                                             <Col md={4} xs={4} sm={4}>
                               <FormItem>
                                                     <Label>
@@ -180,8 +179,8 @@ class FormView extends Component {
                                                         }
                                                     />
                                                 </FormItem>
-                                    
-                        
+
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                             <FormItem>
@@ -200,7 +199,7 @@ class FormView extends Component {
                                                         }
                                                     />
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -219,7 +218,7 @@ class FormView extends Component {
                                                         }
                                                     />
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -243,7 +242,7 @@ class FormView extends Component {
                                         }
                                     </span>
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -267,7 +266,7 @@ class FormView extends Component {
                                         }
                                     </span>
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -291,7 +290,7 @@ class FormView extends Component {
                                         }
                                     </span>
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -315,7 +314,7 @@ class FormView extends Component {
                                         }
                                     </span>
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -339,7 +338,7 @@ class FormView extends Component {
                                         }
                                     </span>
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -364,26 +363,26 @@ class FormView extends Component {
                                     </span>
                                                 </FormItem>
                                             </Col>
-                                    
+
                                     </div>
-                          
-    
+
+
                             </Form>
-    
+
                         </Collapse>
                     </div>
-    
+
                     <div>
                         <span onClick={() => this.setState({ open3: !this.state.open3 })} >
                         <FormSplitHeader title={'客户信息'} />
                     </span>
-    
+
                         <Collapse in={this.state.open3}>
-    
+
                         <Form>
-                              
+
                                     <div>
-                                        
+
                                             <Col md={4} xs={4} sm={4}>
                               <FormItem>
                                                     <Label>
@@ -401,8 +400,8 @@ class FormView extends Component {
                                                         }
                                                     />
                                                 </FormItem>
-                                    
-                        
+
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                             <FormItem>
@@ -421,7 +420,7 @@ class FormView extends Component {
                                                         }
                                                     />
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -440,7 +439,7 @@ class FormView extends Component {
                                                         }
                                                     />
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -464,7 +463,7 @@ class FormView extends Component {
                                         }
                                     </span>
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -488,7 +487,7 @@ class FormView extends Component {
                                         }
                                     </span>
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -512,7 +511,7 @@ class FormView extends Component {
                                         }
                                     </span>
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -536,7 +535,7 @@ class FormView extends Component {
                                         }
                                     </span>
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -560,7 +559,7 @@ class FormView extends Component {
                                         }
                                     </span>
                                                 </FormItem>
-    
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -585,16 +584,16 @@ class FormView extends Component {
                                     </span>
                                                 </FormItem>
                                             </Col>
-                                     
+
                                     </div>
-                      
-    
+
+
                             </Form>
-    
+
                         </Collapse>
                     </div>
                     </div>
-    
+
                     <div className="childListView">
                     <Tabs
                         defaultActiveKey="1"
@@ -617,13 +616,13 @@ class FormView extends Component {
                         <TabPane tab='租金计划' key="6"> <ChildListView { ...this } ref="rentLoan" /></TabPane>
                     </Tabs>
                     </div>
-                </div>  
+                </div>
             );
-            
+
         }else{
             return <div></div>
         }
-        
+
     }
 }
 

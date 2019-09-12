@@ -69,11 +69,11 @@ class AddFormView extends Component {
         // Message.create({content: '完成', color: 'successlight'});
         let newRole = deepClone(this.props.list);
         newRole.push(this.props.form.getFieldsValue());
-        actions.customerPersonApply.updateState({list: newRole, showModal: false, isEdit: false});
+        actions.customerPersonModify.updateState({list: newRole, showModal: false, isEdit: false});
     };
 
     close = () => {
-        actions.customerPersonApply.updateState({showModal: false, isEdit: false});
+        actions.customerPersonModify.updateState({showModal: false, isEdit: false});
     };
     changeDropup = (state) => {
         this.setState({

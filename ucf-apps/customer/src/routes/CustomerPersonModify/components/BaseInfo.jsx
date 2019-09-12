@@ -1,32 +1,32 @@
-import React, {Component} from 'react';
+import Rect, {Component} from 'react'
+import FormSplitHeader from 'components/FormSplitHeader'
 import {
     Form,
     Icon,
     Button,
     Label,
-    Switch,
-    Checkbox,
-    Radio,
     Select,
     Col,
     Row,
     FormControl,
-    Collapse
+    Collapse,
+
 } from 'tinper-bee';
 import {deepClone} from "utils";
-import {SelectField} from 'components/RowField/SelectField'
-import './index.less';
-import DatePicker from "tinper-bee/lib/Datepicker";
-import FormSplitHeader from 'components/FormSplitHeader'
-import {enumConstant} from "../../../../../../ucf-common/src/utils/enums";
 import moment from "moment";
+import DatePicker from "tinper-bee/lib/Datepicker";
+import './index.less';
+import {enumConstant} from "../../../../../../ucf-common/src/utils/enums";
+import FormTreeRef from "../../../../../../ucf-common/src/components/FormTreeRef/FormTreeRef";
 const format = "YYYY-MM-DD";
 const format_time = "YYYY-MM-DD HH:mm:ss";
 
 const dateInputPlaceholder = "选择日期";
+
 const FormItem = Form.FormItem;
 
-class FormView extends Component {
+class BaseInfo extends  Component{
+
     constructor(props) {
         super(props);
         this.state = {
@@ -36,35 +36,34 @@ class FormView extends Component {
             open3: true,
             open4: true,
             open5: true,
-
+            open6: true,
+            open7: true,
+            open8: true,
         };
     }
-
-    //组件生命周期方法-在渲染前调用,在客户端也在服务端
-    componentWillMount() {
-
-    }
+    form = [
+        {label:'客户名称',field:'customer_name',com:FormControl,required:true},
+        {label:'客户编号',field:'customer_code',com:FormControl,required:true},
+        {label:'客户英文名',field:'customer_eng_name',com:FormControl,required:true},
+        {label:'是否授权征信客户',field:'if_warrant_cust',com:Select, data: enumConstant("yesOrNo"), required:true},
+        {label:'客户性质',field:'customer_property',com:Select,required:true},
+        {label:'客户性质(内部)',field:'customer_property_in',com:Select,required:true},
+        {label:'客户类型',field:'cusotmer_class_temp',com:Select,required:true},
+        {label:'经济性质',field:'economic_type',com:Select,required:true},
+        {label:'注册地址',field:'reg_address',com:FormControl,required:true},
+    ];
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
-        this.props.onRef(this);
+
     }
 
-    //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
-    componentWillReceiveProps(nextProps) {
-    }
-
-    handleChange = (value) => {
-        if (value == '暂存') {
-            this.props.form.setFieldsValue({'meetingnper': 555});
-        }
-    };
-
-    render() {
+    render () {
         const {getFieldProps, getFieldError} = this.props.form;
-        let _formObject = deepClone(this.props.formObject);
+        // let _formObject = deepClone(this.props.formObject);
+        let _formObject = this.props.formObject;
+        let formObject = deepClone(_formObject);
         return (
-
             <div className='common-form'>
                 <div>
                     <div> <span onClick={() => this.setState({open: !this.state.open})}>
@@ -2027,9 +2026,7 @@ class FormView extends Component {
 
                 </div>
             </div>
-
-        );
+        )
     }
 }
-
-export default Form.createForm()(FormView);
+export default Form.createForm()(BaseInfo);

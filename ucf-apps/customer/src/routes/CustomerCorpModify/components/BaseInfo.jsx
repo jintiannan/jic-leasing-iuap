@@ -13,10 +13,11 @@ import {
 
 } from 'tinper-bee';
 import {deepClone} from "utils";
-import {actions} from "mirrorx";
 import moment from "moment";
 import DatePicker from "tinper-bee/lib/Datepicker";
 import './index.less';
+import {enumConstant} from "../../../../../../ucf-common/src/utils/enums";
+import FormTreeRef from "../../../../../../ucf-common/src/components/FormTreeRef/FormTreeRef";
 const format = "YYYY-MM-DD";
 const format_time = "YYYY-MM-DD HH:mm:ss";
 
@@ -40,6 +41,17 @@ class BaseInfo extends  Component{
             open8: true,
         };
     }
+    form = [
+        {label:'客户名称',field:'customer_name',com:FormControl,required:true},
+        {label:'客户编号',field:'customer_code',com:FormControl,required:true},
+        {label:'客户英文名',field:'customer_eng_name',com:FormControl,required:true},
+        {label:'是否授权征信客户',field:'if_warrant_cust',com:Select, data: enumConstant("yesOrNo"), required:true},
+        {label:'客户性质',field:'customer_property',com:Select,required:true},
+        {label:'客户性质(内部)',field:'customer_property_in',com:Select,required:true},
+        {label:'客户类型',field:'cusotmer_class_temp',com:Select,required:true},
+        {label:'经济性质',field:'economic_type',com:Select,required:true},
+        {label:'注册地址',field:'reg_address',com:FormControl,required:true},
+    ];
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
@@ -48,7 +60,9 @@ class BaseInfo extends  Component{
 
     render () {
         const {getFieldProps, getFieldError} = this.props.form;
-        let _formObject = deepClone(this.props.formObject);
+        // let _formObject = deepClone(this.props.formObject);
+        let _formObject = this.props.formObject;
+        let formObject = deepClone(_formObject);
         return (
             <div className="common-form">
 
@@ -58,8 +72,38 @@ class BaseInfo extends  Component{
                                       </span>
                     </div>
                     <Collapse in={this.state.open} clssName="form-item">
+                        {/*<Form>*/}
+                            {/*{*/}
+                                {/*this.form.map((value,key) => {*/}
+                                    {/*return (*/}
+                                        {/*<Col md={4} xs={4} sm={4}>*/}
+                                            {/*<FormItem>*/}
+                                                {/*<Label>*/}
+                                                    {/*<Icon type="uf-mi" className='mast'></Icon>*/}
+                                                    {/*{value.label}*/}
+                                                {/*</Label>*/}
+                                                {/*<value.com {...this.props}*/}
+                                                           {/*title={value.label}*/}
+                                                           {/*name = {value.field}*/}
+                                                           {/*disabled={!this.props.isEdit}*/}
+                                                           {/*data={value.data ? value.data: ''}*/}
+                                                           {/*{*/}
+                                                               {/*...getFieldProps(value.field, {*/}
+                                                                   {/*initialValue: formObject[value.field],*/}
+                                                                   {/*rules: [{*/}
+                                                                       {/*required: true,*/}
+                                                                   {/*}],*/}
+                                                               {/*})*/}
+                                                           {/*}>*/}
+                                                {/*</value.com>*/}
+                                            {/*</FormItem>*/}
+                                        {/*</Col>)*/}
+                                {/*})*/}
+                            {/*}*/}
+
+                        {/*</Form>*/}
                         <Form>
-                            <Row>
+                                <Row>
                                 <Col md={4} xs={4} sm={4}>
                                     <FormItem>
                                         <Label>
@@ -77,9 +121,7 @@ class BaseInfo extends  Component{
                                                          })
                                                      }
                                         />
-
                                     </FormItem>
-
                                 </Col>
 
                                 <Col md={4} xs={4} sm={4}>
@@ -88,7 +130,7 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             客户编号
                                         </Label>
-                                        <FormControl disabled={!this.props.isEdit}
+                                        <FormControl disabled={true}
                                                      {
                                                          ...getFieldProps('customer_code', {
                                                              initialValue: _formObject.customer_code,
@@ -155,17 +197,15 @@ class BaseInfo extends  Component{
                                             是否授权征信客户
                                         </Label>
                                         <Select
-
+                                            {
+                                                ...getFieldProps('customer_short', {
+                                                    initialValue: _formObject.customer_short,
+                                                })
+                                            }
+                                            data={enumConstant("yesOrNo")}
+                                            disabled={!this.props.isEdit}
                                             showSearch={true}
-                                            allowClear={true}
-                                        >
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
+                                            allowClear={true}>
                                         </Select>
                                     </FormItem>
                                 </Col>
@@ -175,20 +215,14 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             客户性质
                                         </Label>
-                                        <Select
-
-
-                                            showSearch={true}
-                                            allowClear={true}
+                                        <FormTreeRef
+                                            {
+                                                ...getFieldProps('customer_property', {
+                                                    initialValue: _formObject.customer_property,
+                                                })
+                                            }
                                         >
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
-                                        </Select>
+                                        </FormTreeRef>
                                     </FormItem>
                                 </Col>
 
@@ -201,18 +235,14 @@ class BaseInfo extends  Component{
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             客户性质(内部)
                                         </Label>
-                                        <Select
-
-                                            showSearch={true}
-                                            allowClear={true}>
-                                            <Option value="all">全部</Option>
-                                            <Option value="confirming">待确认</Option>
-                                            <Option value="executing">执行中</Option>
-                                            <Option value="completed">
-                                                已办结
-                                            </Option>
-                                            <Option value="termination">终止</Option>
-                                        </Select>
+                                        <FormTreeRef
+                                            {
+                                                ...getFieldProps('customer_property_in', {
+                                                    initialValue: _formObject.customer_property_in,
+                                                })
+                                            }
+                                        >
+                                        </FormTreeRef>
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
@@ -260,9 +290,9 @@ class BaseInfo extends  Component{
                             </Row>
                             <Row>
 
-                                <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                <Col md={12} xs={12} sm={12}>
+                                    <FormItem className="remark flex">
+                                        <Label style={{width: '12.5%' }}>
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             注册地址
                                         </Label>
@@ -282,6 +312,21 @@ class BaseInfo extends  Component{
 
                                 </Col>
                             </Row>
+                            {/*<Row>*/}
+                                {/*<Col md={12} xs={12}>*/}
+                                    {/*<FormItem className="remark flex">*/}
+                                        {/*<Label>*/}
+                                            {/*<Icon type="uf-mi" className='mast'></Icon>*/}
+                                            {/*注册地址*/}
+                                        {/*</Label>*/}
+                                        {/*<FormControl disabled={!this.props.isEdit} componentClass='textarea'*/}
+                                                     {/*{*/}
+                                                         {/*...getFieldProps('mark', {}*/}
+                                                         {/*) }*/}
+                                        {/*/>*/}
+                                    {/*</FormItem>*/}
+                                {/*</Col>*/}
+                            {/*</Row>*/}
                         </Form>
                     </Collapse>
 
@@ -644,21 +689,25 @@ class BaseInfo extends  Component{
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
-                                            <Icon type="uf-mi" className='mast'></Icon>
-                                            证件有效期(开始)
-                                        </Label>
-                                        <DatePicker
-                                            format={format}
-                                            defaultValue={moment()}
-                                            placeholder={dateInputPlaceholder}
-                                        />
-                                    </FormItem>
+
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    证件有效期(开始)
+                                                </Label>
+
+                                                <DatePicker
+                                                    format={format}
+                                                    defaultValue={moment()}
+                                                    placeholder={dateInputPlaceholder}
+                                                />
+
+                                        </FormItem>
+
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             证件有效期(截止)
                                         </Label>
@@ -672,8 +721,8 @@ class BaseInfo extends  Component{
                             </Row>
                             <Row>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             最新年检日期
                                         </Label>
@@ -704,8 +753,8 @@ class BaseInfo extends  Component{
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             贷款卡最新年审时间
                                         </Label>
@@ -801,8 +850,8 @@ class BaseInfo extends  Component{
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             成立日期
                                         </Label>
@@ -814,8 +863,8 @@ class BaseInfo extends  Component{
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             营业执照登记日
                                         </Label>
@@ -829,8 +878,8 @@ class BaseInfo extends  Component{
                             </Row>
                             <Row>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             营业执照到期日
                                         </Label>
@@ -842,8 +891,8 @@ class BaseInfo extends  Component{
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             营业执照最新年审日
                                         </Label>
@@ -1966,25 +2015,23 @@ class BaseInfo extends  Component{
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
-                                            <Icon type="uf-mi" className='mast'></Icon>
-                                            操作日期
-                                        </Label>
-                                        <DatePicker
-                                            format={format}
-                                            // onSelect={this.onSelect}
-                                            // onChange={this.onChange}
-                                            // locale={zhCN}
 
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">操作日期</Label>
+                                        <DatePicker
+                                            {
+                                                ...getFieldProps('time', {
+                                                    }
+                                                ) }
+                                            format={format}
                                             defaultValue={moment()}
                                             placeholder={dateInputPlaceholder}
                                         />
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             操作时间
                                         </Label>
@@ -2020,8 +2067,8 @@ class BaseInfo extends  Component{
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             最新变更日期
                                         </Label>
@@ -2033,8 +2080,8 @@ class BaseInfo extends  Component{
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             最新变更时间
                                         </Label>
@@ -2068,8 +2115,8 @@ class BaseInfo extends  Component{
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             审核日期
                                         </Label>
@@ -2081,8 +2128,8 @@ class BaseInfo extends  Component{
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                    <FormItem className='time flex'>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             审核时间
                                         </Label>
