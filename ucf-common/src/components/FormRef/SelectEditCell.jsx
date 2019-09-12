@@ -10,7 +10,7 @@ class SelectEditCell extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
-      value: this.props.value,
+      value: this.props.value?this.props.value.value:"",
       editable: this.props.editable
     };
   }
@@ -55,7 +55,7 @@ class SelectEditCell extends Component {
           </div>
         ) : (
           <div className="editable-cell-text-wrapper" onDoubleClick={this.edit.bind(this)}>
-            {this.props.value || ""}
+            {this.props.value?this.props.value.name:"" || ""}
           </div>
         )}
       </div>

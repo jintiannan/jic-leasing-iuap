@@ -5,7 +5,11 @@ import { SelectField } from 'components/RowField/SelectField'
 import FormSplitHeader from 'components/FormSplitHeader'
 import DatePicker from "tinper-bee/lib/Datepicker";
 import ChildListView1 from './ChildListView1';
-import ChildListView from './ChildListView';
+import ChildListView2 from './ChildListView2';
+import ChildListView3 from './ChildListView3';
+import ChildListView4 from './ChildListView4';
+import ChildListView5 from './ChildListView5';
+import ChildListView6 from './ChildListView6';
 import TableFormRef from 'components/FormRef/TableFormRef';
 //参照组件职级
 import { RefWalsinLevel } from 'components/RefViews';
@@ -19,6 +23,7 @@ class FormView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            activeKey: 1,
             open: true, //各个标签
             open2: true,
             open3: true,
@@ -52,7 +57,7 @@ class FormView extends Component {
 
     //子表切换子标签
     onChange = (activeKey) => {
-        console.log(`onChange ${activeKey} o-^-o`);
+        //console.log(`onChange ${activeKey} o-^-o`);
         this.setState({
             activeKey,
         });
@@ -60,23 +65,26 @@ class FormView extends Component {
 
     //字表添加数据
     add=()=>{
-        let dataSource = deepClone(this.child.state.dataSource);
+        let key = this.state.activeKey;
+        let childs = "child" + key;
+        let dataSource = deepClone(this[childs].state.dataSource);
         let index = dataSource.length + 1;
         let newData = {
             a: index,  //序号
-            editable: true,
             cIsEdit: true, //转为c字段提供 可不可编辑判断
         };
         dataSource.push(newData);
-        this.child.setState({
+        this[childs].setState({
             dataSource:dataSource
         });
     }
     //字表删除数据
-    del=(key)=>{
-        let dataSource = deepClone(this.child.state.dataSource);
+    del=(index)=>{
+        let key = this.state.activeKey;
+        let childs = "child" + key;
+        let dataSource = deepClone(this[childs].state.dataSource);
         dataSource.splice(dataSource.length-1,1);
-        this.child.setState({
+        this[childs].setState({
             dataSource:dataSource
         });
     }
@@ -89,8 +97,31 @@ class FormView extends Component {
     }
 
     //绑定子组件
-    onRef = (ref) => {
-        this.child = ref;        
+    onRef1 = (ref) => {
+        this.child1 = ref;        
+    }
+
+    //绑定子组件2
+    onRef2 = (ref) => {
+        this.child2 = ref;        
+    }
+
+    //绑定子组件3
+    onRef3 = (ref) => {
+        this.child3 = ref;        
+    }
+    //绑定子组件4
+    onRef4 = (ref) => {
+        this.child4 = ref;        
+    }
+    //绑定子组件5
+    onRef5 = (ref) => {
+        this.child5 = ref;        
+    }
+
+    //绑定子组件6
+    onRef6 = (ref) => {
+        this.child6 = ref;        
     }
 
     mainForm1 = [
@@ -463,12 +494,12 @@ class FormView extends Component {
                             </div>
                             }
                     >
-                        <TabPane tab='投放计划' key="1"> <ChildListView1 { ...this } ref="onTheLoan" onRef={this.onRef}/></TabPane>
-                        <TabPane tab='保证金计划' key="2"> <ChildListView { ...this } ref="marginLoan" /></TabPane>
-                        <TabPane tab='手续费计划' key="3"> <ChildListView { ...this } ref="commissionLoan" /></TabPane>
-                        <TabPane tab='中间费用支出计划' key="4"> <ChildListView { ...this } ref="middleCostLoan" /></TabPane>
-                        <TabPane tab='其他收支计划' key="5"> <ChildListView { ...this } ref="otherLoan" /></TabPane>
-                        <TabPane tab='租金计划' key="6"> <ChildListView { ...this } ref="rentLoan" /></TabPane>
+                        <TabPane tab='投放计划' key="1"> <ChildListView1 { ...this } ref="onTheLoan" onRef={this.onRef1}/></TabPane>
+                        <TabPane tab='保证金计划' key="2"> <ChildListView2 { ...this } ref="marginLoan" onRef={this.onRef2}/></TabPane>
+                        <TabPane tab='手续费计划' key="3"> <ChildListView3 { ...this } ref="commissionLoan" onRef={this.onRef3}/></TabPane>
+                        <TabPane tab='中间费用支出计划' key="4"> <ChildListView4 { ...this } ref="middleCostLoan" onRef={this.onRef4}/></TabPane>
+                        <TabPane tab='其他收支计划' key="5"> <ChildListView5 { ...this } ref="otherLoan" onRef={this.onRef5}/></TabPane>
+                        <TabPane tab='租金计划' key="6"> <ChildListView6 { ...this } ref="rentLoan" onRef={this.onRef6}/></TabPane>
                     </Tabs>
                     </div>
                 </div>  

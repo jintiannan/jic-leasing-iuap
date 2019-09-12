@@ -217,6 +217,7 @@ class ListView extends Component {
         {title:'计划收取日期',key:'plan_date',type:'4'},
         {title:'交易类别',key:'trans_type',type:'0'},
         {title:'不含税(元)',key:'lease_cash_corpus',type:'0'},
+        {title:'税额(元)',key:'lease_cash_tax',type:'0'},
         {title:'发生金额(元)',key:'lease_cash',type:'1'},
         {title:'备注',key:'memo',type:'0'},
     ]

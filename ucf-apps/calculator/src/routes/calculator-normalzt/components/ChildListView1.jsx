@@ -1,5 +1,5 @@
 /**
- *字表列标配
+ *字表列标配 投放计划
  */
 import React, { Component } from "react";
 import {  } from 'tinper-bee';
@@ -14,7 +14,7 @@ import DatePickerEditCell from 'components/FormRef/DatePickerEditCell';
 
 
 import { deepClone } from "utils";
-  class ChildListView extends Component {
+  class ChildListView1 extends Component {
     constructor(props, context) {
       super(props);
       this.state = {
@@ -22,8 +22,11 @@ import { deepClone } from "utils";
           dataSource: [
             {
               index: "1",
-              editable: this.props.props.isEdit,
-                
+              plan_date_loan:"2017-01-01",
+              plan_cash_loan:"10000",
+              plan_cash_corpus:"10000",
+              tax_rate:{name:'6%',value:'6'},
+            
              }
         ],
         //表头
@@ -42,7 +45,7 @@ import { deepClone } from "utils";
               <DatePickerEditCell
               format = {"YYYY-MM-DD"} //默认可自定义
               value={text}
-              editable = {record.editable}
+              editable = {this.props.props.isEdit}
               onChange={this.onCellChange(index, "plan_date_loan").bind(this)}
             />
             )
@@ -57,7 +60,7 @@ import { deepClone } from "utils";
                 value={text}
                 toThousands = {true}  //是否显示千分位  默认true
                 precision = {2} //默认2
-                editable = {record.editable}
+                editable = {this.props.props.isEdit}
                 onChange={this.onCellChange(index, "plan_cash_loan")}
                 />
             )
@@ -70,7 +73,7 @@ import { deepClone } from "utils";
             render: (text, record, index) => (
               <NumberEditCell
                 value={text}
-                editable = {record.editable}
+                editable = {this.props.props.isEdit}
                 toThousands = {true}  //是否显示千分位  默认true
                 precision = {2} //默认2
                 onChange={this.onCellChange(index, "plan_cash_corpus")}
@@ -85,7 +88,7 @@ import { deepClone } from "utils";
             render: (text, record, index) => {
               return <SelectEditCell
                   value={text}
-                  editable = {record.editable}
+                  editable = {this.props.props.isEdit}
                   data = {[{name:'3%',value:'3'},{name:'6%',value:'6'},{name:'17%',value:'17'}
                         ,{name:'0%',value:'0'},{name:'11%',value:'11'},{name:'16%',value:'16'},{name:'10%',value:'10'}
                         ,{name:'13%',value:'13'},{name:'9%',value:'9'}]}
@@ -103,7 +106,7 @@ import { deepClone } from "utils";
                 value={text}
                 toThousands = {true}  //是否显示千分位  默认true
                 precision = {2} //默认2
-                editable = {record.editable} //是否可编辑
+                editable = {this.props.props.isEdit} //是否可编辑
                 onChange={this.onCellChange(index, "tax_cash")}
               />
             )
@@ -116,7 +119,7 @@ import { deepClone } from "utils";
             render: (text, record, index) => (
               <SelectEditCell
               value={text}
-              editable = {record.editable}
+              editable = {this.props.props.isEdit}
               data={[{name:'现金',value:'0'},{name:'银票',value:'1'}]}
               onChange={this.onCellChange(index, "g").bind(this)}
             />
@@ -131,7 +134,7 @@ import { deepClone } from "utils";
               <DatePickerEditCell
               value={text}
               format = {"YYYY-MM-DD"} //默认可自定义
-              editable = {record.editable}
+              editable = {this.props.props.isEdit}
               onChange={this.onCellChange(index, "make_date_draft").bind(this)}
             />
             )
@@ -145,7 +148,7 @@ import { deepClone } from "utils";
               <DatePickerEditCell
               format = {"YYYY-MM-DD"} //默认可自定义
               value={text}
-              editable = {record.editable}
+              editable = {this.props.props.isEdit}
               onChange={this.onCellChange(index, "end_date_loan").bind(this)}
             />
             )
@@ -158,7 +161,7 @@ import { deepClone } from "utils";
             render: (text, record, index) => (
               <SelectEditCell
               value={text}
-              editable = {record.editable}
+              editable = {this.props.props.isEdit}
               data = {[]}
               onChange={this.onCellChange(index, "deposit_ratio4draft").bind(this)}
             />
@@ -172,7 +175,7 @@ import { deepClone } from "utils";
             render: (text, record, index) => (
               <SelectEditCell
               value={text}
-              editable = {record.editable}
+              editable = {this.props.props.isEdit}
               data={[{name:'3%',value:'3'},{name:'6%',value:'6'},{name:'17%',value:'17'}
                         ,{name:'0%',value:'0'},{name:'11%',value:'11'},{name:'16%',value:'16'},{name:'10%',value:'10'}
                         ,{name:'13%',value:'13'},{name:'9%',value:'9'}]}
@@ -188,7 +191,7 @@ import { deepClone } from "utils";
             render: (text, record, index) => (
               <SelectEditCell
               value={text}
-              editable = {record.editable}
+              editable = {this.props.props.isEdit}
               data={[{name:'全额起息',value:'0'}]}
               onChange={this.onCellChange(index, "calinter_amount_style").bind(this)}
             />
@@ -224,4 +227,4 @@ import { deepClone } from "utils";
       
     }
   }
-  export default Form.createForm()(ChildListView);
+  export default Form.createForm()(ChildListView1);
