@@ -1,22 +1,24 @@
 /**
- * 金额 千分位
+ * 下拉框
  */
 import React, { Component } from "react";
 import {  } from 'tinper-bee';
-import { Icon, InputNumber, Tooltip, Form } from "tinper-bee";
+import { Icon, Select, Tooltip, Form } from "tinper-bee";
+import DatePicker from "tinper-bee/lib/Datepicker";
 
-class NumberEditCell extends Component {
+
+class DatePickerEditCell extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
-      value: parseInt(this.props.value),
+      value: this.props.value,
       editable: this.props.editable
     };
   }
 
-  // handleSelect = value => {
-  //   this.setState({ value });
-  // };
+  handleSelect = value => {
+    this.setState({ value });
+  };
 
   commitChange = () => {
     //this.setState({ editable: false });
@@ -33,29 +35,24 @@ class NumberEditCell extends Component {
 
   render() {
     const { value } = this.state;
-    const { editable,toThousands,precision } = this.props;
+    const { editable, format} = this.props;
     return (
       <div className="editable-cell">
         {editable ? (
           <div className="editable-cell-input-wrapper">
-            <InputNumber
-              defaultValue={this.props.value?parseInt(this.props.value):0}
+            <DatePicker
+              defaultValue={this.props.value}
               value={value}
-              //onSelect={this.handleSelect}
+              format = {format?format:"YYYY-MM-DD"}
+              onSelect={this.handleSelect}
               onBlur={this.commitChange}
               autoFocus
-              iconStyle="one"
-              toThousands = {toThousands?toThousands:true}  //是否显示千分位
-              precision = {precision?precision:2} //精度
-              // min={0}
-              // max={999999}
-            />
+            >
+            </DatePicker>
           </div>
         ) : (
           <div className="editable-cell-text-wrapper" onDoubleClick={this.edit.bind(this)}>
-            {this.props.value?
-              (parseInt(this.props.value).toFixed(2) + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
-              :"" || ""}
+            {this.props.value || ""}
           </div>
         )}
       </div>
@@ -63,4 +60,4 @@ class NumberEditCell extends Component {
   }
 }
 
-export default Form.createForm()(NumberEditCell);
+export default Form.createForm()(DatePickerEditCell);

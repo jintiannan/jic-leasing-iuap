@@ -41,7 +41,7 @@ class ListView extends Component {
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
-        actions.calculatorNormalzt.loadList(this.props.queryParam);
+        actions.calculatorzt.loadList(this.props.queryParam);
     }
 
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
@@ -56,7 +56,7 @@ class ListView extends Component {
     freshData = (pageIndex) => {
         let queryParam = deepClone(this.props.queryParam); // 深拷贝查询条件从 action 里
         queryParam['pageIndex'] = pageIndex;
-        actions.calculatorNormalzt.loadList(queryParam);
+        actions.calculatorzt.loadList(queryParam);
     }
 
     /**
@@ -71,7 +71,7 @@ class ListView extends Component {
         if (value && value.toString().toLowerCase() === "all") { // 对分页 pageSize 为 all 进行处理，前后端约定
             pageSize = 1;
         }
-        actions.calculatorNormalzt.loadList(queryParam);
+        actions.calculatorzt.loadList(queryParam);
     }
 
     /**
@@ -93,8 +93,8 @@ class ListView extends Component {
         // } else {
         //     _selectedList.splice(_selectedList.findIndex(item => item.pk === record.pk), 1)
         // }
-        // actions.calculatorNormalzt.updateRowData(param,index);
-        // actions.calculatorNormalzt.updateState({ selectedList : _selectedList });
+        // actions.calculatorzt.updateRowData(param,index);
+        // actions.calculatorzt.updateState({ selectedList : _selectedList });
         
         
         
@@ -130,7 +130,7 @@ class ListView extends Component {
             _formObj = deepClone(_selectedList[0]);
             this.childList(_formObj);
         }else{
-            actions.calculatorNormalzt.updateState({ list2 : []});
+            actions.calculatorzt.updateState({ list2 : []});
         }
         console.log('let me list');
         console.log(_list);
@@ -138,14 +138,14 @@ class ListView extends Component {
         console.log(list);
         console.log(_selectedList);
         
-        actions.calculatorNormalzt.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj});
+        actions.calculatorzt.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj});
         
     }
 
     childList = (obj) => {
         console.log("进入" + obj);
         //加载子组件列表
-        actions.calculatorNormalzt.loadChildList(this.props.queryParam);
+        actions.calculatorzt.loadChildList(this.props.queryParam);
     }
 
     /**
@@ -166,19 +166,21 @@ class ListView extends Component {
 
     //主表  列属性定义
     grid = [
-        {title:'操作日期',key:'operate_date',type:'4'},
         {title:'测算方案名称',key:'quot_name',type:'0'},
-        {title:'投放日期',key:'plan_date_loan',type:'4'},
-        {title:'计划投放金额(元)',key:'plan_cash_loan',type:'1',enumType:'billstatus'},
+        {title:'限额方案',key:'pk_limit_plan',type:'0'},
         {title:'租赁方式',key:'lease_method',type:'0'},
-        {title:'租赁期限(月)',key:'lease_times',type:'0'},
-        {title:'租赁本金',key:'fact_cash_loan',type:'1'},
-        {title:'保证金金额(元)',key:'deposit_cash',type:'1'},
-        {title:'手续费总金额(元)',key:'srvfee_cash_in',type:'1'},
-        {title:'会计IRR按最新算法',key:'finace_irr_method',type:'0'},
-        {title:'会计IRR算法启用年份',key:'finace_irr_year',type:'0'},
-        {title:'市场IRR',key:'project_irr',type:'2'},
-        {title:'会计IRR',key:'finance_irr',type:'2'},
+        {title:'本金是否开票',key:'if_corpus_tickets',type:'0'},
+        {title:'租金税率',key:'rent_tax_rate',type:'0'},
+        {title:'税种',key:'pk_currtype',type:'0'},
+        {title:'投放日期',key:'plan_date_loan',type:'0'},
+        {title:'投放金额',key:'total_amount_equipment',type:'0'},
+        {title:'租赁本金',key:'fact_cash_loan',type:'0'},
+        {title:'首付款比例',key:'down_payment_ratio',type:'0'},
+        {title:'首付款金额',key:'down_payment',type:'0'},
+        {title:'净融资比例',key:'net_finance_ratio',type:'0'},
+        {title:'净融资额(元)',key:'net_finance_cash',type:'0'},
+        {title:'留购价款(元)',key:'nominal_price',type:'0'},
+        {title:'资产余值',key:'assets_margin',type:'0'},
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
@@ -192,7 +194,6 @@ class ListView extends Component {
         {title:'税额(元)',key:'tax_cash',type:'1'},
         {title:'投放付款方式',key:'pay_method_loan',type:'0'},
         {title:'银票开票日期',key:'make_date_draft',type:'4'},
-        {title:'银票到期日期',key:'end_date_loan',type:'4'},
         {title:'银票保证金比例',key:'deposit_ratio4draft',type:'2'},
         {title:'银票保证金利率',key:'interrate_ratio4draft',type:'1'},
         {title:'计息金额计算方式',key:'calinter_amount_style',type:'0'},
@@ -217,7 +218,6 @@ class ListView extends Component {
         {title:'计划收取日期',key:'plan_date',type:'4'},
         {title:'交易类别',key:'trans_type',type:'0'},
         {title:'不含税(元)',key:'lease_cash_corpus',type:'0'},
-        {title:'税额(元)',key:'lease_cash_tax',type:'0'},
         {title:'发生金额(元)',key:'lease_cash',type:'1'},
         {title:'备注',key:'memo',type:'0'},
     ]

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import {Form,Icon,Label, Radio, Col, Row, FormControl, Collapse, Tree} from 'tinper-bee';
+import {Form,Icon,Label, Radio, Col, Row, FormControl, Collapse, Tree,PageLayout} from 'tinper-bee';
 import { deepClone } from "utils";
 import { SelectField } from 'components/RowField/SelectField'
 import FormSplitHeader from 'components/FormSplitHeader'
 import {actions} from 'mirrorx';
 import './index.less';
-import PageLayout from "bee-page-layout";
 
 
 const Content = PageLayout.Content;

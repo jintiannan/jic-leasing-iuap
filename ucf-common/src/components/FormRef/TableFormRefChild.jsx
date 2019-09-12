@@ -280,7 +280,7 @@ class TableFormRefChild extends Component {
         </div>
       ) : (
         <div className="editable-cell-text-wrapper">
-          {value || " "}
+          {this.props.value?this.props.value.refname:"" || " "}
         </div>
       
       
