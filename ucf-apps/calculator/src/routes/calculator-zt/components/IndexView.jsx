@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import {Tooltip, Menu, Icon, Loading,Form,Label,FormControl,Col, Row} from 'tinper-bee';
+import {Table,Tooltip, Menu, Icon,Tabs, Loading,Drawer,Button,Form,Label,FormControl,Col, Row} from 'tinper-bee';
 import {actions} from 'mirrorx';
 import {singleRecordOper} from "utils/service";
 import {deepClone} from "utils";
@@ -13,7 +13,173 @@ import ListView from './ListView';
 import FormView from './FormView';
 import AddFormView from './AddFormView';
 import './index.less';
+import StringModel from 'components/GridCompnent/StringModel';
+import Grid from 'components/Grid';
+const {TabPane} = Tabs;
 const FormItem = Form.FormItem;
+
+const dataSource = [
+    {
+        flow_code:'1001',
+        oper_name:'市场部负责人(天津)',
+        pk_operator:'李蛟',
+        oper_date:'2016-11-30',
+        oper_time:'20:08:48',
+        wait_operator:'李蛟',
+        already_operator:'李蛟',
+        oper_result:'提交负责人(审批)',
+        oper_advice:'请予以审批',
+        result_date:'2016-11-30',
+        result_time:'20:08:49',
+        result_status:'已处理',
+        solid_time:'1秒',
+        key:1,
+    },
+    {
+        flow_code:'1001',
+        oper_name:'市场部负责人(天津)',
+        pk_operator:'李蛟',
+        oper_date:'2016-11-30',
+        oper_time:'20:08:48',
+        wait_operator:'李蛟',
+        already_operator:'李蛟',
+        oper_result:'提交负责人(审批)',
+        oper_advice:'请予以审批',
+        result_date:'2016-11-30',
+        result_time:'20:08:49',
+        result_status:'已处理',
+        solid_time:'1秒',
+        key:2,
+    },
+    {
+        flow_code:'1001',
+        oper_name:'市场部负责人(天津)',
+        pk_operator:'李蛟',
+        oper_date:'2016-11-30',
+        oper_time:'20:08:48',
+        wait_operator:'李蛟',
+        already_operator:'李蛟',
+        oper_result:'提交负责人(审批)',
+        oper_advice:'请予以审批',
+        result_date:'2016-11-30',
+        result_time:'20:08:49',
+        result_status:'已处理',
+        solid_time:'1秒',
+        key:3,
+    },
+    {
+        flow_code:'1001',
+        oper_name:'市场部负责人(天津)',
+        pk_operator:'李蛟',
+        oper_date:'2016-11-30',
+        oper_time:'20:08:48',
+        wait_operator:'李蛟',
+        already_operator:'李蛟',
+        oper_result:'提交负责人(审批)',
+        oper_advice:'请予以审批',
+        result_date:'2016-11-30',
+        result_time:'20:08:49',
+        result_status:'已处理',
+        solid_time:'1秒',
+        key:4,
+    },
+    {
+        flow_code:'1001',
+        oper_name:'市场部负责人(天津)',
+        pk_operator:'李蛟',
+        oper_date:'2016-11-30',
+        oper_time:'20:08:48',
+        wait_operator:'李蛟',
+        already_operator:'李蛟',
+        oper_result:'提交负责人(审批)',
+        oper_advice:'请予以审批',
+        result_date:'2016-11-30',
+        result_time:'20:08:49',
+        result_status:'已处理',
+        solid_time:'1秒',
+        key:5,
+    },
+    {
+        flow_code:'1001',
+        oper_name:'市场部负责人(天津)',
+        pk_operator:'李蛟',
+        oper_date:'2016-11-30',
+        oper_time:'20:08:48',
+        wait_operator:'李蛟',
+        already_operator:'李蛟',
+        oper_result:'提交负责人(审批)',
+        oper_advice:'请予以审批',
+        result_date:'2016-11-30',
+        result_time:'20:08:49',
+        result_status:'已处理',
+        solid_time:'1秒',
+        key:6,
+    },
+    {
+        flow_code:'1001',
+        oper_name:'市场部负责人(天津)',
+        pk_operator:'李蛟',
+        oper_date:'2016-11-30',
+        oper_time:'20:08:48',
+        wait_operator:'李蛟',
+        already_operator:'李蛟',
+        oper_result:'提交负责人(审批)',
+        oper_advice:'请予以审批',
+        result_date:'2016-11-30',
+        result_time:'20:08:49',
+        result_status:'已处理',
+        solid_time:'1秒',
+        key:7,
+    },
+    {
+        flow_code:'1001',
+        oper_name:'市场部负责人(天津)',
+        pk_operator:'李蛟',
+        oper_date:'2016-11-30',
+        oper_time:'20:08:48',
+        wait_operator:'李蛟',
+        already_operator:'李蛟',
+        oper_result:'提交负责人(审批)',
+        oper_advice:'请予以审批',
+        result_date:'2016-11-30',
+        result_time:'20:08:49',
+        result_status:'已处理',
+        solid_time:'1秒',
+        key:8,
+    },
+    {
+        flow_code:'1001',
+        oper_name:'市场部负责人(天津)',
+        pk_operator:'李蛟',
+        oper_date:'2016-11-30',
+        oper_time:'20:08:48',
+        wait_operator:'李蛟',
+        already_operator:'李蛟',
+        oper_result:'提交负责人(审批)',
+        oper_advice:'请予以审批',
+        result_date:'2016-11-30',
+        result_time:'20:08:49',
+        result_status:'已处理',
+        solid_time:'1秒',
+        key:9,
+    },
+    {
+        flow_code:'1001',
+        oper_name:'市场部负责人(天津)',
+        pk_operator:'李蛟',
+        oper_date:'2016-11-30',
+        oper_time:'20:08:48',
+        wait_operator:'李蛟',
+        already_operator:'李蛟',
+        oper_result:'提交负责人(审批)',
+        oper_advice:'请予以审批',
+        result_date:'2016-11-30',
+        result_time:'20:08:49',
+        result_status:'已处理',
+        solid_time:'1秒',
+        key:10,
+    },
+];
 
 class IndexView extends Component {
     constructor(props) {
@@ -22,6 +188,123 @@ class IndexView extends Component {
         /**临时测试数据 */
         props.powerButton = ['Query','Export','Save','Return','ViewFlow','Check','Submit','Edit','Add','View','Switch'];
         props.ifPowerBtn = true;
+        this.columns = [
+            {
+            title: "流程号",dataIndex: "flow_code",key: "flow_code",width: 80, 
+                render: (text, record, index) => {
+                    return <StringModel text={text} record={record} index={index}/>
+                }
+            },
+            {
+              title: "操作名称",
+              dataIndex: "oper_name",
+              key: "oper_name",
+              width:130,
+              render: (text, record, index) => {
+                return <StringModel text={text} record={record} index={index}/>
+                }
+            },
+            {
+              title: "提交人",
+              dataIndex: "pk_operator",
+              key: "pk_operator",
+              width:80,
+              render: (text, record, index) => {
+                    return <StringModel text={text} record={record} index={index}/>
+                }
+            },
+            {
+              title: "提交日期",
+              dataIndex: "oper_date",
+              key: "oper_date",
+              width: 100,
+              render: (text, record, index) => {
+                    return <StringModel text={text} record={record} index={index}/>
+                }
+            },
+            {
+                title: "提交时间",
+                dataIndex: "oper_time",
+                key: "oper_time",
+                width: 100,
+                render: (text, record, index) => {
+                      return <StringModel text={text} record={record} index={index}/>
+                  }
+              },
+              {
+                title: "待处理人",
+                dataIndex: "wait_operator",
+                key: "wait_operator",
+                width: 100,
+                render: (text, record, index) => {
+                      return <StringModel text={text} record={record} index={index}/>
+                  }
+              },
+              {
+                title: "处理人",
+                dataIndex: "already_operator",
+                key: "already_operator",
+                width: 80,
+                render: (text, record, index) => {
+                      return <StringModel text={text} record={record} index={index}/>
+                  }
+              },
+              {
+                title: "处理结果",
+                dataIndex: "oper_result",
+                key: "oper_result",
+                width: 130,
+                render: (text, record, index) => {
+                      return <StringModel text={text} record={record} index={index}/>
+                  }
+              },
+              {
+                title: "处理意见",
+                dataIndex: "oper_advice",
+                key: "oper_advice",
+                width: 100,
+                render: (text, record, index) => {
+                      return <StringModel text={text} record={record} index={index}/>
+                  }
+              },
+              {
+                title: "处理日期",
+                dataIndex: "result_date",
+                key: "result_date",
+                width: 100,
+                render: (text, record, index) => {
+                      return <StringModel text={text} record={record} index={index}/>
+                  }
+              },
+              {
+                title: "处理时间",
+                dataIndex: "result_time",
+                key: "result_time",
+                width: 100,
+                render: (text, record, index) => {
+                      return <StringModel text={text} record={record} index={index}/>
+                  }
+              },
+              {
+                title: "处理状态",
+                dataIndex: "result_status",
+                key: "result_status",
+                width: 100,
+                render: (text, record, index) => {
+                      return <StringModel text={text} record={record} index={index}/>
+                  }
+              },
+              {
+                title: "持续时间",
+                dataIndex: "solid_time",
+                key: "solid_time",
+                width: 100,
+                render: (text, record, index) => {
+                      return <StringModel text={text} record={record} index={index}/>
+                  }
+              },
+              
+  ];
         /**临时测试数据 */
         this.state = {
             showLoading : false, //加载状态
@@ -35,7 +318,10 @@ class IndexView extends Component {
             formObject: {},//当前卡片界面对象
             listObj: [],//列表对象
             ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
-            powerButton: props.powerButton,//按钮权限列表            
+            powerButton: props.powerButton,//按钮权限列表   
+            showViewFlow:false,   
+            dataSource:dataSource,    
+            tabKey:'flow_picture',  
         };
     }
 
@@ -60,6 +346,17 @@ class IndexView extends Component {
     //绑定子组件
     onRef = (ref) => {
         this.child = ref;        
+    }
+
+    /**
+     *
+     *tab 切换
+     * @param {string}
+     */
+    onChangeTab = (tabKey) => {
+        this.setState({
+            tabKey
+        })
     }
 
     /**
@@ -149,6 +446,22 @@ class IndexView extends Component {
     }
 
     /**
+     * 查看流程图
+     */
+    onViewFlow =()=>{
+        this.setState({
+            showViewFlow:true,
+        })
+    }
+
+    closeViewFlow = ()=>{
+        this.setState({
+            showViewFlow:false,
+        })
+    }
+
+
+    /**
      * 导出数据按钮
      *
      */
@@ -164,6 +477,10 @@ class IndexView extends Component {
             this.switchEdit();
         }
         this.switchToListView();
+    }
+
+    exporflowtExcel = ()=>{
+        this.refs.draw_audit_table.exportExcel();
     }
 
     onSave = () => {
@@ -203,6 +520,7 @@ class IndexView extends Component {
                         View={this.onView}
                         Return={this.onReturn}
                         Save={this.onSave}
+                        ViewFlow={this.onViewFlow}
                         {...this.props}
                     />
                 </div>
@@ -215,6 +533,43 @@ class IndexView extends Component {
                 <div>
                     <AddFormView { ...this.props } />
                 </div>
+                <Drawer showMask={true} maskClosable={false} className = "drawer_view" closeIcon={<Icon type="uf-close-c"/>}  hasHeader={false} show={this.state.showViewFlow} placement='right' destroyOnClose={false}>
+                <div className="drawer-content">
+                    <div className="drawer-tab">
+                    <Tabs
+                    defaultActiveKey={this.state.tabKey}
+                    onChange={this.onChangeTab}
+                    >
+                        <TabPane tab='审批流程图' key="flow_picture">
+                            <div className="picture">
+                                <img src={require('static/images/2.jpg')} />                                      
+                            </div>
+                        </TabPane>
+                        <TabPane tab='审批流程列表' key="flow_table">
+                                {/*<Table data={this.state.dataSource} columns={this.columns}  height={30}/> */}
+                                <Grid  ref="draw_audit_table"
+                                exportFileName="立项申请审批意见"
+                                data={this.state.dataSource}
+                                columns={this.columns}
+                                height={30}
+                                paginationObj={{verticalPosition:'none'}}
+                                headerDisplayInRow={true}//表头换行用...来表示
+                                bodyDisplayInRow={true}//表体换行用...来表示
+                                columnFilterAble={false}
+                                multiSelect={{type:"none"}}
+                                />
+                        </TabPane>
+                    </Tabs>
+                    </div>
+                    <div className ="drawer-button">
+                        <div className = "button_flow">
+                            <Button  size="sm" colors="info" shape="round" style={{ marginRight: 8,marginLeft:10,marginTop:5 }} onClick={this.exporflowtExcel}><Icon type='uf-export'/>导出审批意见</Button>
+                            <Button  size="sm" colors="warning" shape="round" style={{marginTop:5 }} onClick={this.closeViewFlow}><Icon type='uf-close-c-o'/>关闭</Button>
+                        </div>
+                    </div>
+                </div>    
+                </Drawer>
+                
             </div>
             
         );
