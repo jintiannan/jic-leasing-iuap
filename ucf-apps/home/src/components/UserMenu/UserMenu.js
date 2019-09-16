@@ -81,7 +81,8 @@ class UserMenus extends Component {
             <div mode="horizontal" className="dropdown header-right-dropdown" style={{ width: '100%' }}>
                 {<div className="header-right-info">
                     <div role="button" id="username"  aria-expanded="false" data-toggle="dropdown" className="navbar-avatar dropdown-toggle">
-                        <span className="avatar-name"> {decodeURIComponent(decodeURIComponent(cookie.load('_A_P_userName')))} </span>
+                        {/* <span className="avatar-name"> {decodeURIComponent(decodeURIComponent(cookie.load('_A_P_userName')))} </span> */}
+                        <span className="avatar-name"> 测试用户 </span>
                         <span className="header-right-icon"><i className="uf uf-treearrow-down"></i></span>
                     </div>
                 </div>}
