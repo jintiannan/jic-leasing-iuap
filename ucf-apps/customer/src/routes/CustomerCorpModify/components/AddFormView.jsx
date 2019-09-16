@@ -172,27 +172,6 @@ class AddFormView extends Component {
                                             <FormItem>
                                                 <Label>
                                                     <Icon type="uf-mi" className='mast'></Icon>
-                                                    客户编号
-                                                </Label>
-                                                <FormControl disabled={!this.props.isEdit}
-                                                             {
-                                                                 ...getFieldProps('customer_code', {
-                                                                     initialValue: _formObject.customer_code,
-
-                                                                     rules: [{
-                                                                         required: true,
-                                                                     }],
-                                                                 })
-                                                             }
-                                                />
-
-                                            </FormItem>
-
-                                        </Col>
-                                        <Col md={4} xs={4} sm={4}>
-                                            <FormItem>
-                                                <Label>
-                                                    <Icon type="uf-mi" className='mast'></Icon>
                                                     客户英文名
                                                 </Label>
                                                 <FormControl disabled={!this.props.isEdit}
