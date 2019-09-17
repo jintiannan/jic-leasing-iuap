@@ -70,6 +70,28 @@
   }
 }
 
+//form修改页面 字表加减按钮
+.addAndDelChildList {
+  .u-button-icon + .u-button i{
+    padding-left: 0;
+  }
+
+  padding-right: 25px;
+  //form修改页面 字表加减按钮去边框
+  .u-button-border{
+    border: 0px solid #a5adba !important;
+  }
+}
+
+//编辑页面 子表 固定高度
+.childListView{
+  .child-tabs{
+    .u-table-body{
+      height: 220px;
+    }
+  }
+}
+
 
 
 //新增页面弹出层
@@ -134,10 +156,13 @@
     }
     .tableRefAdd {
       float: right;
-      //input 大小
-      .u-form-control {
-        width: 100% !important;
+      .ref-input-wrap {
+        width:204px !important ;
       }
+      //input 大小
+      // .u-form-control {
+      //   width: 101% !important;
+      // }
     
     }
     //金额input
@@ -152,8 +177,12 @@
 
 //---------------标签页
 .demo1-tabs{
-  margin-bottom: 40px;
+  //margin-bottom: 40px;
+  .u-tabs-tab {
+    font-weight: bold;
+  }
 }
+
 .u-tabs-nav-animated {
   font-size: 12px;
 }
@@ -225,15 +254,3 @@
   }
 }
 
-//form修改页面 字表加减按钮
-.addAndDelChildList {
-  .u-button-icon + .u-button i{
-    padding-left: 0;
-  }
-
-  padding-right: 25px;
-  //form修改页面 字表加减按钮去边框
-  .u-button-border{
-    border: 0px solid #a5adba !important;
-  }
-}

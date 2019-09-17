@@ -28,7 +28,7 @@ class FormInputNumber extends Component {
         let _props = this.props;
         let _inputProps = {...this.defaultProps,..._props};
         let {disabled,toThousands,toPercent,precision,...otherProps} = _inputProps;
-        console.log('进入FormInputNumber');
+        //console.log('进入FormInputNumber');
         return (
             <InputNumber                
                 disabled={disabled}

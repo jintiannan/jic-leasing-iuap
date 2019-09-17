@@ -24,6 +24,10 @@ import { deepClone } from "utils";
                 
               }
         ],
+        //不可编辑
+        isEditArray: [
+          []
+        ],
         //表头
         columns: [
           {

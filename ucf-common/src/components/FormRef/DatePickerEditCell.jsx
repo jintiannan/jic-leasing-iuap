@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import {  } from 'tinper-bee';
 import { Icon, Select, Tooltip, Form } from "tinper-bee";
 import DatePicker from "tinper-bee/lib/Datepicker";
-
+import moment from 'moment'
 
 class DatePickerEditCell extends Component {
   constructor(props, context) {
@@ -14,24 +14,31 @@ class DatePickerEditCell extends Component {
       value: this.props.value,
       editable: this.props.editable
     };
+    //this.DatePicker = React.createRef();
   }
 
-  handleSelect = value => {
+  handleChange = value => {
     this.setState({ value });
-  };
-
-  commitChange = () => {
-    //this.setState({ editable: false });
-    if (this.props.onChange) {
-      this.props.onChange(this.state.value);
+    if(value != undefined && value != null && value !=""){
+      let date = moment(value).format("YYYY-MM-DD");
+      this.props.onChange(date);
     }
   };
+
+  // commitChange = (e,value) => {
+  //   //this.setState({ editable: false });
+  //   if (this.props.onChange) {
+  //     console.log(value + "111111111111");
+  //     this.props.onChange(value);
+  //   }
+  // };
 
   edit = () => {
-    if(this.state.editable){
-      this.setState({ editable: true });
+    if(this.props.editable){
+      this.setState({ isEdit: true });
     }
   };
+
 
   render() {
     const { value } = this.state;
@@ -39,13 +46,14 @@ class DatePickerEditCell extends Component {
     return (
       <div className="editable-cell">
         {editable ? (
-          <div className="editable-cell-input-wrapper">
+          <div className="editable-cell-input-wrapper" >
             <DatePicker
-              defaultValue={this.props.value}
+              defaultValue={value}
               value={value}
               format = {format?format:"YYYY-MM-DD"}
-              onSelect={this.handleSelect}
-              onBlur={this.commitChange}
+              onChange={this.handleChange}
+              //onSelect={this.handleChange}
+              //onDateInputBlur={this.commitChange}
               autoFocus
             >
             </DatePicker>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Form, Icon, Button, Label, Switch, Checkbox,InputNumber, Radio, Select, Col, Row, FormControl, Collapse, Tabs, ButtonGroup } from 'tinper-bee';
-import { deepClone } from "utils";
+import { Form, Icon, Button, Label, Switch, Checkbox, Radio, Select, Col, Row, FormControl, Collapse, Tabs, ButtonGroup } from 'tinper-bee';
+import { deepClone,Info } from "utils";
 import { SelectField } from 'components/RowField/SelectField'
 import FormSplitHeader from 'components/FormSplitHeader'
 import DatePicker from "tinper-bee/lib/Datepicker";
+import FormInputNumber from 'components/FormRef/FormInputNumber';
 import ChildListView1 from './ChildListView1';
 import ChildListView2 from './ChildListView2';
 import ChildListView3 from './ChildListView3';
@@ -70,12 +71,15 @@ class FormView extends Component {
         let dataSource = deepClone(this[childs].state.dataSource);
         let index = dataSource.length + 1;
         let newData = {
-            a: index,  //序号
+            index: index,  //序号
             cIsEdit: true, //转为c字段提供 可不可编辑判断
         };
+        let isEditArray = this[childs].state.isEditArray;
+        isEditArray.push([]);
         dataSource.push(newData);
         this[childs].setState({
-            dataSource:dataSource
+            dataSource:dataSource,
+            isEditArray: isEditArray
         });
     }
     //字表删除数据
@@ -132,29 +136,29 @@ class FormView extends Component {
         {label:'租金税率',field:'rent_tax_rate',com:Select,required:true,data:[{key:'0%',value:'0'},{key:'3%',value:'3'},{key:'6%',value:'6'},{key:'10%',value:'10'}]},
         {label:'税种',field:'pk_currtype',com:Select,required:true,data:[{key:'增值税',value:'1'},{key:'营业税',value:'2'},{key:'复合税',value:'3'},{key:'无',value:'0'}]},
         {label:'投放日期',field:'plan_date_loan',com:DatePicker,required:true,format:'YYYY-MM-DD'},
-        {label:'投放金额',field:'total_amount_equipment',com:InputNumber,required:true,iconStyle:"one",toThousands:true,precision:2},
-        {label:'租赁本金',field:'fact_cash_loan',com:InputNumber,required:true,iconStyle:"one",toThousands:true,precision:2},
-        {label:'净融资比例',field:'project_manager',com:InputNumber,required:true,iconStyle:"one",toThousands:false,precision:4},
-        {label:'净融资额(元)',field:'net_finance_cash',com:InputNumber,required:true,iconStyle:"one",toThousands:true,precision:2},
+        {label:'投放金额',field:'total_amount_equipment',com:FormInputNumber,required:true,toThousands:true,precision:2},
+        {label:'租赁本金',field:'fact_cash_loan',com:FormInputNumber,required:true,toThousands:true,precision:2},
+        {label:'净融资比例',field:'project_manager',com:FormInputNumber,required:true,toPercent:true,precision:4},
+        {label:'净融资额(元)',field:'net_finance_cash',com:FormInputNumber,required:true,toThousands:true,precision:2},
     ]
 
     mainForm2 = [
-        {label:'留购价款(元)',field:'nominal_price',com:InputNumber,iconStyle:"one",toThousands:true,precision:2,required:true},
-        {label:'保证金比例',field:'pk_limit_plan',com:InputNumber,required:true,iconStyle:"one",toThousands:false,precision:4},
-        {label:'保证金金额',field:'deposit_cash',com:InputNumber,required:true,iconStyle:"one",toThousands:true,precision:2},
+        {label:'留购价款(元)',field:'nominal_price',com:FormInputNumber,toThousands:true,precision:2,required:true},
+        {label:'保证金比例',field:'deposit_ratio',com:FormInputNumber,required:true,toPercent:true,precision:4},
+        {label:'保证金金额',field:'deposit_cash',com:FormInputNumber,required:true,toThousands:true,precision:2},
     ]
 
     mainForm3 = [
         {label:'手续费收取方式',field:'srvfee_method_in',com:Select,required:true,data:[{key:'每满一年收取',value:'0'},{key:'每年年初收取',value:'1'},{key:'初期收取',value:'2'}]},
-        {label:'手续费比例',field:'srvfee_ratio_in',com:TableFormRef,required:true,iconStyle:"one",toThousands:false,precision:4},
-        {label:'首期手续费金额(元)',field:'srvfee_cash_in_ft',com:InputNumber,required:true,iconStyle:"one",toThousands:true,precision:2},
-        {label:'手续费总金额(元)',field:'srvfee_cash_in',com:Select,required:true,iconStyle:"one",toThousands:true,precision:2},
+        {label:'手续费比例',field:'srvfee_ratio_in',com:TableFormRef,required:true,toPercent:true,precision:4},
+        {label:'首期手续费金额(元)',field:'srvfee_cash_in_ft',com:FormInputNumber,required:true,toThousands:true,precision:2},
+        {label:'手续费总金额(元)',field:'srvfee_cash_in',com:Select,required:true,toThousands:true,precision:2},
         {label:'手续费收入税率(增值税)',field:'srvfee_taxrate_in',com:FormControl,required:true},
         {label:'中间费用支出方式',field:'lease_cal_method',com:Select,required:true,data:[{key:'指定支付',value:'0'},{key:'每满一年支付',value:'1'},{key:'每年年初支付',value:'2'}]},
         {label:'首期中间费用支出时间',field:'srvfee_date_out_ft',com:DatePicker,required:true,format:'YYYY-MM-DD'},
-        {label:'首期中间费用支出金额(元)',field:'srvfee_cash_out_ft',com:InputNumber,required:true,iconStyle:"one",toThousands:true,precision:2},
-        {label:'中间费用支出总金额(元)',field:'fact_cash_loan',com:InputNumber,required:true,iconStyle:"one",toThousands:true,precision:2},
-        {label:'中间费用支出税率(增值税)',field:'project_manager',com:Select,required:true,data:[{key:'3%',value:'3'},{key:'6%',value:'6'},{key:'17%',value:'17'}
+        {label:'首期中间费用支出金额(元)',field:'srvfee_cash_out_ft',com:FormInputNumber,required:true,toThousands:true,precision:2},
+        {label:'中间费用支出总金额(元)',field:'fact_cash_loan',com:FormInputNumber,required:true,toThousands:true,precision:2},
+        {label:'中间费用支出税率(增值税)',field:'srvfee_taxrate_out',com:Select,required:true,data:[{key:'3%',value:'3'},{key:'6%',value:'6'},{key:'17%',value:'17'}
         ,{key:'0%',value:'0'},{key:'11%',value:'11'},{key:'16%',value:'16'},{key:'10%',value:'10'}
         ,{key:'13%',value:'13'},{key:'9%',value:'9'}
         ]},
@@ -173,8 +177,8 @@ class FormView extends Component {
     ]
 
     mainForm5 = [
-        {label:'报价利率',field:'final_rate',com:InputNumber,required:true,iconStyle:"one",toThousands:true,precision:2},
-        {label:'基准利率',field:'interrate',com:InputNumber,required:true,iconStyle:"one",toThousands:false,precision:6},
+        {label:'报价利率',field:'final_rate',com:FormInputNumber,required:true,toThousands:true,precision:2},
+        {label:'基准利率',field:'interrate',com:FormInputNumber,required:true,toPercent:true,precision:6},
         {label:'支付频率',field:'cal_digit',com:Select,required:true,data:[{key:'分',value:'0'},{key:'元',value:'1'}]},
         {label:'年化天数',field:'year_days',com:Select,required:true,data:[{key:'360',value:'0'},{key:'365',value:'1'}]},
         {label:'利率类型',field:'interrate_type',com:Select,required:true,data:[{key:'0%',value:'0'},{key:'3%',value:'3'},{key:'6%',value:'6'},{key:'10%',value:'10'}]},
@@ -183,7 +187,7 @@ class FormView extends Component {
         {label:'利率浮动方式',field:'float_method',com:Select,required:true,data:[{key:'百分比',value:'0'},{key:'绝对值',value:'1'}]},
         {label:'利率生效日期',field:'pk_interrate',com:TableFormRef,required:true},
         {label:'利率档次',field:'interrate_level',com:FormControl,required:true},
-        {label:'利率浮动值(%)',field:'project_mfloat_valueanager',com:InputNumber,required:true,iconStyle:"one",toThousands:false,precision:6},
+        {label:'利率浮动值(%)',field:'project_mfloat_valueanager',com:FormInputNumber,required:true,toPercent:true,precision:6},
     ]
 
     mainForm6 = [
@@ -202,13 +206,15 @@ class FormView extends Component {
         let _props = this.props;
         if(_props.showForm){
             return (
-                <div>
-                <div className='calculatorNormalztForm'>
+                <div className='commom-form'>
+                    
+                
+                    <div className='calculatorNormalztForm'>
                     <div>
                         <span onClick={() => this.setState({ open: !this.state.open })} >
                         <FormSplitHeader title={'投放信息'} />
                         </span>
-    
+                    </div>
                     <Collapse in={this.state.open}>
                             <Form>
                            
@@ -227,6 +233,9 @@ class FormView extends Component {
                                                                 name = {value.field}
                                                                 format = {value.format}
                                                                 iconStyle = {value.iconStyle}
+                                                                toThousands = {value.toThousands}
+                                                                precision = {value.precision}
+                                                                toPercent = {value.toPercent}
                                                                 disabled={!_props.isEdit}
                                                                 data = {value.data}
                                                                 {
@@ -248,13 +257,13 @@ class FormView extends Component {
                             </Form>
     
                     </Collapse>
-                    </div>
+                    
                     
                     <div>
                         <span onClick={() => this.setState({ open2: !this.state.open2 })} >
                         <FormSplitHeader title={'留购价款及保证金设置'} />
-                    </span>
-    
+                        </span>
+                    </div>
                         <Collapse in={this.state.open2}>
                         <Form>
                            
@@ -273,6 +282,9 @@ class FormView extends Component {
                                                                 name = {value.field}
                                                                 format = {value.format}
                                                                 iconStyle = {value.iconStyle}
+                                                                toThousands = {value.toThousands}
+                                                                precision = {value.precision}
+                                                                toPercent = {value.toPercent}
                                                                 disabled={!_props.isEdit}
                                                                 data = {value.data}
                                                                 {
@@ -293,13 +305,13 @@ class FormView extends Component {
 
                         </Form>
                         </Collapse>
-                    </div>
+                    
     
                     <div>
                         <span onClick={() => this.setState({ open3: !this.state.open3 })} >
                         <FormSplitHeader title={'手续费及中间费用支出设置'} />
-                    </span>
-    
+                        </span>
+                    </div>
                         <Collapse in={this.state.open3}>
     
                         <Form>
@@ -319,6 +331,9 @@ class FormView extends Component {
                                                                 name = {value.field}
                                                                 format = {value.format}
                                                                 iconStyle = {value.iconStyle}
+                                                                toThousands = {value.toThousands}
+                                                                precision = {value.precision}
+                                                                toPercent = {value.toPercent}
                                                                 disabled={!_props.isEdit}
                                                                 data = {value.data}
                                                                 {
@@ -340,13 +355,13 @@ class FormView extends Component {
                         </Form>
 
                         </Collapse>
-                    </div>
+                    
 
                     <div>
                         <span onClick={() => this.setState({ open4: !this.state.open4 })} >
                         <FormSplitHeader title={'收租设置'} />
                     </span>
-    
+                    </div>
                         <Collapse in={this.state.open4}>
     
                         <Form>
@@ -365,6 +380,9 @@ class FormView extends Component {
                                                                 name = {value.field}
                                                                 format = {value.format}
                                                                 iconStyle = {value.iconStyle}
+                                                                toThousands = {value.toThousands}
+                                                                precision = {value.precision}
+                                                                toPercent = {value.toPercent}
                                                                 disabled={!_props.isEdit}
                                                                 data = {value.data}
                                                                 {
@@ -385,13 +403,13 @@ class FormView extends Component {
                         </Form>
     
                         </Collapse>
-                    </div>
+                    
 
                     <div>
                         <span onClick={() => this.setState({ open5: !this.state.open5 })} >
                         <FormSplitHeader title={'租息率设置'} />
                     </span>
-    
+                    </div>
                         <Collapse in={this.state.open5}>
     
                         <Form>
@@ -410,6 +428,9 @@ class FormView extends Component {
                                                                 name = {value.field}
                                                                 format = {value.format}
                                                                 iconStyle = {value.iconStyle}
+                                                                toThousands = {value.toThousands}
+                                                                precision = {value.precision}
+                                                                toPercent = {value.toPercent}
                                                                 disabled={!_props.isEdit}
                                                                 data = {value.data}
                                                                 {
@@ -430,13 +451,13 @@ class FormView extends Component {
                         </Form>
     
                         </Collapse>
-                    </div>
+                    
 
                     <div>
                         <span onClick={() => this.setState({ open6: !this.state.open6 })} >
                         <FormSplitHeader title={'IRR信息'} />
-                    </span>
-    
+                        </span>
+                    </div>
                         <Collapse in={this.state.open6}>
     
                         <Form>
@@ -455,6 +476,9 @@ class FormView extends Component {
                                                                 name = {value.field}
                                                                 format = {value.format}
                                                                 iconStyle = {value.iconStyle}
+                                                                toThousands = {value.toThousands}
+                                                                precision = {value.precision}
+                                                                toPercent = {value.toPercent}
                                                                 disabled={!_props.isEdit}
                                                                 data = {value.data}
                                                                 {
@@ -475,16 +499,16 @@ class FormView extends Component {
                         </Form>
     
                         </Collapse>
-                    </div>
+                    
+                        </div>
 
-
-                    </div>
+                   
     
                     <div className="childListView">
                     <Tabs
                         defaultActiveKey="1"
                         onChange={this.onChange}
-                        className="demo1-tabs"
+                        className="child-tabs"
                         extraContent={
                             <div className="addAndDelChildList demoPadding" style={{display:_props.isEdit?'':'none'}} >
                                  <ButtonGroup style={{ margin: 1 }}>
@@ -502,6 +526,7 @@ class FormView extends Component {
                         <TabPane tab='租金计划' key="6"> <ChildListView6 { ...this } ref="rentLoan" onRef={this.onRef6}/></TabPane>
                     </Tabs>
                     </div>
+
                 </div>  
             );
             

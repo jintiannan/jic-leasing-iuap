@@ -20,6 +20,10 @@ import { deepClone } from "utils";
         dataSource: [
             
         ],
+        //不可编辑
+        isEditArray: [
+          []
+        ],
         //表头
         columns: [
           {

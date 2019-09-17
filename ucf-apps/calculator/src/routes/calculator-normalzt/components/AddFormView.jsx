@@ -5,12 +5,13 @@
 *
 */
 import React, { Component } from 'react';
-import { Step, Button, Message, Modal, Form,Icon,InputNumber, Label, Col, Row, Select, FormControl,Tabs, ButtonGroup  } from 'tinper-bee';
+import { Step, Button, Message, Modal, Form,Icon, Label, Col, Row, Select, FormControl,Tabs, ButtonGroup  } from 'tinper-bee';
 import {actions} from 'mirrorx';
 import TableFormRef from 'components/FormRef/TableFormRef';
-import RefMdmComp from 'components/RefMdmComp';
+import {RefWalsinLevel, RefIuapDept} from 'components/RefViews'
 import { deepClone } from "utils";
 import DatePicker from "tinper-bee/lib/Datepicker";
+import FormInputNumber from 'components/FormRef/FormInputNumber';
 
 import ChildListView from './ChildListView';
 const { TabPane } = Tabs;
@@ -155,10 +156,10 @@ handleChange = (rule, value, callback) =>{
 
 //格式化百分数 比例字段
 formatDepositRatio = (value) => {
-    // if(value != undefined){
-    //     let v= Number(value) + 1;
-    //     return v;
-    // }
+    if(value != "" && value != "0.0000"){
+        let v= value + "%";
+        return v;
+    }
 }
 
 aformat=(value)=>{
@@ -251,6 +252,19 @@ onChange = (activeKey) => {
                                                     })
                                                  }
                                                 />
+                                                {/* <RefWalsinLevel
+                                                disabled={false}
+                                                placeholder="请选择限额方案"
+                                                {...getFieldProps('pk_limit_plan', {
+                                                    initialValue: formObject.pk_limit_plan?
+                                                    JSON.stringify(formObject.pk_limit_plan)
+                                                    :"",
+                                                    rules: [{
+                                                        message: '请选择限额方案',
+                                                        pattern: /[^({"refname":"","refpk":""}|{"refpk":"","refname":""})]/
+                                                    }]
+                                                })}
+                                            /> */}
 
                     
 
@@ -385,26 +399,11 @@ onChange = (activeKey) => {
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           投放金额
                                       </Label>
-                                      {/* <FormControl
-                                          {
-                                          ...getFieldProps('total_amount_equipment', {
-                                              validateTrigger: 'onBlur',
-                                              initialValue: formObject.total_amount_equipment ,                                            
-                                              rules: [{
-                                                  required: true, 
-                                              }, {
-                                                validator: this.handleChange //类似于onChange方法
-                                            }],
-                                          })
-                                          }
-                                      /> */}
                                       <div className="InputNumberAdd" >
-                                      <InputNumber
-                                        iconStyle="one"
+                                      <FormInputNumber
+                                        disabled = {false}
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2} //保留2位小数
-                                        // min={0} 
-                                        // max={999999}
                                         {
                                             ...getFieldProps('total_amount_equipment', {
                                                 initialValue: formObject.total_amount_equipment,                                            
@@ -421,19 +420,16 @@ onChange = (activeKey) => {
                               </Col>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
-                                      
-                                       <div>
+                                        <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           租赁本金
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber disabled={true}
-                                        iconStyle="one"
+                                      <FormInputNumber
+                                        disabled = {false}
                                         toThousands = {true}  //是否显示千分位
-                                        precision = {2}
-                                        // min={0}
-                                        // max={999999}
+                                        precision = {2} //保留2位小数
                                         {
                                             ...getFieldProps('fact_cash_loan', {
                                                 initialValue: formObject.fact_cash_loan,                                            
@@ -452,20 +448,29 @@ onChange = (activeKey) => {
                                   <Row>
                                   <Col md={4} xs={4} sm={4}>
                                   <FormItem>
+                                      
+                                      <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           净融资比例
                                       </Label>
-                                      <FormControl disabled={true}
-                                          {
-                                          ...getFieldProps('project_manager', {
-                                              initialValue: formObject.project_manager,
-                                              rules: [{
-                                                  required: true, 
-                                              }],
-                                          })
-                                          }
-                                      />
+                                      <div className="InputNumberAdd" >
+                                      <FormInputNumber
+                                        disabled = {false}
+                                        toPercent = {true}  //是否显示百分号
+                                        precision = {2} //保留2位小数
+                                        {
+                                            ...getFieldProps('project_manager', {
+                                                initialValue: formObject.project_manager,                                            
+                                                rules: [{
+                                                    required: true, 
+                                                }],
+                                            })
+                                            }
+                                        />
+                                        </div>
+                                        </div>
+                                      
                                   </FormItem>
       
                               </Col>
@@ -473,18 +478,16 @@ onChange = (activeKey) => {
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
                                       
-                                      <div>
+                                        <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           净融资额(元)
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber disabled={true}
-                                        iconStyle="one"
+                                      <FormInputNumber
+                                        disabled = {false}
                                         toThousands = {true}  //是否显示千分位
-                                        precision = {2}
-                                        // min={0}
-                                        // max={999999}
+                                        precision = {2} //保留2位小数
                                         {
                                             ...getFieldProps('net_finance_cash', {
                                                 initialValue: formObject.net_finance_cash,                                            
@@ -506,18 +509,16 @@ onChange = (activeKey) => {
                               <Row>
                           <Col md={4} xs={4} sm={4}>
                               <FormItem>
-                                  <div>
+                                        <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           留购价款(元)
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber disabled={true}
-                                        iconStyle="one"
+                                      <FormInputNumber
+                                        disabled = {false}
                                         toThousands = {true}  //是否显示千分位
-                                        precision = {2}
-                                        // min={0}
-                                        // max={999999}
+                                        precision = {2} //保留2位小数
                                         {
                                             ...getFieldProps('nominal_price', {
                                                 initialValue: formObject.nominal_price,                                            
@@ -542,13 +543,9 @@ onChange = (activeKey) => {
                                           保证金比例
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber
-                                        iconStyle="one"
-                                        toThousands = {false}  //是否显示千分位
+                                      <FormInputNumber
+                                        toPercent = {true}  //是否显示百分号
                                         precision = {4}
-                                        //format = {this.formatDepositRatio.bind(this)}
-                                        // min={0}
-                                        // max={999999}
                                         {
                                             ...getFieldProps('deposit_ratio', {
                                                 initialValue: formObject.deposit_ratio,                                            
@@ -571,8 +568,7 @@ onChange = (activeKey) => {
                                           保证金金额
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber
-                                        iconStyle="one"
+                                      <FormInputNumber
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2}
                                         // min={0}
@@ -626,13 +622,10 @@ onChange = (activeKey) => {
                                           手续费比例
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber
-                                        iconStyle="one"
-                                        toThousands = {false}  //是否显示千分位
+                                      <FormInputNumber
+                                        precision = {true}
                                         precision = {4}
-                                        //format = {this.formatDepositRatio.bind(this)}
-                                        // min={0}
-                                        // max={999999}
+
                                         {
                                             ...getFieldProps('srvfee_ratio_in', {
                                                 initialValue: formObject.srvfee_ratio_in,                                            
@@ -655,8 +648,7 @@ onChange = (activeKey) => {
                                           首期手续费金额(元)
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber
-                                        iconStyle="one"
+                                      <FormInputNumber
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2} //保留2位小数
                                         // min={0}
@@ -685,8 +677,7 @@ onChange = (activeKey) => {
                                           手续费总金额(元)
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber disabled={true}
-                                        iconStyle="one"
+                                      <FormInputNumber disabled={true}
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2} //保留2位小数
                                         // min={0}
@@ -783,8 +774,7 @@ onChange = (activeKey) => {
                                           首期中间费用支出金额(元)
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber disabled={true}
-                                        iconStyle="one"
+                                      <FormInputNumber disabled={true}
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2} //保留2位小数
                                         // min={0}
@@ -811,8 +801,7 @@ onChange = (activeKey) => {
                                           中间费用支出总金额(元)
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber disabled={true}
-                                        iconStyle="one"
+                                      <FormInputNumber disabled={true}
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2} //保留2位小数
                                         // min={0}
@@ -1001,9 +990,8 @@ onChange = (activeKey) => {
                                           报价利率
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber
-                                        iconStyle="one"
-                                        toThousands = {false}  //是否显示千分位
+                                      <FormInputNumber
+                                        toPercent = {true}  
                                         precision = {6}
                                         //format = {this.formatDepositRatio.bind(this)}
                                         // min={0}
@@ -1031,10 +1019,9 @@ onChange = (activeKey) => {
                                           基准利率
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber
-                                        iconStyle="one"
-                                        toThousands = {false}  //是否显示千分位
-                                        precision = {6}
+                                      <FormInputNumber
+                                        precision = {6}  
+                                        toPercent = {true}  
                                         //format = {this.formatDepositRatio.bind(this)}
                                         // min={0}
                                         // max={999999}
@@ -1215,10 +1202,9 @@ onChange = (activeKey) => {
                                           利率浮动值(%)
                                       </Label>
                                       <div className="InputNumberAdd" >
-                                      <InputNumber
-                                        iconStyle="one"
-                                        toThousands = {false}  //是否显示千分位
-                                        precision = {6}
+                                      <FormInputNumber
+                                        toPercent = {true}  //是否显示千分位
+                                        precision = {6}  //是否显示千分位
                                         //format = {this.formatDepositRatio.bind(this)}
                                         // min={0}
                                         // max={999999}

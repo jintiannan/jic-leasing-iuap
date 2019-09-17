@@ -20,6 +20,10 @@ import { deepClone } from "utils";
         dataSource: [
             
         ],
+        //不可编辑
+        isEditArray: [
+          []
+        ],
         //表头
         columns: [
           {
@@ -35,6 +39,7 @@ import { deepClone } from "utils";
             render: (text, record, index) => (
               <StringEditCell
               value={text}
+              type = "email"
               editable = {this.props.props.isEdit}
               onChange={this.onCellChange(index, "lease_time").bind(this)}
             />
@@ -106,19 +111,17 @@ import { deepClone } from "utils";
       //修改时 限定某个字段不可编辑
       
     }
+
+    //绑定子组件2
+    onRef2 = (ref) => {
+      this.child2 = ref;        
+    }
   
     //输入框变化事件
     onCellChange = (index, key) => {
       return value => {
         let dataSource = this.state.dataSource;
         dataSource[index][key] = value;
-        
-        if(key = "c" && value == "男"){
-          dataSource[index].cIsEdit = false;
-          dataSource[index].e = "不可编辑"; //联动
-        }else if(key = "c" && value != "男"){
-          dataSource[index].cIsEdit = true;
-        }
         this.setState({ dataSource }, () => console.dir(this.state.dataSource));
       };
       
