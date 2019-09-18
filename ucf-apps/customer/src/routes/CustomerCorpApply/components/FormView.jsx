@@ -63,7 +63,7 @@ class FormView extends Component {
         const {getFieldProps, getFieldError} = this.props.form;
         let _formObject = deepClone(this.props.formObject);
         return (
-            <div className='common-form'>
+            <div className='jic-form'>
                 <div>
                     <div>
                     <span onClick={() => this.setState({open: !this.state.open})}>
@@ -1218,7 +1218,7 @@ class FormView extends Component {
 
                             </Row>
 
-                            <Row className={"textArea"}>
+                            <Row className={"jic-textArea"}>
                                 <Col md={12} xs={12} sm={12}>
                                     <FormItem className="remark flex">
                                         <Label className="line-height-32">
@@ -1242,7 +1242,7 @@ class FormView extends Component {
 
                                 </Col>
                             </Row>
-                            <Row className={"textArea"}>
+                            <Row className={"jic-textArea"}>
                                 <Col md={12} xs={12} sm={12}>
                                     <FormItem className="remark flex">
                                         <Label>
@@ -1814,7 +1814,7 @@ class FormView extends Component {
                                 </Col>
                             </Row>
 
-                            <Row className={"textArea"}>
+                            <Row className={"jic-textArea"}>
                                 <Col md={12} xs={12} sm={12}>
                                     <FormItem className="remark flex">
                                         <Label>

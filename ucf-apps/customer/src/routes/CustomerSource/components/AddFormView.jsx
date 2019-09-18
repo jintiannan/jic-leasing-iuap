@@ -53,7 +53,7 @@ class AddFormView extends Component {
         return (
             <div>
                 <Modal
-                    className="add-model"
+                    className="jic-model"
                     show={this.props.showModal}
                     backdrop="static" //关闭遮罩事件
                     size="xlg" //大号模态框

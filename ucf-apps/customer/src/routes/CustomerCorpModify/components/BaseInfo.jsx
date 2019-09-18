@@ -64,7 +64,7 @@ class BaseInfo extends  Component{
         let _formObject = this.props.formObject;
         let formObject = deepClone(_formObject);
         return (
-            <div className="common-form">
+            <div className="jic-form">
 
                 <div>
                     <div> <span onClick={() => this.setState({open: !this.state.open})}>
@@ -1175,7 +1175,7 @@ class BaseInfo extends  Component{
 
 
                             </Row>
-                            <Row className={"textArea"}>
+                            <Row className={"jic-textArea"}>
                                 <Col md={12} xs={12} sm={12}>
                                     <FormItem className="remark flex">
                                         <Label>
@@ -1199,7 +1199,7 @@ class BaseInfo extends  Component{
 
                                 </Col>
                             </Row>
-                            <Row className={"textArea"}>
+                            <Row className={"jic-textArea"}>
                                 <Col md={12} xs={12} sm={12}>
                                     <FormItem className="remark flex">
                                         <Label className="line-height-32">
@@ -1754,7 +1754,7 @@ class BaseInfo extends  Component{
                                 </Col>
                             </Row>
 
-                            <Row className={"textArea"}>
+                            <Row className={"jic-textArea"}>
                                 <Col md={12} xs={12} sm={12}>
                                     <FormItem className="remark flex">
                                         <Label className="line-height-32">

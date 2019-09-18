@@ -134,7 +134,7 @@ class AddFormView extends Component {
                 <div>
 
                     <Modal
-                        className="add-model"
+                        className="jic-model"
                         show={this.props.showModal}
                         backdrop="static" //关闭遮罩事件
                         size="xlg" //大号模态框
@@ -147,7 +147,7 @@ class AddFormView extends Component {
                             <Steps current={current}>
                                 {steps.map(item => <Step key={item.title} title={item.title}/>)}
                             </Steps>
-                            <div className="steps-content common-form">
+                            <div className="steps-content jic-form">
                                 <Form>
                                     <div style={{display: this.state.show0}}>
                                         <Row>

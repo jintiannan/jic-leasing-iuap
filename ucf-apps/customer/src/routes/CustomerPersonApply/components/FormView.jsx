@@ -65,7 +65,7 @@ class FormView extends Component {
         let _formObject = deepClone(this.props.formObject);
         return (
 
-            <div className='common-form'>
+            <div className='jic-form'>
                 <div>
                     <div> <span onClick={() => this.setState({open: !this.state.open})}>
                                         <FormSplitHeader open={this.state.open} title={'客户基本信息'}/>
