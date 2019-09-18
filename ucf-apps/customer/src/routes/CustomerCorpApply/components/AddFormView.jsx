@@ -129,7 +129,7 @@ class AddFormView extends Component {
             <div>
 
                 <Modal
-                    className="demo4-modal"
+                    className="add-modal"
                     show={this.props.showModal}
                     backdrop="static" //关闭遮罩事件
                     size="xlg" //大号模态框
@@ -142,7 +142,7 @@ class AddFormView extends Component {
                         <Steps current={current}>
                             {steps.map(item => <Step key={item.title} title={item.title}/>)}
                         </Steps>
-                        <div className="steps-content">
+                        <div className="steps-content common-form">
                             <Form>
                                 <div style={{display: this.state.show0}}>
                                     <Row>
@@ -167,7 +167,6 @@ class AddFormView extends Component {
                                             </FormItem>
 
                                         </Col>
-
                                         <Col md={4} xs={4} sm={4}>
                                             <FormItem>
                                                 <Label>
@@ -212,8 +211,6 @@ class AddFormView extends Component {
                                         </Col>
                                     </Row>
                                     <Row>
-
-
                                         <Col md={4} xs={4} sm={4}>
                                             <FormItem>
                                                 <Label>
@@ -240,8 +237,6 @@ class AddFormView extends Component {
                                                     是否授权征信客户
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
-
                                                     showSearch={true}
                                                     allowClear={true}
                                                 >
@@ -262,7 +257,7 @@ class AddFormView extends Component {
                                                     客户性质
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -287,7 +282,7 @@ class AddFormView extends Component {
                                                     客户性质(内部)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -310,7 +305,7 @@ class AddFormView extends Component {
                                                     客户类型
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -332,7 +327,7 @@ class AddFormView extends Component {
                                                     经济性质
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -392,7 +387,7 @@ class AddFormView extends Component {
                                                     行业门类
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -414,7 +409,7 @@ class AddFormView extends Component {
                                                     行业门类(大类)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -436,7 +431,7 @@ class AddFormView extends Component {
                                                     行业门类(中类)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -460,7 +455,7 @@ class AddFormView extends Component {
                                                     行业门类(小类)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -550,7 +545,7 @@ class AddFormView extends Component {
                                                     学校等级
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -572,7 +567,7 @@ class AddFormView extends Component {
                                                     医院等级
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -596,7 +591,7 @@ class AddFormView extends Component {
                                                     企业规模(四部委)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -618,7 +613,7 @@ class AddFormView extends Component {
                                                     企业规模(人行)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -640,7 +635,7 @@ class AddFormView extends Component {
                                                     企业规模(内部管理)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -668,7 +663,7 @@ class AddFormView extends Component {
                                                     注册登记号类型
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -711,7 +706,7 @@ class AddFormView extends Component {
                                                     证件类型
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -757,7 +752,7 @@ class AddFormView extends Component {
                                                     证件有效期(开始)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -779,7 +774,7 @@ class AddFormView extends Component {
                                                     证件有效期(截止)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -803,7 +798,7 @@ class AddFormView extends Component {
                                                     最新年检日期
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -847,7 +842,7 @@ class AddFormView extends Component {
                                                     贷款卡是否有效
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -871,7 +866,7 @@ class AddFormView extends Component {
                                                     贷款卡最新年审时间
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -893,7 +888,7 @@ class AddFormView extends Component {
                                                     贷款卡最新年审结果
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -962,7 +957,7 @@ class AddFormView extends Component {
                                                     成立日期
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -984,7 +979,7 @@ class AddFormView extends Component {
                                                     营业执照登记日
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1008,7 +1003,7 @@ class AddFormView extends Component {
                                                     营业执照到期日
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1030,7 +1025,7 @@ class AddFormView extends Component {
                                                     营业执照最新年审日
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1076,7 +1071,7 @@ class AddFormView extends Component {
                                                     法定代表人
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1098,7 +1093,7 @@ class AddFormView extends Component {
                                                     证件类型
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1168,7 +1163,7 @@ class AddFormView extends Component {
                                                     实际控制人
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1193,7 +1188,7 @@ class AddFormView extends Component {
                                                     证件类型
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1237,7 +1232,7 @@ class AddFormView extends Component {
                                                     注册资本币种
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1283,7 +1278,7 @@ class AddFormView extends Component {
                                                     实收资本币种
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1422,7 +1417,7 @@ class AddFormView extends Component {
                                                     是否集团公司(母公司)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1444,7 +1439,7 @@ class AddFormView extends Component {
                                                     有无进出口经营
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1466,7 +1461,7 @@ class AddFormView extends Component {
                                                     是否上市公司
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1491,7 +1486,7 @@ class AddFormView extends Component {
                                                     是否政府融资背景
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1514,7 +1509,7 @@ class AddFormView extends Component {
                                                     是否科技型企业
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1536,7 +1531,7 @@ class AddFormView extends Component {
                                                     科技型企业类型
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1561,7 +1556,7 @@ class AddFormView extends Component {
                                                     是否环保行业企业
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1583,7 +1578,7 @@ class AddFormView extends Component {
                                                     是否重点监测客户
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1605,7 +1600,7 @@ class AddFormView extends Component {
                                                     {/*是否财政*/}
                                                 {/*</Label>*/}
                                                 {/*<Select*/}
-                                                    {/*style={{ width: 195 }}*/}
+                                                    {/**/}
 
                                                     {/*showSearch={true}*/}
                                                     {/*allowClear={true}*/}
@@ -1631,7 +1626,7 @@ class AddFormView extends Component {
                                                     {/*业务领域*/}
                                                 {/*</Label>*/}
                                                 {/*<Select*/}
-                                                    {/*style={{ width: 195 }}*/}
+                                                    {/**/}
 
                                                     {/*showSearch={true}*/}
                                                     {/*allowClear={true}*/}
@@ -1655,7 +1650,7 @@ class AddFormView extends Component {
                                                     {/*是否江苏省银监局平台*/}
                                                 {/*</Label>*/}
                                                 {/*<Select*/}
-                                                    {/*style={{ width: 195 }}*/}
+                                                    {/**/}
 
                                                     {/*showSearch={true}*/}
                                                     {/*allowClear={true}*/}
@@ -1677,7 +1672,7 @@ class AddFormView extends Component {
                                                     {/*是否人民银行认定平台*/}
                                                 {/*</Label>*/}
                                                 {/*<Select*/}
-                                                    {/*style={{ width: 195 }}*/}
+                                                    {/**/}
 
                                                     {/*showSearch={true}*/}
                                                     {/*allowClear={true}*/}
@@ -1699,7 +1694,7 @@ class AddFormView extends Component {
                                                     {/*是否银监会认定平台*/}
                                                 {/*</Label>*/}
                                                 {/*<Select*/}
-                                                    {/*style={{ width: 195 }}*/}
+                                                    {/**/}
 
                                                     {/*showSearch={true}*/}
                                                     {/*allowClear={true}*/}
@@ -1727,7 +1722,7 @@ class AddFormView extends Component {
                                                     所在国家(地区)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1749,7 +1744,7 @@ class AddFormView extends Component {
                                                     区域
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1771,7 +1766,7 @@ class AddFormView extends Component {
                                                     注册地隶属
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1795,7 +1790,7 @@ class AddFormView extends Component {
                                                     地区(省)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1817,7 +1812,7 @@ class AddFormView extends Component {
                                                     地区(市)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1839,7 +1834,7 @@ class AddFormView extends Component {
                                                     地区(区/县)
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -1999,7 +1994,7 @@ class AddFormView extends Component {
                                                     实际办公地所有权
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -2049,7 +2044,7 @@ class AddFormView extends Component {
                                                     客户洗钱风险评级
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -2167,7 +2162,7 @@ class AddFormView extends Component {
                                                     开票说明
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -2195,7 +2190,7 @@ class AddFormView extends Component {
                                                     部门名称
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -2217,7 +2212,7 @@ class AddFormView extends Component {
                                                     客户经理
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -2239,7 +2234,7 @@ class AddFormView extends Component {
                                                     操作人
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -2263,7 +2258,7 @@ class AddFormView extends Component {
                                                     操作日期
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -2307,7 +2302,7 @@ class AddFormView extends Component {
                                                     最新变更人
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -2333,7 +2328,7 @@ class AddFormView extends Component {
                                                     最新变更日期
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -2377,7 +2372,7 @@ class AddFormView extends Component {
                                                     审核人
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -2401,7 +2396,7 @@ class AddFormView extends Component {
                                                     审核日期
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -2445,7 +2440,7 @@ class AddFormView extends Component {
                                                     机构
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}
@@ -2470,7 +2465,7 @@ class AddFormView extends Component {
                                                     二级业务领域
                                                 </Label>
                                                 <Select
-                                                    style={{ width: 195 }}
+
 
                                                     showSearch={true}
                                                     allowClear={true}

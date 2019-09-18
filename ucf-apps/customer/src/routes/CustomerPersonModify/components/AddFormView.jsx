@@ -457,8 +457,8 @@ class AddFormView extends Component {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col md={4} xs={4} sm={4}>
-                                            <FormItem>
+                                        <Col md={12} xs={12} sm={12}>
+                                            <FormItem className="remark flex">
                                                 <Label>
                                                     <Icon type="uf-mi" className='mast'></Icon>
                                                     详细地址
@@ -545,8 +545,8 @@ class AddFormView extends Component {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col md={4} xs={4} sm={4}>
-                                            <FormItem>
+                                        <Col md={12} xs={12} sm={12}>
+                                            <FormItem className="remark flex">
                                                 <Label>
                                                     <Icon type="uf-mi" className='mast'></Icon>
                                                     详细地址
@@ -795,8 +795,8 @@ class AddFormView extends Component {
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
+                                            <Col md={12} xs={12} sm={12}>
+                                                <FormItem className="remark flex">
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         单位详细地址
@@ -1214,8 +1214,8 @@ class AddFormView extends Component {
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
+                                            <Col md={12} xs={12} sm={12}>
+                                                <FormItem className="remark flex">
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         单位详细地址
@@ -1478,8 +1478,8 @@ class AddFormView extends Component {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col md={4} xs={4} sm={4}>
-                                            <FormItem>
+                                        <Col md={12} xs={12} sm={12}>
+                                            <FormItem className="remark flex">
                                                 <Label>
                                                     <Icon type="uf-mi" className='mast'></Icon>
                                                     居住详细地址
@@ -1684,8 +1684,8 @@ class AddFormView extends Component {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col md={4} xs={4} sm={4}>
-                                            <FormItem>
+                                        <Col md={12} xs={12} sm={12}>
+                                            <FormItem className="remark flex">
                                                 <Label>
                                                     <Icon type="uf-mi" className='mast'></Icon>
                                                     单位详细地址
@@ -1909,8 +1909,8 @@ class AddFormView extends Component {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col md={4} xs={4} sm={4}>
-                                            <FormItem>
+                                        <Col md={12} xs={12} sm={12}>
+                                            <FormItem className="remark flex">
                                                 <Label>
                                                     <Icon type="uf-mi" className='mast'></Icon>
                                                     现居住详细地址

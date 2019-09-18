@@ -2,7 +2,7 @@
  * App模块
  */
 import React, { Component } from 'react';
-import {Tooltip, Menu, Icon, Loading, Form,Col, FormControl, Label, Row} from 'tinper-bee';
+import {Loading, Form} from 'tinper-bee';
 import {actions} from 'mirrorx';
 import {singleRecordOper} from "utils/service";
 import {deepClone} from "utils";
@@ -26,7 +26,7 @@ class IndexView extends Component {
             showFormView : 'none',//显示Form表单
             isEdit : false,//是否可编辑(卡片界面)
             isGrid : true,//是否列表界面
-            formObject: {},//当前卡片界面对象
+            formObj: {},//当前卡片界面对象
             listObj: [],//列表对象
             ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
             powerButton: props.powerButton,//按钮权限列表
@@ -73,7 +73,7 @@ class IndexView extends Component {
         this.setState({
             showListView:'none',
             showFormView:'',
-            formObject :_formObj,
+            formObj :_formObj,
         });
         actions.customerCorpApply.updateState({ formObject : _formObj,isGrid : false,isEdit : false});
     };
@@ -85,7 +85,7 @@ class IndexView extends Component {
         this.setState({
             isEdit:!this.state.isEdit,
         });
-        this.state.formObject['_edit'] = this.state.formObject['_edit'] ? false : true;
+        this.state.formObj['_edit'] = this.state.formObj['_edit'] ? false : true;
         actions.customerCorpApply.updateState({isEdit : !this.state.isEdit});
     };
 
@@ -93,8 +93,8 @@ class IndexView extends Component {
      * 查询方法
      */
     onQuery = (queryParam) =>{
-
-
+        // actions.projectInfo.loadList(queryParam);
+        console.log(this.props.list);
     };
 
 
@@ -131,13 +131,12 @@ class IndexView extends Component {
 
     onSave = () => {
         actions.customerCorpApply.saveOrUpdate(this.props.formObject);
-
     };
 
     onDelete = () => {
         singleRecordOper(this.props.selectedList,(param) => {
             let _selected = deepClone(param);
-            actions.customerCorpApply.delete(_selected.role_code);
+            actions.customerCorpApply.delete(_selected.customer_code);
         });
     };
 
@@ -145,7 +144,7 @@ class IndexView extends Component {
      * 新增按钮
      */
     onAdd = () =>{
-        actions.customerCorpApply.updateState({showModal : true, isEdit: true});
+        actions.customerCorpApply.updateState({showModal : true});
     };
     render() {
         let ButtonPower = {
@@ -171,9 +170,6 @@ class IndexView extends Component {
                         {...this.props}
                     />
                 </div>
-                <Row>
-                    <div className='cust-name'>客户名称： {this.props.formObject. role_name}</div>
-                </Row>
                 <div style={{display:this.state.showListView}}>
                     <ListView {...this.props}/>
                 </div>
@@ -183,8 +179,6 @@ class IndexView extends Component {
                 <div>
                     <AddFormView { ...this.props } onRef={this.onRef}/>
                 </div>
-
-
             </div>
 
         );

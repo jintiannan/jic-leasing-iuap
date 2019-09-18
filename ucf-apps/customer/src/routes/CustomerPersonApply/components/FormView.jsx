@@ -194,7 +194,7 @@ class FormView extends Component {
                             </Row>
                             <Row>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
+                                    <FormItem >
                                         <Label>
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             通讯地址邮政编码
@@ -378,9 +378,9 @@ class FormView extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                <Col md={12} xs={12} sm={12}>
+                                    <FormItem className="remark flex">
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             详细地址
                                         </Label>
@@ -402,7 +402,7 @@ class FormView extends Component {
                             <Row>
 
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
+                                    <FormItem >
                                         <Label>
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             户籍地址(省)
@@ -423,7 +423,7 @@ class FormView extends Component {
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
+                                    <FormItem >
                                         <Label>
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             户籍地址(市)
@@ -444,7 +444,7 @@ class FormView extends Component {
                                     </FormItem>
                                 </Col>
                                 <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
+                                    <FormItem >
                                         <Label>
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             户籍地址(区/县)
@@ -466,9 +466,9 @@ class FormView extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                <Col md={12} xs={12} sm={12}>
+                                    <FormItem className="remark flex">
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             详细地址
                                         </Label>
@@ -720,9 +720,9 @@ class FormView extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                <Col md={12} xs={12} sm={12}>
+                                    <FormItem className="remark flex">
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             单位详细地址
                                         </Label>
@@ -1144,9 +1144,9 @@ class FormView extends Component {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4} xs={4} sm={4}>
-                                        <FormItem>
-                                            <Label>
+                                    <Col md={12} xs={12} sm={12}>
+                                        <FormItem className="remark flex">
+                                            <Label className="line-height-32">
                                                 <Icon type="uf-mi" className='mast'></Icon>
                                                 单位详细地址
                                             </Label>
@@ -1414,9 +1414,9 @@ class FormView extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                <Col md={12} xs={12} sm={12}>
+                                    <FormItem className="remark flex">
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             居住详细地址
                                         </Label>
@@ -1620,9 +1620,9 @@ class FormView extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                <Col md={12} xs={12} sm={12}>
+                                    <FormItem className="remark flex">
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             单位详细地址
                                         </Label>
@@ -1851,9 +1851,9 @@ class FormView extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                                <Col md={12} xs={12} sm={12}>
+                                    <FormItem className="remark flex">
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             现居住详细地址
                                         </Label>

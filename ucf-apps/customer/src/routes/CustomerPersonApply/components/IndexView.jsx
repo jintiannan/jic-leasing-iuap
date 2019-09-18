@@ -2,7 +2,7 @@
  * App模块
  */
 import React, { Component } from 'react';
-import {Tooltip, Menu, Icon, Loading, Form} from 'tinper-bee';
+import {Loading, Form} from 'tinper-bee';
 import {actions} from 'mirrorx';
 import {singleRecordOper} from "utils/service";
 import {deepClone} from "utils";
@@ -30,7 +30,6 @@ class IndexView extends Component {
             listObj: [],//列表对象
             ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
             powerButton: props.powerButton,//按钮权限列表
-            treeData:[]
         };
     }
 

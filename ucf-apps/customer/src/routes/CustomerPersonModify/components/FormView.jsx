@@ -15,8 +15,8 @@ import {
     Collapse,
     Tree
 } from 'tinper-bee';
-import PageLayout from 'bee-page-layout';
 import {actions} from 'mirrorx';
+import {deepClone, getHeight} from "utils";
 import {SelectField} from 'components/RowField/SelectField'
 
 
@@ -25,15 +25,13 @@ import BaseInfo from "./BaseInfo";
 import {CustomerSource} from "../../CustomerSource/container";
 import ButtonGroup from "./ButtonGroup";
 
-const Content = PageLayout.Content;
-const LeftContent = PageLayout.LeftContent;
-const RightContent = PageLayout.RightContent;
 const TreeNode = Tree.TreeNode;
 
 class FormView extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            formHeight: 0,
             showSub: 'baseInfo',
         }
     }
@@ -41,7 +39,7 @@ class FormView extends Component {
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
-
+        this.resetFormHeight(false);
     }
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
@@ -60,6 +58,10 @@ class FormView extends Component {
             actions.customerPersonModify.updateState({subForm:selectedNode.url});
         }
 
+    };
+    resetFormHeight = (isopen) => {
+        let formHeight = getHeight()-10;
+        this.setState({ formHeight });
     };
     /**
      * 返回按钮
@@ -89,39 +91,37 @@ class FormView extends Component {
                              icon={<Icon type="uf-list-s-o"/>}/>;
         });
         const treeNodes = loop(this.props.treeData);
+        let { formHeight} = this.state;
         return (
             <div>
-                <PageLayout>
-                    <Content>
-                        <LeftContent md={2} xs={2} sm={2}>
-                            <Tree className="tree" showLine defaultSelectedKeys={"1"} defaultExpandedKeys={"1"}
-                                  disabled={true}
-                                  cancelUnSelect={true} onSelect={this.onSelect} showIcon>
-                                {treeNodes}
-                            </Tree>
-                        </LeftContent>
-                        <RightContent md={10} xs={10} sm={10}>
-                            <div style={{display: (this.props.subForm === 'baseInfo' ? "" : 'none')}}>
-                                <div style={{display:this.state.showListView}}>
-                                    <ButtonGroup
-                                        BtnPower= {this.props.ButtonPower}
-                                        Query= {this.onQuery}
-                                        Save={this.onSave}
-                                        Return={this.onReturn}
-                                        {...this.props}
-                                    />
-                                </div>
-                                <BaseInfo {...this.props}/>
+
+                <div>
+                    <div style={{width: "13%", height: formHeight, float: "left", overflow: "auto"}}>
+                        <Tree className="tree" showLine defaultSelectedKeys={"1"} defaultExpandedKeys={"1"}
+                              disabled={true}
+                              cancelUnSelect={true} onSelect={this.onSelect} showIcon>
+                            {treeNodes}
+                        </Tree>
+                    </div>
+                    <div style={{width: "87%", height: formHeight, float: "left", overflow: "auto"}}>
+                        <div style={{display: (this.props.subForm === 'baseInfo' ? "" : 'none')}}>
+                            <div style={{display:this.state.showListView}}>
+                                <ButtonGroup
+                                    BtnPower= {this.props.ButtonPower}
+                                    Query= {this.onQuery}
+                                    Save={this.onSave}
+                                    Return={this.onReturn}
+                                    {...this.props}
+                                />
                             </div>
-                            <div style={{display: (this.props.subForm === 'source' ? "" : 'none')}}>
-                                <CustomerSource  customer={customer} subForm={this.props.subForm}/>
-                            </div>
-                        </RightContent>
-                    </Content>
-                </PageLayout>
+                            <BaseInfo {...this.props}/>
+                        </div>
+                        <div style={{display: (this.props.subForm === 'source' ? "" : 'none')}}>
+                            <CustomerSource  customer={customer} subForm={this.props.subForm}/>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-
         );
     }
 }
