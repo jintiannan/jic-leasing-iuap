@@ -7,11 +7,11 @@
 import React, {Component} from 'react';
 import {Step, Button, Message, Modal, Form, Icon, Label, Col, Row, FormControl, Select} from 'tinper-bee';
 import {actions} from 'mirrorx';
-
-const FormItem = Form.FormItem;
-
+import moment from "moment";
 import './index.less';
 import {deepClone} from "../../../../../../ucf-common/src/utils";
+import FormInputNumber from 'components/FormRef/FormInputNumber';
+import DatePicker from "tinper-bee/lib/Datepicker";
 
 const Steps = Step.Steps;
 const addTitle = "新增单位客户申请基本信息表";
@@ -22,9 +22,11 @@ const steps = [{title: '客户基本信息'},
     {title: '客户重要标志'},
     {title: '客户地址信息'},
     {title: '客户评级信息'},
-    {title: '客户其他信息'},
-    {title: '操作信息'}];
-
+    {title: '客户其他信息'},];
+const FormItem = Form.FormItem;
+const format = "YYYY-MM-DD";
+const format_time = "YYYY-MM-DD HH:mm:ss";
+const dateInputPlaceholder = "选择日期";
 
 class AddFormView extends Component {
     constructor(props) {
@@ -39,8 +41,7 @@ class AddFormView extends Component {
             show3: 'none',
             show4: 'none',
             show5: 'none',
-            show6: 'none',
-            show7: 'none',
+            show6: 'none'
         };
         this.changeSize = this.changeSize.bind(this);
         this.close = this.close.bind(this);
@@ -486,18 +487,19 @@ class AddFormView extends Component {
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         营业收入(万元)
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('operating_income', {
-                                                                         initialValue: _formObject.operating_income,
-
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
+                                                    <FormInputNumber
+                                                        disabled={!this.props.isEdit}
+                                                        toThousands={true}  //是否显示千分位
+                                                        precision={2} //保留2位小数
+                                                        {
+                                                            ...getFieldProps('operating_income', {
+                                                                initialValue: _formObject.operating_income,
+                                                                rules: [{
+                                                                    required: true,
+                                                                }],
+                                                            })
+                                                        }
                                                     />
-
                                                 </FormItem>
 
                                             </Col>
@@ -696,65 +698,48 @@ class AddFormView extends Component {
 
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
+
+                                                <FormItem className='time flex'>
+                                                    <Label className="line-height-32">
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         证件有效期(开始)
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+
+                                                    <DatePicker
+                                                        format={format}
+                                                        defaultValue={moment()}
+                                                        placeholder={dateInputPlaceholder}
+                                                    />
+
                                                 </FormItem>
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
+                                                <FormItem className='time flex'>
+                                                    <Label className="line-height-32">
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         证件有效期(截止)
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <DatePicker
+                                                        format={format}
+                                                        defaultValue={moment()}
+                                                        placeholder={dateInputPlaceholder}
+                                                    />
                                                 </FormItem>
                                             </Col>
                                         </Row>
                                         <Row>
                                             <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
+                                                <FormItem className='time flex'>
+                                                    <Label className="line-height-32">
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         最新年检日期
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <DatePicker
+                                                        format={format}
+                                                        defaultValue={moment()}
+                                                        placeholder={dateInputPlaceholder}
+                                                    />
                                                 </FormItem>
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
@@ -802,23 +787,16 @@ class AddFormView extends Component {
                                         </Row>
                                         <Row>
                                             <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label md={2} xs={2} sm={2}>
+                                                <FormItem className='time flex'>
+                                                    <Label className="line-height-32">
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         贷款卡最新年审时间
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <DatePicker
+                                                        format={format_time}
+                                                        defaultValue={moment()}
+                                                        placeholder={dateInputPlaceholder}
+                                                    />
                                                 </FormItem>
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
@@ -889,85 +867,57 @@ class AddFormView extends Component {
 
 
                                             <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
+                                                <FormItem className='time flex'>
+                                                    <Label className="line-height-32">
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         成立日期
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <DatePicker
+                                                        format={format}
+                                                        defaultValue={moment()}
+                                                        placeholder={dateInputPlaceholder}
+                                                    />
                                                 </FormItem>
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
+                                                <FormItem className='time flex'>
+                                                    <Label className="line-height-32">
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         营业执照登记日
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <DatePicker
+                                                        format={format}
+                                                        defaultValue={moment()}
+                                                        placeholder={dateInputPlaceholder}
+                                                    />
                                                 </FormItem>
                                             </Col>
                                         </Row>
                                         <Row>
                                             <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
+                                                <FormItem className='time flex'>
+                                                    <Label className="line-height-32">
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         营业执照到期日
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <DatePicker
+                                                        format={format}
+                                                        defaultValue={moment()}
+                                                        placeholder={dateInputPlaceholder}
+                                                    />
                                                 </FormItem>
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
+                                                <FormItem className='time flex'>
+                                                    <Label className="line-height-32">
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         营业执照最新年审日
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <DatePicker
+                                                        format={format}
+                                                        defaultValue={moment()}
+                                                        placeholder={dateInputPlaceholder}
+                                                    />
                                                 </FormItem>
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
@@ -1891,281 +1841,6 @@ class AddFormView extends Component {
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         开票说明
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                    <div style={{display: this.state.show7}}>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        部门名称
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        客户经理
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        操作人
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        操作日期
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        操作时间
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('operate_time', {
-                                                                         initialValue: _formObject.operate_time,
-
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        最新变更人
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-
-
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        最新变更日期
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        最新变更时间
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('operate_time_lst', {
-                                                                         initialValue: _formObject.operate_time_lst,
-
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        审核人
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        审核日期
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        审核时间
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('check_time', {
-                                                                         initialValue: _formObject.check_time,
-
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        机构
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        二级业务领域
                                                     </Label>
                                                     <Select
                                                         showSearch={true}
