@@ -68,7 +68,7 @@ class BaseInfo extends  Component{
 
                 <div>
                     <div> <span onClick={() => this.setState({open: !this.state.open})}>
-                                        <FormSplitHeader title={'客户基本信息'}/>
+                                        <FormSplitHeader open={this.state.open} title={'客户基本信息'}/>
                                       </span>
                     </div>
                     <Collapse in={this.state.open} clssName="form-item">
@@ -292,7 +292,7 @@ class BaseInfo extends  Component{
 
                                 <Col md={12} xs={12} sm={12}>
                                     <FormItem className="remark flex">
-                                        <Label style={{width: '12.5%' }}>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             注册地址
                                         </Label>
@@ -332,7 +332,7 @@ class BaseInfo extends  Component{
 
                     <div>
                                         <span onClick={() => this.setState({open1: !this.state.open1})}>
-                                            <FormSplitHeader title={'客户规模信息'}/>
+                                            <FormSplitHeader  open={this.state.open1} title={'客户规模信息'}/>
                                         </span>
                     </div>
                     <Collapse in={this.state.open1}>
@@ -603,7 +603,7 @@ class BaseInfo extends  Component{
                     </Collapse>
                     <div>
                     <span onClick={() => this.setState({open2: !this.state.open2})}>
-                        <FormSplitHeader title={'客户证件信息'}/>
+                        <FormSplitHeader open={this.state.open2} title={'客户证件信息'}/>
                     </span>
                     </div>
                     <Collapse in={this.state.open2}>
@@ -1175,16 +1175,15 @@ class BaseInfo extends  Component{
 
 
                             </Row>
-
-                            <Row>
-                                <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
+                            <Row className={"textArea"}>
+                                <Col md={12} xs={12} sm={12}>
+                                    <FormItem className="remark flex">
                                         <Label>
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             经营范围(限200个汉字)
                                         </Label>
 
-                                        <FormControl disabled={!this.props.isEdit}
+                                        <FormControl disabled={!this.props.isEdit} componentClass='textarea'
                                                      {
                                                          ...getFieldProps('bussiness_scope', {
                                                              initialValue: _formObject.bussiness_scope,
@@ -1200,14 +1199,14 @@ class BaseInfo extends  Component{
 
                                 </Col>
                             </Row>
-                            <Row>
-                                <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                            <Row className={"textArea"}>
+                                <Col md={12} xs={12} sm={12}>
+                                    <FormItem className="remark flex">
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             主营业务(限200个汉字)
                                         </Label>
-                                        <FormControl disabled={!this.props.isEdit}
+                                        <FormControl disabled={!this.props.isEdit} componentClass='textarea'
                                                      {
                                                          ...getFieldProps('primary_bussiness', {
                                                              initialValue: _formObject.primary_bussiness,
@@ -1275,7 +1274,7 @@ class BaseInfo extends  Component{
                     </Collapse>
                     <div>
                     <span onClick={() => this.setState({open3: !this.state.open3})}>
-                        <FormSplitHeader title={'客户重要标志'}/>
+                        <FormSplitHeader open={this.state.open3} title={'客户重要标志'}/>
                     </span>
                     </div>
                     <Collapse in={this.state.open3}>
@@ -1460,7 +1459,7 @@ class BaseInfo extends  Component{
 
                     <div>
                     <span onClick={() => this.setState({open4: !this.state.open4})}>
-                        <FormSplitHeader title={'客户地址信息'}/>
+                        <FormSplitHeader open={this.state.open4} title={'客户地址信息'}/>
                     </span>
                     </div>
                     <Collapse in={this.state.open4}>
@@ -1755,15 +1754,14 @@ class BaseInfo extends  Component{
                                 </Col>
                             </Row>
 
-                            <Row>
-
-                                <Col md={4} xs={4} sm={4}>
-                                    <FormItem>
-                                        <Label>
+                            <Row className={"textArea"}>
+                                <Col md={12} xs={12} sm={12}>
+                                    <FormItem className="remark flex">
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             备注
                                         </Label>
-                                        <FormControl disabled={!this.props.isEdit}
+                                        <FormControl disabled={!this.props.isEdit} componentClass='textarea'
                                                      {
                                                          ...getFieldProps('remarks', {
                                                              initialValue: _formObject.remarks,
@@ -1778,15 +1776,13 @@ class BaseInfo extends  Component{
                                     </FormItem>
 
                                 </Col>
-
-
                             </Row>
                         </Form>
                     </Collapse>
 
                     <div>
                     <span onClick={() => this.setState({open5: !this.state.open5})}>
-                        <FormSplitHeader title={'客户评级信息'}/>
+                        <FormSplitHeader open={this.state.open5} title={'客户评级信息'}/>
                     </span>
                     </div>
                     <Collapse in={this.state.open5}>
@@ -1820,7 +1816,7 @@ class BaseInfo extends  Component{
 
                     <div>
                     <span onClick={() => this.setState({open6: !this.state.open6})}>
-                        <FormSplitHeader title={'客户其他信息'}/>
+                        <FormSplitHeader open={this.state.open6} title={'客户其他信息'}/>
                     </span>
                     </div>
                     <Collapse in={this.state.open6}>
@@ -1941,7 +1937,7 @@ class BaseInfo extends  Component{
                     </Collapse>
                     <div>
                     <span onClick={() => this.setState({open7: !this.state.open7})}>
-                        <FormSplitHeader title={'操作信息'}/>
+                        <FormSplitHeader open={this.state.open7} title={'操作信息'}/>
                     </span>
                     </div>
                     <Collapse in={this.state.open7}>

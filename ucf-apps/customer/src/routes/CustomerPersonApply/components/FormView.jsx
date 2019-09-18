@@ -68,7 +68,7 @@ class FormView extends Component {
             <div className='common-form'>
                 <div>
                     <div> <span onClick={() => this.setState({open: !this.state.open})}>
-                                        <FormSplitHeader title={'客户基本信息'}/>
+                                        <FormSplitHeader open={this.state.open} title={'客户基本信息'}/>
                                       </span>
                     </div>
                     <Collapse in={this.state.open} clssName="form-item">
@@ -589,7 +589,7 @@ class FormView extends Component {
                         </Form>
                     </Collapse>
                     <div> <span onClick={() => this.setState({open1: !this.state.open1})}>
-    <FormSplitHeader title={'客户职业信息'}/>
+    <FormSplitHeader open={this.state.open1} title={'客户职业信息'}/>
         </span>
                     </div>
                     <Collapse in={this.state.open1} clssName="form-item">
@@ -820,7 +820,7 @@ class FormView extends Component {
                         </Form>
                     </Collapse>
                     <div> <span onClick={() => this.setState({open2: !this.state.open2})}>
-    <FormSplitHeader title={'配偶信息'}/>
+    <FormSplitHeader open={this.state.open2} title={'配偶信息'}/>
         </span>
                     </div>
                     <Collapse in={this.state.open2} clssName="form-item">
@@ -1169,7 +1169,7 @@ class FormView extends Component {
                         </Form>
                     </Collapse>
                     <div> <span onClick={() => this.setState({open3: !this.state.open3})}>
-    <FormSplitHeader title={'担保人信息'}/>
+    <FormSplitHeader open={this.state.open3} title={'担保人信息'}/>
         </span>
                     </div>
                     <Collapse in={this.state.open3} clssName="form-item">
@@ -1720,7 +1720,7 @@ class FormView extends Component {
                         </Form>
                     </Collapse>
                     <div> <span onClick={() => this.setState({open4: !this.state.open4})}>
-    <FormSplitHeader title={'联系人信息'}/>
+    <FormSplitHeader open={this.state.open4} title={'联系人信息'}/>
         </span>
                     </div>
                     <Collapse in={this.state.open4} clssName="form-item">
@@ -1876,7 +1876,7 @@ class FormView extends Component {
                     </Collapse>
                     <div>
     <span onClick={() => this.setState({open5: !this.state.open5})}>
-    <FormSplitHeader title={'客户银行卡信息'}/>
+    <FormSplitHeader open={this.state.open5} title={'客户银行卡信息'}/>
         </span>
                     </div>
                     <Collapse in={this.state.open5} clssName="form-item">

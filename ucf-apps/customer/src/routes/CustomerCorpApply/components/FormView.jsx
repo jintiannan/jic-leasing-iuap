@@ -269,7 +269,7 @@ class FormView extends Component {
 
                                 <Col md={12} xs={12} sm={12}>
                                     <FormItem className="remark flex">
-                                        <Label>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             注册地址
                                         </Label>
@@ -1221,7 +1221,7 @@ class FormView extends Component {
                             <Row className={"textArea"}>
                                 <Col md={12} xs={12} sm={12}>
                                     <FormItem className="remark flex">
-                                        <Label>
+                                        <Label className="line-height-32">
                                             <Icon type="uf-mi" className='mast'></Icon>
                                             经营范围(限200个汉字)
                                         </Label>
@@ -1814,8 +1814,7 @@ class FormView extends Component {
                                 </Col>
                             </Row>
 
-                            <Row>
-
+                            <Row className={"textArea"}>
                                 <Col md={12} xs={12} sm={12}>
                                     <FormItem className="remark flex">
                                         <Label>
@@ -1835,10 +1834,7 @@ class FormView extends Component {
                                         />
 
                                     </FormItem>
-
                                 </Col>
-
-
                             </Row>
                         </Form>
                     </Collapse>

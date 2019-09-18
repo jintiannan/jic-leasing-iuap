@@ -125,11 +125,14 @@ class AddFormView extends Component {
         const {current} = this.state;
         const {getFieldProps, getFieldError} = this.props.form;
         let _formObject = this.props.formObject;
+        if (!this.props.showModal) {
+            return <div></div>
+        }
         return (
             <div>
 
                 <Modal
-                    className="add-modal"
+                    className="add-model"
                     show={this.props.showModal}
                     backdrop="static" //关闭遮罩事件
                     size="xlg" //大号模态框
