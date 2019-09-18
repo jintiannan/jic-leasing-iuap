@@ -21,7 +21,8 @@ module.exports = (env, argv) => {
             "settings",
             'customer',
             "calculator",
-            "finance"
+            "finance",
+            "portal"
         ],
         // 代理的配置
         proxy: [

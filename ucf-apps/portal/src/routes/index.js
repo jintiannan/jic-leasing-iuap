@@ -7,6 +7,7 @@ import React from "react";
 import { Route } from "mirrorx";
 import { ConnectedCover } from "./cover/container";
 import { ConnectedMessage } from "./message/container";
+import { ConnectedTask } from "./taskcenter/container";
 
 
 export default () => (
@@ -14,5 +15,6 @@ export default () => (
         <Route exact path="/" component={ConnectedCover} />
         <Route exact path="/cover" component={ConnectedCover} />
         <Route exact path="/message" component={ConnectedMessage} />
+        <Route exact path="/taskcenter" component={ConnectedTask} />
     </div>
 );

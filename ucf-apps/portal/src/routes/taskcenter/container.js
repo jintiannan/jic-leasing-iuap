@@ -12,4 +12,4 @@ import model from './model'
 // 数据和组件UI关联、绑定
 mirror.model(model);
 
-export const ConnectedCover = connect(state => state.cover)(IndexView);
+export const ConnectedTask = connect(state => state.taskcenter)(IndexView);

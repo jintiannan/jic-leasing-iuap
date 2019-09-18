@@ -8,11 +8,8 @@ import {processData, structureObj, initStateObj,deepClone} from "utils";
 
 export default {
     // 确定 Store 中的数据模型作用域
-    name: "cover",
+    name: "taskcenter",
     // 设置当前 Model 所需的初始化 state
-    menus:[],
-    current: '',//单选选中的key
-    reload:0,
     initialState: {
         pageParams: {},
         queryParam: {
@@ -52,7 +49,7 @@ export default {
          */
         async loadList(param = {}, getState) {
             // 正在加载数据，显示加载 Loading 图标
-            actions.cover.updateState({showLoading: true});
+            actions.taskcenter.updateState({showLoading: true});
             let data = processData(await api.getList(param));  // 调用 getList 请求数据
             let updateData = {showLoading: false};
             let queryObj = {
@@ -63,7 +60,7 @@ export default {
             updateData.queryObj = queryObj;
             updateData.queryParam = param;
             updateData.list = data;
-            actions.cover.updateState(updateData); // 更新数据和查询条件
+            actions.taskcenter.updateState(updateData); // 更新数据和查询条件
         },
         /**
          * 更新界面单行数据,使用之前请对需要更新的对象进行深拷贝再传入!!
@@ -73,7 +70,7 @@ export default {
          */
         async updateRowData(param={},getState){
             let{index,record} = param;
-            let list = getState().cover.list;
+            let list = getState().taskcenter.list;
             let _list = deepClone(list);
             if(index != undefined){
                 _list[index] = record;
@@ -87,7 +84,7 @@ export default {
                     }
                 }                
             }            
-            actions.cover.updateState({list:_list});
+            actions.taskcenter.updateState({list:_list});
         },
     }
 };

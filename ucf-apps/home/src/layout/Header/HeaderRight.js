@@ -84,7 +84,7 @@ class HeaderRight extends Component {
                     <Icon type="uf-minimize" style={{"fontSize":"18px"}}></Icon>
                   </a>
                 }
-                <a id="taskCenterBox" value="taskcenter" onClick={(e)=>self.handleDefault(e,'',item2)} data-ref="taskcenter" name={item2['name'+locale_serial]} title={item2['name'+locale_serial]} href={`${GROBAL_HTTP_CTX}/index-view.html#/taskcenter`} className="navbar-avatar" titlekey={intl.formatMessage({id: 'tabs.header.task'})} >
+                <a id="taskCenterBox" value="taskcenter" onClick={(e)=>self.handleDefault(e,'',item2)} data-ref="taskcenter" name={item2['name'+locale_serial]} title={item2['name'+locale_serial]} href={`home#/ifr/portal#/taskcenter`} className="navbar-avatar" titlekey={intl.formatMessage({id: 'tabs.header.task'})} >
                   <i className="pap pap-task"></i>
                 </a>
                 <a id="messageCount" value="msgCenter" onClick={(e)=>self.handleDefault(e,'',item1)} data-ref="msgCenter" name={item1['name'+locale_serial]}  title={item1['name'+locale_serial]}  href={`${GROBAL_HTTP_CTX}/index-view.html#/msgCenter`} className="navbar-avatar" titlekey={intl.formatMessage({id: 'tabs.header.message'})}>
