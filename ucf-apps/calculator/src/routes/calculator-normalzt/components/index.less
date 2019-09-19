@@ -1,4 +1,49 @@
+//编辑页面子表页面 
+.childListView{
+   //子表 固定高度
+  .list-tabs{
+    .u-table-body{
+      height: 220px;
+    }
+  }
 
+   //字表修改input间距
+  .editable-cell-input-wrapper {
+    padding-right: 2px !important;
+    .u-form-control {
+      height: 30px !important;
+    }
+  }
+  //字表修改input间距
+  .u-editable-table .u-table .u-table-row td {
+    padding: 5px 1px!important;
+  }
+
+  //form修改页面 字表加减按钮
+  .addAndDelChildList {
+    .u-button-icon + .u-button i{
+      padding-left: 0;
+    }
+
+    padding-right: 25px;
+    //form修改页面 字表加减按钮去边框
+    .u-button-border{
+      border: 0px solid #a5adba !important;
+    }
+  }
+
+}
+
+//标签页
+.list-tabs{
+  //tabs字体加粗
+  .u-tabs-tab {
+    font-weight: bold;
+  }
+  .u-tabs-nav-animated {
+    font-size: 12px;
+  }
+}
 
 //form 修改详情页
 .calculatorNormalztForm {
@@ -37,13 +82,6 @@
         width: 53%;
       }
 
-
-  // .ref-input-wrap {
-  //   width:70%!important;  
-  //       .u-form-control{
-  //         width:100%; 
-  //       }
-  // }
   //行距
   .u-form-item {
     min-height: 30px ;
@@ -55,202 +93,3 @@
   }
   
 }
-
-.tableRef {
-  .lableRef {
-     float: left;
-     padding-top: 7px;
-  }
-  .ref-input-wrap {
-    width: 70% !important;
-  }
-  //input 大小
-  .u-form-control {
-    width: 100% !important;
-  }
-}
-
-//form修改页面 字表加减按钮
-.addAndDelChildList {
-  .u-button-icon + .u-button i{
-    padding-left: 0;
-  }
-
-  padding-right: 25px;
-  //form修改页面 字表加减按钮去边框
-  .u-button-border{
-    border: 0px solid #a5adba !important;
-  }
-}
-
-//编辑页面 子表 固定高度
-.childListView{
-  .child-tabs{
-    .u-table-body{
-      height: 220px;
-    }
-  }
-}
-
-
-
-//新增页面弹出层
-.calculatorNormalztAddmodal{
-    //新增form样式 上一步 下一步 按钮
-    .steps-action {
-      margin-top: 24px;
-      text-align: right;
-    }
-      //新增form样式 内容
-  .steps-content {
-    margin-top: 16px;
-    border: 1px dashed #e9e9e9;
-    border-radius: 6px;
-    background-color: #fafafa;
-    min-height: 200px;
-    text-align: right;
-    //padding-top: 80px;
-  }
-     //新增页面弹出层
-    .u-modal-content {
-      touch-action: none;
-      transform: translate(-12%, 0px) !important;
-      width: 130%;
-    }
-    .u-modal-body{
-      background: #f7f9fb;
-    }
-    .u-form {
-      height: auto !important;
-      overflow: auto;
-    }
-    //input 大小
-    // .u-form-control {
-    //   width: 70% !important;
-    // }
-    //行距
-    .u-form-item {
-      min-height: 42px ;
-    }
-    .u-label {
-      padding-top: 6px;
-    }
-      //下拉框
-    .u-select-enabled {
-      width: 52%!important;
-    }
-    //单选下拉框 value
-    .u-select-selection-selected-value {
-      text-align: left;
-      width: 90%;
-    }
-    //时间插件
-    .datepicker-container {
-      width: 95%;
-      .u-form-control {
-        width: 100%;
-      }
-    }
-    .DatePicker {
-      float: right;
-    }
-    .tableRefAdd {
-      float: right;
-      .ref-input-wrap {
-        width:204px !important ;
-      }
-      //input 大小
-      // .u-form-control {
-      //   width: 101% !important;
-      // }
-    
-    }
-    //金额input
-    .InputNumberAdd {
-      width: 52%;
-      float: right;
-    }
-  }
-
-
-
-
-//---------------标签页
-.demo1-tabs{
-  //margin-bottom: 40px;
-  .u-tabs-tab {
-    font-weight: bold;
-  }
-}
-
-.u-tabs-nav-animated {
-  font-size: 12px;
-}
-
-//----------------树参照列表
-.u-editable-table .u-table {
-  .u-table-row {
-    td {
-      padding: 5px 8px;
-
-      input {
-        padding-left: 5px;
-        font-size: 12px;
-
-        &.error {
-          border-color: #F44336;
-        }
-      }
-    }
-
-    .editable-cell {
-      height: 30px;
-    }
-
-    &-hover {
-      .editable-cell-text-wrapper {
-        line-height: 19px;
-      }
-    }
-
-    .u-form-control,
-    .u-select-selection {
-      height: 30px;
-    }
-  }
-
-  .editable-cell-text-wrapper {
-    box-sizing: border-box;
-    line-height: 20px;
-    border-radius: 3px;
-  }
-
-  .editable-cell-input-wrapper {
-    padding-right: 0;
-    .ref-input-wrap {
-      width: auto !important;
-      height: 30px;
-      .u-input-group{
-        display: inline-block;
-      }
-    }
-  }
-
-  .verify-cell {
-    padding-right: 25px !important;
-  }
-
-  .require {
-    position: absolute;
-    top: 2px;
-    color: #F44336;
-    font-size: 20px;
-  }
-}
-
-.u-editable-table-tp {
-  .tp-content {
-    color: #F44336;
-  }
-}
-

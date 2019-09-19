@@ -19,10 +19,11 @@ class DatePickerEditCell extends Component {
 
   handleChange = value => {
     this.setState({ value });
+    let date = null;
     if(value != undefined && value != null && value !=""){
-      let date = moment(value).format("YYYY-MM-DD");
-      this.props.onChange(date);
+      date = moment(value).format("YYYY-MM-DD");
     }
+    this.props.onChange(date);
   };
 
   // commitChange = (e,value) => {

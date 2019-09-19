@@ -144,36 +144,33 @@ class AddFormView extends Component {
     });
   }
 
- //绑定子组件
- onRef = (ref) => {
-   this.child = ref;        
- }
-
- //onChange方法
-handleChange = (rule, value, callback) =>{
-    
-}
-
-//格式化百分数 比例字段
-formatDepositRatio = (value) => {
-    if(value != "" && value != "0.0000"){
-        let v= value + "%";
-        return v;
+    //绑定子组件
+    onRef = (ref) => {
+    this.child = ref;        
     }
-}
 
-aformat=(value)=>{
-    //value =  value + 1;
-}
+    //onChange方法 保证金比例
+    handleChangeDeposit_ratio = (value) =>{
+        let objectForm = this.props.form.getFieldsValue();
+        let val = objectForm.total_amount_equipment * value;
+        this.props.form.setFieldsValue({'deposit_cash':val});
+    }
+
+    //onChange方法 保证金金额
+    handleChangeDeposit_cash = (value) =>{
+        let objectForm = this.props.form.getFieldsValue();
+        let val =  ( objectForm.total_amount_equipment > 0? value/objectForm.total_amount_equipment : 0 )
+        this.props.form.setFieldsValue({'deposit_ratio':val});
+    }
 
 
-//子表切换子标签
-onChange = (activeKey) => {
-    console.log(`onChange ${activeKey} o-^-o`);
-    this.setState({
-        activeKey,
-    });
-}
+    //子表切换子标签
+    onChange = (activeKey) => {
+        console.log(`onChange ${activeKey} o-^-o`);
+        this.setState({
+            activeKey,
+        });
+    }
 
   render() {
     const { current } = this.state;
@@ -187,7 +184,7 @@ onChange = (activeKey) => {
             <div>
              
               <Modal
-                          className="calculatorNormalztAddmodal"
+                          className="jic-modal"
                           show={ this.props.showModal }
                           backdrop="static" //关闭遮罩事件
                           size={"xlg"} //大号模态框
@@ -201,7 +198,7 @@ onChange = (activeKey) => {
                 {steps.map(item => <Step key={item.title} title={item.title} />)}
               </Steps>
               
-              <div className="steps-content">
+              <div className="steps-content jic-form">
               <Form>
               <div style={{display:this.state.showDiv1}}>
                                   
@@ -227,16 +224,12 @@ onChange = (activeKey) => {
                               </Col>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
-
-                               
-                                             <div> 
-                                                
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         限额方案
                                                     </Label>
                                                 
-                                                <div className="tableRefAdd" >
+                                               
                                                 <TableFormRef
                                                 {...this.props}
                                                 isEdit={true} 
@@ -266,12 +259,6 @@ onChange = (activeKey) => {
                                                 })}
                                             /> */}
 
-                    
-
-                                                </div>
-                                                
-                                            </div>
-                                    
                                   </FormItem>
       
                               </Col>
@@ -307,7 +294,6 @@ onChange = (activeKey) => {
                                       </Label>
                                       
                                       <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'是',value:'0'},{key:'否',value:'1'}]}
                                     {...getFieldProps('if_corpus_tickets', {
                                         initialValue: formObject.if_corpus_tickets,                                       
@@ -329,7 +315,6 @@ onChange = (activeKey) => {
                                       </Label>
                                       
                                       <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'0%',value:'0'},{key:'3%',value:'3'},{key:'6%',value:'6'},{key:'10%',value:'10'}]}
                                     {...getFieldProps('rent_tax_rate', {
                                         initialValue: formObject.rent_tax_rate,                                        
@@ -349,7 +334,6 @@ onChange = (activeKey) => {
                                           税种
                                       </Label>
                                       <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'增值税',value:'1'},{key:'营业税',value:'2'},{key:'复合税',value:'3'},{key:'无',value:'0'}]}
                                     {...getFieldProps('pk_currtype', {
                                         initialValue: formObject.pk_currtype,                                   
@@ -366,12 +350,10 @@ onChange = (activeKey) => {
                                   <Row>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
-                                  <div>  
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           投放日期
                                       </Label>
-                                      <div className="DatePicker">
                                       <DatePicker
                                       {
                                         ...getFieldProps('plan_date_loan', {
@@ -387,19 +369,15 @@ onChange = (activeKey) => {
                                         // onClick={this.onClick}
                                         // onDateInputBlur={this.onDateInputBlur}
                                       />
-                                </div>
-                                </div>  
                                   </FormItem>
       
                               </Col>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
-                                      <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           投放金额
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber
                                         disabled = {false}
                                         toThousands = {true}  //是否显示千分位
@@ -413,21 +391,17 @@ onChange = (activeKey) => {
                                             })
                                             }
                                         />
-                                        </div>
-                                        </div>
                                   </FormItem>
       
                               </Col>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
-                                        <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           租赁本金
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber
-                                        disabled = {false}
+                                        disabled = {true}
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2} //保留2位小数
                                         {
@@ -439,8 +413,6 @@ onChange = (activeKey) => {
                                             })
                                             }
                                         />
-                                        </div>
-                                        </div>
                                   </FormItem>
       
                               </Col>
@@ -449,14 +421,12 @@ onChange = (activeKey) => {
                                   <Col md={4} xs={4} sm={4}>
                                   <FormItem>
                                       
-                                      <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           净融资比例
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber
-                                        disabled = {false}
+                                        disabled = {true}
                                         toPercent = {true}  //是否显示百分号
                                         precision = {2} //保留2位小数
                                         {
@@ -468,8 +438,6 @@ onChange = (activeKey) => {
                                             })
                                             }
                                         />
-                                        </div>
-                                        </div>
                                       
                                   </FormItem>
       
@@ -478,14 +446,12 @@ onChange = (activeKey) => {
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
                                       
-                                        <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           净融资额(元)
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber
-                                        disabled = {false}
+                                        disabled = {true}
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2} //保留2位小数
                                         {
@@ -497,8 +463,6 @@ onChange = (activeKey) => {
                                             })
                                             }
                                         />
-                                        </div>
-                                        </div>
                                   </FormItem>
       
                               </Col>
@@ -509,14 +473,12 @@ onChange = (activeKey) => {
                               <Row>
                           <Col md={4} xs={4} sm={4}>
                               <FormItem>
-                                        <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           留购价款(元)
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber
-                                        disabled = {false}
+                                        disabled = {true}
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2} //保留2位小数
                                         {
@@ -528,22 +490,18 @@ onChange = (activeKey) => {
                                             })
                                             }
                                         />
-                                        </div>
-                                        </div>
                                   
                               </FormItem>
       
                           </Col>
                           <Col md={4} xs={4} sm={4}>
                               <FormItem>
-                                  
-                                  <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           保证金比例
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber
+                                        disabled = {false}
                                         toPercent = {true}  //是否显示百分号
                                         precision = {4}
                                         {
@@ -552,24 +510,22 @@ onChange = (activeKey) => {
                                                 rules: [{
                                                     required: true, 
                                                 }],
+                                                onChange:this.handleChangeDeposit_ratio ,
                                             })
                                             }
                                         />
-                                        </div>
-                                   </div>
                               </FormItem>
       
                           </Col>
                           <Col md={4} xs={4} sm={4}>
                               <FormItem>
-                                    <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           保证金金额
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber
-                                        toThousands = {true}  //是否显示千分位
+                                        disabled = {false}
+                                        toThousands = {false}  //是否显示千分位
                                         precision = {2}
                                         // min={0}
                                         // max={999999}
@@ -579,11 +535,10 @@ onChange = (activeKey) => {
                                                 rules: [{
                                                     required: true, 
                                                 }],
+                                                onChange:this.handleChangeDeposit_cash ,
                                             })
                                             }
                                         />
-                                        </div>
-                                   </div>
                                   
                               </FormItem>
       
@@ -616,12 +571,10 @@ onChange = (activeKey) => {
                               </Col>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
-                                      <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           手续费比例
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber
                                         precision = {true}
                                         precision = {4}
@@ -634,22 +587,18 @@ onChange = (activeKey) => {
                                                 }],
                                             })
                                             }
-                                        />
-                                        </div>
-                                   </div>                               
+                                        />                         
                                   </FormItem>
       
                               </Col>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
-                                      <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           首期手续费金额(元)
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber
-                                        toThousands = {true}  //是否显示千分位
+                                        toThousands = {false}  //是否显示千分位
                                         precision = {2} //保留2位小数
                                         // min={0}
                                         // max={999999}
@@ -662,8 +611,6 @@ onChange = (activeKey) => {
                                             })
                                             }
                                         />
-                                        </div>
-                                   </div>
                                   </FormItem>
       
                               </Col>
@@ -671,12 +618,10 @@ onChange = (activeKey) => {
                                   <Row>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>    
-                                    <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           手续费总金额(元)
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber disabled={true}
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2} //保留2位小数
@@ -691,8 +636,6 @@ onChange = (activeKey) => {
                                             })
                                             }
                                         />
-                                        </div>
-                                   </div>
                                       
                                   </FormItem>
       
@@ -739,13 +682,11 @@ onChange = (activeKey) => {
                                   </Row>
                                   <Row>
                                   <Col md={4} xs={4} sm={4}>
-                                  <FormItem>
-                                    <div>  
+                                  <FormItem> 
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           首期中间费用支出时间
                                       </Label>
-                                      <div className="DatePicker">
                                       <DatePicker
                                       {
                                         ...getFieldProps('srvfee_date_out_ft', {
@@ -760,20 +701,16 @@ onChange = (activeKey) => {
                                         // onChange={this.onChange}
                                         // onClick={this.onClick}
                                         // onDateInputBlur={this.onDateInputBlur}
-                                      />
-                                </div>
-                                </div>  
+                                      />  
                                   </FormItem>
       
                               </Col>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
-                                      <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           首期中间费用支出金额(元)
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber disabled={true}
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2} //保留2位小数
@@ -787,20 +724,16 @@ onChange = (activeKey) => {
                                                 }],
                                             })
                                             }
-                                        />
-                                        </div>
-                                   </div>                             
+                                        />                        
                                   </FormItem>
       
                               </Col>
                               <Col md={4} xs={4} sm={4}>
                                   <FormItem>
-                                      <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           中间费用支出总金额(元)
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber disabled={true}
                                         toThousands = {true}  //是否显示千分位
                                         precision = {2} //保留2位小数
@@ -814,9 +747,7 @@ onChange = (activeKey) => {
                                                 }],
                                             })
                                             }
-                                        />
-                                        </div>
-                                   </div>                 
+                                        />              
                                   </FormItem>
       
                               </Col>
@@ -830,7 +761,6 @@ onChange = (activeKey) => {
                                       </Label>
                                       
                                       <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'3%',value:'3'},{key:'6%',value:'6'},{key:'17%',value:'17'}
                                     ,{key:'0%',value:'0'},{key:'11%',value:'11'},{key:'16%',value:'16'},{key:'10%',value:'10'}
                                     ,{key:'13%',value:'13'},{key:'9%',value:'9'}
@@ -883,7 +813,6 @@ onChange = (activeKey) => {
                                          先付后付标志
                                      </Label>
                                      <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'先付',value:'0'},{key:'后付',value:'1'}]}
                                     {...getFieldProps('prepay_or_not', {
                                         initialValue: formObject.prepay_or_not,                                        
@@ -903,7 +832,6 @@ onChange = (activeKey) => {
                                      </Label>
                                      
                                      <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'月',value:'0'},{key:'双月',value:'1'},{key:'季',value:'2'}
                                     ,{key:'四月',value:'1'},{key:'半年',value:'1'},{key:'年',value:'1'}]}
                                     {...getFieldProps('lease_freq', {
@@ -925,7 +853,6 @@ onChange = (activeKey) => {
                                          计算方式
                                      </Label>
                                      <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'等额租金',value:'0'},{key:'等额本金',value:'1'},{key:'平息法',value:'2'}]}
                                     {...getFieldProps('lease_cal_method', {
                                         initialValue: formObject.lease_cal_method,                                        
@@ -944,7 +871,6 @@ onChange = (activeKey) => {
                                          总投放金额的计息方式
                                      </Label>
                                      <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'约定计息(第一笔投放)',value:'0'},{key:'按投放时间点计息',value:'1'}]}
                                     {...getFieldProps('interest_method_total_loan', {
                                         initialValue: formObject.interest_method_total_loan,                                        
@@ -963,7 +889,6 @@ onChange = (activeKey) => {
                                          现金流日期计算方式
                                      </Label>
                                      <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'360',value:'0'},{key:'365',value:'1'}]}
                                     {...getFieldProps('year_days_flow', {
                                         initialValue: formObject.year_days_flow,                                        
@@ -984,12 +909,10 @@ onChange = (activeKey) => {
                                  <Row>
                              <Col md={4} xs={4} sm={4}>
                                  <FormItem>
-                                     <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           报价利率
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber
                                         toPercent = {true}  
                                         precision = {6}
@@ -1004,21 +927,17 @@ onChange = (activeKey) => {
                                                 }],
                                             })
                                             }
-                                        />
-                                        </div>
-                                   </div>              
+                                        />             
                                      
                                  </FormItem>
      
                              </Col>
                              <Col md={4} xs={4} sm={4}>
                                  <FormItem>
-                                     <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           基准利率
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber
                                         precision = {6}  
                                         toPercent = {true}  
@@ -1033,9 +952,7 @@ onChange = (activeKey) => {
                                                 }],
                                             })
                                             }
-                                        />
-                                        </div>
-                                   </div>                                          
+                                        />                                      
                                  </FormItem>
      
                              </Col>
@@ -1046,7 +963,6 @@ onChange = (activeKey) => {
                                           支付频率
                                       </Label>
                                      <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'分',value:'0'},{key:'元',value:'1'}]}
                                     {...getFieldProps('cal_digit', {
                                         initialValue: formObject.cal_digit,                                        
@@ -1067,7 +983,6 @@ onChange = (activeKey) => {
                                          年化天数
                                      </Label>
                                      <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'360',value:'0'},{key:'365',value:'1'}]}
                                     {...getFieldProps('year_days', {
                                         initialValue: formObject.year_days,                                        
@@ -1087,7 +1002,6 @@ onChange = (activeKey) => {
                                          利率类型
                                      </Label>
                                     <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'浮动',value:'0'},{key:'固定',value:'1'}]}
                                     {...getFieldProps('interrate_type', {
                                         initialValue: formObject.interrate_type,                                        
@@ -1106,7 +1020,6 @@ onChange = (activeKey) => {
                                          币种
                                      </Label>
                                      <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'人民币',value:'0'},{key:'多币种',value:'1'},{key:'欧元',value:'1'}
                                     ,{key:'港元',value:'1'},{key:'日元',value:'1'},{key:'澳门元',value:'1'},{key:'美元',value:'1'}]}
                                     {...getFieldProps('pk_currtype', {
@@ -1129,7 +1042,6 @@ onChange = (activeKey) => {
                                      </Label>
                                      
                                      <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'百分比',value:'0'},{key:'绝对值',value:'1'}]}
                                     {...getFieldProps('float_method', {
                                         initialValue: formObject.float_method,                                        
@@ -1143,15 +1055,12 @@ onChange = (activeKey) => {
      
                              </Col>
                              <Col md={4} xs={4} sm={4}>
-                                 <FormItem>
-                                     <div> 
-                                                
+                                 <FormItem>                 
                                                 <Label>
                                                     <Icon type="uf-mi" className='mast'></Icon>
                                                     利率生效日期
                                                 </Label>
                                             
-                                            <div className="tableRefAdd" >
                                             <TableFormRef
                                             {...this.props}
                                             isEdit={true} 
@@ -1167,9 +1076,7 @@ onChange = (activeKey) => {
                                                 })
                                              }
                                             />
-                                            </div>
-                                            
-                                        </div>                             
+                          
                                  </FormItem>
      
                              </Col>
@@ -1196,12 +1103,10 @@ onChange = (activeKey) => {
                                  <Row>
                              <Col md={4} xs={4} sm={4}>
                                  <FormItem>
-                                     <div>
                                       <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           利率浮动值(%)
                                       </Label>
-                                      <div className="InputNumberAdd" >
                                       <FormInputNumber
                                         toPercent = {true}  //是否显示千分位
                                         precision = {6}  //是否显示千分位
@@ -1216,9 +1121,7 @@ onChange = (activeKey) => {
                                                 }],
                                             })
                                             }
-                                        />
-                                        </div>
-                                   </div>               
+                                        />             
                                      
                                  </FormItem>
      

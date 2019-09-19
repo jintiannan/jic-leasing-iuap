@@ -305,7 +305,7 @@ class ListView extends Component {
                     <Tabs
                     defaultActiveKey="1"
                     onChange={this.onChange}
-                    className="demo1-tabs"
+                    className="list-tabs"
                 >
                     
                     <TabPane tab='投放计划' key="1">

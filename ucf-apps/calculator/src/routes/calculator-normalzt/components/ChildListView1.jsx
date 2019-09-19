@@ -21,7 +21,7 @@ import { deepClone } from "utils";
           dataSource: [
             {
               index: 1,
-              plan_date_loan:"2017-01-01",
+              plan_date_loan:"2019-09-17",
               plan_cash_loan:"10000",
               plan_cash_corpus:"10000",
               tax_rate:{name:'6%',value:'6'},
@@ -119,7 +119,7 @@ import { deepClone } from "utils";
             width: 215,
             render: (text, record, index) => {
               let {isEditArray} = this.state;
-              let isEdit = isEditArray[index].indexOf("tax_cash") > -1 || isEditArray[index].indexOf("all") > -1;
+              let isEdit = isEditArray[index].indexOf("all") > -1 || isEditArray[index].indexOf("tax_rate") > -1 || isEditArray[index].indexOf("pay_method_loan") > -1;
               return <NumberEditCell
                 value={text}
                 toThousands = {true}  //是否显示千分位  默认true
@@ -247,7 +247,12 @@ import { deepClone } from "utils";
       
     }
   
-    //输入框变化事件
+    /**
+     *   字表统一 onChange事件
+     * @param index 下标
+     * @param key 字段名
+     * @param value 值
+     */
     onCellChange = (index, key, value) => {
       let { isEditArray }  = this.state;
       let dataSource = this.state.dataSource;
@@ -255,35 +260,59 @@ import { deepClone } from "utils";
 
       let array = isEditArray[index]; //获取当前行 数组
 
+      //投放日期
+      if(key == "plan_date_loan"){
         let all_i = isEditArray[index].indexOf("all"); //获取当前属性的下标
-        if(key == "plan_date_loan" && value == "2019-09-17"){
+        if(value == null || value == undefined || value == ""){
           if(all_i < 0){
             array.push("all"); //数组重添加该属性 整行不可编辑
           }
-        }else if(key == "plan_date_loan" && value != "2019-09-17"){
+        }else{
           if(all_i > -1){
             array.splice(all_i,1); //数组重删除该属性 可编辑
            }
         }
-
-        let tax_rate_i = isEditArray[index].indexOf("tax_cash"); //获取当前属性的下标
-        if(key == "tax_rate" && value == 6){
+      }
+      
+      //税率
+      if(key == "tax_rate"){
+        let tax_rate_i = isEditArray[index].indexOf("tax_rate"); //获取当前属性的下标
+        if(value == 6){
           if(tax_rate_i < 0){
-            array.push("tax_cash"); //数组重添加该属性 不可编辑
+            array.push("tax_rate"); //数组重添加该属性 不可编辑
            }
-        }else if(key == "tax_rate" && value != 6){
+        }else{
           if(tax_rate_i > -1){
             array.splice(tax_rate_i,1); //数组重删除该属性 可编辑
            }
         }
-        this.setState({ dataSource, isEditArray}, () => console.dir(this.state.dataSource));
+      }
+
+      //投放付款方式
+      if(key == "pay_method_loan"){
+        let pay_method_loan_i = isEditArray[index].indexOf("pay_method_loan"); //获取当前属性的下标
+        if(value == '0'){
+          if(pay_method_loan_i < 0){
+            array.push("pay_method_loan"); //数组重添加该属性 不可编辑
+           }
+        }else{
+          if(pay_method_loan_i > -1){
+            array.splice(pay_method_loan_i,1); //数组重删除该属性 可编辑
+           }
+        }
+      }
+        
+
+        
+
+      this.setState({ dataSource, isEditArray}, () => console.dir(this.state.dataSource));
 
       
     };
   
     render() { 
         return (
-          <div className="demo0502 u-editable-table">
+          <div className="u-editable-table">
             <Table data={this.state.dataSource} columns={this.state.columns} headerHeight={20} height={40}/>
           </div>
         );

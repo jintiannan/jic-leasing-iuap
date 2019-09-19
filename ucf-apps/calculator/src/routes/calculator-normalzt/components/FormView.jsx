@@ -508,7 +508,7 @@ class FormView extends Component {
                     <Tabs
                         defaultActiveKey="1"
                         onChange={this.onChange}
-                        className="child-tabs"
+                        className="list-tabs"
                         extraContent={
                             <div className="addAndDelChildList demoPadding" style={{display:_props.isEdit?'':'none'}} >
                                  <ButtonGroup style={{ margin: 1 }}>

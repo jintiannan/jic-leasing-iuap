@@ -4,7 +4,7 @@
 import React, { Component } from "react";
 import {  } from 'tinper-bee';
 import { Icon, Tooltip, Form } from "tinper-bee";
-import FormInputNumber from 'components/FormRef/FormInputNumber';
+import InputNumber from 'components/InputNumber';
 
 class NumberEditCell extends Component {
   constructor(props, context) {
@@ -46,13 +46,13 @@ class NumberEditCell extends Component {
       <div className="editable-cell">
         {editable ? (
           <div className="editable-cell-input-wrapper">
-            <FormInputNumber
+            <InputNumber
               defaultValue={value?parseInt(value):0}
               value={value}
               disabled = {false}
               //onBlur={this.commitChange}
               onChange={this.handleChange}
-              autoFocus
+              //autoFocus
               precision={precision?precision:false}
               toThousands = {toThousands?toThousands:true}  //是否显示千分位
               precision = {precision?precision:2} //精度

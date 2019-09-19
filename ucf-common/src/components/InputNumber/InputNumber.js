@@ -119,7 +119,7 @@ class InputNumber extends Component {
             }else{
                 this.setState({
                     value: nextProps.value,
-                    showValue:this.formatValue(nextProps.value),
+                    //showValue:this.formatValue(nextProps.value), //暂时注掉  影响修改字表
                 });
             }
             
@@ -190,7 +190,7 @@ class InputNumber extends Component {
     formatValue = (value) => {
         let {toThousands,toPercent,precision} = this.props;
         value = value ? Number(value) : 0;
-        //console.log(value);
+        console.log(value);
         if(toPercent){
             value = formatPercent(value,precision);
             return value;
