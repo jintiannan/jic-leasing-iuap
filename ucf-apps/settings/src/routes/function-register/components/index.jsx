@@ -59,8 +59,6 @@ class FormView extends Component {
             fieldName: "节点路径",
             parentNode: {},
 
-            tempTreeData : []
-
         };
     }
 

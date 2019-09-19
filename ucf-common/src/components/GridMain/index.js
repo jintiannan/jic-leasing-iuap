@@ -19,6 +19,10 @@ const defaultProps = {
     data: []
 };
 
+// 在此自定义无数据时的展示内容
+const emptyFunc = () => '无数据';
+
+
 class GridMain extends Component {
     constructor(props) {
         super(props);
@@ -35,11 +39,11 @@ class GridMain extends Component {
      */
     resetTableHeight = (isopen) => {
         let tableHeightMain = 0;
-        tableHeightMain = getHeight() - 430;
+        tableHeightMain = getHeight() * 0.4;
         this.setState({ tableHeightMain });
 
         let tableHeightChild = 0;
-        tableHeightChild = getHeight() - 500;
+        tableHeightChild = getHeight() * 0.23;
         this.setState({ tableHeightChild });
     }
 
@@ -73,11 +77,12 @@ class GridMain extends Component {
         const _paginationObj = {...defualtPaginationParam, ...paginationObj};
         const { tableHeightMain,  tableHeightChild} = this.state;
         return (
-            <div className='demo-grid-wrapper'>
+            <div className='gridMain'>
                 <Grid
                     ref={el => this.grid = el}
                     columns={columns} //字段定义
                     data={data} //数据数组
+                    columnFilterAble={tableHeight==1?true:false} //是否显示列过滤功能 默认主表显示 字表不显示
                     rowKey={(r, i) => {r._index = i; return i}} //生成行的key
                     multiSelect={true}  //false 单选，默认多选                        
                     scroll={{y: tableHeight==1?tableHeightMain:tableHeightChild}} //滚动轴高度
@@ -85,8 +90,9 @@ class GridMain extends Component {
                     bordered //表格有边界
                     headerDisplayInRow={true}//表头换行用...来表示
                     bodyDisplayInRow={true}//表体换行用...来表示
-                    headerHeight={40} //表头高度
-                    bodyStyle={{'height':tableHeight==1?tableHeightMain:tableHeightChild,'background-color':'rgb(241, 242, 245)'}} //表体样式
+                    headerHeight={tableHeight==1?40:30} //表头高度 主表40 字表30
+                    showFilterPopover={false}
+                    bodyStyle={{'height':tableHeight==1?tableHeightMain:"auto!important"}} //表体样式
                     sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
                     hideHeaderScroll={false} //无数据时是否显示表头
                     //排序属性设置
@@ -103,6 +109,7 @@ class GridMain extends Component {
                             return '';
                         }
                     }}
+                    //emptyText={emptyFunc}  //无数据显示函数
                     {...otherProps}
                 />
             </div>

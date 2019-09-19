@@ -62,14 +62,15 @@ export default {
             actions.role.updateState({showLoading: true});
             let data = processData(await api.getList(param));  // 调用 getList 请求数据
             let updateData = {showLoading: false};
-            let queryObj = {
-                pageIndex:param.pageIndex,
-                pageSize:param.pageSize,
-                totalPages:Math.ceil(data.length/param.pageSize)
+
+            updateData.queryObj = {
+                pageIndex: param.pageIndex,
+                pageSize: param.pageSize,
+                totalPages: Math.ceil(data.length / param.pageSize)
             };
-            updateData.queryObj = queryObj;
             updateData.queryParam = param;
             updateData.list = data;
+
             actions.role.updateState(updateData); // 更新数据和查询条件
         },
 
@@ -89,10 +90,6 @@ export default {
                 _list[record._index] = record;
             } else {
                 for(let key of list){
-                    // if(key['pk'] == record['pk']){
-                    //     key = record;
-                    //     break;
-                    // }
 
                     if(key['_index'] == record._index){
                         _list[key] = record;
@@ -102,5 +99,21 @@ export default {
             }
             actions.role.updateState({list:_list});
         },
+        async saveOrUpdate(formObj) {
+            actions.role.updateState({showLoading: true});
+            let data = processData(await api.save({data: formObj}));  // 调用 getList 请求数据
+            actions.role.updateState({showLoading: false, isEdit: false});
+
+        },
+
+
+        async delete (id) {
+            actions.role.updateState({showLoading: true});
+            let data = processData(await api.requestDelete({id: id}));  // 调用 getList 请求数据
+            actions.role.updateState({showLoading: false});
+            if (data.success) {
+
+            }
+        }
     }
 };

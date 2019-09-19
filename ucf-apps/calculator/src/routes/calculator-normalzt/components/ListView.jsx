@@ -30,7 +30,6 @@ class ListView extends Component {
         //计算表格滚动条高度
         this.resetTableHeight(false);
         this.gridColumn = [...genGridColumn(this.grid)];
-
         this.gridColumnOnTheLoan = [...genGridColumn(this.gridOnTheLoan)];
         this.gridColumnMarginLoan = [...genGridColumn(this.gridMarginLoan)];
         this.gridColumnCommissionLoan = [...genGridColumn(this.gridCommissionLoan)];
@@ -81,20 +80,20 @@ class ListView extends Component {
      */
     onRowSelect = (record, index, event) => {
         console.log('行点击事件');
-        // let _record = deepClone(record);
-        // _record._checked = _record._checked ? false : true;
-        // let param = {
-        //     record:_record,
-        //     index:index,
-        // }
-        // let _selectedList = deepClone(this.props.selectedList);
-        // if(_record._checked){
-        //     _selectedList.push(_record);
-        // } else {
-        //     _selectedList.splice(_selectedList.findIndex(item => item.pk === record.pk), 1)
-        // }
-        // actions.calculatorNormalzt.updateRowData(param,index);
-        // actions.calculatorNormalzt.updateState({ selectedList : _selectedList });
+        let _record = deepClone(record);
+        _record._checked = _record._checked ? false : true;
+        let param = {
+            record:_record,
+            index:index,
+        }
+        let _selectedList = deepClone(this.props.selectedList);
+        if(_record._checked){
+            _selectedList.push(_record);
+        } else {
+            _selectedList.splice(_selectedList.findIndex(item => item.pk === record.pk), 1)
+        }
+        actions.calculatorNormalzt.updateRowData(param,index);
+        actions.calculatorNormalzt.updateState({ selectedList : _selectedList });
         
         
         
@@ -161,38 +160,40 @@ class ListView extends Component {
         let tableHeight2 = 0;
         tableHeight2 = getHeight() - 480;
         this.setState({ tableHeight2 });
+
     }
 
-    //主表  列属性定义
+    //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        {title:'操作日期',key:'operate_date',type:'4'},
-        {title:'测算方案名称',key:'quot_name',type:'0'},
-        {title:'投放日期',key:'plan_date_loan',type:'4'},
-        {title:'计划投放金额(元)',key:'plan_cash_loan',type:'1',enumType:'billstatus'},
-        {title:'租赁方式',key:'lease_method',type:'0'},
-        {title:'租赁期限(月)',key:'lease_times',type:'0'},
-        {title:'租赁本金',key:'fact_cash_loan',type:'1'},
-        {title:'保证金金额(元)',key:'deposit_cash',type:'1'},
-        {title:'手续费总金额(元)',key:'srvfee_cash_in',type:'1'},
+        {title:'操作日期',key:'operate_date',type:'0',ifshow:false},
+        {title:'测算方案名称',key:'quot_name',type:'0',ifshow:false},
+        {title:'投放日期',key:'plan_date_loan',type:'0',ifshow:false},
+        {title:'计划投放金额(元)',key:'plan_cash_loan',type:'0'},
+        {title:'租赁方式',key:'lease_method',type:'0',ifshow:false},
+        {title:'租赁期限(月)',key:'lease_times',type:'0',ifshow:false},
+        {title:'租赁本金',key:'fact_cash_loan',type:'0'},
+        {title:'保证金金额(元)',key:'deposit_cash',type:'0'},
+        {title:'手续费总金额(元)',key:'srvfee_cash_in',type:'0'},
         {title:'会计IRR按最新算法',key:'finace_irr_method',type:'0'},
         {title:'会计IRR算法启用年份',key:'finace_irr_year',type:'0'},
-        {title:'市场IRR',key:'project_irr',type:'2'},
-        {title:'会计IRR',key:'finance_irr',type:'2'},
+        {title:'市场IRR',key:'project_irr',type:'0'},
+        {title:'会计IRR',key:'finance_irr',type:'0'},
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
 
     // 投放计划 列属性定义
     gridOnTheLoan = [
-        {title:'计划投放日期',key:'plan_date_loan',type:'4'},
-        {title:'投放金额(元)',key:'plan_cash_loan',type:'1'},
-        {title:'不含税投放金额(元)',key:'plan_cash_corpus',type:'1'},
-        {title:'税率',key:'tax_rate',type:'2'},
-        {title:'税额(元)',key:'tax_cash',type:'1'},
+        {title:'计划投放日期',key:'plan_date_loan',type:'0'},
+        {title:'投放金额(元)',key:'plan_cash_loan',type:'0'},
+        {title:'不含税投放金额(元)',key:'plan_cash_corpus',type:'0'},
+        {title:'税率',key:'tax_rate',type:'0'},
+        {title:'税额(元)',key:'tax_cash',type:'0'},
         {title:'投放付款方式',key:'pay_method_loan',type:'0'},
-        {title:'银票开票日期',key:'make_date_draft',type:'4'},
-        {title:'银票保证金比例',key:'deposit_ratio4draft',type:'2'},
-        {title:'银票保证金利率',key:'interrate_ratio4draft',type:'1'},
+        {title:'银票开票日期',key:'make_date_draft',type:'0'},
+        {title:'银票到期日期',key:'end_date_loan',type:'0'},
+        {title:'银票保证金比例',key:'deposit_ratio4draft',type:'0'},
+        {title:'银票保证金利率',key:'interrate_ratio4draft',type:'0'},
         {title:'计息金额计算方式',key:'calinter_amount_style',type:'0'},
     ]
     // 投放计划 列属性定义=>通过前端service工具类自动生成
@@ -201,9 +202,9 @@ class ListView extends Component {
     //保证金计划  列属性定义
     gridMarginLoan = [
         {title:'收取期次',key:'lease_time',type:'0'},
-        {title:'计划收取日期',key:'plan_date',type:'4'},
+        {title:'计划收取日期',key:'plan_date',type:'0'},
         {title:'交易类别',key:'trans_type',type:'0'},
-        {title:'发生金额(元)',key:'lease_cash',type:'1'},
+        {title:'发生金额(元)',key:'lease_cash',type:'0'},
         {title:'备注',key:'memo',type:'0'},
     ]
     //保证金计划 列属性定义=>通过前端service工具类自动生成
@@ -212,10 +213,11 @@ class ListView extends Component {
     //手续费计划  列属性定义
     gridCommissionLoan = [
         {title:'收取期次',key:'lease_time',type:'0'},
-        {title:'计划收取日期',key:'plan_date',type:'4'},
+        {title:'计划收取日期',key:'plan_date',type:'0'},
         {title:'交易类别',key:'trans_type',type:'0'},
         {title:'不含税(元)',key:'lease_cash_corpus',type:'0'},
-        {title:'发生金额(元)',key:'lease_cash',type:'1'},
+        {title:'税额(元)',key:'lease_cash_tax',type:'0'},
+        {title:'发生金额(元)',key:'lease_cash',type:'0'},
         {title:'备注',key:'memo',type:'0'},
     ]
     //手续费计划 列属性定义=>通过前端service工具类自动生成
@@ -224,11 +226,11 @@ class ListView extends Component {
     //中间费用支出计划  列属性定义
     gridMiddleCostLoan = [
         {title:'支出期次',key:'lease_time',type:'0'},
-        {title:'计划支出日期',key:'plan_date',type:'4'},
+        {title:'计划支出日期',key:'plan_date',type:'0'},
         {title:'交易类别',key:'trans_type',type:'0'},
         {title:'不含税(元)',key:'lease_cash_corpus',type:'0'},
         {title:'税额(元)',key:'lease_cash_tax',type:'0'},
-        {title:'发生金额(元)',key:'lease_cash',type:'1'},
+        {title:'发生金额(元)',key:'lease_cash',type:'0'},
         {title:'备注',key:'memo',type:'0'},
     ]
     //中间费用支出计划 列属性定义=>通过前端service工具类自动生成
@@ -237,12 +239,12 @@ class ListView extends Component {
     //其他收支计划  列属性定义
     gridOtherLoan = [
         {title:'收取期次',key:'lease_time',type:'0'},
-        {title:'计划收取日期',key:'plan_date',type:'4'},
+        {title:'计划收取日期',key:'plan_date',type:'0'},
         {title:'交易类别',key:'trans_type',type:'0'},
         {title:'不含税(元)',key:'lease_cash_corpus',type:'0'},
         {title:'税额(元)',key:'lease_cash_tax',type:'0'},
-        {title:'发生金额(元)',key:'lease_cash',type:'1'},
-        {title:'税率',key:'tax_rate',type:'2'},
+        {title:'发生金额(元)',key:'lease_cash',type:'0'},
+        {title:'税率',key:'tax_rate',type:'0'},
         {title:'备注',key:'memo',type:'0'},
     ]
     //其他收支计划 列属性定义=>通过前端service工具类自动生成
@@ -250,12 +252,12 @@ class ListView extends Component {
 
     //租金计划  列属性定义
     gridRentLoan = [
-        {title:'计划收取日期',key:'plan_date',type:'4'},
+        {title:'计划收取日期',key:'plan_date',type:'0'},
         {title:'收取期次',key:'lease_time',type:'0'},
         {title:'交易类别',key:'trans_type',type:'0'},
-        {title:'租金(元)',key:'lease_cash',type:'1'},
-        {title:'本金(元)',key:'lease_corpus',type:'1'},
-        {title:'利息(元)',key:'lease_interest',type:'1'},
+        {title:'租金(元)',key:'lease_cash',type:'0'},
+        {title:'本金(元)',key:'lease_corpus',type:'0'},
+        {title:'利息(元)',key:'lease_interest',type:'0'},
     ]
     //租金计划 列属性定义=>通过前端service工具类自动生成
     gridColumnRentLoan = [];
@@ -266,16 +268,25 @@ class ListView extends Component {
             activeKey,
         });
     }
-    
+
+    // afterFilter = (optData,columns)=>{
+    //     columns.map((item,index)=>{
+    //         item.ifshow=false;
+    //     });
+    //     this.gridColumn = columns;
+    // }
+
     render() {
         let { tableHeight,  tableHeight2} = this.state;
         return (            
             <div className="grid-parent" style={{display:this.state.listView}}>
                 <div>
                 <GridMain
+                        ref={(el) => this.grid = el} //存模版
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组                     
                         tableHeight={1} //表格高度 1主表 2字表
+                        
                         //分页对象
                         paginationObj = {{
                             activePage : this.props.queryParam.pageIndex,//活动页
@@ -286,6 +297,7 @@ class ListView extends Component {
                         }}
                         onRowClick={this.onRowSelect}
                         getSelectedDataFunc={this.getSelectedDataFunc}
+                        //afterFilter={this.afterFilter}
 
                     />
                 </div>
@@ -293,13 +305,13 @@ class ListView extends Component {
                     <Tabs
                     defaultActiveKey="1"
                     onChange={this.onChange}
-                    className="demo1-tabs"
+                    className="list-tabs"
                 >
                     
                     <TabPane tab='投放计划' key="1">
                     <div>
                 <GridMain
-                        ref={(el) => this.grid = el} //存模版
+                        ref={(el) => this.gridOnTheLoan = el} //存模版
                         columns={this.gridColumnOnTheLoan} //字段定义
                         data={this.props.list2} //数据数组
                         //分页对象

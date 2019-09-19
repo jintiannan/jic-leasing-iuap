@@ -118,11 +118,7 @@ class ListView extends Component {
         if(_selectedList && _selectedList.length == 1){
             _formObj = deepClone(_selectedList[0]);
         }
-        console.log('let me list');
-        console.log(_list);
-        console.log(_formObj);
-        console.log(list);
-        console.log(_selectedList);
+
         actions.role.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj});
     };
     /**

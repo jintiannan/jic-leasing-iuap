@@ -5,12 +5,13 @@
  *
  */
 import React, {Component} from 'react';
-import {Step, Button, Message, Modal, Form, Icon, Label, Col, Row, FormControl} from 'tinper-bee';
+import {Button, Message, Modal, Form, Icon, Label, Col, Row, FormControl, Select} from 'tinper-bee';
 import {actions} from 'mirrorx';
 
 const FormItem = Form.FormItem;
 
 import './index.less';
+import {deepClone} from "../../../../../../ucf-common/src/utils";
 
 const addTitle = "新增角色";
 
@@ -19,7 +20,7 @@ class AddFormView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            current: 0,
+
         };
         this.close = this.close.bind(this);
     }
@@ -39,7 +40,7 @@ class AddFormView extends Component {
 
     onSubSave = () => {
         // Message.create({content: '完成', color: 'successlight'});
-        let newRole = this.props.list;
+        let newRole = deepClone(this.props.list);
         newRole.push(this.props.form.getFieldsValue());
         actions.role.updateState({list: newRole, showModal: false});
     };
@@ -53,7 +54,6 @@ class AddFormView extends Component {
         let formObjAdd = this.props.formObject;
         return (
             <div>
-
                 <Modal
                     className="demo4-modal"
                     show={this.props.showModal}
@@ -64,10 +64,9 @@ class AddFormView extends Component {
                         <Modal.Title> {addTitle} </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <div className="steps-content">
+                        <div>
                             <Form>
                                 <div>
-
                                     <Row>
                                         <Col md={4} xs={4} sm={4}>
                                             <FormItem>
@@ -85,9 +84,7 @@ class AddFormView extends Component {
                                                         })
                                                     }
                                                 />
-
                                             </FormItem>
-
                                         </Col>
                                         <Col md={4} xs={4} sm={4}>
                                             <FormItem>
@@ -126,20 +123,44 @@ class AddFormView extends Component {
                                             </FormItem>
                                         </Col>
                                     </Row>
+
+                                    <Row>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    证件类型
+                                                </Label>
+                                                <Select
+                                                    style={{ width: 195 }}
+
+                                                    showSearch={true}
+                                                    allowClear={true}
+                                                >
+                                                    <Option value="all">全部</Option>
+                                                    <Option value="confirming">待确认</Option>
+                                                    <Option value="executing">执行中</Option>
+                                                    <Option value="completed">
+                                                        已办结
+                                                    </Option>
+                                                    <Option value="termination">终止</Option>
+                                                </Select>
+                                            </FormItem>
+                                        </Col>
+                                    </Row>
                                 </div>
                             </Form>
-
                         </div>
-                        <div className="steps-action">
-                            {
-                                <Button colors="primary" style={{marginRight: 8}}
-                                        onClick={this.onSubSave}>保存</Button>
-                            }{
-                            <Button colors="secondary" onClick={this.close}> 关闭 </Button>
-                        }
-                        </div>
-
                     </Modal.Body>
+                    <Modal.Footer className="text-center">
+                        <Button colors="primary" style={{ marginRight: 8 }} onClick={this.onSubSave.bind(this)}>
+                            保存
+                        </Button>
+                        <Button bordered onClick={this.close}>
+                            取消
+                        </Button>
+
+                    </Modal.Footer>
                 </Modal>
             </div>
         );

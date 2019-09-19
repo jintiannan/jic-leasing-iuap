@@ -39,6 +39,7 @@
     "core-js": "^2.5.7",
     "cpr": "^3.0.1",
     "director": "^1.2.8",
+    "echarts": "^4.3.0",
     "element-closest": "^2.0.2",
     "es6-promise": "^4.0.5",
     "intl": "^1.2.5",

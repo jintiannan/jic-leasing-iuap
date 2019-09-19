@@ -8,9 +8,8 @@ class StringModel extends Component {
         this.state = {  };
     }
 
-    handleChange =(value)=>{
-        
-        debugger;
+    handleChange =(dataIndex,value)=>{
+        this.props.record[dataIndex] = value;
     }
 
 
@@ -22,7 +21,7 @@ class StringModel extends Component {
                 <FormControl
                     placeholder="请输入..."
                     defaultValue={text}
-                    onChange={this.handleChange}
+                    onChange={this.handleChange.bind(this,dataIndex)}
                     /></div> : <div>{text ? text : ""}</div>}
             </div>
             

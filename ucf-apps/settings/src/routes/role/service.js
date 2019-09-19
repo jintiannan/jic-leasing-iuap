@@ -1,10 +1,12 @@
 /**
  * 服务请求类
  */
-import * as mock from "./mock";
+import request from 'ucf-request';
 //定义接口地址
 const URL = {
-    "GET_LIST":  `${GROBAL_HTTP_CTX}/sales/list`
+    "LIST":  `${GROBAL_HTTP_CTX}/role/list`,
+    "SAVE": `${GROBAL_HTTP_CTX}/role/saveOrUpdate`,
+    "DELETE": `${GROBAL_HTTP_CTX}/role/delete`,
 };
 
 /**
@@ -12,7 +14,28 @@ const URL = {
  * @param {*} params
  */
 export const getList = (params) => {
-    let data =  mock.mockData(mock.data);
-    return data;
+    return request(URL.LIST, {
+        method : "post",
+        params : {data: JSON.stringify(params)}
+    });
+};
+
+/**
+ * 保存或修改
+ * @param {*} params
+ */
+export const save = (params) => {
+    return request(URL.SAVE, {
+        method : "post",
+        params : {data: JSON.stringify(params)}
+    });
+};
+
+
+export const requestDelete = (id) =>  {
+    return request(URL.DELETE, {
+        method : "post",
+        params : {id: id}
+    });
 };
 

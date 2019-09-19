@@ -58,7 +58,7 @@ class IndexView extends Component {
         this.modalchild = ref;
     }
 
-    searchRef = (ref) =>{
+    onsearchRef = (ref) =>{
         this.serachRef = ref;
     }
 
@@ -117,7 +117,6 @@ class IndexView extends Component {
      */
     onQuery = (queryParam) =>{        
         // actions.loandeal.loadList(queryParam);  
-        // console.log(this.props.list);
         this.setState({
             showSearchPanel:true
         })
@@ -155,7 +154,6 @@ class IndexView extends Component {
     }
 
     onSave = () => {
-        console.log('save save')
         let obj = this.listchild.submit();
         let loanlist= this.listchild.tableonesubmit();
         let accountlist= this.listchild.tabletwosubmit();
@@ -184,7 +182,12 @@ class IndexView extends Component {
     }
 
     onalterSearch = ()=>{
-        
+        const dataSource = this.serachRef.alterSerach();
+        console.log(dataSource);
+        localStorage.setItem('loandealsearch',JSON.stringify(dataSource));
+        this.setState({
+            showSearchPanel:false,
+        })
     }
     
 
@@ -221,7 +224,7 @@ class IndexView extends Component {
                     <ModalView {...this.props} onRef={this.onmodalRef}  />
                 </div>
                 <div>
-                    <SearchPanel {...this.props} IfShow = {this.state.showSearchPanel} onRef = {this.serachRef} closeSearch={this.oncloseSearch} alterSerach={this.onalterSearch}/>
+                    <SearchPanel {...this.props} IfShow = {this.state.showSearchPanel} onRef = {this.onsearchRef} closeSearch={this.oncloseSearch} alterSerach={this.onalterSearch}/>
                 </div>
             </div>
             

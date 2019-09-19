@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row } from 'tinper-bee';
+import { Col, Row, Icon } from 'tinper-bee';
 import './index.less';
 
 class Header extends Component {
@@ -11,11 +11,12 @@ class Header extends Component {
 
     render() {
         const {title } = this.props;
+        const {open } = this.props;
         return (
             <Row className={'title'}>
                 <Col xs={12}>
                     <span className="main-title">
-                        {title}
+                        {open? <Icon type="uf-reduce-c-o"/>:  <Icon type="uf-add-c-o"/>}{title}
                     </span>
                 </Col>
             </Row>

@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import {Tooltip, Menu, Icon, Loading,Form,Label,FormControl,Col, Row} from 'tinper-bee';
 import {actions} from 'mirrorx';
 import {singleRecordOper} from "utils/service";
-import {deepClone} from "utils";
+import { deepClone,Info } from "utils";
 
 import ButtonGroup from './ButtonGroup';
 import ListView from './ListView';
@@ -149,6 +149,14 @@ class IndexView extends Component {
     }
 
     /**
+     * 导出数据按钮
+     *
+     */
+    onClickExport = () => {
+        this.grid.exportExcel();
+    }
+
+    /**
      * 返回按钮
      */
     onReturn = () =>{
@@ -159,15 +167,18 @@ class IndexView extends Component {
     }
 
     onSave = () => {
-        console.log('save save')
-        let obj = this.child.submit();
-        let _formObj = deepClone(this.props.formObject);
-        Object.assign(_formObj,obj);
-        console.log('save form');
-        console.log(_formObj);
-        actions.calculatorNormalzt.updateRowData({'record':_formObj});
-        this.switchEdit();
-
+        if(!this.props.error){
+            Info('子表数据填写不正确');
+        }else{
+            console.log('save save')
+            let obj = this.child.submit();
+            let _formObj = deepClone(this.props.formObject);
+            Object.assign(_formObj,obj);
+            console.log('save form');
+            console.log(_formObj);
+            actions.calculatorNormalzt.updateRowData({'record':_formObj});
+            this.switchEdit();
+        }
     }
 
     render() {
@@ -179,6 +190,8 @@ class IndexView extends Component {
             isGrid : this.state.isGrid,
             isEdit : this.state.isEdit,
         }
+
+
 
         return (            
 
@@ -204,7 +217,7 @@ class IndexView extends Component {
                 </div>
                 <div>
                     <AddFormView { ...this.props } />
-                </div> 
+                </div>
             </div>
             
         );

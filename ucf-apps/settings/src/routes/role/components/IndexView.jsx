@@ -12,7 +12,6 @@ import ListView from './ListView';
 import FormView from './FormView';
 import './index.less';
 import AddFormView from './AddFormView';
-import {Col, FormControl, Label, Row} from "../../../../../project/src/routes/project-approvalNew/components/IndexView";
 
 class IndexView extends Component {
     constructor(props) {
@@ -23,7 +22,6 @@ class IndexView extends Component {
         props.ifPowerBtn = true;
         /**临时测试数据 */
         this.state = {
-            showLoading : false, //加载状态
             showListView : '', //显示列表界面
             showFormView : 'none',//显示Form表单
             isEdit : false,//是否可编辑(卡片界面)
@@ -32,6 +30,7 @@ class IndexView extends Component {
             listObj: [],//列表对象
             ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
             powerButton: props.powerButton,//按钮权限列表
+            treeData:[]
         };
     }
 
@@ -132,8 +131,15 @@ class IndexView extends Component {
     };
 
     onSave = () => {
-        alert("save");
+        actions.role.saveOrUpdate(this.props.formObject);
 
+    };
+
+    onDelete = () => {
+        singleRecordOper(this.props.selectedList,(param) => {
+            let _selected = deepClone(param);
+            actions.role.delete(_selected.role_code);
+        });
     };
 
     /**
@@ -154,7 +160,7 @@ class IndexView extends Component {
         return (
 
             <div>
-                <Loading showBackDrop={true} show={this.state.showLoading} fullScreen={true}/>
+                <Loading showBackDrop={true} show={this.props.showLoading} fullScreen={true}/>
                 <div>
                     <ButtonGroup
                         BtnPower= {ButtonPower}
@@ -164,6 +170,7 @@ class IndexView extends Component {
                         Return={this.onReturn}
                         Save={this.onSave}
                         Add={this.onAdd}
+                        Delete={this.onDelete}
                         {...this.props}
                     />
                 </div>
@@ -175,6 +182,7 @@ class IndexView extends Component {
                 </div>
                 <div>
                     <AddFormView { ...this.props } onRef={this.onRef}/>
+                    {/*<AddFormModel {...this.props} onRef={this.onRef}/>*/}
                 </div>
 
 

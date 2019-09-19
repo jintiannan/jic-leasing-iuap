@@ -6,14 +6,12 @@ import {  } from 'tinper-bee';
 import { Icon, Select, Tooltip, Form } from "tinper-bee";
 const Option = Select.Option;
 
-const SELECT_SOURCE = ["男", "女"];
-
 class SelectEditCell extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
-      value: this.props.value,
-      editable: false
+      value: this.props.value?this.props.value.value:"",
+      editable: this.props.editable
     };
   }
 
@@ -22,18 +20,21 @@ class SelectEditCell extends Component {
   };
 
   commitChange = () => {
-    this.setState({ editable: false });
+    //this.setState({ editable: false });
     if (this.props.onChange) {
       this.props.onChange(this.state.value);
     }
   };
 
   edit = () => {
-    this.setState({ editable: true });
+    if(this.state.editable){
+      this.setState({ editable: true });
+    }
   };
 
   render() {
-    const { value, editable } = this.state;
+    const { value } = this.state;
+    const { editable, data } = this.props;
     return (
       <div className="editable-cell">
         {editable ? (
@@ -45,16 +46,16 @@ class SelectEditCell extends Component {
               onBlur={this.commitChange}
               autoFocus
             >
-              {SELECT_SOURCE.map((item, index) => (
-                <Option key={index} value={item}>
-                  {item}
+              {data.map((item, index) => (
+                <Option key={index} value={item.value}>
+                  {item.name}
                 </Option>
               ))}
             </Select>
           </div>
         ) : (
-          <div className="editable-cell-text-wrapper" onDoubleClick={this.edit}>
-            {value || " "}
+          <div className="editable-cell-text-wrapper" onDoubleClick={this.edit.bind(this)}>
+            {this.props.value?this.props.value.name:"" || ""}
           </div>
         )}
       </div>

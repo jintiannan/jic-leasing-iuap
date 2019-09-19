@@ -6,22 +6,42 @@ import './index.less';
 class EnumModel extends Component {
     constructor(props) {
         super(props);
-        this.state = {  };
+        this.state = {
+            value: this.props.text,
+          };
     }
+
+    handleSelect = value => {
+        this.setState({ value });
+      };
+    
+      commitChange = () => {
+        if (this.props.onChange) {
+          this.props.onChange(this.state.value);
+        }
+      };
+
+      handleChange = (dataIndex,value) =>{
+        this.props.record[dataIndex] = value;
+      }
 
 
     render() {
-        let {type,text,record,index} = this.props;
+        let {type,text,record,index,dataIndex} = this.props;
         let data = enumConstant(type);
         return (
             <div>
                 {record._edit ? <div className="enum_model">
                 <Select 
                     showSearch
+                    autoFocus
                     placeholder="请选择..."
                     optionFilterProp="children"
                     data={data}
                     defaultValue={data[0].key}
+                    onSelect={this.handleSelect}
+                    onBlur={this.commitChange}
+                    onChange ={this.handleChange.bind(this,dataIndex,type)}
                     /></div> : <div>{text ? text : ""}</div>}
             </div>
             

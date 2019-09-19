@@ -46,7 +46,7 @@ export const getLoanPlan = (param) => {
 }
 
 /**
- * 获取子列表 
+ * 获取子列表
  * @param {*} params
  */
 export const getPayAccount = (param) => {
@@ -62,6 +62,9 @@ export const getPayAccount = (param) => {
         }
     })
     return result;
+}
+export const getListByCol = ()=> {
+
 }
 
 
