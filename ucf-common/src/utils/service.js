@@ -22,7 +22,7 @@ const dateTimeFormat = "YYYY-MM-DD HH:mm:ss";
 export function genGridColumn(param){
     let gridColumn = param.map(function(element,index,param){
         let{type,title,key,width,digit,enumType,ifshow} = element;
-        if(ifshow == null) ifshow = false; //ifshow:false 不显示该列  默认不显示
+        if(ifshow == null) ifshow = true; //ifshow:false 不显示该列  默认不显示
         if(width == null) width = 120;
         if(digit == null) digit = 0;
 
