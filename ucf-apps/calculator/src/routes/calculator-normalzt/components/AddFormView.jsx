@@ -12,8 +12,8 @@ import {RefWalsinLevel, RefIuapDept} from 'components/RefViews'
 import { deepClone } from "utils";
 import DatePicker from "tinper-bee/lib/Datepicker";
 import FormInputNumber from 'components/FormRef/FormInputNumber';
+import {enumConstant} from '../../../../../../ucf-common/src/utils/enums';
 
-import ChildListView from './ChildListView';
 const { TabPane } = Tabs;
 const FormItem = Form.FormItem;
 
@@ -162,6 +162,27 @@ class AddFormView extends Component {
         let val =  ( objectForm.total_amount_equipment > 0? value/objectForm.total_amount_equipment : 0 )
         this.props.form.setFieldsValue({'deposit_ratio':val});
     }
+    //租金税率
+    handleChangeRent_tax_rate = (value) =>{
+        this.props.form.setFieldsValue({'srvfee_taxrate_in':value});
+    }
+    //租赁方式
+    handleChangeLease_method = (value) =>{
+        this.props.form.setFieldsValue({'if_corpus_tickets':value});
+    }
+    //onChange方法 手续费比例
+    handleChangeSrvfee_ratio_in = (value) =>{
+        let objectForm = this.props.form.getFieldsValue();
+        let val = objectForm.total_amount_equipment * value;
+        this.props.form.setFieldsValue({'srvfee_cash_in_ft':val});
+    }
+
+    //onChange方法 首期手续费金额
+    handleChangeSrvfee_cash_in_ft = (value) =>{
+        let objectForm = this.props.form.getFieldsValue();
+        let val =  ( objectForm.total_amount_equipment > 0? value/objectForm.total_amount_equipment : 0 )
+        this.props.form.setFieldsValue({'srvfee_ratio_in':val});
+    }
 
 
     //子表切换子标签
@@ -184,7 +205,7 @@ class AddFormView extends Component {
             <div>
              
               <Modal
-                          className="jic-modal"
+                          className="jic-model"
                           show={ this.props.showModal }
                           backdrop="static" //关闭遮罩事件
                           size={"xlg"} //大号模态框
@@ -270,9 +291,9 @@ class AddFormView extends Component {
                                       </Label>
                                     
                                       <Select 
-                                    //onChange={this.handleChange}
                                     data={[{key:'直租',value:'0'},{key:'回租',value:'1'}]}
                                     {...getFieldProps('lease_method', {
+                                        onChange:this.handleChangeLease_method,
                                         initialValue: formObject.lease_method,                                        
                                         rules: [{
                                             required: true, message: '请选择',
@@ -293,8 +314,8 @@ class AddFormView extends Component {
                                           本金是否开票
                                       </Label>
                                       
-                                      <Select 
-                                    data={[{key:'是',value:'0'},{key:'否',value:'1'}]}
+                                      <Select  disabled = {true}
+                                    data={enumConstant('yesOrNo')}
                                     {...getFieldProps('if_corpus_tickets', {
                                         initialValue: formObject.if_corpus_tickets,                                       
                                         rules: [{
@@ -316,7 +337,9 @@ class AddFormView extends Component {
                                       
                                       <Select 
                                     data={[{key:'0%',value:'0'},{key:'3%',value:'3'},{key:'6%',value:'6'},{key:'10%',value:'10'}]}
+                                    
                                     {...getFieldProps('rent_tax_rate', {
+                                        onChange: this.handleChangeRent_tax_rate,
                                         initialValue: formObject.rent_tax_rate,                                        
                                         rules: [{
                                             required: true, message: '请选择',
@@ -334,7 +357,7 @@ class AddFormView extends Component {
                                           税种
                                       </Label>
                                       <Select 
-                                    data={[{key:'增值税',value:'1'},{key:'营业税',value:'2'},{key:'复合税',value:'3'},{key:'无',value:'0'}]}
+                                    data={[{key:'增值税',value:'0'},{key:'营业税',value:'1'},{key:'复合税',value:'2'},{key:'无',value:'4'}]}
                                     {...getFieldProps('pk_currtype', {
                                         initialValue: formObject.pk_currtype,                                   
                                         rules: [{
@@ -556,8 +579,7 @@ class AddFormView extends Component {
                                           手续费收取方式
                                       </Label>
                                       <Select 
-                                    //onChange={this.handleChange}
-                                    data={[{key:'每满一年收取',value:'0'},{key:'每年年初收取',value:'1'},{key:'初期收取',value:'2'}]}
+                                    data={[{key:'每满一年收取',value:'2'},{key:'每年年初收取',value:'4'},{key:'初期收取',value:'0'}]}
                                     {...getFieldProps('srvfee_method_in', {
                                         initialValue: formObject.srvfee_method_in,                                        
                                         rules: [{
@@ -576,15 +598,16 @@ class AddFormView extends Component {
                                           手续费比例
                                       </Label>
                                       <FormInputNumber
-                                        precision = {true}
+                                        toPercent = {true}  //是否显示百分号
                                         precision = {4}
-
+                                        disabled = {false}
                                         {
                                             ...getFieldProps('srvfee_ratio_in', {
                                                 initialValue: formObject.srvfee_ratio_in,                                            
                                                 rules: [{
                                                     required: true, 
                                                 }],
+                                                onChange:this.handleChangeSrvfee_ratio_in,
                                             })
                                             }
                                         />                         
@@ -600,6 +623,7 @@ class AddFormView extends Component {
                                       <FormInputNumber
                                         toThousands = {false}  //是否显示千分位
                                         precision = {2} //保留2位小数
+                                        disabled = {false}
                                         // min={0}
                                         // max={999999}
                                         {
@@ -608,6 +632,7 @@ class AddFormView extends Component {
                                                 rules: [{
                                                     required: true, 
                                                 }],
+                                                onChange:this.handleChangeSrvfee_cash_in_ft ,
                                             })
                                             }
                                         />
@@ -646,7 +671,7 @@ class AddFormView extends Component {
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           手续费收入税率(增值税)
                                       </Label>
-                                      <FormControl disabled={true}
+                                      {/* <FormControl disabled={true}
                                           {
                                           ...getFieldProps('srvfee_taxrate_in', {
                                               initialValue: formObject.srvfee_taxrate_in,
@@ -655,7 +680,17 @@ class AddFormView extends Component {
                                               }],
                                           })
                                           }
-                                      />                               
+                                      /> */}
+                                      <Select disabled={true}
+                                    data={[{key:'0%',value:'0'},{key:'3%',value:'3'},{key:'6%',value:'6'},{key:'10%',value:'10'}]}
+                                    //onChange={this.handleChangeRent_tax_rate}
+                                    {...getFieldProps('srvfee_taxrate_in', {
+                                        initialValue: formObject.srvfee_taxrate_in,                                        
+                                        rules: [{
+                                            required: true, message: '请选择',
+                                        }],
+                                    })}  
+                                />
                                   </FormItem>
       
                               </Col>
@@ -667,7 +702,7 @@ class AddFormView extends Component {
                                       </Label>
                                       <Select 
                                     //onChange={this.handleChange}
-                                    data={[{key:'指定支付',value:'0'},{key:'每满一年支付',value:'1'},{key:'每年年初支付',value:'2'}]}
+                                    data={[{key:'指定支付',value:'0'},{key:'每满一年支付',value:'1'},{key:'每年年初支付',value:'3'}]}
                                     {...getFieldProps('lease_cal_method', {
                                         initialValue: formObject.lease_cal_method,                                        
                                         rules: [{
@@ -794,7 +829,7 @@ class AddFormView extends Component {
                                          {
                                          ...getFieldProps('lease_times', {
                                              initialValue: formObject.lease_times,
-                                            
+                                             
                                              rules: [{
                                                  required: true, 
                                              }],
@@ -833,7 +868,7 @@ class AddFormView extends Component {
                                      
                                      <Select 
                                     data={[{key:'月',value:'0'},{key:'双月',value:'1'},{key:'季',value:'2'}
-                                    ,{key:'四月',value:'1'},{key:'半年',value:'1'},{key:'年',value:'1'}]}
+                                    ,{key:'四月',value:'3'},{key:'半年',value:'4'},{key:'年',value:'5'}]}
                                     {...getFieldProps('lease_freq', {
                                         initialValue: formObject.lease_freq,                                        
                                         rules: [{
@@ -940,8 +975,7 @@ class AddFormView extends Component {
                                       </Label>
                                       <FormInputNumber
                                         precision = {6}  
-                                        toPercent = {true}  
-                                        //format = {this.formatDepositRatio.bind(this)}
+                                        toPercent = {true}
                                         // min={0}
                                         // max={999999}
                                         {
@@ -960,7 +994,7 @@ class AddFormView extends Component {
                                  <FormItem>
                                        <Label>
                                           <Icon type="uf-mi" className='mast'></Icon>
-                                          支付频率
+                                          计算精度
                                       </Label>
                                      <Select 
                                     data={[{key:'分',value:'0'},{key:'元',value:'1'}]}
@@ -1086,16 +1120,17 @@ class AddFormView extends Component {
                                          <Icon type="uf-mi" className='mast'></Icon>
                                          利率档次
                                      </Label>
-                                     <FormControl disabled={true}
-                                         {
-                                         ...getFieldProps('interrate_level', {
-                                             initialValue: formObject.interrate_level,
-                                             rules: [{
-                                                 required: true, 
-                                             }],
-                                         })
-                                         }
-                                     />
+                                     
+                                      <Select disabled={true}
+                                    data={[{key:'六个月以内(含六个月)',value:'0'},{key:'6个月至一年(含一年)',value:'1'},{key:'一年至三年(含三年)',value:'2'}
+                                    ,{key:'三年至五年(含三年)',value:'3'},{key:'五年以上',value:'4'}]}
+                                    {...getFieldProps('interrate_level', {
+                                        initialValue: formObject.interrate_level,                                        
+                                        rules: [{
+                                            required: true, message: '请选择',
+                                        }],
+                                    })}
+                                    />        
                                  </FormItem>
      
                              </Col>
@@ -1142,17 +1177,16 @@ class AddFormView extends Component {
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           会计IRR按最新算法
                                       </Label>
-                                      <FormControl disabled={true}
-                                          {
-                                          ...getFieldProps('finace_irr_method', {
-                                              initialValue: formObject.finace_irr_method,
-                                             
-                                              rules: [{
-                                                  required: true, 
-                                              }],
-                                          })
-                                          }
-                                      />
+                                      
+                                      <Select  disabled = {true}
+                                    data={enumConstant('yesOrNo')}
+                                    {...getFieldProps('finace_irr_method', {
+                                        initialValue: formObject.finace_irr_method,                                       
+                                        rules: [{
+                                            required: true, message: '请选择',
+                                        }],
+                                    })}  
+                                />
                                       
                                   </FormItem>
       
@@ -1163,16 +1197,15 @@ class AddFormView extends Component {
                                           <Icon type="uf-mi" className='mast'></Icon>
                                           会计IRR算法启用年份
                                       </Label>
-                                      <FormControl disabled={true}
-                                          {
-                                          ...getFieldProps('finace_irr_year', {
-                                              initialValue: formObject.finace_irr_year,
-                                              rules: [{
-                                                  required: true, 
-                                              }],
-                                          })
-                                          }
-                                      />                               
+                                      <Select  disabled = {true}
+                                    data={[{key:'2015',value:'0'},{key:'2016',value:'1'}]}
+                                    {...getFieldProps('finace_irr_year', {
+                                        initialValue: formObject.finace_irr_year,                                       
+                                        rules: [{
+                                            required: true, message: '请选择',
+                                        }],
+                                    })}  
+                                />
                                   </FormItem>
       
                               </Col>
