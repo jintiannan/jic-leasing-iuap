@@ -12,6 +12,8 @@ import './index.less';
 import {deepClone} from "../../../../../../ucf-common/src/utils";
 import FormInputNumber from 'components/FormRef/FormInputNumber';
 import DatePicker from "tinper-bee/lib/Datepicker";
+import {enumConstant} from "../../../../../../ucf-common/src/utils/enums";
+import FormTreeRef from "../../../../../../ucf-common/src/components/FormTreeRef/FormTreeRef";
 
 const Steps = Step.Steps;
 const addTitle = "新增单位客户申请基本信息表";
@@ -191,13 +193,10 @@ class AddFormView extends Component {
                                                                      })
                                                                  }
                                                     />
-
                                                 </FormItem>
                                             </Col>
                                         </Row>
                                         <Row>
-
-
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
@@ -215,9 +214,7 @@ class AddFormView extends Component {
                                                                      })
                                                                  }
                                                     />
-
                                                 </FormItem>
-
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
@@ -226,17 +223,15 @@ class AddFormView extends Component {
                                                         是否授权征信客户
                                                     </Label>
                                                     <Select
+                                                        data={enumConstant("yesOrNo")}
                                                         showSearch={true}
                                                         allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                        {
+                                                            ...getFieldProps('if_warrant_cust', {
+                                                                initialValue: _formObject.if_warrant_cust,
+                                                            })
+                                                        }
+                                                    />
                                                 </FormItem>
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
@@ -245,18 +240,14 @@ class AddFormView extends Component {
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         客户性质
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormTreeRef
+                                                        {
+                                                            ...getFieldProps('customer_property', {
+                                                                initialValue: _formObject.customer_property,
+                                                            })
+                                                        }
+                                                    />
+
                                                 </FormItem>
                                             </Col>
                                         </Row>

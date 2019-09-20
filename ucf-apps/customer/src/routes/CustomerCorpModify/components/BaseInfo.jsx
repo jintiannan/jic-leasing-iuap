@@ -163,7 +163,6 @@ class BaseInfo extends Component {
 
     render() {
         const {getFieldProps, getFieldError} = this.props.form;
-        // let _formObject = deepClone(this.props.formObject);
         let _formObject = this.props.formObject;
         let formObject = deepClone(_formObject);
         const loop = data => data.map((value, key) => {
@@ -172,7 +171,8 @@ class BaseInfo extends Component {
                     <FormItem
                         className={(value.col === 12 ? (value.class && value.class === 'textarea' ? "remark flex jic-textArea" : "remark flex ") : '')}>
                         <Label className={value.col === 12 ? "line-height-32" : ''}>
-                            <Icon type="uf-mi" className='mast'></Icon>
+                            {(value.required && value.required === true) ?
+                                <Icon type="uf-mi" className='mast'></Icon> : ''}
                             {value.label}
                         </Label>
                         <value.com {...this.props}
@@ -196,103 +196,99 @@ class BaseInfo extends Component {
                 </Col>)
         });
 
-        if (this.props.subForm === 'baseInfo') {
-            return (
-                <div className="jic-form">
+        return (
+            <div className="jic-form">
 
-                    <div>
-                        <div> <span onClick={() => this.setState({open: !this.state.open})}>
+                <div>
+                    <div> <span onClick={() => this.setState({open: !this.state.open})}>
                                         <FormSplitHeader open={this.state.open} title={'客户基本信息'}/>
                                       </span>
-                        </div>
-                        <Collapse in={this.state.open}>
-                            <Form>
-                                {loop(this.form)}
-                            </Form>
+                    </div>
+                    <Collapse in={this.state.open}>
+                        <Form>
+                            {loop(this.form)}
+                        </Form>
 
-                        </Collapse>
+                    </Collapse>
 
-                        <div>
+                    <div>
                                         <span onClick={() => this.setState({open1: !this.state.open1})}>
                                             <FormSplitHeader open={this.state.open1} title={'客户规模信息'}/>
                                         </span>
-                        </div>
-                        <Collapse in={this.state.open1}>
-                            <Form>
-                                {loop(this.form1)}
-                            </Form>
-                        </Collapse>
-                        <div>
+                    </div>
+                    <Collapse in={this.state.open1}>
+                        <Form>
+                            {loop(this.form1)}
+                        </Form>
+                    </Collapse>
+                    <div>
                     <span onClick={() => this.setState({open2: !this.state.open2})}>
                         <FormSplitHeader open={this.state.open2} title={'客户证件信息'}/>
                     </span>
-                        </div>
-                        <Collapse in={this.state.open2}>
-                            <Form>
-                                {loop(this.form2)}
-                            </Form>
-                        </Collapse>
-                        <div>
+                    </div>
+                    <Collapse in={this.state.open2}>
+                        <Form>
+                            {loop(this.form2)}
+                        </Form>
+                    </Collapse>
+                    <div>
                     <span onClick={() => this.setState({open3: !this.state.open3})}>
                         <FormSplitHeader open={this.state.open3} title={'客户重要标志'}/>
                     </span>
-                        </div>
-                        <Collapse in={this.state.open3}>
-                            <Form>
-                                {loop(this.form3)}
-                            </Form>
-                        </Collapse>
+                    </div>
+                    <Collapse in={this.state.open3}>
+                        <Form>
+                            {loop(this.form3)}
+                        </Form>
+                    </Collapse>
 
-                        <div>
+                    <div>
                     <span onClick={() => this.setState({open4: !this.state.open4})}>
                         <FormSplitHeader open={this.state.open4} title={'客户地址信息'}/>
                     </span>
-                        </div>
-                        <Collapse in={this.state.open4}>
-                            <Form>
-                                {loop(this.form4)}
-                            </Form>
-                        </Collapse>
+                    </div>
+                    <Collapse in={this.state.open4}>
+                        <Form>
+                            {loop(this.form4)}
+                        </Form>
+                    </Collapse>
 
-                        <div>
+                    <div>
                     <span onClick={() => this.setState({open5: !this.state.open5})}>
                         <FormSplitHeader open={this.state.open5} title={'客户评级信息'}/>
                     </span>
-                        </div>
-                        <Collapse in={this.state.open5}>
-                            <Form>
-                                {loop(this.form5)}
+                    </div>
+                    <Collapse in={this.state.open5}>
+                        <Form>
+                            {loop(this.form5)}
 
-                            </Form>
-                        </Collapse>
+                        </Form>
+                    </Collapse>
 
-                        <div>
+                    <div>
                     <span onClick={() => this.setState({open6: !this.state.open6})}>
                         <FormSplitHeader open={this.state.open6} title={'客户其他信息'}/>
                     </span>
-                        </div>
-                        <Collapse in={this.state.open6}>
-                            <Form>
-                                {loop(this.form6)}
-                            </Form>
-                        </Collapse>
-                        <div>
+                    </div>
+                    <Collapse in={this.state.open6}>
+                        <Form>
+                            {loop(this.form6)}
+                        </Form>
+                    </Collapse>
+                    <div>
                     <span onClick={() => this.setState({open7: !this.state.open7})}>
                         <FormSplitHeader open={this.state.open7} title={'操作信息'}/>
                     </span>
-                        </div>
-                        <Collapse in={this.state.open7}>
-                            <Form>
-                                {loop(this.form7)}
-                            </Form>
-                        </Collapse>
-
                     </div>
+                    <Collapse in={this.state.open7}>
+                        <Form>
+                            {loop(this.form7)}
+                        </Form>
+                    </Collapse>
+
                 </div>
-            )
-        } else {
-            return <div></div>
-        }
+            </div>
+        )
 
 
     }
