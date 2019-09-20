@@ -40,7 +40,7 @@ class TableFormRef extends Component {
   }
 
   componentWillUpdata(nextProps, nextState){
-    
+
   }
 
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
@@ -50,8 +50,8 @@ class TableFormRef extends Component {
 
   /**
    * @msg: 请求mock数据，包含表头数据和表体数据
-   * @param {type} 
-   * @return: 
+   * @param {type}
+   * @return:
    */
   // loadData = async () => {
   //   let refModelUrl = {
@@ -80,8 +80,8 @@ class TableFormRef extends Component {
 
     /**
    * @msg: 请求mock数据，包含表头数据和表体数据 自定义
-   * @param {type} 
-   * @return: 
+   * @param {type}
+   * @return:
    */
   loadData = async () => {
     let data = {
@@ -96,10 +96,10 @@ class TableFormRef extends Component {
           {"rownum_":3,"code":"003","mobile":"15011430232","name":"人员3","refcode":"003","refpk":"004989bb-a705-45ce-88f3-662f87ee6e52","id":"004989bb-a705-45ce-88f3-662f87ee6e52","refname":"人员3","email":"33@33.com"},
           {"rownum_":4,"code":"004","mobile":"15011430234","name":"人员4","refcode":"004","refpk":"3570cbde-0d43-49ce-ad53-ab27ee6ee7dd","id":"3570cbde-0d43-49ce-ad53-ab27ee6ee7dd","refname":"人员4","email":"33@34.com"},
           {"rownum_":5,"code":"005","mobile":"15011430235","name":"人员5","refcode":"005","refpk":"5e3a85ec-5e14-4734-8b3a-1e6168426c89","id":"5e3a85ec-5e14-4734-8b3a-1e6168426c89","refname":"人员5","email":"55@26.com"},
-          
+
         ],
         "page":{"pageSize":10,"currPageIndex":0,"pageCount":2,"totalElements":15},
-    } 
+    }
     };
     this.launchTableHeader(data.columnsData);
     this.launchTableData(data.bodyData);
@@ -110,7 +110,7 @@ class TableFormRef extends Component {
 
   /**
  * 根据 refinfo 返回结果拆解并渲染表格表头
- * @param {object} data 
+ * @param {object} data
    * 注意：单选时候自己添加radio
  */
   launchTableHeader = (data) => {
@@ -168,8 +168,8 @@ class TableFormRef extends Component {
   }
   /**
    * @msg: 简单搜索的回调，与复杂搜索的回调不是同一个
-   * @param {type} 
-   * @return: 
+   * @param {type}
+   * @return:
    */
   miniSearchFunc = (value) => {
     alert('搜索' + value)
@@ -191,8 +191,8 @@ class TableFormRef extends Component {
   }
   /**
    * @msg: modal框确认按钮
-   * @param {type} 
-   * @return: 
+   * @param {type}
+   * @return:
    */
   onSave = (item) => {
     let obj = {}
@@ -209,8 +209,8 @@ class TableFormRef extends Component {
   }
   /**
    * @msg: modal框右上X和右下角取消
-   * @param {type} 
-   * @return: 
+   * @param {type}
+   * @return:
    */
   onCancel = () => {
     this.setState({ showModal: false })
@@ -220,7 +220,7 @@ class TableFormRef extends Component {
    * @msg: 清空操作
    * @param {type} 此时value不可以直接传'',因为''下只能清除一次，第二次清除时前后value都是''，不会触发更新操作，
    * 因此通过refpk不一致来触发更新操作
-   * @return: 
+   * @return:
    */
   clearFunc = () => {
     this.setState({
@@ -229,7 +229,7 @@ class TableFormRef extends Component {
     })
   }
   render() {
-  
+
     let { showLoading, showModal, matchData, value } = this.state;
     let { columnsData, tableData, page } = this;
     options = {
@@ -253,10 +253,10 @@ class TableFormRef extends Component {
       onCancel: this.onCancel,
     });
     return (
-      
+
       <div>
         <RefMultipleTableWithInput
-         disabled={!this.props.isEdit}
+         disabled={this.props.disabled}
           title = {this.props.title}
           {...childrenProps}
           //filterUrl={'https://mock.yonyoucloud.com/mock/1264/pap_basedoc/common-ref/blobRefTreeGrid'}
