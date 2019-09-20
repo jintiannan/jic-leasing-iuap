@@ -173,25 +173,19 @@ class ListView extends Component {
      */
     getShowColumn = (gridColumn,grid,show) =>{
         if(show){
-            gridColumn.map((item,index)=>{
-                grid.map((itemGrid,indexGrid)=>{
-                    if(item == itemGrid.key){
-                        gridColumn[index] = itemGrid;
-                    }
-                })
-            });
-            return gridColumn;
-        }else{
-            gridColumn.map((item,index)=>{
-                grid.map((itemGrid,indexGrid)=>{
-                    if(item == itemGrid.key){
-                        const obj = Object.assign(itemGrid, {ifshow:false})
-                        grid[indexGrid] = obj;
-                    }
-                })
-            });
-            return grid;
+            grid.map((item,index)=>{
+                grid[index] = Object.assign(item, {ifshow:false});
+            })
         }
+        gridColumn.map((item,index)=>{
+            grid.map((itemGrid,indexGrid)=>{
+                if(item == itemGrid.key){
+                    const obj = Object.assign(itemGrid, {ifshow:show?true:false})
+                    grid[indexGrid] = obj;
+                }
+            })
+        });
+        return grid;
     }
 
     //gridColumn 需要显示的字段  grid全部的字段
