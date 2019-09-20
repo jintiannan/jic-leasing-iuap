@@ -206,19 +206,17 @@ class FormView extends Component {
         let _props = this.props;
         if(_props.showForm){
             return (
-                <div className='commom-form'>
+                <div>
                     
                 
-                    <div className='calculatorNormalztForm'>
+                    <div className='jic-form'>
                     <div>
                         <span onClick={() => this.setState({ open: !this.state.open })} >
                         <FormSplitHeader title={'投放信息'} />
                         </span>
                     </div>
                     <Collapse in={this.state.open}>
-                            <Form>
-                           
-                                        <div>
+                            <Form>                                    
                                             {
                                                 this.mainForm1.map((value,key) => {
                                                     return (
@@ -252,8 +250,6 @@ class FormView extends Component {
                                                 })
                                             }
                                             
-                                           </div>
-    
                             </Form>
     
                     </Collapse>

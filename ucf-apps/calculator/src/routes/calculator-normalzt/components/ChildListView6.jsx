@@ -163,7 +163,9 @@ import { deepClone } from "utils";
     render() { 
         return (
           <div className="demo0502 u-editable-table">
-            <Table data={this.state.dataSource} columns={this.state.columns} headerHeight={40} height={40}/>
+            <Table data={this.state.dataSource} columns={this.state.columns} headerHeight={40} height={40}
+            emptyText = {()=>{return "";}} //无数据时显示内容
+            />
           </div>
         );
       

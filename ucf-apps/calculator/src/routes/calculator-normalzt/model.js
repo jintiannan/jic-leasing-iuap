@@ -30,6 +30,10 @@ export default {
         powerButton:[],
         //是否过滤按钮权限
         ifPowerBtn:true,
+        //显示字段
+        gridColumn:[],
+        //是否自定义显示字段
+        ifGridColumn:true,
         //是否可编辑
         isEdit:false,
         //是否显示新增页面

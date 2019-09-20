@@ -27,9 +27,11 @@ class ListView extends Component {
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
+        //主表过滤显示字段
+        const gridMain = this.getShowColumn(this.props.gridColumn,this.grid,true);
         //计算表格滚动条高度
         this.resetTableHeight(false);
-        this.gridColumn = [...genGridColumn(this.grid)];
+        this.gridColumn = [...genGridColumn(gridMain)];
         this.gridColumnOnTheLoan = [...genGridColumn(this.gridOnTheLoan)];
         this.gridColumnMarginLoan = [...genGridColumn(this.gridMarginLoan)];
         this.gridColumnCommissionLoan = [...genGridColumn(this.gridCommissionLoan)];
@@ -78,26 +80,26 @@ class ListView extends Component {
      * 可能会有性能问题,暂时实现功能,待后期再取舍
      * #关闭功能,如果有页面特殊要求再打开#
      */
-    onRowSelect = (record, index, event) => {
-        console.log('行点击事件');
-        let _record = deepClone(record);
-        _record._checked = _record._checked ? false : true;
-        let param = {
-            record:_record,
-            index:index,
-        }
-        let _selectedList = deepClone(this.props.selectedList);
-        if(_record._checked){
-            _selectedList.push(_record);
-        } else {
-            _selectedList.splice(_selectedList.findIndex(item => item.pk === record.pk), 1)
-        }
-        actions.calculatorNormalzt.updateRowData(param,index);
-        actions.calculatorNormalzt.updateState({ selectedList : _selectedList });
+    // onRowSelect = (record, index, event) => {
+    //     console.log('行点击事件');
+    //     let _record = deepClone(record);
+    //     _record._checked = _record._checked ? false : true;
+    //     let param = {
+    //         record:_record,
+    //         index:index,
+    //     }
+    //     let _selectedList = deepClone(this.props.selectedList);
+    //     if(_record._checked){
+    //         _selectedList.push(_record);
+    //     } else {
+    //         _selectedList.splice(_selectedList.findIndex(item => item.pk === record.pk), 1)
+    //     }
+    //     actions.calculatorNormalzt.updateRowData(param,index);
+    //     actions.calculatorNormalzt.updateState({ selectedList : _selectedList });
         
         
         
-    }
+    // }
 
     /**
      * 点击row选择框触发绑定数据对象
@@ -163,14 +165,42 @@ class ListView extends Component {
 
     }
 
+    /**
+     * 过滤需要处理的字段
+     * @param gridColumn 需要处理的字段 
+     * @param grid 全部的字段 
+     * @param show show==true gridColumn为需要显示的字段  show==false  gridColumn为隐藏的字段
+     */
+    getShowColumn = (gridColumn,grid,show) =>{
+        if(show){
+            grid.map((item,index)=>{
+                grid[index] = Object.assign(item, {ifshow:false});
+            })
+        }
+        gridColumn.map((item,index)=>{
+            grid.map((itemGrid,indexGrid)=>{
+                if(item == itemGrid.key){
+                    const obj = Object.assign(itemGrid, {ifshow:show?true:false})
+                    grid[indexGrid] = obj;
+                }
+            })
+        });
+        return grid;
+    }
+
+    //gridColumn 需要显示的字段  grid全部的字段
+    getColumnByShow = (gridColumn,grid) =>{
+        
+    }
+
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        {title:'操作日期',key:'operate_date',type:'0',ifshow:false},
-        {title:'测算方案名称',key:'quot_name',type:'0',ifshow:false},
-        {title:'投放日期',key:'plan_date_loan',type:'0',ifshow:false},
+        {title:'操作日期',key:'operate_date',type:'0'},
+        {title:'测算方案名称',key:'quot_name',type:'0'},
+        {title:'投放日期',key:'plan_date_loan',type:'0'},
         {title:'计划投放金额(元)',key:'plan_cash_loan',type:'0'},
-        {title:'租赁方式',key:'lease_method',type:'0',ifshow:false},
-        {title:'租赁期限(月)',key:'lease_times',type:'0',ifshow:false},
+        {title:'租赁方式',key:'lease_method',type:'0'},
+        {title:'租赁期限(月)',key:'lease_times',type:'0'},
         {title:'租赁本金',key:'fact_cash_loan',type:'0'},
         {title:'保证金金额(元)',key:'deposit_cash',type:'0'},
         {title:'手续费总金额(元)',key:'srvfee_cash_in',type:'0'},
@@ -295,7 +325,7 @@ class ListView extends Component {
                             freshData: this.freshData, //活动页改变,跳转指定页数据
                             onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
                         }}
-                        onRowClick={this.onRowSelect}
+                        //onRowClick={this.onRowSelect}
                         getSelectedDataFunc={this.getSelectedDataFunc}
                         //afterFilter={this.afterFilter}
 
