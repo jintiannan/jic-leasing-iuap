@@ -26,11 +26,11 @@ class DatePickerEditCell extends Component {
     this.props.onChange(date);
   };
 
-  // onChange = () => {
-  //   if (this.props.onChange) {
-  //     this.props.onChange("");
-  //   }
-  // };
+  onChange = () => {
+    if (this.props.onChange) {
+      this.props.onChange("");
+    }
+  };
 
   edit = () => {
     if(this.props.editable){
@@ -50,7 +50,7 @@ class DatePickerEditCell extends Component {
               defaultValue={value}
               value={value}
               format = {format?format:"YYYY-MM-DD"}
-              //onChange={this.onChange}
+              onChange={this.onChange}
               onSelect={this.handleChange}
               showToday={false}
               autoFocus

@@ -3,13 +3,11 @@
  */
 import React, { Component } from "react";
 import {  } from 'tinper-bee';
-import { Icon, Select, Tooltip, Form, Table } from "tinper-bee";
-import SelectEditCell from 'components/FormRef/SelectEditCell';
-import StringEditCell from 'components/FormRef/StringEditCell';
-import RefEditCell from 'components/FormRef/RefEditCell';
-import TableFormRef from 'components/FormRef/TableFormRefChild';
-import NumberEditCell from 'components/FormRef/NumberEditCell';
-import DatePickerEditCell from 'components/FormRef/DatePickerEditCell';
+import {Form, Table } from "tinper-bee";
+import StringEditCell from 'components/ChildListRef/StringEditCell';
+import TableFormRef from 'components/ChildListRef/TableFormRefChild';
+import NumberEditCell from 'components/ChildListRef/NumberEditCell';
+import DatePickerEditCell from 'components/ChildListRef/DatePickerEditCell';
 
 import { deepClone } from "utils";
   class ChildListView4 extends Component {
