@@ -27,11 +27,11 @@ class ListView extends Component {
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
-        //过滤显示字段
-        this.getGridColumn(this.props.gridColumn,this.grid);
+        //主表过滤显示字段
+        const gridMain = this.getShowColumn(this.props.gridColumn,this.grid,true);
         //计算表格滚动条高度
         this.resetTableHeight(false);
-        this.gridColumn = [...genGridColumn(this.grid)];
+        this.gridColumn = [...genGridColumn(gridMain)];
         this.gridColumnOnTheLoan = [...genGridColumn(this.gridOnTheLoan)];
         this.gridColumnMarginLoan = [...genGridColumn(this.gridMarginLoan)];
         this.gridColumnCommissionLoan = [...genGridColumn(this.gridCommissionLoan)];
@@ -165,16 +165,38 @@ class ListView extends Component {
 
     }
 
-    getGridColumn = (gridColumn,grid) =>{
-        gridColumn.map((item,index)=>{
-            grid.map((itemGrid,indexGrid)=>{
-                if(item == itemGrid.key){
-                    const obj = Object.assign(itemGrid, {ifshow:true})
-                    grid[indexGrid] = obj;
-                }
-            })
-        });
-        return grid;
+    /**
+     * 过滤需要处理的字段
+     * @param gridColumn 需要处理的字段 
+     * @param grid 全部的字段 
+     * @param show show==true gridColumn为需要显示的字段  show==false  gridColumn为隐藏的字段
+     */
+    getShowColumn = (gridColumn,grid,show) =>{
+        if(show){
+            gridColumn.map((item,index)=>{
+                grid.map((itemGrid,indexGrid)=>{
+                    if(item == itemGrid.key){
+                        gridColumn[index] = itemGrid;
+                    }
+                })
+            });
+            return gridColumn;
+        }else{
+            gridColumn.map((item,index)=>{
+                grid.map((itemGrid,indexGrid)=>{
+                    if(item == itemGrid.key){
+                        const obj = Object.assign(itemGrid, {ifshow:false})
+                        grid[indexGrid] = obj;
+                    }
+                })
+            });
+            return grid;
+        }
+    }
+
+    //gridColumn 需要显示的字段  grid全部的字段
+    getColumnByShow = (gridColumn,grid) =>{
+        
     }
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
