@@ -11,7 +11,7 @@ class NumberEditCell extends Component {
     super(props);
     this.state = {
       value: parseInt(this.props.value),
-      editable: false
+      editable: this.props.editable
     };
   }
 
@@ -19,12 +19,15 @@ class NumberEditCell extends Component {
   //   this.setState({ value });
   // };
 
-  commitChange = () => {
-    this.setState({ editable: false });
-  };
+  // commitChange = () => {
+  //   //this.setState({ editable: false });
+  //   if (this.props.onChange) {
+  //     this.props.onChange(this.state.value);
+  //   }
+  // };
 
   edit = () => {
-    if(this.props.editable){
+    if(this.state.editable){
       this.setState({ editable: true });
     }
   };
@@ -37,8 +40,8 @@ class NumberEditCell extends Component {
   };
 
   render() {
-    const { value, editable } = this.state;
-    const { toThousands,precision } = this.props;
+    const { value } = this.state;
+    const { editable,toThousands,precision } = this.props;
     return (
       <div className="editable-cell">
         {editable ? (
@@ -47,7 +50,7 @@ class NumberEditCell extends Component {
               defaultValue={value?parseInt(value):0}
               value={value}
               disabled = {false}
-              onBlur={this.commitChange}
+              //onBlur={this.commitChange}
               onChange={this.handleChange}
               //autoFocus
               precision={precision?precision:false}
