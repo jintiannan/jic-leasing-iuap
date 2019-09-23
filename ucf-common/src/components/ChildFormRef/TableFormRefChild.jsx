@@ -18,7 +18,6 @@ class TableFormRefChild extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editable: false,
       showLoading: false,
       showModal: false,
       matchData: [
@@ -227,6 +226,7 @@ class TableFormRefChild extends Component {
   }
 
   commitChange = () => {
+    //this.setState({ editable: false });
     if (this.props.onChange) {
       this.props.onChange(this.state.value);
     }
@@ -237,21 +237,14 @@ class TableFormRefChild extends Component {
     const __REF_CONTENT__ = document.querySelector("div.ref-core-modal");
     if (!__REF_CONTENT__ && e.target === this.refWarp) {
       this.commitChange();
-      this.setState({ editable: false });
-    }
-  };
-
-  edit = () => {
-    if(this.props.editable){
-      this.setState({ editable: true });
     }
   };
 
   render() {
   
-    let { showLoading, showModal, matchData, value, editable } = this.state;
+    let { showLoading, showModal, matchData, value } = this.state;
     let { columnsData, tableData, page } = this;
-    //const { editable } = this.props;
+    const { editable } = this.props;
     options = {
       miniSearch: true,
       multiple: false,
@@ -286,8 +279,8 @@ class TableFormRefChild extends Component {
             />
         </div>
       ) : (
-        <div className="editable-cell-text-wrapper" onDoubleClick={this.edit}>
-          {matchData[0].refname || " "}
+        <div className="editable-cell-text-wrapper">
+          {this.props.value?this.props.value.refname:"" || " "}
         </div>
       
       

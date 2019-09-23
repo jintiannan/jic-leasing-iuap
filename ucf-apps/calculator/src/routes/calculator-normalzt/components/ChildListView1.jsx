@@ -5,12 +5,8 @@ import React, { Component } from "react";
 import {  } from 'tinper-bee';
 import { Icon, Select, Tooltip, Form, Table } from "tinper-bee";
 import SelectEditCell from 'components/FormRef/SelectEditCell';
-import StringEditCell from 'components/FormRef/StringEditCell';
-import RefEditCell from 'components/FormRef/RefEditCell';
-import TableFormRef from 'components/FormRef/TableFormRefChild';
 import NumberEditCell from 'components/FormRef/NumberEditCell';
 import DatePickerEditCell from 'components/FormRef/DatePickerEditCell';
-import { deepClone } from "utils";
 
 
   class ChildListView1 extends Component {
@@ -25,6 +21,7 @@ import { deepClone } from "utils";
               plan_cash_loan:"10000",
               plan_cash_corpus:"10000",
               tax_rate:{name:'6%',value:'6'},
+              tax_cash:"10000"
             
              }
         ],

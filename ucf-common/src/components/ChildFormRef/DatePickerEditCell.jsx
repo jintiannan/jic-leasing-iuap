@@ -12,7 +12,7 @@ class DatePickerEditCell extends Component {
     super(props);
     this.state = {
       value: this.props.value,
-      editable: false
+      editable: this.props.editable
     };
     //this.DatePicker = React.createRef();
   }
@@ -26,22 +26,24 @@ class DatePickerEditCell extends Component {
     this.props.onChange(date);
   };
 
-  // onChange = () => {
+  // commitChange = (e,value) => {
+  //   //this.setState({ editable: false });
   //   if (this.props.onChange) {
-  //     this.props.onChange("");
+  //     console.log(value + "111111111111");
+  //     this.props.onChange(value);
   //   }
   // };
 
   edit = () => {
     if(this.props.editable){
-      this.setState({ editable: true });
+      this.setState({ isEdit: true });
     }
   };
 
 
   render() {
-    const { value, editable} = this.state;
-    const {format} = this.props;
+    const { value } = this.state;
+    const { editable, format} = this.props;
     return (
       <div className="editable-cell">
         {editable ? (
@@ -50,9 +52,9 @@ class DatePickerEditCell extends Component {
               defaultValue={value}
               value={value}
               format = {format?format:"YYYY-MM-DD"}
-              //onChange={this.onChange}
-              onSelect={this.handleChange}
-              showToday={false}
+              onChange={this.handleChange}
+              //onSelect={this.handleChange}
+              //onDateInputBlur={this.commitChange}
               autoFocus
             >
             </DatePicker>

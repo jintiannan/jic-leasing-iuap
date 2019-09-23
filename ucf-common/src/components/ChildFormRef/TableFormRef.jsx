@@ -1,6 +1,6 @@
 /**
  *
- * @title 子表参照
+ * @title 表参照 form表单
  * @description 清空功能：不使用form表单
  *
  */
@@ -14,17 +14,16 @@ import request from 'utils/request.js'
 import {actions} from 'mirrorx';
 
 let options = {}
-class TableFormRefChild extends Component {
+class TableFormRef extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editable: false,
       showLoading: false,
       showModal: false,
       matchData: [
-        this.props.value?this.props.value:{} //参照中选中的对象
+        this.props.formObject[this.props.name]?this.props.formObject[this.props.name]:{} //参照中选中的对象
       ],
-      value: this.props.value?JSON.stringify(this.props.value):"", //表单页显示的值
+      value: this.props.formObject[this.props.name]?JSON.stringify(this.props.formObject[this.props.name]):"", //表单页显示的值
     };
     this.page = {
       pageCount: 0,
@@ -33,7 +32,7 @@ class TableFormRefChild extends Component {
     };
     this.tableData = [];
     this.columnsData = [];
-    this.refWarp = React.createRef();
+
   }
 
   componentDidMount(){
@@ -196,12 +195,16 @@ class TableFormRefChild extends Component {
    * @return: 
    */
   onSave = (item) => {
+    let obj = {}
+    //obj[this.props.key] = item[0].refpk;
+    obj[this.props.name] = item[0];
+    actions.calculatorNormalzt.updateState({formObject:obj});
     this.checkedArray = item;
     this.setState({
       showModal: false,
       matchData: item,
-      value: JSON.stringify(item[0])
     })
+
 
   }
   /**
@@ -225,33 +228,10 @@ class TableFormRefChild extends Component {
       value: `{"refname":"","refpk":"${Math.random()}"}`,
     })
   }
-
-  commitChange = () => {
-    if (this.props.onChange) {
-      this.props.onChange(this.state.value);
-    }
-  };
-
-  onRefBlur = e => {
-    // 消除点击子组件，父组件先失焦再聚焦的事件触发过程带来的副作用
-    const __REF_CONTENT__ = document.querySelector("div.ref-core-modal");
-    if (!__REF_CONTENT__ && e.target === this.refWarp) {
-      this.commitChange();
-      this.setState({ editable: false });
-    }
-  };
-
-  edit = () => {
-    if(this.props.editable){
-      this.setState({ editable: true });
-    }
-  };
-
   render() {
   
-    let { showLoading, showModal, matchData, value, editable } = this.state;
+    let { showLoading, showModal, matchData, value } = this.state;
     let { columnsData, tableData, page } = this;
-    //const { editable } = this.props;
     options = {
       miniSearch: true,
       multiple: false,
@@ -264,7 +244,7 @@ class TableFormRefChild extends Component {
       columnsData: columnsData,
       tableData: tableData,
       ...page,
-      matchData:matchData,
+      matchData:this.state.matchData,
       value ,
       miniSearchFunc: this.miniSearchFunc,
       dataNumSelect: this.dataNumSelect,
@@ -272,28 +252,18 @@ class TableFormRefChild extends Component {
       onSave: this.onSave,
       onCancel: this.onCancel,
     });
-    return  editable ? (
-        <div
-          ref={el => (this.refWarp = el)}
-          className="editable-cell-input-wrapper"
-          tabIndex={-1}
-          onBlur={this.onRefBlur}
-        >
-            <RefMultipleTableWithInput
-              title = {this.props.title}
-              {...childrenProps}
-              //filterUrl={'https://mock.yonyoucloud.com/mock/1264/pap_basedoc/common-ref/blobRefTreeGrid'} //搜索地址
-            />
-        </div>
-      ) : (
-        <div className="editable-cell-text-wrapper" onDoubleClick={this.edit}>
-          {matchData[0].refname || " "}
-        </div>
+    return (
       
-      
-      
+      <div>
+        <RefMultipleTableWithInput
+         disabled={!this.props.isEdit}
+          title = {this.props.title}
+          {...childrenProps}
+          //filterUrl={'https://mock.yonyoucloud.com/mock/1264/pap_basedoc/common-ref/blobRefTreeGrid'}
+        />
+      </div>
     )
   }
 }
 
-export default TableFormRefChild;
+export default TableFormRef;

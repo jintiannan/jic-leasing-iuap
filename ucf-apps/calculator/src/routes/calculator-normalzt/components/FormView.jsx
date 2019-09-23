@@ -6,8 +6,8 @@ import FormSplitHeader from 'components/FormSplitHeader'
 import DatePicker from "tinper-bee/lib/Datepicker";
 import FormInputNumber from 'components/FormRef/FormInputNumber';
 import ChildListView1 from './ChildListView1';
-import ChildListView2 from './ChildListView2';
-import ChildListView3 from './ChildListView3';
+import ChildListView2 from './ChildListView7';
+import ChildListView3 from './ChildListView8';
 import ChildListView4 from './ChildListView4';
 import ChildListView5 from './ChildListView5';
 import ChildListView6 from './ChildListView6';
@@ -72,10 +72,9 @@ class FormView extends Component {
         let index = dataSource.length + 1;
         let newData = {
             index: index,  //序号
-            cIsEdit: true, //转为c字段提供 可不可编辑判断
         };
         let isEditArray = this[childs].state.isEditArray;
-        isEditArray.push([]);
+        isEditArray?isEditArray.push([]):isEditArray=[];
         dataSource.push(newData);
         this[childs].setState({
             dataSource:dataSource,
@@ -516,7 +515,7 @@ class FormView extends Component {
                     >
                         <TabPane tab='投放计划' key="1"> <ChildListView1 { ...this } ref="onTheLoan" onRef={this.onRef1}/></TabPane>
                         <TabPane tab='保证金计划' key="2"> <ChildListView2 { ...this } ref="marginLoan" onRef={this.onRef2}/></TabPane>
-                        <TabPane tab='手续费计划' key="3"> <ChildListView3 { ...this } ref="commissionLoan" onRef={this.onRef3}/></TabPane>
+                        <TabPane tab='手续费计划' key="3"> <ChildListView3 { ...this } { ...this.props } ref="commissionLoan" onRef={this.onRef3}/></TabPane>
                         <TabPane tab='中间费用支出计划' key="4"> <ChildListView4 { ...this } ref="middleCostLoan" onRef={this.onRef4}/></TabPane>
                         <TabPane tab='其他收支计划' key="5"> <ChildListView5 { ...this } ref="otherLoan" onRef={this.onRef5}/></TabPane>
                         <TabPane tab='租金计划' key="6"> <ChildListView6 { ...this } ref="rentLoan" onRef={this.onRef6}/></TabPane>
