@@ -12,18 +12,20 @@ import './index.less';
 import {deepClone} from "../../../../../../ucf-common/src/utils";
 import FormInputNumber from 'components/FormRef/FormInputNumber';
 import DatePicker from "tinper-bee/lib/Datepicker";
-
+import {enumConstant} from "../../../../../../ucf-common/src/utils/enums";
 const Steps = Step.Steps;
 const addTitle = "新增普通项目审批";
 const setpsName = "show";
 const steps = [{title: '项目基本信息'},
     {title: '授信额度信息'},
-    {title: '调戏设置'},
+    {title: '调息设置'},
     {title: '客户基本信息'},
     {title: '报价信息'},
+    {title: '租赁物信息'},
     {title: '担保信息'},
     {title: '限额信息'},
     {title: '项目相关人信息'},
+    {title: '承租人相关部门信息'},
     {title: '其他信息'}
 
 ];
@@ -47,7 +49,10 @@ class AddFormView extends Component {
             show5: 'none',
             show6: 'none',
             show7: 'none',
-            show8: 'none'
+            show8: 'none',
+            show9: 'none',
+            show10: 'none'
+
 
         };
         this.changeSize = this.changeSize.bind(this);
@@ -75,7 +80,8 @@ class AddFormView extends Component {
 
     onSubSave = () => {
         // Message.create({content: '完成', color: 'successlight'});
-        let newRole = deepClone(this.props.list);
+        // let newRole = deepClone(this.props.list);
+        let newRole = [];
         newRole.push(this.props.form.getFieldsValue());
         actions.projectInfo.updateState({list: newRole, showModal: false, isEdit: false});
     };
@@ -164,12 +170,12 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        客户名称
+                                                        立项名称
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('customer_name', {
-                                                                         initialValue: _formObject.customer_name,
+                                                                     ...getFieldProps('pk_project_approval.name', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -186,12 +192,34 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        客户英文名
+                                                        立项编码
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_project_approval.code', {
+                                                                         initialValue: "",
+
+                                                                         rules: [{
+                                                                             required: false
+                                                                             ,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        承租人名称
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('customer_eng_name', {
-                                                                         initialValue: _formObject.customer_eng_name,
+                                                                     ...getFieldProps('pk_consumer.name', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -201,6 +229,7 @@ class AddFormView extends Component {
                                                     />
 
                                                 </FormItem>
+
                                             </Col>
                                         </Row>
                                         <Row>
@@ -210,12 +239,34 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        客户简称
+                                                        项目名称
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('customer_short', {
-                                                                         initialValue: _formObject.customer_short,
+                                                                     ...getFieldProps('project_name', {
+                                                                         initialValue: _formObject.project_name,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目编号
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('project_code', {
+                                                                         initialValue: _formObject.project_code,
 
                                                                          rules: [{
                                                                              required: true,
@@ -231,124 +282,1044 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        是否授权征信客户
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        客户性质
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        客户性质(内部)
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        客户类型
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        经济性质
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        注册地址
+                                                        项目批次
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('reg_address', {
-                                                                         initialValue: _formObject.reg_address,
+                                                                     ...getFieldProps('project_batch', {
+                                                                         initialValue: _formObject.project_batch,
 
                                                                          rules: [{
                                                                              required: true,
                                                                          }],
                                                                      })
                                                                  }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目状态
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={true}
+                                                        {
+                                                            ...getFieldProps('project_status', {
+                                                                initialValue: _formObject.project_status,
+                                                            })
+                                                        }
+                                                    />
+                                                </FormItem>
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        租赁类别
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('lease_categry', {
+                                                                initialValue: _formObject.lease_categry,
+                                                            })
+                                                        }
+                                                    />
+                                                </FormItem>
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        回租类别
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={true}
+                                                        {
+                                                            ...getFieldProps('leaseback_type', {
+                                                                initialValue: _formObject.leaseback_type,
+                                                            })
+                                                        }
+                                                    />
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目税种
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('project_tax_type', {
+                                                                initialValue: _formObject.project_tax_type,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        是否投保
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('is_insure', {
+                                                                initialValue: _formObject.is_insure,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        是否有共同承租人
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('if_co_lessee', {
+                                                                initialValue: _formObject.if_co_lessee,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        客户评级
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('client_rating', {
+                                                                         initialValue: _formObject.client_rating,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        预计投放日期
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('plan_release_date', {
+                                                                         initialValue: _formObject.plan_release_date,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目金额
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('release_amount', {
+                                                                         initialValue: _formObject.release_amount,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        设备金额
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('purchase_total_amount', {
+                                                                         initialValue: _formObject.purchase_total_amount,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        资金渠道
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('funding_sources', {
+                                                                initialValue: _formObject.funding_sources,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        交易框架
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('trading_schemes', {
+                                                                initialValue: _formObject.trading_schemes,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目分类
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('project_sort', {
+                                                                initialValue: _formObject.project_sort,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目主办人
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('pk_cust_main.name', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目协办人
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('pk_cust_help.name', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        租赁物类别
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('lease_classification', {
+                                                                initialValue: _formObject.lease_classification,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        增信措施类别
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('increase_credit_type', {
+                                                                initialValue: _formObject.increase_credit_type,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        业务领域
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('business_domain', {
+                                                                         initialValue: _formObject.business_domain,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        资金用途
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('capital_use', {
+                                                                         initialValue: _formObject.capital_use,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        是否项目合同一一对应
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('is_onetoone', {
+                                                                         initialValue: _formObject.is_onetoone,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        实际融资客户
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('pk_cust_finance', {
+                                                                         initialValue: _formObject.pk_cust_finance,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        是否预约资金
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('is_precapital', {
+                                                                initialValue: _formObject.is_precapital,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        出租方账户
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('pk_account.name', {
+                                                                         initialValue: "",
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        出租方账号
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('pk_account.code', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        出租方开户银行
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_account.account_bank', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        出租方开户银行行号
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_account.bank_no', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        是否允许提前还款
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('is_canrefund', {
+                                                                initialValue: _formObject.is_canrefund,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        提前还款期限(月)
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('refund_times', {
+                                                                         initialValue: _formObject.refund_times,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目编提前还款手续费率(%)
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('refund_rate', {
+                                                                         initialValue: _formObject.refund_rate,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        地区审批总额
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_project_approval.area_approve_total', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        地区实际投放总额
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_project_approval.area_loan_total', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        地区剩余投放总额
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_project_approval.area_surplus_total', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        地区可用授信额度
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_project_approval.area_usable_total', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        行业审批总额
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_project_approval.industry_approve_total', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        行业实际投放总额
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_project_approval.industry_loan_total', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        行业剩余投放总额
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_project_approval.industry_surplus_total', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        行业可用授信额度
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_project_approval.industry_usable_total', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        让利方式
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('benefit_method', {
+                                                                initialValue: _formObject.benefit_method,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        宽限天数
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('grace_days', {
+                                                                         initialValue: _formObject.grace_days,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        建议日扣减金额
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('suggest_deduct_amt', {
+                                                                         initialValue: _formObject.suggest_deduct_amt,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        约定日扣减金额
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('appoint_deduct_amt', {
+                                                                         initialValue: _formObject.appoint_deduct_amt,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        所属公司
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('pk_pro_org', {
+                                                                         initialValue: _formObject.pk_pro_org,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        是否跨境业务
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('ifCrossborder', {
+                                                                initialValue: _formObject.ifCrossborder,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        是否孵化及创新业务
+                                                    </Label>
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('ifInnovate', {
+                                                                initialValue: _formObject.ifInnovate,
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        是否关联交易方
+                                                    </Label>
+
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('ifRelation', {
+                                                                initialValue: _formObject.ifRelation,
+                                                            })
+                                                        }
                                                     />
 
                                                 </FormItem>
@@ -366,60 +1337,57 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        行业门类
+                                                        授信分类
                                                     </Label>
                                                     <Select
+                                                        data={enumConstant("yesOrNo")}
                                                         showSearch={true}
                                                         allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                        disabled={true}
+                                                        {
+                                                            ...getFieldProps('limit_class', {
+                                                                initialValue: _formObject.limit_class,
+                                                            })
+                                                        }
+                                                    />
                                                 </FormItem>
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        行业门类(大类)
+                                                        授信类型
                                                     </Label>
                                                     <Select
+                                                        data={enumConstant("yesOrNo")}
                                                         showSearch={true}
                                                         allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                        disabled={true}
+                                                        {
+                                                            ...getFieldProps('granting_type', {
+                                                                initialValue: _formObject.granting_type,
+                                                            })
+                                                        }
+                                                    />
                                                 </FormItem>
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        行业门类(中类)
+                                                        本次授信额度
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('limit_amt', {
+                                                                         initialValue: _formObject.limit_amt,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
                                                 </FormItem>
                                             </Col>
                                         </Row>
@@ -428,32 +1396,31 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        行业门类(小类)
+                                                        授信起始日期
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('granting_start_date', {
+                                                                         initialValue: _formObject.granting_start_date,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
                                                 </FormItem>
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        从业人数
+                                                        授信期限
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('employee_num', {
-                                                                         initialValue: _formObject.employee_num,
+                                                                     ...getFieldProps('granting_times', {
+                                                                         initialValue: _formObject.granting_times,
 
                                                                          rules: [{
                                                                              required: true,
@@ -470,12 +1437,12 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        资产总额(万元)
+                                                        授信截止日期
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('assets_total', {
-                                                                         initialValue: _formObject.assets_total,
+                                                                     ...getFieldProps('granting_end_date', {
+                                                                         initialValue: _formObject.granting_end_date,
 
                                                                          rules: [{
                                                                              required: true,
@@ -494,15 +1461,15 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        营业收入(万元)
+                                                        原授信额度(元)
                                                     </Label>
                                                     <FormInputNumber
-                                                        disabled={!this.props.isEdit}
+                                                        disabled={true}
                                                         toThousands={true}  //是否显示千分位
                                                         precision={2} //保留2位小数
                                                         {
-                                                            ...getFieldProps('operating_income', {
-                                                                initialValue: _formObject.operating_income,
+                                                            ...getFieldProps('granting_original_limit', {
+                                                                initialValue: _formObject.granting_original_limit,
                                                                 rules: [{
                                                                     required: true,
                                                                 }],
@@ -517,40 +1484,42 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        学校等级
+                                                        已用额度(元)
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormInputNumber
+                                                        disabled={true}
+                                                        toThousands={true}  //是否显示千分位
+                                                        precision={2} //保留2位小数
+                                                        {
+                                                            ...getFieldProps('granting_used_limit', {
+                                                                initialValue: _formObject.granting_used_limit,
+                                                                rules: [{
+                                                                    required: true,
+                                                                }],
+                                                            })
+                                                        }
+                                                    />
                                                 </FormItem>
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        医院等级
+                                                        调整额度(元)
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormInputNumber
+                                                        disabled={true}
+                                                        toThousands={true}  //是否显示千分位
+                                                        precision={2} //保留2位小数
+                                                        {
+                                                            ...getFieldProps('granting_add_limit', {
+                                                                initialValue: _formObject.granting_add_limit,
+                                                                rules: [{
+                                                                    required: true,
+                                                                }],
+                                                            })
+                                                        }
+                                                    />
                                                 </FormItem>
                                             </Col>
                                         </Row>
@@ -559,60 +1528,59 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        企业规模(四部委)
+                                                        可用额度(元)
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormInputNumber
+                                                        disabled={true}
+                                                        toThousands={true}  //是否显示千分位
+                                                        precision={2} //保留2位小数
+                                                        {
+                                                            ...getFieldProps('granting_surplus_limit', {
+                                                                initialValue: _formObject.granting_surplus_limit,
+                                                                rules: [{
+                                                                    required: true,
+                                                                }],
+                                                            })
+                                                        }
+                                                    />
                                                 </FormItem>
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        企业规模(人行)
+                                                        授信币种
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('granting_currency', {
+                                                                         initialValue: _formObject.granting_currency,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
                                                 </FormItem>
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        企业规模(内部管理)
+                                                        租赁最大期限
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('max_deadline', {
+                                                                         initialValue: _formObject.max_deadline,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
                                                 </FormItem>
                                             </Col>
                                         </Row>
@@ -622,224 +1590,252 @@ class AddFormView extends Component {
                                     {/*调息设置*/}
                                     <div style={{display: this.state.show2}}>
                                         <Row>
+
+
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        注册登记号类型
+                                                        是否调息
                                                     </Label>
                                                     <Select
+                                                        data={enumConstant("yesOrNo")}
                                                         showSearch={true}
                                                         allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        注册登记号
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('reg_number', {
-                                                                         initialValue: _formObject.reg_number,
-
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('if_adjust', {
+                                                                initialValue: _formObject.if_adjust,
+                                                            })
+                                                        }
                                                     />
 
                                                 </FormItem>
 
                                             </Col>
+
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        证件类型
+                                                        调息渠道
                                                     </Label>
                                                     <Select
+                                                        data={enumConstant("yesOrNo")}
                                                         showSearch={true}
                                                         allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('adjust_type', {
+                                                                initialValue: _formObject.adjust_type,
+                                                            })
+                                                        }
+                                                    />
 
-                                        </Row>
-                                        <Row>
+                                                </FormItem>
+
+                                            </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        组织机构代码证
+                                                        调息响应方式
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('identity_no', {
-                                                                         initialValue: _formObject.identity_no,
 
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('adjust_time', {
+                                                                initialValue: _formObject.adjust_time,
+                                                            })
+                                                        }
                                                     />
 
                                                 </FormItem>
 
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-
-                                                <FormItem className='time flex'>
-                                                    <Label className="line-height-32">
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        证件有效期(开始)
-                                                    </Label>
-
-                                                    <DatePicker
-                                                        format={format}
-                                                        defaultValue={moment()}
-                                                        placeholder={dateInputPlaceholder}
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem className='time flex'>
-                                                    <Label className="line-height-32">
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        证件有效期(截止)
-                                                    </Label>
-                                                    <DatePicker
-                                                        format={format}
-                                                        defaultValue={moment()}
-                                                        placeholder={dateInputPlaceholder}
-                                                    />
-                                                </FormItem>
                                             </Col>
                                         </Row>
+
                                         <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem className='time flex'>
-                                                    <Label className="line-height-32">
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        最新年检日期
-                                                    </Label>
-                                                    <DatePicker
-                                                        format={format}
-                                                        defaultValue={moment()}
-                                                        placeholder={dateInputPlaceholder}
-                                                    />
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        贷款卡号
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('loan_card_no', {
-                                                                         initialValue: _formObject.loan_card_no,
 
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
 
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        贷款卡是否有效
+                                                        调息方法
                                                     </Label>
                                                     <Select
+                                                        data={enumConstant("yesOrNo")}
                                                         showSearch={true}
                                                         allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem className='time flex'>
-                                                    <Label className="line-height-32">
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        贷款卡最新年审时间
-                                                    </Label>
-                                                    <DatePicker
-                                                        format={format_time}
-                                                        defaultValue={moment()}
-                                                        placeholder={dateInputPlaceholder}
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('adjust_method', {
+                                                                initialValue: _formObject.adjust_method,
+                                                            })
+                                                        }
                                                     />
+
                                                 </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        贷款卡最新年审结果
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
+
                                             </Col>
 
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        机构信用代码
+                                                        调息起始日
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('org_credit_code', {
-                                                                         initialValue: _formObject.org_credit_code,
+                                                                     ...getFieldProps('adjust_start_date', {
+                                                                         initialValue: _formObject.adjust_start_date,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                    </div>
+
+                                    {/*客户基本信息*/}
+                                    <div style={{display: this.state.show3}}>
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        承租人编码
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.code', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        客户号
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.customer_no', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        地区（省）
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.province', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        地区（市）
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.city', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        地区（县/区）
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.district', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        行业门类
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.industry', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -853,16 +1849,18 @@ class AddFormView extends Component {
                                             </Col>
                                         </Row>
                                         <Row>
+
+
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        营业执照号码
+                                                        行业门类(大类)
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('license_no', {
-                                                                         initialValue: _formObject.license_no,
+                                                                     ...getFieldProps('pk_consumer.industry1', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -875,71 +1873,62 @@ class AddFormView extends Component {
 
                                             </Col>
 
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        行业门类(中类)
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.industry2', {
+                                                                         initialValue: '',
 
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem className='time flex'>
-                                                    <Label className="line-height-32">
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        成立日期
-                                                    </Label>
-                                                    <DatePicker
-                                                        format={format}
-                                                        defaultValue={moment()}
-                                                        placeholder={dateInputPlaceholder}
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
                                                     />
+
                                                 </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem className='time flex'>
-                                                    <Label className="line-height-32">
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        营业执照登记日
-                                                    </Label>
-                                                    <DatePicker
-                                                        format={format}
-                                                        defaultValue={moment()}
-                                                        placeholder={dateInputPlaceholder}
-                                                    />
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem className='time flex'>
-                                                    <Label className="line-height-32">
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        营业执照到期日
-                                                    </Label>
-                                                    <DatePicker
-                                                        format={format}
-                                                        defaultValue={moment()}
-                                                        placeholder={dateInputPlaceholder}
-                                                    />
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem className='time flex'>
-                                                    <Label className="line-height-32">
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        营业执照最新年审日
-                                                    </Label>
-                                                    <DatePicker
-                                                        format={format}
-                                                        defaultValue={moment()}
-                                                        placeholder={dateInputPlaceholder}
-                                                    />
-                                                </FormItem>
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        法定代表人(文本类型)
+                                                        行业门类(集团口径)
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('legal_representative', {
-                                                                         initialValue: _formObject.legal_representative,
+                                                                     ...getFieldProps('pk_consumer.industry3', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        企业规模（内部管理）
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.enter_scale_inner', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -952,58 +1941,62 @@ class AddFormView extends Component {
 
                                             </Col>
 
-                                        </Row>
-                                        <Row>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        企业规模（四部委）
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.enter_scale_6m', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         法定代表人
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        证件类型
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        证件号码
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('pk_customer_person.identity_no', {
-                                                                         initialValue: _formObject.pk_customer_person ? _formObject.pk_customer_person.identity_no : '',
+                                                                     ...getFieldProps('pk_consumer.legal_rep', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        实际告知地址
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.inform_address', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1016,20 +2009,62 @@ class AddFormView extends Component {
 
                                             </Col>
 
-                                        </Row>
-
-
-                                        <Row>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        实际控制人(文本类型)
+                                                        经济性质
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('actual_controller', {
-                                                                         initialValue: _formObject.actual_controller,
+                                                                     ...getFieldProps('pk_consumer.economic_type', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        法定代表人
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.legal_representative', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        注册地址
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.reg_address', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1048,53 +2083,10 @@ class AddFormView extends Component {
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         实际控制人
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        证件类型
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        证件号码
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('actual_control.identity_no', {
-                                                                         initialValue: _formObject.actual_control ? _formObject.actual_control.identity_no : '',
+                                                                     ...getFieldProps('pk_consumer.customer_person', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1106,37 +2098,16 @@ class AddFormView extends Component {
                                                 </FormItem>
 
                                             </Col>
-
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        注册资本币种
+                                                        注册币种
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        注册资本
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('capital', {
-                                                                         initialValue: _formObject.capital,
+                                                                     ...getFieldProps('pk_consumer.capital_cur', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1148,455 +2119,161 @@ class AddFormView extends Component {
                                                 </FormItem>
 
                                             </Col>
-
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        实收资本币种
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        实收资本
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('capital_paidin', {
-                                                                         initialValue: _formObject.capital_paidin,
-
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        经营范围(限200个汉字)
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('bussiness_scope', {
-                                                                         initialValue: _formObject.bussiness_scope,
-
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        主营业务(限200个汉字)
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('primary_bussiness', {
-                                                                         initialValue: _formObject.primary_bussiness,
-
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        税务登记证号(国税)
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('national_tax', {
-                                                                         initialValue: _formObject.national_tax,
-
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        税务登记证号(地税)
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('land_tax', {
-                                                                         initialValue: _formObject.land_tax,
-
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
                                         </Row>
 
-                                    </div>
-
-                                    {/*客户基本信息*/}
-                                    <div style={{display: this.state.show3}}>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        是否集团公司(母公司)
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        有无进出口经营
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        是否上市公司
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        是否政府融资背景
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        是否科技型企业
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        科技型企业类型
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        是否环保行业企业
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        是否重点监测客户
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
                                     </div>
 
                                     {/*报价信息*/}
                                     <div style={{display: this.state.show4}}>
                                         <Row>
+
+
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        所在国家(地区)
+                                                        报价名称
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.name', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
                                                 </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        报价编号
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.code', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        区域
+                                                        租赁方式
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.lease_method', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
                                                 </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        注册地隶属
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
+
                                             </Col>
                                         </Row>
                                         <Row>
+
+
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        地区(省)
+                                                        税种
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.tax_mode', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
                                                 </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        租赁期限（月）
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.lease_times', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        地区(市)
+                                                        支付频率
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.lease_freq', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
                                                 </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        地区(区/县)
-                                                    </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
+
                                             </Col>
                                         </Row>
                                         <Row>
+
+
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        实际告知地址
+                                                        计算方式
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('inform_address', {
-                                                                         initialValue: _formObject.inform_address,
+                                                                     ...getFieldProps('projectCalculatorRefVO.lease_cal_method', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1604,18 +2281,42 @@ class AddFormView extends Component {
                                                                      })
                                                                  }
                                                     />
+
                                                 </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        报价利率
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.final_rate', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        实际告知地址邮编
+                                                        合同金额(元)
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('inform_address_zip', {
-                                                                         initialValue: _formObject.inform_address_zip,
+                                                                     ...getFieldProps('projectCalculatorRefVO.total_amount_equipment', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1623,39 +2324,24 @@ class AddFormView extends Component {
                                                                      })
                                                                  }
                                                     />
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        通讯地址
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('comm_address', {
-                                                                         initialValue: _formObject.comm_address,
 
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
                                                 </FormItem>
+
                                             </Col>
                                         </Row>
                                         <Row>
+
+
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        通讯地址邮编
+                                                        净融资额(元)
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('comm_address_zip', {
-                                                                         initialValue: _formObject.comm_address_zip,
+                                                                     ...getFieldProps('projectCalculatorRefVO.net_finance_cash', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1663,18 +2349,42 @@ class AddFormView extends Component {
                                                                      })
                                                                  }
                                                     />
+
                                                 </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        商业折扣(元)
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.trade_discount', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        实际办公地址
+                                                        实际投放金额(元)
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('office_address', {
-                                                                         initialValue: _formObject.office_address,
+                                                                     ...getFieldProps('projectCalculatorRefVO.fact_cash_loan', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1682,59 +2392,24 @@ class AddFormView extends Component {
                                                                      })
                                                                  }
                                                     />
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        实际办公地址邮编
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('office_address_zip', {
-                                                                         initialValue: _formObject.office_address_zip,
 
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
                                                 </FormItem>
+
                                             </Col>
                                         </Row>
                                         <Row>
+
+
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        实际办公地所有权
+                                                        首付款金额(元)
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        备注
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('remarks', {
-                                                                         initialValue: _formObject.remarks,
+                                                                     ...getFieldProps('projectCalculatorRefVO.down_payment', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1742,50 +2417,667 @@ class AddFormView extends Component {
                                                                      })
                                                                  }
                                                     />
+
                                                 </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        保证金金额(元)
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.deposit_cash', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        服务费收入总金额(元)
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.srvfee_cash_in', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
                                             </Col>
                                         </Row>
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        服务费支出总金额(元)
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.srvfee_cash_out', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        总租金(元)
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.lease_cash', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        总利息(元)
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.lease_interest', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        总本金(元)
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.lease_corpus', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        会计IRR算法调整
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.finance_irr_method', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        会计IRR算法启用年份
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.finance_irr_year', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        增值税下IRR
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.vat_irr', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        会计IRR
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.finance_irr', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        租金IRR
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.rent_irr', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        项目去税IRR
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.project_notax_irr', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        手续费分配IRR
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.fee_distr_irr', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        租赁合同IRR
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.contract_irr', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        审计IRR
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.audit_irr', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        承租人IRR
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.lessee_irr', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        会计去税IRR
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectCalculatorRefVO.finance_notax_irr', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
                                     </div>
 
                                     {/*租赁物信息*/}
                                     <div style={{display: this.state.show5}}>
                                         <Row>
+
+
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        客户洗钱风险评级
+                                                        租赁物名称
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectRentThingRefVO.name', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
                                                 </FormItem>
+
                                             </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        租赁物编号
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectRentThingRefVO.code', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        型号
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectRentThingRefVO.model', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        租赁物分类
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectRentThingRefVO.param_name', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        设备总价
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectRentThingRefVO.total_cost', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        净值
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectRentThingRefVO.net_worth', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        估值
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectRentThingRefVO.valuation', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        交货日期
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectRentThingRefVO.delivery_date', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        交货地点
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectRentThingRefVO.delivery_address', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+                                        </Row>
+                                        <Row>
+
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        使用地址
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectRentThingRefVO.use_address', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
                                         </Row>
                                     </div>
 
-                                    {/*限额信息*/}
+                                    {/*担保信息*/}
                                     <div style={{display: this.state.show6}}>
                                         <Row>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        公司网址
+                                                        担保方式
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <Select
+                                                        data={enumConstant("yesOrNo")}
+                                                        showSearch={true}
+                                                        allowClear={true}
+                                                        disabled={true}
+                                                        {
+                                                            ...getFieldProps('projectPledgeRefVO.guarantee_method', {
+                                                                initialValue: '',
+                                                            })
+                                                        }
+                                                    />
+
+                                                </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        单位客户
+                                                    </Label>
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('company_website', {
-                                                                         initialValue: _formObject.company_website,
+                                                                     ...getFieldProps('projectPledgeRefVO.corp_cust', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1793,18 +3085,20 @@ class AddFormView extends Component {
                                                                      })
                                                                  }
                                                     />
+
                                                 </FormItem>
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        传真
+                                                        自然人客户
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('fax', {
-                                                                         initialValue: _formObject.fax,
+                                                                     ...getFieldProps('projectPledgeRefVO.pers_cust', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1812,39 +3106,23 @@ class AddFormView extends Component {
                                                                      })
                                                                  }
                                                     />
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        公司邮箱
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('company_mailbox', {
-                                                                         initialValue: _formObject.company_mailbox,
 
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
                                                 </FormItem>
+
                                             </Col>
                                         </Row>
+
                                         <Row>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        电话
+                                                        担保总金额
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('phone', {
-                                                                         initialValue: _formObject.phone,
+                                                                     ...getFieldProps('projectPledgeRefVO.plan_cash', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1852,44 +3130,69 @@ class AddFormView extends Component {
                                                                      })
                                                                  }
                                                     />
+
                                                 </FormItem>
+
+                                            </Col>
+
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        抵押金额
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectPledgeRefVO.pledge_amount', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
+                                                </FormItem>
+
                                             </Col>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        开票说明
+                                                        质押金额
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('projectPledgeRefVO.prenda_amount', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+
                                                 </FormItem>
+
                                             </Col>
                                         </Row>
                                     </div>
 
-                                    {/*承租人相关信息*/}
+                                    {/*限额信息*/}
                                     <div style={{display: this.state.show7}}>
                                         <Row>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        公司网址
+                                                        供应商合作协议
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('company_website', {
-                                                                         initialValue: _formObject.company_website,
+                                                                     ...getFieldProps('pk_framework_agreem', {
+                                                                         initialValue: _formObject.pk_framework_agreem,
 
                                                                          rules: [{
                                                                              required: true,
@@ -1903,12 +3206,12 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        传真
+                                                        供应商限额方案
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('fax', {
-                                                                         initialValue: _formObject.fax,
+                                                                     ...getFieldProps('pk_quota_scheme', {
+                                                                         initialValue: _formObject.pk_quota_scheme,
 
                                                                          rules: [{
                                                                              required: true,
@@ -1922,12 +3225,178 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        公司邮箱
+                                                        供应商限额结果
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('quota_result', {
+                                                                         initialValue: _formObject.quota_result,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
+                                    </div>
+
+                                    {/*项目相关信息*/}
+                                    <div style={{display: this.state.show8}}>
+                                        <Row>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    项目部门(大区)
+                                                </Label>
+                                                <FormControl disabled={!this.props.isEdit}
+                                                             {
+                                                                 ...getFieldProps('belongs_area', {
+                                                                     initialValue: _formObject.belongs_area,
+
+                                                                     rules: [{
+                                                                         required: true,
+                                                                     }],
+                                                                 })
+                                                             }
+                                                />
+                                            </FormItem>
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    项目部门(片区)
+                                                </Label>
+                                                <FormControl disabled={!this.props.isEdit}
+                                                             {
+                                                                 ...getFieldProps('project_dept', {
+                                                                     initialValue: _formObject.project_dept,
+
+                                                                     rules: [{
+                                                                         required: true,
+                                                                     }],
+                                                                 })
+                                                             }
+                                                />
+                                            </FormItem>
+                                        </Col>
+                                        <Col md={4} xs={4} sm={4}>
+                                            <FormItem>
+                                                <Label>
+                                                    <Icon type="uf-mi" className='mast'></Icon>
+                                                    项目经理
+                                                </Label>
+                                                <FormControl disabled={!this.props.isEdit}
+                                                             {
+                                                                 ...getFieldProps('pk_prj_manager', {
+                                                                     initialValue: _formObject.pk_prj_manager,
+
+                                                                     rules: [{
+                                                                         required: true,
+                                                                     }],
+                                                                 })
+                                                             }
+                                                />
+                                            </FormItem>
+                                        </Col>
+                                    </Row>
+                                        <Row>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        大区经理
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('company_mailbox', {
-                                                                         initialValue: _formObject.company_mailbox,
+                                                                     ...getFieldProps('region_manager', {
+                                                                         initialValue: _formObject.region_manager,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+                                                </FormItem>
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        片区经理
+                                                    </Label>
+                                                    <FormControl disabled={!this.props.isEdit}
+                                                                 {
+                                                                     ...getFieldProps('area_manager', {
+                                                                         initialValue: _formObject.area_manager,
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+                                                </FormItem>
+                                            </Col>
+                                        </Row>
+                                    </div>
+
+                                    {/*承租人相关部门信息*/}
+                                    <div style={{display: this.state.show9}}>
+                                        <Row>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        财务相关
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.finance_related', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+                                                </FormItem>
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        设备相关
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.equipment_related', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+                                                </FormItem>
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        其他部门
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.other_dept', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1943,12 +3412,12 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        电话
+                                                        政府相关
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
+                                                    <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('phone', {
-                                                                         initialValue: _formObject.phone,
+                                                                     ...getFieldProps('pk_consumer.government_related', {
+                                                                         initialValue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1962,38 +3431,56 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        开票说明
+                                                        政府财政相关
                                                     </Label>
-                                                    <Select
-                                                        showSearch={true}
-                                                        allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.govern_finance_related', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
+                                                </FormItem>
+                                            </Col>
+                                            <Col md={4} xs={4} sm={4}>
+                                                <FormItem>
+                                                    <Label>
+                                                        <Icon type="uf-mi" className='mast'></Icon>
+                                                        政府其他部门
+                                                    </Label>
+                                                    <FormControl disabled={true}
+                                                                 {
+                                                                     ...getFieldProps('pk_consumer.govern_other_sectors', {
+                                                                         initialValue: '',
+
+                                                                         rules: [{
+                                                                             required: true,
+                                                                         }],
+                                                                     })
+                                                                 }
+                                                    />
                                                 </FormItem>
                                             </Col>
                                         </Row>
                                     </div>
 
                                     {/*其他信息*/}
-                                    <div style={{display: this.state.show8}}>
+                                    <div style={{display: this.state.show10}}>
                                         <Row>
                                             <Col md={4} xs={4} sm={4}>
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        公司网址
+                                                        保险费比例
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('company_website', {
-                                                                         initialValue: _formObject.company_website,
+                                                                     ...getFieldProps('premium', {
+                                                                         initialValue: _formObject.premium,
 
                                                                          rules: [{
                                                                              required: true,
@@ -2007,12 +3494,12 @@ class AddFormView extends Component {
                                                 <FormItem>
                                                     <Label>
                                                         <Icon type="uf-mi" className='mast'></Icon>
-                                                        传真
+                                                        公证费比例
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('fax', {
-                                                                         initialValue: _formObject.fax,
+                                                                     ...getFieldProps('notarial_fees_rate', {
+                                                                         initialValue: _formObject.notarial_fees_rate,
 
                                                                          rules: [{
                                                                              required: true,
@@ -2028,58 +3515,17 @@ class AddFormView extends Component {
                                                         <Icon type="uf-mi" className='mast'></Icon>
                                                         公司邮箱
                                                     </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('company_mailbox', {
-                                                                         initialValue: _formObject.company_mailbox,
-
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
-                                                </FormItem>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        电话
-                                                    </Label>
-                                                    <FormControl disabled={!this.props.isEdit}
-                                                                 {
-                                                                     ...getFieldProps('phone', {
-                                                                         initialValue: _formObject.phone,
-
-                                                                         rules: [{
-                                                                             required: true,
-                                                                         }],
-                                                                     })
-                                                                 }
-                                                    />
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        开票说明
-                                                    </Label>
                                                     <Select
+                                                        data={enumConstant("yesOrNo")}
                                                         showSearch={true}
                                                         allowClear={true}
-                                                    >
-                                                        <Option value="all">全部</Option>
-                                                        <Option value="confirming">待确认</Option>
-                                                        <Option value="executing">执行中</Option>
-                                                        <Option value="completed">
-                                                            已办结
-                                                        </Option>
-                                                        <Option value="termination">终止</Option>
-                                                    </Select>
+                                                        disabled={!this.props.isEdit}
+                                                        {
+                                                            ...getFieldProps('is_fit_admittance', {
+                                                                initialValue: _formObject.is_fit_admittance,
+                                                            })
+                                                        }
+                                                    />
                                                 </FormItem>
                                             </Col>
                                         </Row>
@@ -2090,20 +3536,20 @@ class AddFormView extends Component {
                                 {
                                     this.state.current > 0
                                     &&
-                                    <Button bordered style={{marginRight: 8}} onClick={() => this.prev()}>
+                                    <Button bordered style={{marginRight: 11}} onClick={() => this.prev()}>
                                         上一步
                                     </Button>
                                 }
                                 {
                                     this.state.current < steps.length - 1
                                     &&
-                                    <Button colors="primary" style={{marginRight: 8}}
+                                    <Button colors="primary" style={{marginRight: 11}}
                                             onClick={() => this.next()}>下一步</Button>
                                 }
                                 {
                                     this.state.current === steps.length - 1
                                     &&
-                                    <Button colors="primary" style={{marginRight: 8}}
+                                    <Button colors="primary" style={{marginRight: 11}}
                                             onClick={() => this.onSubSave()}>完成</Button>
                                 }{
                                 <Button colors="secondary" onClick={() => this.close()}> 关闭 </Button>

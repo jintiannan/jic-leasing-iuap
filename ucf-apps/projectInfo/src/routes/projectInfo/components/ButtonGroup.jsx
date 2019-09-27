@@ -36,6 +36,8 @@ class ButtonGroup extends Component {
     powerGridView = (param,name) =>{
         let ifPower = param.ifPowerBtn;
         let isGrid = param.isGrid;
+        let power = false;
+
         //过滤后台按钮权限
         if(ifPower){
             if(param.powerButton && param.powerButton.length > 0){
@@ -54,6 +56,8 @@ class ButtonGroup extends Component {
     powerFormView = (param,name) =>{
         let ifPower = param.ifPowerBtn;
         let isGrid = param.isGrid;
+        let power = false;
+
         //过滤后台按钮权限
         if(ifPower){
             if(param.powerButton && param.powerButton.length > 0){
@@ -105,7 +109,7 @@ class ButtonGroup extends Component {
     }
 
     render() {
-        console.log(this.props.isEdit);
+        // console.log(this.props.isEdit);
         let _props = this.props;
         let _this = this;
         const tableMenu = (
