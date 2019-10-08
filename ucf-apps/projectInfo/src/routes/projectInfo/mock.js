@@ -2,7 +2,7 @@ export const treeData = [{key: '11', title: "普通项目审批",
 
     children: [{key: '111', title: "项目基本信息",  ext: {url: 'baseInfo'}},
         {key: '112', title: "报价方案", ext: {url: 'source'}},
-        {key: '113', title: "供应商信息", url: ''},
+        {key: '113', title: "供应商信息", ext: {url: 'contInfo'}},
         {key: '114', title: "承租方信息", url: ''},
         {key: '115', title: "出租方信息", url: ''},
         {key: '116', title: "项目来源信息", url: ''},

@@ -22,7 +22,7 @@ import {SelectField} from 'components/RowField/SelectField'
 
 import './index.less';
 import BaseInfo from "./BaseInfo";
-// import {CustomerSource} from "../../CustomerSource/container";
+import {ContProvider} from "../../contProvider/container";
 import ButtonGroup from "./ButtonGroup";
 
 const TreeNode = Tree.TreeNode;
@@ -115,9 +115,10 @@ class FormView extends Component {
                             </div>
                             <BaseInfo {...this.props}/>
                         </div>
-                        {/*<div style={{display: (this.props.subForm === 'source' ? "" : 'none')}}>*/}
-                        {/*    <CustomerSource  customer={customer} subForm={this.props.subForm}/>*/}
-                        {/*</div>*/}
+                        <div style={{display: (this.props.subForm === 'contInfo' ? "" : 'none')}}>
+                            {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
+                            <ContProvider   subForm={this.props.subForm}/>
+                        </div>
                     </div>
                 </div>
             </div>
