@@ -3,7 +3,7 @@ import {actions} from "mirrorx";
 import * as api from "./service";
 // 接口返回数据公共处理方法，根据具体需要
 
-import {processData, structureObj, initStateObj,deepClone} from "utils";
+import {processData, structureObj, initStateObj, deepClone} from "utils";
 
 
 export default {
@@ -14,25 +14,26 @@ export default {
         showLoading: false,
         pageParams: {},
         queryParam: {
-            pageIndex: 0,
+            pageIndex: 1,
             pageSize: 50,
         },
         //查询结果参数
         queryObj: {},
         //页面数据集
         list: [],
+        total: 0,
         //form表单绑定数据
-        formObject:{},
+        formObject: {},
         //当前页选中的数据
-        selectedList:[],
+        selectedList: [],
         //按钮权限集
-        powerButton:[],
+        powerButton: [],
         //是否过滤按钮权限
-        ifPowerBtn:true,
+        ifPowerBtn: true,
         //是否可编辑
-        isEdit:false,
+        isEdit: false,
         //是否列表界面
-        isGrid:true,
+        isGrid: true,
         // 模态框
         showModal: false
 
@@ -66,10 +67,11 @@ export default {
             updateData.queryObj = {
                 pageIndex: param.pageIndex,
                 pageSize: param.pageSize,
-                totalPages: Math.ceil(data.length / param.pageSize)
+                totalPages: data.totalPages
             };
             updateData.queryParam = param;
-            updateData.list = data;
+            updateData.list = data.rows;
+            updateData.total = data.total;
 
             actions.customerCorpApply.updateState(updateData); // 更新数据和查询条件
         },
@@ -80,24 +82,24 @@ export default {
          * @param {顺序号} index
          * @param {*} getState
          */
-        async updateRowData(param={},getState){
-            let{index,record} = param;
+        async updateRowData(param = {}, getState) {
+            let {index, record} = param;
             let list = getState().role.list;
             let _list = deepClone(list);
-            if(index != undefined){
+            if (index != undefined) {
                 _list[index] = record;
-            } else if(record._index != undefined){
+            } else if (record._index != undefined) {
                 _list[record._index] = record;
             } else {
-                for(let key of list){
+                for (let key of list) {
 
-                    if(key['_index'] == record._index){
+                    if (key['_index'] == record._index) {
                         _list[key] = record;
                         break;
                     }
                 }
             }
-            actions.customerCorpApply.updateState({list:_list});
+            actions.customerCorpApply.updateState({list: _list});
         },
         async saveOrUpdate(formObj) {
             actions.customerCorpApply.updateState({showLoading: true});
@@ -107,7 +109,7 @@ export default {
         },
 
 
-        async delete (id) {
+        async delete(id) {
             actions.customerCorpApply.updateState({showLoading: true});
             let data = processData(await api.requestDelete({id: id}));  // 调用 getList 请求数据
             actions.customerCorpApply.updateState({showLoading: false});
