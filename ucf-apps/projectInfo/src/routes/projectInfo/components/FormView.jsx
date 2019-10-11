@@ -24,7 +24,9 @@ import './index.less';
 import BaseInfo from "./BaseInfo";
 import {ContProvider} from "../../contProvider/container";
 import ButtonGroup from "./ButtonGroup";
-
+import {ProjectBothLessee} from "../../projectBothLessee/container";
+import {ProjectLeader} from "../../projectLeader/container";
+import {ProjectSource} from "../../projectSource/container"
 const TreeNode = Tree.TreeNode;
 
 class FormView extends Component {
@@ -75,11 +77,9 @@ class FormView extends Component {
 
     render() {
 
-        let customer = {
-            name: this.props.formObject.customer_name,
-            customer_name: this.props.formObject.customer_name,
-            customer_code: this.props.formObject.customer_code,
-            code: this.props.formObject.customer_code
+        let project = {
+            name: '测试项目',
+            code: '测试项目code'
         };
 
         const loop = data => data.map((item) => {
@@ -117,7 +117,22 @@ class FormView extends Component {
                         </div>
                         <div style={{display: (this.props.subForm === 'contInfo' ? "" : 'none')}}>
                             {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
-                            <ContProvider   subForm={this.props.subForm}/>
+                            <ContProvider  project = {project} subForm={this.props.subForm}/>
+                        </div>
+
+                        <div style={{display: (this.props.subForm === 'projectBoth' ? "" : 'none')}}>
+                            {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
+                            <ProjectBothLessee  project = {project} subForm={this.props.subForm}/>
+                        </div>
+
+                        <div style={{display: (this.props.subForm === 'projectLeader' ? "" : 'none')}}>
+                            {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
+                            <ProjectLeader  project = {project} subForm={this.props.subForm}/>
+                        </div>
+
+                        <div style={{display: (this.props.subForm === 'projectSource' ? "" : 'none')}}>
+                            {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
+                            <ProjectSource  project = {project} subForm={this.props.subForm}/>
                         </div>
                     </div>
                 </div>

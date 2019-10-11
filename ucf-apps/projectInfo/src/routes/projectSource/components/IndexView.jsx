@@ -51,11 +51,11 @@ class IndexView extends Component {
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
-        actions.contProvider.updateState({powerButton:this.props.powerButton});
-        actions.contProvider.updateState({ifPowerBtn:this.props.ifPowerBtn});
+        actions.projectSource.updateState({powerButton:this.props.powerButton});
+        actions.projectSource.updateState({ifPowerBtn:this.props.ifPowerBtn});
 
-        // actions.contProvider.updateState({gridColumn:this.props.gridColumn});
-        // actions.contProvider.updateState({ifGridColumn:this.props.ifGridColumn});
+        // actions.projectSource.updateState({gridColumn:this.props.gridColumn});
+        // actions.projectSource.updateState({ifGridColumn:this.props.ifGridColumn});
 
     }
 
@@ -84,7 +84,7 @@ class IndexView extends Component {
             showFormView:'none',
             formObject:{},
         })
-        actions.contProvider.updateState({ formObject : {},isGrid : true,isEdit : false, showForm : false});
+        actions.projectSource.updateState({ formObject : {},isGrid : true,isEdit : false, showForm : false});
     }
 
     /**
@@ -98,7 +98,7 @@ class IndexView extends Component {
             formObject:_formObj,
         })
 
-        actions.contProvider.updateState({ formObject : _formObj,isGrid : false,isEdit : false, showForm : true});
+        actions.projectSource.updateState({ formObject : _formObj,isGrid : false,isEdit : false, showForm : true});
     }
 
     /**
@@ -109,7 +109,7 @@ class IndexView extends Component {
             isEdit:!this.state.isEdit,
         });
         this.state.formObject['_edit'] = this.state.formObject['_edit'] ? false : true;
-        actions.contProvider.updateState({isEdit : !this.state.isEdit});
+        actions.projectSource.updateState({isEdit : !this.state.isEdit});
     };
 
     /**
@@ -127,11 +127,11 @@ class IndexView extends Component {
         let objectForm = localStorage.getItem("addKey");
         if(objectForm){
             let _formObject = deepClone(JSON.parse(objectForm));
-            actions.contProvider.updateState({formObject:_formObject});
+            actions.projectSource.updateState({formObject:_formObject});
         }else{
 
             //新增完成初始化form表单
-            actions.contProvider.updateState({formObject:{
+            actions.projectSource.updateState({formObject:{
                     //租赁方式
                     lease_method:'0',
                     //本金是否开票
@@ -177,7 +177,7 @@ class IndexView extends Component {
                 }});
         }
         //填出新增窗口
-        actions.contProvider.updateState({showModal : true});
+        actions.projectSource.updateState({showModal : true,isEdit:true});
 
         // singleRecordOper(param => {
         //     this.switchToCardView(param);
@@ -201,7 +201,7 @@ class IndexView extends Component {
     onView = () =>{
         singleRecordOper(this.props.selectedList,(param) => {
             this.switchToCardView(param);
-            actions.contProvider.updateState({bt:false});
+            actions.projectSource.updateState({bt:false});
         });
     }
 
@@ -233,7 +233,7 @@ class IndexView extends Component {
             Object.assign(_formObj,obj);
             console.log('save form');
             console.log(_formObj);
-            actions.contProvider.updateRowData({'record':_formObj});
+            actions.projectSource.updateRowData({'record':_formObj});
             this.switchEdit();
         }
     }

@@ -11,7 +11,6 @@ import {enumConstant} from "../../../../../../ucf-common/src/utils/enums";
 import ButtonGroup from './ButtonGroup';
 import ListView from './ListView';
 import FormView from './FormView';
-import AddFormView from './AddFormView';
 import moment from 'moment';
 import './index.less';
 const FormItem = Form.FormItem;
@@ -51,11 +50,11 @@ class IndexView extends Component {
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
-        actions.contProvider.updateState({powerButton:this.props.powerButton});
-        actions.contProvider.updateState({ifPowerBtn:this.props.ifPowerBtn});
+        actions.projectLeader.updateState({powerButton:this.props.powerButton});
+        actions.projectLeader.updateState({ifPowerBtn:this.props.ifPowerBtn});
 
-        // actions.contProvider.updateState({gridColumn:this.props.gridColumn});
-        // actions.contProvider.updateState({ifGridColumn:this.props.ifGridColumn});
+        // actions.projectLeader.updateState({gridColumn:this.props.gridColumn});
+        // actions.projectLeader.updateState({ifGridColumn:this.props.ifGridColumn});
 
     }
 
@@ -84,7 +83,7 @@ class IndexView extends Component {
             showFormView:'none',
             formObject:{},
         })
-        actions.contProvider.updateState({ formObject : {},isGrid : true,isEdit : false, showForm : false});
+        actions.projectLeader.updateState({ formObject : {},isGrid : true,isEdit : false, showForm : false});
     }
 
     /**
@@ -98,7 +97,7 @@ class IndexView extends Component {
             formObject:_formObj,
         })
 
-        actions.contProvider.updateState({ formObject : _formObj,isGrid : false,isEdit : false, showForm : true});
+        actions.projectLeader.updateState({ formObject : _formObj,isGrid : false,isEdit : false, showForm : true});
     }
 
     /**
@@ -109,7 +108,7 @@ class IndexView extends Component {
             isEdit:!this.state.isEdit,
         });
         this.state.formObject['_edit'] = this.state.formObject['_edit'] ? false : true;
-        actions.contProvider.updateState({isEdit : !this.state.isEdit});
+        actions.projectLeader.updateState({isEdit : !this.state.isEdit});
     };
 
     /**
@@ -127,11 +126,11 @@ class IndexView extends Component {
         let objectForm = localStorage.getItem("addKey");
         if(objectForm){
             let _formObject = deepClone(JSON.parse(objectForm));
-            actions.contProvider.updateState({formObject:_formObject});
+            actions.projectLeader.updateState({formObject:_formObject});
         }else{
 
             //新增完成初始化form表单
-            actions.contProvider.updateState({formObject:{
+            actions.projectLeader.updateState({formObject:{
                     //租赁方式
                     lease_method:'0',
                     //本金是否开票
@@ -177,7 +176,7 @@ class IndexView extends Component {
                 }});
         }
         //填出新增窗口
-        actions.contProvider.updateState({showModal : true});
+        actions.projectLeader.updateState({showModal : true});
 
         // singleRecordOper(param => {
         //     this.switchToCardView(param);
@@ -201,7 +200,7 @@ class IndexView extends Component {
     onView = () =>{
         singleRecordOper(this.props.selectedList,(param) => {
             this.switchToCardView(param);
-            actions.contProvider.updateState({bt:false});
+            actions.projectLeader.updateState({bt:false});
         });
     }
 
@@ -233,7 +232,7 @@ class IndexView extends Component {
             Object.assign(_formObj,obj);
             console.log('save form');
             console.log(_formObj);
-            actions.contProvider.updateRowData({'record':_formObj});
+            actions.projectLeader.updateRowData({'record':_formObj});
             this.switchEdit();
         }
     }
@@ -275,9 +274,9 @@ class IndexView extends Component {
                 <div style={{display:this.state.showFormView}}>
                     <FormView {...this.props} onRef={this.onRef}/>
                 </div>
-                <div>
-                    <AddFormView { ...this.props } />
-                </div>
+                {/*<div>*/}
+                {/*    <AddFormView { ...this.props } />*/}
+                {/*</div>*/}
             </div>
 
         );
