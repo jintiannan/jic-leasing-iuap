@@ -27,6 +27,8 @@ import ButtonGroup from "./ButtonGroup";
 import {ProjectBothLessee} from "../../projectBothLessee/container";
 import {ProjectLeader} from "../../projectLeader/container";
 import {ProjectSource} from "../../projectSource/container"
+import {ProjectPledge} from "../../projectPledge/container";
+import {ProjectInsure} from "../../projectInsure/container";
 const TreeNode = Tree.TreeNode;
 
 class FormView extends Component {
@@ -133,6 +135,16 @@ class FormView extends Component {
                         <div style={{display: (this.props.subForm === 'projectSource' ? "" : 'none')}}>
                             {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
                             <ProjectSource  project = {project} subForm={this.props.subForm}/>
+                        </div>
+
+                        <div style={{display: (this.props.subForm === 'projectPledge' ? "" : 'none')}}>
+                            {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
+                            <ProjectPledge  project = {project} subForm={this.props.subForm}/>
+                        </div>
+
+                        <div style={{display: (this.props.subForm === 'projectInsure' ? "" : 'none')}}>
+                            {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
+                            <ProjectInsure  project = {project} subForm={this.props.subForm}/>
                         </div>
                     </div>
                 </div>
