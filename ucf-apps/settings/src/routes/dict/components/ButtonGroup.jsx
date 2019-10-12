@@ -22,11 +22,9 @@ class ButtonGroup extends Component {
     powerView = (param,name) => {
         //获取用户有权限的按钮,暂时写True,构建后台后再改。
         let power = false;
-        alert(name);
         if(param.powerButton && param.powerButton.length > 0){
             power = param.powerButton.includes(name);
         }
-        console.log(power)
         return power;
     };
 
@@ -46,43 +44,19 @@ class ButtonGroup extends Component {
         return isEdit;
     };
 
-    //菜单删除按钮判断是否可用
-    powerdeleteDisabled = (param) =>{
-        if(param.SelectformObj!=undefined&&param.SelectformObj.func_code!=undefined){
-            if(param.SelectformObj.func_code=='0'||param.SelectformObj.first_enable_menu){
-                return true;
-            }else{
-                return false;
-            }
-        }else{
-            return true;
-        }
-    }
-
-    //菜单修改按钮判断是否可用
-    powereditDsiabled =(param)=>{
-        if(param.SelectformObj!=undefined&&param.SelectformObj.func_code!=undefined){
-            if(param.SelectformObj.func_code=='0'){
-                return true;
-            }else{
-                return false;
-            }
-        }else{
-            return true;
-        }
-    }
-
     render() {
         let _props = this.props;
         let _this = this;
 
         return (
             <div className='table-header'>
+            <Button visible={!_props.isGrid} disabled={_this.powerDisabledUnEdit(_props)} className="ml8" colors="primary" onClick={_props.Return}><Icon type='uf-search'/>返回</Button>
                 <Button visible={_props.isEdit} disabled={_this.powerDisabledEdit(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Save}><Icon type='uf-search'/>保存</Button>
                 <Button visible={_props.isEdit} className="ml8 yl-r-b" colors="primary" onClick={_props.Cancel}><Icon type='uf-repeat'/>取消</Button>
-                <Button visible={!_props.isEdit } disabled={_this.powerdeleteDisabled(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Delete}><Icon type='uf-del'/>删除</Button>
-                <Button visible={!_props.isEdit  } disabled={_this.powereditDsiabled(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Edit}><Icon type='uf-pencil-s'/>修改</Button>
-                <Button visible={true} disabled={_this.powerDisabledUnEdit(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Add}><Icon type='uf-add-c-o'/>新增</Button>       
+                <Button visible={!_props.isEdit } className="ml8 yl-r-b" colors="primary" onClick={_props.Delete}><Icon type='uf-del'/>删除</Button>
+                <Button visible={_this.powerView(_props,'Edit')} disabled={_this.powerDisabledUnEdit(_props)}   className="ml8 yl-r-b" colors="primary" onClick={_props.Edit}><Icon type='uf-pencil-s'/>修改</Button>
+                <Button visible={_this.powerView(_props,'Add')}  disabled={_this.powerDisabledUnEdit(_props)}   className="ml8 yl-r-b" colors="primary" onClick={_props.Add}><Icon type='uf-add-c-o'/>新增</Button>
+                <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.View}><Icon type='uf-files-o'/>查看</Button>      
             </div>
         );
     }

@@ -14,14 +14,11 @@ export default {
     initialState: {
         showLoading: false,
         // 缓存行过滤条件
-        cacheFilter: [],
-        isEdit: false,
-        isDisabled: true,
-        formObject: {},
-        lastSelectedNode : {},
-        treeData: [],
-        selectedValue: ''
-
+        isEdit: false,         //编辑态调整
+        SelectformObj: {},     //选中菜单项
+        treeData: [],          //整体菜单项
+        treeDisabled:true,     //编辑态情况下不能重新选择其他树节点    true可选  false 不可选
+        showaddModal:false,    //增加模态框是否展示
     },
     reducers: {
         /**

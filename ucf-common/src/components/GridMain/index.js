@@ -43,7 +43,7 @@ class GridMain extends Component {
         this.setState({ tableHeightMain });
 
         let tableHeightChild = 0;
-        tableHeightChild = getHeight() * 0.23;
+        tableHeightChild = getHeight() * 0.2;
         this.setState({ tableHeightChild });
     }
 
