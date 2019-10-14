@@ -20,7 +20,7 @@ const defaultProps = {
 };
 
 // 在此自定义无数据时的展示内容
-const emptyFunc = () => '无数据';
+const emptyFunc = () => '';
 
 
 class GridMain extends Component {
@@ -109,7 +109,7 @@ class GridMain extends Component {
                             return '';
                         }
                     }}
-                    //emptyText={emptyFunc}  //无数据显示函数
+                    emptyText={emptyFunc}  //无数据显示函数
                     {...otherProps}
                 />
             </div>
