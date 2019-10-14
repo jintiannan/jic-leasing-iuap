@@ -29,6 +29,10 @@ import {ProjectLeader} from "../../projectLeader/container";
 import {ProjectSource} from "../../projectSource/container"
 import {ProjectPledge} from "../../projectPledge/container";
 import {ProjectInsure} from "../../projectInsure/container";
+import {ReceivePaymentOption} from "../../receivePaymentOption/container";
+import {PaymentCondition} from "../../paymentCondition/container";
+import {RentCondition} from "../../rentCondition/container";
+import {PenaltyRuleDetail} from "../../penaltyRuleDetail/container";
 const TreeNode = Tree.TreeNode;
 
 class FormView extends Component {
@@ -118,33 +122,42 @@ class FormView extends Component {
                             <BaseInfo {...this.props}/>
                         </div>
                         <div style={{display: (this.props.subForm === 'contInfo' ? "" : 'none')}}>
-                            {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
                             <ContProvider  project = {project} subForm={this.props.subForm}/>
                         </div>
 
                         <div style={{display: (this.props.subForm === 'projectBoth' ? "" : 'none')}}>
-                            {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
                             <ProjectBothLessee  project = {project} subForm={this.props.subForm}/>
                         </div>
 
                         <div style={{display: (this.props.subForm === 'projectLeader' ? "" : 'none')}}>
-                            {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
                             <ProjectLeader  project = {project} subForm={this.props.subForm}/>
                         </div>
 
                         <div style={{display: (this.props.subForm === 'projectSource' ? "" : 'none')}}>
-                            {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
                             <ProjectSource  project = {project} subForm={this.props.subForm}/>
                         </div>
 
                         <div style={{display: (this.props.subForm === 'projectPledge' ? "" : 'none')}}>
-                            {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
                             <ProjectPledge  project = {project} subForm={this.props.subForm}/>
                         </div>
 
                         <div style={{display: (this.props.subForm === 'projectInsure' ? "" : 'none')}}>
-                            {/*<ContProvider  customer={customer} subForm={this.props.subForm}/>*/}
                             <ProjectInsure  project = {project} subForm={this.props.subForm}/>
+                        </div>
+                        <div style={{display: (this.props.subForm === 'receivePaymentOption' ? "" : 'none')}}>
+                            <ReceivePaymentOption  project = {project} subForm={this.props.subForm}/>
+                        </div>
+
+                        <div style={{display: (this.props.subForm === 'paymentCondition' ? "" : 'none')}}>
+                            <PaymentCondition  project = {project} subForm={this.props.subForm}/>
+                        </div>
+
+                        <div style={{display: (this.props.subForm === 'rentCondition' ? "" : 'none')}}>
+                            <RentCondition  project = {project} subForm={this.props.subForm}/>
+                        </div>
+
+                        <div style={{display: (this.props.subForm === 'penaltyRuleDetail' ? "" : 'none')}}>
+                            <PenaltyRuleDetail  project = {project} subForm={this.props.subForm}/>
                         </div>
                     </div>
                 </div>

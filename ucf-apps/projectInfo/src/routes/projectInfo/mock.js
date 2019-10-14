@@ -8,10 +8,10 @@ export const treeData = [{key: '1', title: "普通项目审批",
         {key: '16', title: "项目来源信息", ext: {url: 'projectSource'}},
         {key: '17', title: "担保信息", ext: {url: 'projectPledge'}},
         {key: '18', title: "保险信息", ext: {url: 'projectInsure'}},
-        {key: '19', title: "收付各方", url: ''},
-        {key: '110', title: "付款条件", url: ''},
-        {key: '111', title: "起租条件", url: ''},
-        {key: '112', title: "罚息规则设置", url: ''},
+        {key: '19', title: "收付各方", ext: {url: 'receivePaymentOption'}},
+        {key: '110', title: "付款条件", ext: {url: 'paymentCondition'}},
+        {key: '111', title: "起租条件", ext: {url: 'rentCondition'}},
+        {key: '112', title: "罚息规则设置", ext: {url: 'penaltyRuleDetail'}},
         {key: '113', title: "附件信息", url: ''}
 
     ]
