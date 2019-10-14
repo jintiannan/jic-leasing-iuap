@@ -76,10 +76,11 @@ class FormView extends Component {
     render() {
 
         let customer = {
-            name: this.props.formObject.customer_name,
-            customer_name: this.props.formObject.customer_name,
-            customer_code: this.props.formObject.customer_code,
-            code: this.props.formObject.customer_code
+            name: this.props.formObject.customerName,
+            customer_name: this.props.formObject.customerName,
+            customer_code: this.props.formObject.customerCode,
+            code: this.props.formObject.customerCode,
+            pk: this.props.formObject.pkCustomer
         };
 
         const loop = data => data.map((item) => {

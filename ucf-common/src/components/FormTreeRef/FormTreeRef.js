@@ -408,6 +408,7 @@ class FormTreeRef extends Component {
                 <RefTreeWithInput
                     {...option}
                     onSave={this.handleSelect}
+                    disabled={this.props.disabled}
                     getRefTreeData={this.getRefTreeData}
                     {...getFieldProps("code1", {
                         initialValue: JSON.stringify(value),

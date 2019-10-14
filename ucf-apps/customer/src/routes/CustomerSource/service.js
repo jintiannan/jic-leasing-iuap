@@ -4,7 +4,7 @@
 import request from 'ucf-request';
 //定义接口地址
 const URL = {
-    "LIST":  `${GROBAL_HTTP_CTX}/customerSource/list`,
+    "LIST":  `${GROBAL_HTTP_CTX}/customer/customerSourceList`,
     "SAVE": `${GROBAL_HTTP_CTX}/customerSource/saveOrUpdate`,
     "DELETE": `${GROBAL_HTTP_CTX}/customerSource/delete`,
 };

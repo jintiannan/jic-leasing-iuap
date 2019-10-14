@@ -92,6 +92,9 @@ class FormView extends Component {
         });
         const treeNodes = loop(this.props.treeData);
         let { formHeight} = this.state;
+        if (this.props) {
+
+        }
         return (
             <div>
                 <div>

@@ -42,7 +42,9 @@ class IndexView extends Component {
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
-
+        if (this.props.customer && this.props.customer.pk) {
+            actions.customerSource.loadList({pkCustomer: this.props.customer});
+        }
     }
 
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
@@ -95,7 +97,8 @@ class IndexView extends Component {
      */
     onQuery = (queryParam) =>{
         // actions.projectInfo.loadList(queryParam);
-        console.log(this.props.list);
+        // console.log(this.props.list);
+        alert(1);
     };
 
 

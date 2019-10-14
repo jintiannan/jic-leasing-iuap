@@ -14,7 +14,7 @@ export default {
         showLoading: false,
         pageParams: {},
         queryParam: {
-            pageIndex: 0,
+            pageIndex: 1,
             pageSize: 50,
         },
         //查询结果参数
@@ -66,11 +66,11 @@ export default {
             updateData.queryObj = {
                 pageIndex: param.pageIndex,
                 pageSize: param.pageSize,
-                totalPages: Math.ceil(data.length / param.pageSize)
+                totalPages: data.totalPages
             };
             updateData.queryParam = param;
-            updateData.list = data;
-
+            updateData.list = data.rows;
+            updateData.total = data.total;
             actions.customerSource.updateState(updateData); // 更新数据和查询条件
         },
 

@@ -10,15 +10,17 @@ import {CustomerPersonApply} from "./CustomerPersonApply/container";
 import {CustomerCorpModify} from "./CustomerCorpModify/container";
 import {CustomerSource} from "./CustomerSource/container";
 import {CustomerPersonModify} from "./CustomerPersonModify/container";
+import {CustomerCorp} from "./CustomerCorp/container";
 
 export default () => (
 
     <div className="route-content">
-        <Route exact path="/customerCorp" component={CustomerCorpApply} />
+        <Route exact path="/customerCorpApply" component={CustomerCorpApply} />
         <Route exact path="/customerPerson" component={CustomerPersonApply} />
         <Route exact path="/customerCorpModify" component={CustomerCorpModify} />
         <Route exact path="/CustomerPersonModify" component={CustomerPersonModify} />
         <Route exact path='/customerSource' component={CustomerSource} />
+        <Route exact path='/customerCorp' component={CustomerCorp} />
     </div>
 
 );
