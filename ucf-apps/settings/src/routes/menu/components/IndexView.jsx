@@ -2,30 +2,23 @@
  * App模块
  */
 import React, { Component } from 'react';
-import {Menu, Loading, Form} from 'tinper-bee';
+import {Loading, Form} from 'tinper-bee';
 import {actions} from 'mirrorx';
 import Message from 'bee-message';
 import ButtonGroup from './ButtonGroup';
 import FormView from './FormView';
+import {deepClone} from "utils";
+import AddModalView from './AddModalView';
 import './index.less';
 
 class IndexView extends Component {
     constructor(props) {
         super(props);
-        //在路由时带出此节点权限按钮
         /**临时测试数据 */
         props.powerButton = ['Save', 'Edit', 'Add', 'Delete', 'Cancel'];
         props.ifPowerBtn = true;
-        props.treeDisabled = false;
         /**临时测试数据 */
         this.state = {
-            isEdit : false,//是否可编辑(卡片界面)
-            formObject: {},//当前卡片界面对象
-            treeData:[],
-            ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
-            powerButton: props.powerButton,//按钮权限列表
-            lastSelectedNode: {},
-            selectedValue: '0',
         };
     }
 
@@ -49,145 +42,111 @@ class IndexView extends Component {
         this.child = ref;
     };
 
+    //绑定新增模态框子组件
+    onaddmodalRef =(ref) =>{
+        this.addmoalRef = ref;
+    }
+
     /**
      * 点击button事件
      */
     onAdd = () => {
-        if (this.props.lastSelectedNode.func_code === undefined) {
+        if (this.props.SelectformObj.func_code === undefined) {
             Message.create({ content: "请选中父节点", color : 'danger'});
-        } else {
-            this.child.onRadioChange('0');
-            actions.menu.updateState({isEdit: true, treeDisabled: true});
-            this.props.form.setFieldsValue(this.initFormObj());
+        }else if(this.props.SelectformObj.menu_property=='third_menu'){
+            Message.create({ content: "可执行功能节点无法继续新增子节点", color : 'danger'});
         }
-
+         else {
+            actions.menu.updateState({showaddModal: true});
+            if(this.props.SelectformObj.key == 'function_register'){    //选中主菜单  默认添加一级菜单
+                this.props.form.setFieldsValue({func_code1:this.getFuncCode(),func_name1:'222',path1:'',menu_property1:'first_menu',if_power_menu1:false});
+            }else if(this.props.SelectformObj.menu_property=='first_menu'){   //选中一级菜单 默认生成二级菜单
+                this.props.form.setFieldsValue({func_code1:this.getFuncCode(),func_name1:'22',path1:'',menu_property1:'second_menu',if_power_menu1:false});
+            }else if(this.props.SelectformObj.menu_property=='second_menu'){  //选中二级菜单 默认生成三级菜单
+                this.props.form.setFieldsValue({func_code1:this.getFuncCode(),func_name1:'2',path1:'',menu_property1:'third_menu',if_power_menu1:false});
+            }
+        }
     };
     // 取消功能
     onCancel = () => {
-        let node = this.props.lastSelectedNode;
-        this.child.onRadioChange(node.if_menu);
-        actions.menu.updateState({isEdit: false,treeDisabled: false});
-        this.props.form.setFieldsValue(node);
+        let node = this.props.SelectformObj;
+        node.func_name=node.func_name ==null ? '':node.func_name;
+        node.path=node.path ==null ? '':node.path;
+        this.child.alterformvalue(node);
     };
 
     // 保存节点
     onSave = () => {
-        let key = this.props.lastSelectedNode.func_code;
         let nodeItem = this.props.form.getFieldsValue();
-        let node = {
-            key: nodeItem.func_code,
-            name: nodeItem.func_name,
-            parent:key,
-            ext: nodeItem
-        };
-        let oldNode = this.getNodeByKey(this.props.treeData, nodeItem.func_code);
-        if (oldNode) {
-
-            this.doUpdate(nodeItem);
-        } else {
-            this.addNode(key, node);
-        }
-
-
-        actions.menu.updateState({isEdit: false, treeDisabled: false});
+        //先更新表单数据  
+        const formObj = deepClone(this.props.SelectformObj);
+        formObj.func_name= nodeItem.func_name;
+        formObj.path=nodeItem.path;
+        formObj.if_power_menu = nodeItem.if_power_menu;
+        //后更新树节点数据
+        this.doUpdate(this.props.treeData,nodeItem);
+        actions.menu.updateState({SelectformObj:formObj,isEdit: false,treeDisabled: true});
     };
 
     // 删除方法
     onDelete = () => {
-
         this.doDelete(this.props.treeData);
-        // 刷新树
-
     };
 
     // 修改
     onEdit = () => {
-        if (this.props.lastSelectedNode.key !== '1') {
-            actions.menu.updateState({isEdit: true});
-        }
-
+        actions.menu.updateState({isEdit: true,treeDisabled: false});
     };
     doDelete = (nodes) => {
-        let key = this.props.lastSelectedNode.func_code;
+        let key = this.props.SelectformObj.key;
         let data = nodes;
         for (let i = 0; i < data.length; i++) {
-            if (data[i].key === key) {
+            if (data[i].key == key) {
                 data.splice(i, 1);
-                return (true);
             } else if (data[i].children && data[i].children.length > 0) {
                 this.doDelete(data[i].children);
             }
         }
+        actions.menu.updateState({SelectformObj:{},treeData:data});
     };
     /**
      * 修改节点
-     * @param node 更新节点
-     * @param data 查找树节点集合
+     * @param key 节点主键
+     * @param nodeItem 数据集合
      */
-    doUpdate = (node, data) => {
-        for (let i = 0; i < data.length; i++) {
-            if (data.key === node.func_code) {
-                data[i] = node;
-                return true;
-            } else if (data[i].children && data[i].children.length > 0) {
-                this.doUpdate(node, data[i].children)
+    doUpdate = (data,nodeItem) => {
+        let key = this.props.SelectformObj.key;
+        data.map((item)=>{
+            if(item.key == key){
+                item.func_name=nodeItem.func_name;
+                item.path=nodeItem.path;
+                item.if_power_menu=nodeItem.if_power_menu;
+            }else if(item.children && item.children.length > 0){
+                this.doUpdate(item.children,nodeItem);
             }
-        }
-    };
-
-    initFormObj = () => {
-        return {
-            func_code: this.getFuncCode(),
-            func_name: '',
-            func_icon: '',
-            if_menu: '0',
-            func_url: '',
-            btn_visible: '',
-            btn_disabled: ''
-
-        }
+        })
+        actions.menu.updateState({treeData:data});
     };
 
     // 获取新增节点的功能编码
     getFuncCode = () => {
         let func_code = '';
         let data = this.props.treeData;
-        let parentKey = this.props.lastSelectedNode.func_code;
+        let parentKey = this.props.SelectformObj.key;
         let parNode = this.getNodeByKey(data, parentKey);
+        let _func_code = this.props.SelectformObj.func_code;
         if (parNode.children) {
             let length = parNode.children.length;
             if (length < 9) {
-                func_code = parentKey + "0" + (length + 1);
+                func_code = _func_code + "0" + (length + 1);
             } else {
-                func_code = parentKey + (length + 1);
+                func_code = _func_code + (length + 1);
             }
         } else {
-            func_code = parentKey + "01";
+            func_code = _func_code + "01";
         }
         return func_code;
     };
-
-    /**
-     * 增加节点
-     * @param prKey
-     * @param nodeItem
-     */
-    addNode(prKey, nodeItem) {
-        const data = this.props.treeData;
-        let parNode;
-        if (prKey) {
-            // 如果prKey存在则搜索父节点进行添加
-            parNode = this.getNodeByKey(data, prKey);
-            //如果父节点存在的话，添加到父节点上
-            if (parNode) {
-                if (!parNode.children) {
-                    parNode.children = [];
-                }
-                parNode.children.push(nodeItem);
-                actions.menu.save(data);
-            }
-        }
-    }
 
     getNodeByKey = (data, key) => {
         this.parentNode = undefined;
@@ -195,8 +154,8 @@ class IndexView extends Component {
             if (data[i].key === key) {
                 this.parentNode = data[i];
                 break;
-            } else if (data[i].children) {
-                this.getNodeByKey(data[i].children, key);
+            } else if (data[i].children&&data[i].children.length>0) {
+                return this.getNodeByKey(data[i].children, key);
             }
         }
         return this.parentNode;
@@ -204,28 +163,32 @@ class IndexView extends Component {
 
     render() {
         let ButtonPower = {
-            PowerButton : this.state.powerButton,
-            ifPowerBtn : this.state.ifPowerBtn,
-            isEdit : this.state.isEdit,
+            PowerButton : this.props.powerButton,
+            ifPowerBtn : this.props.ifPowerBtn,
+            isEdit : this.props.isEdit,
         };
         return (
 
             <div>
                 <Loading showBackDrop={true} show={this.props.showLoading} fullScreen={true}/>
-                <div>
+                <div className="register_btn">
                     <ButtonGroup
                         BtnPower={ButtonPower}
                         Edit={this.onEdit}
-                        Add={this.onAdd.bind(this)}
+                        Add={this.onAdd}
                         Save={this.onSave}
-                        Cancel={this.onCancel.bind(this)}
+                        Cancel={this.onCancel}
                         Delete={this.onDelete}
-                        {...this.props}
+                        {...this.props}   
                     />
                 </div>
 
-                <div>
+                <div className="register_form">
                     <FormView {...this.props} ref="formView" onRef={this.onRef}/>
+                </div>
+
+                <div>
+                    <AddModalView {...this.props} onaddmodalRef={this.onaddmodalRef} />
                 </div>
             </div>
 

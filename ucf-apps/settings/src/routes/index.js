@@ -7,12 +7,14 @@ import React from "react";
 import { Route } from "mirrorx";
 import {Role} from "./role/container";
 import {Menu} from "./menu/container";
+import {Dict} from "./dict/container";
 
 export default () => (
 
     <div className="route-content">
         <Route exact path="/role" component={Role} />
         <Route exact path="/menu" component={Menu} />
+        <Route exact path="/dict" component={Dict} />
     </div>
 
 );

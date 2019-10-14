@@ -353,7 +353,6 @@ class PendingView extends React.Component {
     }
 
     ontabClick = ()=>{
-      debugger
       const item = deepClone(this.state.wait_menu);
       var options = {
         title:item.name,
@@ -370,7 +369,6 @@ class PendingView extends React.Component {
 
     createTab = (options) =>{
       var {menus,themeObj} = this.state;
-      debugger
       if(!window.sessionStorage){
           alert('This browser does NOT support sessionStorage');
           return false;
