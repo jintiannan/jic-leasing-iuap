@@ -58,7 +58,7 @@ class ListView extends Component {
         queryParam['pageSize'] = value;
         queryParam['pageIndex'] = 0;
         if (value && value.toString().toLowerCase() === "all") { // 对分页 pageSize 为 all 进行处理，前后端约定
-            pageSize = 1;
+
         }
         actions.customerCorpModify.loadList(queryParam);
     };
