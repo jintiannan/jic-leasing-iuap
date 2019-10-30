@@ -218,7 +218,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('pk_lease_calculator.name', {
+                                                                     ...getFieldProps('pkLeaseCalculator.name', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -240,7 +240,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('event_type.name', {
+                                                                     ...getFieldProps('eventType.name', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -264,8 +264,8 @@ class AddFormView extends Component {
                                                         allowClear={true}
                                                         disabled={true}
                                                         {
-                                                            ...getFieldProps('execute_status', {
-                                                                initialValue: _formObject.execute_status,
+                                                            ...getFieldProps('executeStatus', {
+                                                                initialvalue: _formObject.executeStatus,
                                                             })
                                                         }
                                                     />
@@ -285,7 +285,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('batch_ref.name', {
+                                                                     ...getFieldProps('batchRef.name', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,

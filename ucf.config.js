@@ -34,7 +34,7 @@ module.exports = (env, argv) => {
                 },
                 //要代理访问的对方路由
                 router: [
-                    '/leasing','jic-leasing',
+                    '/jic','jic-leasing',
                 ],
                 url: 'http://localhost:8088'
             },
@@ -66,10 +66,10 @@ module.exports = (env, argv) => {
             'process.env.NODE_ENV': JSON.stringify(env),
             'process.env.STATIC_HTTP_PATH': env == 'development' ? JSON.stringify("static") : JSON.stringify("../static"),
             'process.env.NODE_ENV': JSON.stringify("production"),
-            GROBAL_HTTP_CTX: JSON.stringify("/leasing"),
+            GROBAL_HTTP_CTX: JSON.stringify("/jic/menu"),
             //前台默认上下文
             GROBAL_PORTAL_ID: JSON.stringify("leasing"),
-            GROBAL_PORTAL_CTX: JSON.stringify("/leasing"),
+            GROBAL_PORTAL_CTX: JSON.stringify("/jic"),
             GROBAL_PACKAGE_NAME: JSON.stringify("leasing"),
         },
         static: 'ucf-common/src',

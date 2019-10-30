@@ -219,7 +219,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('insure_code', {
+                                                                     ...getFieldProps('insureCode', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -245,8 +245,8 @@ class AddFormView extends Component {
                                                         allowClear={true}
                                                         disabled={!this.props.isEdit}
                                                         {
-                                                            ...getFieldProps('insure_beneficiary_change', {
-                                                                initialValue: _formObject.insure_beneficiary_change,
+                                                            ...getFieldProps('insureBeneficiaryChange', {
+                                                                initialvalue: _formObject.insureBeneficiaryChange,
                                                             })
                                                         }
                                                     />
@@ -263,7 +263,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('pk_beneficiary.name', {
+                                                                     ...getFieldProps('pkBeneficiary.name', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -287,7 +287,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('pk_insure_util', {
+                                                                     ...getFieldProps('pkInsureUtil', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -309,7 +309,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('insure_type', {
+                                                                     ...getFieldProps('insureType', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -329,7 +329,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('insure_mark_amount', {
+                                                                     ...getFieldProps('insureMarkAmount', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -351,7 +351,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('rent_amout', {
+                                                                     ...getFieldProps('rentAmout', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -371,7 +371,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('insure_rate', {
+                                                                     ...getFieldProps('insureRate', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -391,7 +391,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('insure_amount', {
+                                                                     ...getFieldProps('insureAmount', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -414,7 +414,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('start_date', {
+                                                                     ...getFieldProps('startDate', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -434,7 +434,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('insure_times', {
+                                                                     ...getFieldProps('insureTimes', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -454,7 +454,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('end_date', {
+                                                                     ...getFieldProps('endDate', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,

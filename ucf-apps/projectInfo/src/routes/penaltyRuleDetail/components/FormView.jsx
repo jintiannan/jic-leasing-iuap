@@ -118,9 +118,9 @@ class FormView extends Component {
     }
 
     form = [
-        {label:'罚息类型',field:'penalty_type',com:FormControl},
-        {label:'逾期天数',field:'penalty_days',com:FormControl},
-        {label:'逾期利率',field:'penalty_rate',com:Select, data: enumConstant("")}
+        {label:'罚息类型',field:'penaltyType',com:FormControl},
+        {label:'逾期天数',field:'penaltyDays',com:FormControl},
+        {label:'逾期利率',field:'penaltyRate',com:Select, data: enumConstant("")}
     ];
 
 

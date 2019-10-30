@@ -7,7 +7,7 @@ const URL = {
     "GET_LIST":  `${GROBAL_HTTP_CTX}/order/list`,
     "GET_LOCALE": `${GROBAL_HTTP_CTX}/i18n/classification/serial`,
     "GET_LANGLIST": `${GROBAL_HTTP_CTX}/i18n/classification/list`,
-    "GET_MENU":  `${GROBAL_HTTP_CTX}/menu/getFuncMenu`,
+    "GET_MENU":  `${GROBAL_HTTP_CTX}/funcMenu/getFuncMenu`,
     "GET_MENU_PORTAL":  `${GROBAL_HTTP_CTX}/appmenumgr/listSidebarByApportalCode`,
     "GET_USER_MENU":  `${GROBAL_HTTP_CTX}/moreMenu/list`,
     "GET_UNREADMSG":`/iuap-saas-message-center/message/getUnReadMsg`,

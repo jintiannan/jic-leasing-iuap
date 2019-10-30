@@ -121,29 +121,29 @@ class FormView extends Component {
     }
 
     form = [
-        {label:'客户性质',field:'lessee_type',com:Select, data: enumConstant(""), disabled: true},
-        {label:'客户',field:'pk_consumer',com:TableFormRef},
-        {label:'客户编码',field:'pk_consumer.code',com:FormControl, disabled: true},
-        {label:'法定代表人',field:'pk_consumer.legal_rep',com:FormControl, disabled: true},
-        {label:'地址',field:'pk_consumer.inform_address',com:FormControl, disabled: true},
-        {label:'邮编',field:'pk_consumer.inform_address_zip',com:FormControl, disabled: true},
-        {label:'传真',field:'pk_consumer.fax',com:FormControl, disabled: true},
-        {label:'邮箱',field:'pk_consumer.company_mailbox',com:FormControl, disabled: true},
-        {label:'客户评级',field:'client_rating',com:TableFormRef, disabled: true}
+        {label:'客户性质',field:'lesseeType',com:Select, data: enumConstant(""), disabled: true},
+        {label:'客户',field:'pkConsumer',com:TableFormRef},
+        {label:'客户编码',field:'pkConsumer.code',com:FormControl, disabled: true},
+        {label:'法定代表人',field:'pkConsumer.legalRep',com:FormControl, disabled: true},
+        {label:'地址',field:'pkConsumer.informAddress',com:FormControl, disabled: true},
+        {label:'邮编',field:'pkConsumer.informAddressZip',com:FormControl, disabled: true},
+        {label:'传真',field:'pkConsumer.fax',com:FormControl, disabled: true},
+        {label:'邮箱',field:'pkConsumer.companyMailbox',com:FormControl, disabled: true},
+        {label:'客户评级',field:'clientRating',com:TableFormRef, disabled: true}
     ];
 
     form1 = [
-        {label:'客户方账户名称',field:'pk_account_lessee',com:TableFormRef},
-        {label:'客户方账号',field:'pk_account_lessee.code',com:FormControl, disabled: true},
-        {label:'客户方开户银行',field:'pk_account_lessee.account_bank',com:FormControl, disabled: true},
-        {label:'客户方开户银行行号',field:'pk_account_lessee.bank_no',com:FormControl, disabled: true}
+        {label:'客户方账户名称',field:'pkAccountLessee',com:TableFormRef},
+        {label:'客户方账号',field:'pkAccountLessee.code',com:FormControl, disabled: true},
+        {label:'客户方开户银行',field:'pkAccountLessee.accountBank',com:FormControl, disabled: true},
+        {label:'客户方开户银行行号',field:'pkAccountLessee.bankNo',com:FormControl, disabled: true}
     ];
 
     form2 = [
-        {label:'出租方账户名称',field:'pk_account',com:TableFormRef},
-        {label:'出租方账号',field:'pk_account.code',com:FormControl, disabled: true},
-        {label:'出租方开户银行',field:'pk_account.account_bank',com:FormControl, disabled: true},
-        {label:'出租方开户银行行号',field:'pk_account.bank_no',com:FormControl, disabled: true}
+        {label:'出租方账户名称',field:'pkAccount',com:TableFormRef},
+        {label:'出租方账号',field:'pkAccount.code',com:FormControl, disabled: true},
+        {label:'出租方开户银行',field:'pkAccount.accountBank',com:FormControl, disabled: true},
+        {label:'出租方开户银行行号',field:'pkAccount.bankNo',com:FormControl, disabled: true}
     ];
 
 

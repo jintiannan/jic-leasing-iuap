@@ -181,9 +181,9 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        {title:'罚息类型',key:'penalty_type',type:'0'},
-        {title:'逾期天数',key:'penalty_days',type:'0'},
-        {title:'罚息利率',key:'penalty_rate',type:'0'}
+        {title:'罚息类型',key:'penaltyType',type:'0'},
+        {title:'逾期天数',key:'penaltyDays',type:'0'},
+        {title:'罚息利率',key:'penaltyRate',type:'0'}
 
     ];
     //主表 列属性定义=>通过前端service工具类自动生成

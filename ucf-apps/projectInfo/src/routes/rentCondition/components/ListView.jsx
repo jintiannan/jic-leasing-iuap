@@ -181,8 +181,8 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        {title:'起租条件',key:'on_condition.name',type:'0'},
-        {title:'执行状态',key:'execute_state',type:'0'}
+        {title:'起租条件',key:'onCondition.name',type:'0'},
+        {title:'执行状态',key:'executeState',type:'0'}
     ];
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];

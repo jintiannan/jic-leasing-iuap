@@ -118,8 +118,8 @@ class FormView extends Component {
     }
 
     form = [
-        {label:'起租条件',field:'on_condition.name',com:FormControl},
-        {label:'执行状态',field:'execute_status',com:Select, data: enumConstant("")}
+        {label:'起租条件',field:'onCondition.name',com:FormControl},
+        {label:'执行状态',field:'executeStatus',com:Select, data: enumConstant("")}
     ];
 
 

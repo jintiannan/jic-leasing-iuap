@@ -1,7 +1,22 @@
-import React, { Component } from 'react';
-import { Form, Icon, Button, Label, Switch, Checkbox, Radio, Select, Col, Row, FormControl, Collapse, Tabs, ButtonGroup } from 'tinper-bee';
-import { deepClone,Info } from "utils";
-import { SelectField } from 'components/RowField/SelectField'
+import React, {Component} from 'react';
+import {
+    Form,
+    Icon,
+    Button,
+    Label,
+    Switch,
+    Checkbox,
+    Radio,
+    Select,
+    Col,
+    Row,
+    FormControl,
+    Collapse,
+    Tabs,
+    ButtonGroup
+} from 'tinper-bee';
+import {deepClone, Info} from "utils";
+import {SelectField} from 'components/RowField/SelectField'
 import FormSplitHeader from 'components/FormSplitHeader'
 import DatePicker from "tinper-bee/lib/Datepicker";
 import FormInputNumber from 'components/FormRef/FormInputNumber';
@@ -9,8 +24,9 @@ import ChildListView from './ChildListView';
 import TableFormRef from 'components/FormRef/TableFormRef';
 import {enumConstant} from "../../../../../../ucf-common/src/utils/enums";
 //参照组件职级
-import { RefWalsinLevel } from 'components/RefViews';
-const { TabPane } = Tabs;
+import {RefWalsinLevel} from 'components/RefViews';
+
+const {TabPane} = Tabs;
 
 import './index.less';
 
@@ -56,7 +72,7 @@ class FormView extends Component {
     }
 
     //字表添加数据
-    add=()=>{
+    add = () => {
         let key = this.state.activeKey;
         let childs = "child" + key;
         let dataSource = deepClone(this[childs].state.dataSource);
@@ -65,27 +81,27 @@ class FormView extends Component {
             index: index,  //序号
         };
         let isEditArray = this[childs].state.isEditArray;
-        isEditArray?isEditArray.push([]):isEditArray=[];
+        isEditArray ? isEditArray.push([]) : isEditArray = [];
         dataSource.push(newData);
         this[childs].setState({
-            dataSource:dataSource,
+            dataSource: dataSource,
             isEditArray: isEditArray
         });
     }
     //字表删除数据
-    del=(index)=>{
+    del = (index) => {
         let key = this.state.activeKey;
         let childs = "child" + key;
         let dataSource = deepClone(this[childs].state.dataSource);
-        dataSource.splice(dataSource.length-1,1);
+        dataSource.splice(dataSource.length - 1, 1);
         this[childs].setState({
-            dataSource:dataSource
+            dataSource: dataSource
         });
     }
 
     //onChange事件
-    handleChange = (value) =>{
-        if(value == '01'){
+    handleChange = (value) => {
+        if (value == '01') {
 
         }
     }
@@ -119,22 +135,17 @@ class FormView extends Component {
     }
 
     form = [
-        {label:'报价方案',field:'pk_lease_calculator',com:TableFormRef},
-        {label:'交易类别',field:'event_type',com:TableFormRef},
-        {label:'执行状态',field:'execute_status',com:Select, data: enumConstant(""), disabled: true},
-        {label:'期数',field:'batch_ref',com:TableFormRef},
-        {label:'金额(元)',field:'amount',com:FormControl, disabled: true},
-        {label:'备注',field:'memo',com:FormControl, col: 12, class: 'textarea'}
+        {label: '报价方案', field: 'pkLeaseCalculator', com: TableFormRef},
+        {label: '交易类别', field: 'eventType', com: TableFormRef},
+        {label: '执行状态', field: 'executeStatus', com: Select, data: enumConstant(""), disabled: true},
+        {label: '期数', field: 'batchRef', com: TableFormRef},
+        {label: '金额(元)', field: 'amount', com: FormControl, disabled: true},
+        {label: '备注', field: 'memo', com: FormControl, col: 12, class: 'textarea'}
     ];
 
 
-
-
-
-
-
     render() {
-        const { getFieldProps, getFieldError } = this.props.form;
+        const {getFieldProps, getFieldError} = this.props.form;
         let _formObject = this.props.formObject;
         let formObject = deepClone(_formObject);
         let _props = this.props;
@@ -169,15 +180,15 @@ class FormView extends Component {
                 </Col>)
         });
 
-        if(_props.showForm){
+        if (_props.showForm) {
             return (
                 <div>
 
 
                     <div className='jic-form'>
                         <div>
-                        <span onClick={() => this.setState({ open: !this.state.open })} >
-                        <FormSplitHeader title={'主表信息'} />
+                        <span onClick={() => this.setState({open: !this.state.open})}>
+                        <FormSplitHeader title={'主表信息'}/>
                         </span>
                         </div>
                         <Collapse in={this.state.open}>
@@ -192,22 +203,24 @@ class FormView extends Component {
                     </div>
 
 
-
                     <div className="childListView">
                         <Tabs
                             defaultActiveKey="1"
                             onChange={this.onChange}
                             className="list-tabs"
                             extraContent={
-                                <div className="addAndDelChildList demoPadding" style={{display:_props.isEdit?'':'none'}} >
-                                    <ButtonGroup style={{ margin: 1 }}>
-                                        <Button shape='border' onClick={this.add.bind(this)}><Icon type='uf-add-c-o' /></Button>
-                                        <Button shape='border' onClick={this.del.bind(this)}><Icon type='uf-reduce-c-o' /></Button>
+                                <div className="addAndDelChildList demoPadding"
+                                     style={{display: _props.isEdit ? '' : 'none'}}>
+                                    <ButtonGroup style={{margin: 1}}>
+                                        <Button shape='border' onClick={this.add.bind(this)}><Icon
+                                            type='uf-add-c-o'/></Button>
+                                        <Button shape='border' onClick={this.del.bind(this)}><Icon
+                                            type='uf-reduce-c-o'/></Button>
                                     </ButtonGroup>
                                 </div>
                             }
                         >
-                            <TabPane tab='子表信息' key="1"> <ChildListView { ...this } ref="onTheLoan" onRef={this.onRef1}/></TabPane>
+                            <TabPane tab='子表信息' key="1"> <ChildListView {...this} ref="onTheLoan" onRef={this.onRef1}/></TabPane>
                             {/*<TabPane tab='保证金计划' key="2"> <ChildListView2 { ...this } ref="marginLoan" onRef={this.onRef2}/></TabPane>*/}
                             {/*<TabPane tab='手续费计划' key="3"> <ChildListView3 { ...this } { ...this.props } ref="commissionLoan" onRef={this.onRef3}/></TabPane>*/}
                             {/*<TabPane tab='中间费用支出计划' key="4"> <ChildListView4 { ...this } ref="middleCostLoan" onRef={this.onRef4}/></TabPane>*/}
@@ -219,7 +232,7 @@ class FormView extends Component {
                 </div>
             );
 
-        }else{
+        } else {
             return <div></div>
         }
 

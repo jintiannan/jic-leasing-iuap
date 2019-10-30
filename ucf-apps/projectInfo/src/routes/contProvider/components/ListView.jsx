@@ -186,20 +186,20 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        {title:'项目名称',key:'pk_project.name',type:'0'},
-        {title:'合同名称',key:'contract_name',type:'0'},
-        {title:'合同编号',key:'contract_code',type:'0'},
-        {title:'合同金额',key:'contract_amount',type:'0'},
-        {title:'租赁物折让价',key:'lessee_assignment',type:'0'},
-        {title:'设备金额',key:'facility_amount',type:'0'},
-        {title:'承租人',key:'pk_linkman.name',type:'0'},
-        {title:'卖方名称',key:'pk_customer_sales.name',type:'0'},
-        {title:'供应商开票方式',key:'invoice_way',type:'0'},
-        {title:'供应商纳税主体',key:'taxes_main',type:'0'},
-        {title:'发票性质',key:'invoice_nature',type:'0'},
-        {title:'税率',key:'tax_rate',type:'0'},
-        {title:'合同类型',key:'cont_type',type:'0'},
-        {title:'合同状态',key:'cont_status',type:'0'},
+        {title:'项目名称',key:'pkProject.name',type:'0'},
+        {title:'合同名称',key:'contractName',type:'0'},
+        {title:'合同编号',key:'contractCode',type:'0'},
+        {title:'合同金额',key:'contractAmount',type:'0'},
+        {title:'租赁物折让价',key:'lesseeAssignment',type:'0'},
+        {title:'设备金额',key:'facilityAmount',type:'0'},
+        {title:'承租人',key:'pkLinkman.name',type:'0'},
+        {title:'卖方名称',key:'pkCustomerSales.name',type:'0'},
+        {title:'供应商开票方式',key:'invoiceWay',type:'0'},
+        {title:'供应商纳税主体',key:'taxesMain',type:'0'},
+        {title:'发票性质',key:'invoiceNature',type:'0'},
+        {title:'税率',key:'taxRate',type:'0'},
+        {title:'合同类型',key:'contType',type:'0'},
+        {title:'合同状态',key:'contStatus',type:'0'},
         {title:'备注',key:'memo',type:'0'}
 
     ]
@@ -208,15 +208,15 @@ class ListView extends Component {
 
     // 投放计划 列属性定义
     gridOnTheLoan = [
-        {title:'联络人',key:'pk_linkman.name',type:'0'},
-        {title:'部门',key:'pk_linkman.department',type:'0'},
-        {title:'职务',key:'pk_linkman.duty',type:'0'},
-        {title:'手机',key:'pk_linkman.mobile',type:'0'},
-        {title:'邮箱',key:'pk_linkman.email',type:'0'},
-        {title:'办公电话',key:'pk_linkman.office_phone',type:'0'},
-        {title:'传真',key:'pk_linkman.fax',type:'0'},
-        {title:'是否合同授权人',key:'is_cont_grantor',type:'0'},
-        {title:'是否合同联系人',key:'is_cont_link',type:'0'}
+        {title:'联络人',key:'pkLinkman.name',type:'0'},
+        {title:'部门',key:'pkLinkman.department',type:'0'},
+        {title:'职务',key:'pkLinkman.duty',type:'0'},
+        {title:'手机',key:'pkLinkman.mobile',type:'0'},
+        {title:'邮箱',key:'pkLinkman.email',type:'0'},
+        {title:'办公电话',key:'pkLinkman.officePhone',type:'0'},
+        {title:'传真',key:'pkLinkman.fax',type:'0'},
+        {title:'是否合同授权人',key:'isContGrantor',type:'0'},
+        {title:'是否合同联系人',key:'isContLink',type:'0'}
     ]
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];

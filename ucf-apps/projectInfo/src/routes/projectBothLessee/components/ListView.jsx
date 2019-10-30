@@ -187,20 +187,20 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        {title:'客户性质',key:'lessee_type',type:'0'},
-        {title:'客户',key:'pk_consumer.name',type:'0'},
-        {title:'客户编码',key:'pk_consumer.code',type:'0'},
-        {title:'法定代表人',key:'pk_consumer.legal_rep',type:'0'},
-        {title:'地址',key:'pk_consumer.inform_address',type:'0'},
-        {title:'邮编',key:'pk_consumer.inform_address_zip',type:'0'},
-        {title:'传真',key:'pk_consumer.fax',type:'0'},
-        {title:'邮箱',key:'pk_consumer.company_mailbox',type:'0'},
-        {title:'纳税人识别号',key:'pk_consumer.national_tax',type:'0'},
-        {title:'客户方账户名称',key:'pk_account_lessee.name',type:'0'},
-        {title:'客户方账号',key:'pk_account_lessee.code',type:'0'},
-        {title:'客户方开户银行',key:'pk_account_lessee.account_bank',type:'0'},
-        {title:'出租方账户名称',key:'pk_account.name',type:'0'},
-        {title:'出租方开户银行',key:'pk_account.account_bank',type:'0'},
+        {title:'客户性质',key:'lesseeType',type:'0'},
+        {title:'客户',key:'pkConsumer.name',type:'0'},
+        {title:'客户编码',key:'pkConsumer.code',type:'0'},
+        {title:'法定代表人',key:'pkConsumer.legalRep',type:'0'},
+        {title:'地址',key:'pkConsumer.informAddress',type:'0'},
+        {title:'邮编',key:'pkConsumer.informAddressZip',type:'0'},
+        {title:'传真',key:'pkConsumer.fax',type:'0'},
+        {title:'邮箱',key:'pkConsumer.companyMailbox',type:'0'},
+        {title:'纳税人识别号',key:'pkConsumer.nationalTax',type:'0'},
+        {title:'客户方账户名称',key:'pkAccountLessee.name',type:'0'},
+        {title:'客户方账号',key:'pkAccountLessee.code',type:'0'},
+        {title:'客户方开户银行',key:'pkAccountLessee.accountBank',type:'0'},
+        {title:'出租方账户名称',key:'pkAccount.name',type:'0'},
+        {title:'出租方开户银行',key:'pkAccount.accountBank',type:'0'},
         {title:'查看本客户',key:'memo',type:'0'}
 
     ]
@@ -209,27 +209,27 @@ class ListView extends Component {
 
     // 联系人信息 列属性定义
     gridOnTheLinkMan = [
-        {title:'联络人',key:'pk_linkman.name',type:'0'},
-        {title:'部门',key:'pk_linkman.department',type:'0'},
-        {title:'职务',key:'pk_linkman.duty',type:'0'},
-        {title:'手机',key:'pk_linkman.mobile',type:'0'},
-        {title:'邮箱',key:'pk_linkman.email',type:'0'},
-        {title:'办公电话',key:'pk_linkman.office_phone',type:'0'},
-        {title:'传真',key:'pk_linkman.fax',type:'0'},
-        {title:'是否合同授权人',key:'is_cont_grantor',type:'0'},
-        {title:'是否合同联系人',key:'is_cont_link',type:'0'},
-        {title:'是否短信催收',key:'is_collection',type:'0'}
+        {title:'联络人',key:'pkLinkman.name',type:'0'},
+        {title:'部门',key:'pkLinkman.department',type:'0'},
+        {title:'职务',key:'pkLinkman.duty',type:'0'},
+        {title:'手机',key:'pkLinkman.mobile',type:'0'},
+        {title:'邮箱',key:'pkLinkman.email',type:'0'},
+        {title:'办公电话',key:'pkLinkman.officePhone',type:'0'},
+        {title:'传真',key:'pkLinkman.fax',type:'0'},
+        {title:'是否合同授权人',key:'isContGrantor',type:'0'},
+        {title:'是否合同联系人',key:'isContLink',type:'0'},
+        {title:'是否短信催收',key:'isCollection',type:'0'}
     ]
     // 联系人信息 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLinkMan = [];
 
     // 客户账号信息 列属性定义
     gridOnTheLesseeAccount = [
-        {title:'账户性质',key:'account_type',type:'0'},
-        {title:'账户名称',key:'pk_account.name',type:'0'},
-        {title:'账号',key:'pk_account.code',type:'0'},
-        {title:'开户银行',key:'pk_account.account_bank',type:'0'},
-        {title:'开户银行行号',key:'pk_account.bank_no',type:'0'}
+        {title:'账户性质',key:'accountType',type:'0'},
+        {title:'账户名称',key:'pkAccount.name',type:'0'},
+        {title:'账号',key:'pkAccount.code',type:'0'},
+        {title:'开户银行',key:'pkAccount.accountBank',type:'0'},
+        {title:'开户银行行号',key:'pkAccount.bankNo',type:'0'}
     ]
     // 客户账号信息 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLesseeAccount = [];

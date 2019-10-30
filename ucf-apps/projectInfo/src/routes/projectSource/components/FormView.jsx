@@ -120,19 +120,19 @@ class FormView extends Component {
     }
 
     form = [
-        {label:'来源方式',field:'source_type',com:Select, data: enumConstant("")},
-        {label:'法定代表人',field:'pk_customer.legal_rep',com:FormControl, disabled: true},
-        {label:'客户编号',field:'pk_customer.code',com:FormControl, disabled: true},
-        {label:'客户名称',field:'pk_customer',com:TableFormRef},
-        {label:'纳税人识别号',field:'pk_customer.national_tax',com:FormControl, disabled: true},
-        {label:'地址',field:'pk_customer.comm_address',com:FormControl, disabled: true},
-        {label:'邮编',field:'pk_customer.comm_address_zip',com:FormControl, disabled: true}
+        {label:'来源方式',field:'sourceType',com:Select, data: enumConstant("")},
+        {label:'法定代表人',field:'pkCustomer.legalRep',com:FormControl, disabled: true},
+        {label:'客户编号',field:'pkCustomer.code',com:FormControl, disabled: true},
+        {label:'客户名称',field:'pkCustomer',com:TableFormRef},
+        {label:'纳税人识别号',field:'pkCustomer.nationalTax',com:FormControl, disabled: true},
+        {label:'地址',field:'pkCustomer.commAddress',com:FormControl, disabled: true},
+        {label:'邮编',field:'pkCustomer.commAddressZip',com:FormControl, disabled: true}
     ];
 
     form1 = [
-        {label:'中介账户',field:'pk_account',com:TableFormRef},
-        {label:'中介开户银行',field:'pk_account.account_bank',com:FormControl, disabled: true},
-        {label:'中介账号',field:'pk_account.code',com:FormControl, disabled: true}
+        {label:'中介账户',field:'pkAccount',com:TableFormRef},
+        {label:'中介开户银行',field:'pkAccount.accountBank',com:FormControl, disabled: true},
+        {label:'中介账号',field:'pkAccount.code',com:FormControl, disabled: true}
     ];
 
 

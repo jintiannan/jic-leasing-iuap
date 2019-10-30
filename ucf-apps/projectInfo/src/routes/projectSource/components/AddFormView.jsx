@@ -224,8 +224,8 @@ class AddFormView extends Component {
                                                         allowClear={true}
                                                         disabled={!this.props.isEdit}
                                                         {
-                                                            ...getFieldProps('source_type', {
-                                                                initialValue: _formObject.source_type,
+                                                            ...getFieldProps('sourceType', {
+                                                                initialvalue: _formObject.sourceType,
                                                             })
                                                         }
                                                     />
@@ -241,7 +241,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={true}
                                                         {
-                                                            ...getFieldProps('pk_customer.legal_representative', {
+                                                            ...getFieldProps('pkCustomer.legalRepresentative', {
                                                                 initialValue: '',
                                                                 rules: [{
                                                                     required: true,
@@ -264,7 +264,7 @@ class AddFormView extends Component {
                                                     <FormControl disabled={true
                                                     }
                                                                  {
-                                                                     ...getFieldProps('pk_customer.code', {
+                                                                     ...getFieldProps('pkCustomer.code', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -288,7 +288,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('pk_customer.name', {
+                                                                     ...getFieldProps('pkCustomer.name', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -310,7 +310,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('pk_customer.national_tax', {
+                                                                     ...getFieldProps('pkCustomer.nationalTax', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -330,7 +330,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('pk_customer.inform_address', {
+                                                                     ...getFieldProps('pkCustomer.informAddress', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -352,7 +352,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('pk_customer.inform_address_zip', {
+                                                                     ...getFieldProps('pkCustomer.informAddressZip', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -376,7 +376,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('pk_account.name', {
+                                                                     ...getFieldProps('pkAccount.name', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -396,7 +396,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('pk_account.account_bank', {
+                                                                     ...getFieldProps('pkAccount.accountBank', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -418,7 +418,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('pk_account.bank_no', {
+                                                                     ...getFieldProps('pkAccount.bankNo', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -441,7 +441,7 @@ class AddFormView extends Component {
                                                 </Label>
                                                 <FormControl disabled={true}
                                                              {
-                                                                 ...getFieldProps('pk_account.code', {
+                                                                 ...getFieldProps('pkAccount.code', {
                                                                      initialValue: '',
                                                                      rules: [{
                                                                          required: true,

@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {actions} from 'mirrorx';
 import Grid from 'components/Grid';
-import { Tabs } from 'tinper-bee';
+import {Tabs} from 'tinper-bee';
 import {deepClone, getHeight} from "utils";
-import {genGridColumn,checkListSelect} from "utils/service";
+import {genGridColumn, checkListSelect} from "utils/service";
 import GridMain from 'components/GridMain';
 import {enumConstant} from "../../../../../../ucf-common/src/utils/enums";
-const { TabPane } = Tabs;
+
+const {TabPane} = Tabs;
 import './index.less';
 
 class ListView extends Component {
@@ -17,10 +18,10 @@ class ListView extends Component {
             tableHeight2: 0, //字表高度
             filterable: false,
             record: {}, // 存储关联数据信息
-            isGrid:true,//是否列表界面 true:列表界面 false:卡片界面
-            formView:'none',
-            listView:'',
-            selectList:[],
+            isGrid: true,//是否列表界面 true:列表界面 false:卡片界面
+            formView: 'none',
+            listView: '',
+            selectList: [],
         }
     }
 
@@ -93,22 +94,21 @@ class ListView extends Component {
     //     actions.paymentCondition.updateState({ selectedList : _selectedList });
 
 
-
     // }
 
     /**
      * 点击row选择框触发绑定数据对象
      * 绑定选中数据数组到数据模型中
      */
-    getSelectedDataFunc = (selectedList,record,index) => {
-        let { list } = this.props;
+    getSelectedDataFunc = (selectedList, record, index) => {
+        let {list} = this.props;
         let _list = deepClone(list);
         let _selectedList = deepClone(selectedList);
         let _formObj = {};
         if (index != undefined) {
             _list[index]['_checked'] = !_list[index]['_checked'];
         } else {
-            if(_selectedList && _selectedList.length > 0){
+            if (_selectedList && _selectedList.length > 0) {
                 _list.map(item => {
                     if (!item['_disabled']) {
                         item['_checked'] = true;
@@ -122,15 +122,15 @@ class ListView extends Component {
                 });
             }
         }
-        if(_selectedList && _selectedList.length == 1){
+        if (_selectedList && _selectedList.length == 1) {
             _formObj = deepClone(_selectedList[0]);
             this.childList(_formObj);
-        }else{
-            actions.paymentCondition.updateState({ list2 : []});
+        } else {
+            actions.paymentCondition.updateState({list2: []});
         }
 
 
-        actions.paymentCondition.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj});
+        actions.paymentCondition.updateState({list: _list, selectedList: _selectedList, formObject: _formObj});
 
     }
 
@@ -148,11 +148,11 @@ class ListView extends Component {
     resetTableHeight = (isopen) => {
         let tableHeight = 0;
         tableHeight = getHeight() - 430;
-        this.setState({ tableHeight });
+        this.setState({tableHeight});
 
         let tableHeight2 = 0;
         tableHeight2 = getHeight() - 480;
-        this.setState({ tableHeight2 });
+        this.setState({tableHeight2});
 
     }
 
@@ -162,7 +162,7 @@ class ListView extends Component {
      * @param grid 全部的字段
      * @param show show==true gridColumn为需要显示的字段  show==false  gridColumn为隐藏的字段
      */
-    getShowColumn = (gridColumn,grid,show) =>{
+    getShowColumn = (gridColumn, grid, show) => {
         // if(show){
         //     grid.map((item,index)=>{
         //         grid[index] = Object.assign(item, {ifshow:true});
@@ -180,25 +180,25 @@ class ListView extends Component {
     }
 
     //gridColumn 需要显示的字段  grid全部的字段
-    getColumnByShow = (gridColumn,grid) =>{
+    getColumnByShow = (gridColumn, grid) => {
 
     }
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        {title:'报价方案',key:'pk_lease_calculator.name',type:'0'},
-        {title:'交易类别',key:'event_type.name',type:'0'},
-        {title:'期数',key:'batch_ref.name',type:'0'},
-        {title:'备注',key:'memo',type:'0'}
+        {title: '报价方案', key: 'pkLeaseCalculator.name', type: '0'},
+        {title: '交易类别', key: 'eventType.name', type: '0'},
+        {title: '期数', key: 'batchRef.name', type: '0'},
+        {title: '备注', key: 'memo', type: '0'}
     ];
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
 
     // 投放计划 列属性定义
     gridOnTheItem = [
-        {title:'付款条件',key:'pk_condition_item.name',type:'0'},
-        {title:'执行状态',key:'execute_status',type:'0'},
-        {title:'备注',key:'memo',type:'0'}
+        {title: '付款条件', key: 'pkConditionItem.name', type: '0'},
+        {title: '执行状态', key: 'executeStatus', type: '0'},
+        {title: '备注', key: 'memo', type: '0'}
     ]
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheItem = [];
@@ -218,57 +218,57 @@ class ListView extends Component {
     // }
 
     render() {
-        let { tableHeight,  tableHeight2} = this.state;
+        let {tableHeight, tableHeight2} = this.state;
         return (
-            this.props.subForm === 'paymentCondition'?
-            <div className="grid-parent" style={{display:this.state.listView}}>
-                <div>
-                    <GridMain
-                        ref={(el) => this.grid = el} //存模版
-                        columns={this.gridColumn} //字段定义
-                        data={this.props.list} //数据数组                     
-                        tableHeight={1} //表格高度 1主表 2字表
+            this.props.subForm === 'paymentCondition' ?
+                <div className="grid-parent" style={{display: this.state.listView}}>
+                    <div>
+                        <GridMain
+                            ref={(el) => this.grid = el} //存模版
+                            columns={this.gridColumn} //字段定义
+                            data={this.props.list} //数据数组
+                            tableHeight={1} //表格高度 1主表 2字表
 
-                        //分页对象
-                        paginationObj = {{
-                            activePage : this.props.queryParam.pageIndex,//活动页
-                            total : this.props.list.length,//总条数
-                            items: this.props.queryObj.totalPages,//总页数
-                            freshData: this.freshData, //活动页改变,跳转指定页数据
-                            onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
-                        }}
-                        //onRowClick={this.onRowSelect}
-                        getSelectedDataFunc={this.getSelectedDataFunc}
-                        //afterFilter={this.afterFilter}
+                            //分页对象
+                            paginationObj={{
+                                activePage: this.props.queryParam.pageIndex,//活动页
+                                total: this.props.list.length,//总条数
+                                items: this.props.queryObj.totalPages,//总页数
+                                freshData: this.freshData, //活动页改变,跳转指定页数据
+                                onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
+                            }}
+                            //onRowClick={this.onRowSelect}
+                            getSelectedDataFunc={this.getSelectedDataFunc}
+                            //afterFilter={this.afterFilter}
 
-                    />
-                </div>
-                <div>
-                    <Tabs
-                        defaultActiveKey="1"
-                        onChange={this.onChange}
-                        className="list-tabs"
-                    >
+                        />
+                    </div>
+                    <div>
+                        <Tabs
+                            defaultActiveKey="1"
+                            onChange={this.onChange}
+                            className="list-tabs"
+                        >
 
-                        <TabPane tab='子表信息' key="1">
-                            <div>
-                                <GridMain
-                                    ref={(el) => this.gridOnTheItem = el} //存模版
-                                    columns={this.gridColumnOnTheItem} //字段定义
-                                    data={this.props.list2} //数据数组
-                                    //分页对象
-                                    paginationObj = {{
-                                        verticalPosition:'none'
-                                    }}
-                                    onRowClick={this.onRowSelect}
-                                    // getSelectedDataFunc={this.getSelectedDataFunc}
+                            <TabPane tab='子表信息' key="1">
+                                <div>
+                                    <GridMain
+                                        ref={(el) => this.gridOnTheItem = el} //存模版
+                                        columns={this.gridColumnOnTheItem} //字段定义
+                                        data={this.props.list2} //数据数组
+                                        //分页对象
+                                        paginationObj={{
+                                            verticalPosition: 'none'
+                                        }}
+                                        onRowClick={this.onRowSelect}
+                                        // getSelectedDataFunc={this.getSelectedDataFunc}
 
-                                />
-                            </div>
-                        </TabPane>
-                    </Tabs>
-                </div>
-            </div>:<div></div>
+                                    />
+                                </div>
+                            </TabPane>
+                        </Tabs>
+                    </div>
+                </div> : <div></div>
 
         );
     }

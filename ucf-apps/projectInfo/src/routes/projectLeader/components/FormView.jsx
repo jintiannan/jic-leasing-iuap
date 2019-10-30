@@ -122,12 +122,12 @@ class FormView extends Component {
     }
 
     form = [
-        {label:'出租方名称',field:'pk_customer',com:TableFormRef, disabled: true},
-        {label:'出租方编号',field:'pk_customer.code',com:FormControl, disabled: true},
-        {label:'法人代表',field:'pk_customer.legal_rep',com:FormControl, disabled: true},
-        {label:'纳税人识别号',field:'pk_customer.national_tax',com:FormControl, disabled: true},
-        {label:'邮编',field:'pk_customer.comm_address_zip',com:FormControl, disabled: true},
-        {label:'实际告知地址',field:'pk_customer.comm_address',com:FormControl, disabled: true},
+        {label:'出租方名称',field:'pkCustomer',com:TableFormRef, disabled: true},
+        {label:'出租方编号',field:'pkCustomer.code',com:FormControl, disabled: true},
+        {label:'法人代表',field:'pkCustomer.legalRep',com:FormControl, disabled: true},
+        {label:'纳税人识别号',field:'pkCustomer.nationalTax',com:FormControl, disabled: true},
+        {label:'邮编',field:'pkCustomer.commAddressZip',com:FormControl, disabled: true},
+        {label:'实际告知地址',field:'pkCustomer.commAddress',com:FormControl, disabled: true},
         {label:'备注',field:'memo',com:FormControl, col: 12, class: 'textarea'}
     ];
 

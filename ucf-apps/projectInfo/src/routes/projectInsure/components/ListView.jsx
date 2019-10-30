@@ -181,18 +181,18 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        {title:'保单号',key:'insure_code',type:'0'},
-        {title:'第一受益人是否变更为我司',key:'insure_beneficiary_change',type:'0'},
-        {title:'受益人',key:'pk_beneficiary.name',type:'0'},
-        {title:'保险公司',key:'pk_insure_util',type:'0'},
-        {title:'险种',key:'insure_type',type:'0'},
-        {title:'保险标金额',key:'insure_mark_amount',type:'0'},
-        {title:'租赁物原值合计',key:'rent_amout',type:'0'},
-        {title:'保险费率(%)',key:'insure_rate',type:'0'},
-        {title:'保险费（元）',key:'insure_amount',type:'0'},
-        {title:'保险开始日期',key:'start_date',type:'0'},
-        {title:'期限(月)',key:'insure_times',type:'0'},
-        {title:'保险到期日',key:'end_date',type:'0'},
+        {title:'保单号',key:'insureCode',type:'0'},
+        {title:'第一受益人是否变更为我司',key:'insureBeneficiaryChange',type:'0'},
+        {title:'受益人',key:'pkBeneficiary.name',type:'0'},
+        {title:'保险公司',key:'pkInsureUtil',type:'0'},
+        {title:'险种',key:'insureType',type:'0'},
+        {title:'保险标金额',key:'insureMarkAmount',type:'0'},
+        {title:'租赁物原值合计',key:'rentAmout',type:'0'},
+        {title:'保险费率(%)',key:'insureRate',type:'0'},
+        {title:'保险费（元）',key:'insureAmount',type:'0'},
+        {title:'保险开始日期',key:'startDate',type:'0'},
+        {title:'期限(月)',key:'insureTimes',type:'0'},
+        {title:'保险到期日',key:'endDate',type:'0'},
         {title:'备注',key:'memo',type:'0'},
     ];
     //主表 列属性定义=>通过前端service工具类自动生成

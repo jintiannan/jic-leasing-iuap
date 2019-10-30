@@ -219,7 +219,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('on_condition.name', {
+                                                                     ...getFieldProps('onCondition.name', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -243,8 +243,8 @@ class AddFormView extends Component {
                                                         allowClear={true}
                                                         disabled={!this.props.isEdit}
                                                         {
-                                                            ...getFieldProps('execute_state', {
-                                                                initialValue: _formObject.execute_state,
+                                                            ...getFieldProps('executeState', {
+                                                                initialvalue: _formObject.executeState,
                                                             })
                                                         }
                                                     />

@@ -219,7 +219,7 @@ class AddFormView extends Component {
 
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('penalty_type', {
+                                                                     ...getFieldProps('penaltyType', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,
@@ -239,7 +239,7 @@ class AddFormView extends Component {
                                                 </Label>
                                                 <FormControl disabled={!this.props.isEdit}
                                                              {
-                                                                 ...getFieldProps('penalty_days', {
+                                                                 ...getFieldProps('penaltyDays', {
                                                                      initialValue: '',
                                                                      rules: [{
                                                                          required: true,
@@ -259,7 +259,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('penalty_rate', {
+                                                                     ...getFieldProps('penaltyRate', {
                                                                          initialValue: '',
                                                                          rules: [{
                                                                              required: true,

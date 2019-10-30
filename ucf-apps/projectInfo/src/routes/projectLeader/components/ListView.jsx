@@ -186,13 +186,13 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        {title:'出租方名称',key:'pk_customer.name',type:'0'},
-        {title:'出租方编号',key:'pk_customer.code',type:'0'},
+        {title:'出租方名称',key:'pkCustomer.name',type:'0'},
+        {title:'出租方编号',key:'pkCustomer.code',type:'0'},
 
-        {title:'法人代表',key:'pk_customer.legal_rep',type:'0'},
-        {title:'纳税人识别号',key:'pk_customer.national_tax',type:'0'},
-        {title:'实际告知地址',key:'pk_customer.inform_address',type:'0'},
-        {title:'邮编',key:'pk_customer.inform_address_zip',type:'0'},
+        {title:'法人代表',key:'pkCustomer.legalRep',type:'0'},
+        {title:'纳税人识别号',key:'pkCustomer.nationalTax',type:'0'},
+        {title:'实际告知地址',key:'pkCustomer.informAddress',type:'0'},
+        {title:'邮编',key:'pkCustomer.informAddressZip',type:'0'},
         {title:'备注',key:'memo',type:'0'}
 
     ];
@@ -201,15 +201,15 @@ class ListView extends Component {
 
     // 投放计划 列属性定义
     gridOnTheLinkMan = [
-        {title:'联络人',key:'pk_linkman.name',type:'0'},
-        {title:'部门',key:'pk_linkman.department',type:'0'},
-        {title:'职务',key:'pk_linkman.duty',type:'0'},
-        {title:'手机',key:'pk_linkman.mobile',type:'0'},
-        {title:'邮箱',key:'pk_linkman.email',type:'0'},
-        {title:'办公电话',key:'pk_linkman.office_phone',type:'0'},
-        {title:'传真',key:'pk_linkman.fax',type:'0'},
-        {title:'是否合同授权人',key:'is_cont_grantor',type:'0'},
-        {title:'是否合同联系人',key:'is_cont_link',type:'0'}
+        {title:'联络人',key:'pkLinkman.name',type:'0'},
+        {title:'部门',key:'pkLinkman.department',type:'0'},
+        {title:'职务',key:'pkLinkman.duty',type:'0'},
+        {title:'手机',key:'pkLinkman.mobile',type:'0'},
+        {title:'邮箱',key:'pkLinkman.email',type:'0'},
+        {title:'办公电话',key:'pkLinkman.officePhone',type:'0'},
+        {title:'传真',key:'pkLinkman.fax',type:'0'},
+        {title:'是否合同授权人',key:'isContGrantor',type:'0'},
+        {title:'是否合同联系人',key:'isContLink',type:'0'}
     ];
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLinkMan = [];

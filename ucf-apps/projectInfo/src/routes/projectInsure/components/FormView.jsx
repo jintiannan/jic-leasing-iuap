@@ -118,18 +118,18 @@ class FormView extends Component {
     }
 
     form = [
-        {label:'保单号',field:'insure_code',com:FormControl},
-        {label:'第一受益人是否变更为我司',field:'insure_beneficiary_change',com:Select, data: enumConstant("")},
-        {label:'受益人',field:'pk_beneficiary',com:TableFormRef},
-        {label:'保险公司',field:'pk_insure_util',com:FormControl},
-        {label:'险种',field:'insure_type',com:FormControl},
-        {label:'保险标的金额',field:'insure_mark_amount',com:FormControl},
-        {label:'租赁物(原值)总计',field:'rent_amout',com:FormControl, disabled: true},
-        {label:'保险费率(%)',field:'insure_rate',com:FormControl},
-        {label:'保险费（元）',field:'insure_amount',com:FormControl},
-        {label:'保险开始日期',field:'start_date',com:TableFormRef},
-        {label:'期限(月)',field:'insure_times',com:FormControl},
-        {label:'保险到期日',field:'end_date',com:TableFormRef, disabled: true},
+        {label:'保单号',field:'insureCode',com:FormControl},
+        {label:'第一受益人是否变更为我司',field:'insureBeneficiaryChange',com:Select, data: enumConstant("")},
+        {label:'受益人',field:'pkBeneficiary',com:TableFormRef},
+        {label:'保险公司',field:'pkInsureUtil',com:FormControl},
+        {label:'险种',field:'insureType',com:FormControl},
+        {label:'保险标的金额',field:'insureMarkAmount',com:FormControl},
+        {label:'租赁物(原值)总计',field:'rentAmout',com:FormControl, disabled: true},
+        {label:'保险费率(%)',field:'insureRate',com:FormControl},
+        {label:'保险费（元）',field:'insureAmount',com:FormControl},
+        {label:'保险开始日期',field:'startDate',com:TableFormRef},
+        {label:'期限(月)',field:'insureTimes',com:FormControl},
+        {label:'保险到期日',field:'endDate',com:TableFormRef, disabled: true},
         {label:'备注',field:'memo',com:FormControl, col: 12, class: 'textarea'}
     ];
 

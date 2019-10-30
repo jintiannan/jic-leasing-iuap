@@ -193,13 +193,13 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        {title:'担保客户名称',key:'pk_customer.name',type:'0'},
-        {title:'担保客户编号',key:'pk_customer.code',type:'0'},
-        {title:'债权方',key:'bond_bank',type:'0'},
-        {title:'关系分类',key:'relation_class',type:'0'},
-        {title:'担保方式',key:'guarantee_method',type:'0'},
-        {title:'客户关系',key:'relation_role',type:'0'},
-        {title:'担保金额',key:'plan_cash',type:'0'},
+        {title:'担保客户名称',key:'pkCustomer.name',type:'0'},
+        {title:'担保客户编号',key:'pkCustomer.code',type:'0'},
+        {title:'债权方',key:'bondBank',type:'0'},
+        {title:'关系分类',key:'relationClass',type:'0'},
+        {title:'担保方式',key:'guaranteeMethod',type:'0'},
+        {title:'客户关系',key:'relationRole',type:'0'},
+        {title:'担保金额',key:'planCash',type:'0'},
         {title:'提供担保原因',key:'reason',type:'0'},
         {title:'与承租人关系',key:'memo',type:'0'},
         {title:'查看本客户',key:'memo',type:'0'}
@@ -211,7 +211,7 @@ class ListView extends Component {
     //担保信息
     gridGuarantee = [
         {title:'保证人名称',key:'owner',type:'0'},
-        {title:'保证期限（月）',key:'pledge_deadline',type:'0'},
+        {title:'保证期限（月）',key:'pledgeDeadline',type:'0'},
         {title:'备注',key:'remark',type:'0'}
     ];
 
@@ -220,23 +220,23 @@ class ListView extends Component {
     //抵押物（不动产）
     gridMortgageEstate = [
 
-        {title:'抵押物名称',key:'guarantee_name',type:'0'},
-        {title:'不动产分类',key:'real_estate_class',type:'0'},
-        {title:'其他物件',key:'other_objects',type:'0'},
+        {title:'抵押物名称',key:'guaranteeName',type:'0'},
+        {title:'不动产分类',key:'realEstateClass',type:'0'},
+        {title:'其他物件',key:'otherObjects',type:'0'},
         {title:'抵押人',key:'owner',type:'0'},
         {title:'抵押权人',key:'mortgagor',type:'0'},
-        {title:'抵押期限（月）',key:'pledge_deadline',type:'0'},
-        {title:'面积',key:'assets_count',type:'0'},
-        {title:'权证号',key:'assets_no',type:'0'},
-        {title:'原值（元）',key:'net_value',type:'0'},
+        {title:'抵押期限（月）',key:'pledgeDeadline',type:'0'},
+        {title:'面积',key:'assetsCount',type:'0'},
+        {title:'权证号',key:'assetsNo',type:'0'},
+        {title:'原值（元）',key:'netValue',type:'0'},
         {title:'净值（元）',key:'owner',type:'0'},
-        {title:'地址',key:'assets_name',type:'0'},
-        {title:'建造日期',key:'build_date',type:'0'},
-        {title:'评估日期',key:'assess_date',type:'0'},
-        {title:'评估机构',key:'assess_org',type:'0'},
-        {title:'评估价值（元）',key:'estimate_value',type:'0'},
-        {title:'登记机关',key:'reg_authority',type:'0'},
-        {title:'已为其他债权设定抵押金额（元）',key:'mortgage_cash',type:'0'},
+        {title:'地址',key:'assetsName',type:'0'},
+        {title:'建造日期',key:'buildDate',type:'0'},
+        {title:'评估日期',key:'assessDate',type:'0'},
+        {title:'评估机构',key:'assessOrg',type:'0'},
+        {title:'评估价值（元）',key:'estimateValue',type:'0'},
+        {title:'登记机关',key:'regAuthority',type:'0'},
+        {title:'已为其他债权设定抵押金额（元）',key:'mortgageCash',type:'0'},
         {title:'备注',key:'remark',type:'0'}
 
     ];
@@ -245,24 +245,24 @@ class ListView extends Component {
 
     //抵押物 动产
     gridMortgageProperty = [
-        {title:'设备类型',key:'equipment_type',type:'0'},
-        {title:'设备名称',key:'guarantee_name',type:'0'},
-        {title:'数量',key:'assets_count',type:'0'},
-        {title:'型号',key:'assets_no',type:'0'},
+        {title:'设备类型',key:'equipmentType',type:'0'},
+        {title:'设备名称',key:'guaranteeName',type:'0'},
+        {title:'数量',key:'assetsCount',type:'0'},
+        {title:'型号',key:'assetsNo',type:'0'},
         {title:'抵押人',key:'owner',type:'0'},
         {title:'抵押权人',key:'mortgagor',type:'0'},
-        {title:'原值（元）',key:'net_value',type:'0'},
+        {title:'原值（元）',key:'netValue',type:'0'},
         {title:'净值（元）',key:'owner',type:'0'},
-        {title:'设备采购日期',key:'purchase_date',type:'0'},
-        {title:'设备生产厂商',key:'equipment_manufacturer',type:'0'},
-        {title:'设备单价（元）',key:'equipment_unit_price',type:'0'},
-        {title:'设备总价（元）',key:'equipment_sum_price',type:'0'},
-        {title:'使用寿命（年）',key:'use_life',type:'0'},
-        {title:'已使用年限（年）',key:'used_term',type:'0'},
-        {title:'评估机构',key:'assess_org',type:'0'},
-        {title:'评估价值（元）',key:'estimate_value',type:'0'},
-        {title:'登记机关',key:'reg_authority',type:'0'},
-        {title:'已为其他债权设定抵押金额（元）',key:'mortgage_cash',type:'0'},
+        {title:'设备采购日期',key:'purchaseDate',type:'0'},
+        {title:'设备生产厂商',key:'equipmentManufacturer',type:'0'},
+        {title:'设备单价（元）',key:'equipmentUnitPrice',type:'0'},
+        {title:'设备总价（元）',key:'equipmentSumPrice',type:'0'},
+        {title:'使用寿命（年）',key:'useLife',type:'0'},
+        {title:'已使用年限（年）',key:'usedTerm',type:'0'},
+        {title:'评估机构',key:'assessOrg',type:'0'},
+        {title:'评估价值（元）',key:'estimateValue',type:'0'},
+        {title:'登记机关',key:'regAuthority',type:'0'},
+        {title:'已为其他债权设定抵押金额（元）',key:'mortgageCash',type:'0'},
         {title:'备注',key:'remark',type:'0'}
 
 
@@ -273,19 +273,19 @@ class ListView extends Component {
 
     //质押物 权利
     gridPledgeWarrant = [
-        {title:'权利种类',key:'warrant_type',type:'0'},
-        {title:'其他物件',key:'other_objects',type:'0'},
-        {title:'质押物名称',key:'guarantee_name',type:'0'},
+        {title:'权利种类',key:'warrantType',type:'0'},
+        {title:'其他物件',key:'otherObjects',type:'0'},
+        {title:'质押物名称',key:'guaranteeName',type:'0'},
         {title:'质押人',key:'owner',type:'0'},
         {title:'质押权人',key:'mortgagor',type:'0'},
-        {title:'数量',key:'assets_count',type:'0'},
-        {title:'权证号',key:'assets_no',type:'0'},
-        {title:'原值（元）',key:'net_value',type:'0'},
+        {title:'数量',key:'assetsCount',type:'0'},
+        {title:'权证号',key:'assetsNo',type:'0'},
+        {title:'原值（元）',key:'netValue',type:'0'},
         {title:'净值（元）',key:'owner',type:'0'},
-        {title:'市值（元）',key:'net_value',type:'0'},
-        {title:'登记机关',key:'reg_authority',type:'0'},
-        {title:'评估机构',key:'assess_org',type:'0'},
-        {title:'估值',key:'estimate_value',type:'0'},
+        {title:'市值（元）',key:'netValue',type:'0'},
+        {title:'登记机关',key:'regAuthority',type:'0'},
+        {title:'评估机构',key:'assessOrg',type:'0'},
+        {title:'估值',key:'estimateValue',type:'0'},
         {title:'备注',key:'remark',type:'0'}
 
 
@@ -297,24 +297,24 @@ class ListView extends Component {
     //质押物 动产
 
     gridPledgeProperty = [
-        {title:'设备类型',key:'equipment_type',type:'0'},
-        {title:'设备名称',key:'guarantee_name',type:'0'},
-        {title:'数量',key:'assets_count',type:'0'},
-        {title:'型号',key:'assets_no',type:'0'},
+        {title:'设备类型',key:'equipmentType',type:'0'},
+        {title:'设备名称',key:'guaranteeName',type:'0'},
+        {title:'数量',key:'assetsCount',type:'0'},
+        {title:'型号',key:'assetsNo',type:'0'},
         {title:'质押人',key:'owner',type:'0'},
         {title:'质押权人',key:'mortgagor',type:'0'},
-        {title:'原值（元）',key:'net_value',type:'0'},
+        {title:'原值（元）',key:'netValue',type:'0'},
         {title:'净值（元）',key:'owner',type:'0'},
-        {title:'设备采购日期',key:'purchase_date',type:'0'},
-        {title:'设备生产厂商',key:'equipment_manufacturer',type:'0'},
-        {title:'设备单价（元）',key:'equipment_unit_price',type:'0'},
-        {title:'设备总价（元）',key:'equipment_sum_price',type:'0'},
-        {title:'使用寿命（年）',key:'use_life',type:'0'},
-        {title:'已使用年限（年）',key:'used_term',type:'0'},
-        {title:'评估机构',key:'assess_org',type:'0'},
-        {title:'评估价值（元）',key:'estimate_value',type:'0'},
-        {title:'登记机关',key:'reg_authority',type:'0'},
-        {title:'已为其他债权设定抵押金额（元）',key:'mortgage_cash',type:'0'},
+        {title:'设备采购日期',key:'purchaseDate',type:'0'},
+        {title:'设备生产厂商',key:'equipmentManufacturer',type:'0'},
+        {title:'设备单价（元）',key:'equipmentUnitPrice',type:'0'},
+        {title:'设备总价（元）',key:'equipmentSumPrice',type:'0'},
+        {title:'使用寿命（年）',key:'useLife',type:'0'},
+        {title:'已使用年限（年）',key:'usedTerm',type:'0'},
+        {title:'评估机构',key:'assessOrg',type:'0'},
+        {title:'评估价值（元）',key:'estimateValue',type:'0'},
+        {title:'登记机关',key:'regAuthority',type:'0'},
+        {title:'已为其他债权设定抵押金额（元）',key:'mortgageCash',type:'0'},
         {title:'备注',key:'remark',type:'0'}
 
     ];
@@ -324,22 +324,22 @@ class ListView extends Component {
     //厂商回购
 
     gridBusinessBack = [
-        {title:'设备类型',key:'equipment_type',type:'0'},
-        {title:'设备名称',key:'guarantee_name',type:'0'},
+        {title:'设备类型',key:'equipmentType',type:'0'},
+        {title:'设备名称',key:'guaranteeName',type:'0'},
         {title:'回购方名称',key:'owner',type:'0'},
         {title:'回购权人',key:'mortgagor',type:'0'},
-        {title:'数量',key:'assets_count',type:'0'},
-        {title:'回购期限（月）',key:'pledge_deadline',type:'0'},
-        {title:'型号',key:'assets_no',type:'0'},
-        {title:'原值（元）',key:'net_value',type:'0'},
+        {title:'数量',key:'assetsCount',type:'0'},
+        {title:'回购期限（月）',key:'pledgeDeadline',type:'0'},
+        {title:'型号',key:'assetsNo',type:'0'},
+        {title:'原值（元）',key:'netValue',type:'0'},
         {title:'净值（元）',key:'owner',type:'0'},
-        {title:'设备单价（元）',key:'equipment_unit_price',type:'0'},
-        {title:'设备总价（元）',key:'equipment_sum_price',type:'0'},
-        {title:'设备采购日期',key:'purchase_date',type:'0'},
-        {title:'设备生产厂商',key:'equipment_manufacturer',type:'0'},
-        {title:'评估机构',key:'assess_org',type:'0'},
-        {title:'评估机构',key:'assess_org',type:'0'},
-        {title:'评估价值（元）',key:'estimate_value',type:'0'},
+        {title:'设备单价（元）',key:'equipmentUnitPrice',type:'0'},
+        {title:'设备总价（元）',key:'equipmentSumPrice',type:'0'},
+        {title:'设备采购日期',key:'purchaseDate',type:'0'},
+        {title:'设备生产厂商',key:'equipmentManufacturer',type:'0'},
+        {title:'评估机构',key:'assessOrg',type:'0'},
+        {title:'评估机构',key:'assessOrg',type:'0'},
+        {title:'评估价值（元）',key:'estimateValue',type:'0'},
         {title:'备注',key:'remark',type:'0'},
 
 
@@ -350,16 +350,16 @@ class ListView extends Component {
 
     // 联系人信息 列属性定义
     gridOnTheLinkMan = [
-        {title:'联络人',key:'pk_linkman.name',type:'0'},
-        {title:'部门',key:'pk_linkman.department',type:'0'},
-        {title:'职务',key:'pk_linkman.duty',type:'0'},
-        {title:'手机',key:'pk_linkman.mobile',type:'0'},
-        {title:'邮箱',key:'pk_linkman.email',type:'0'},
-        {title:'办公电话',key:'pk_linkman.office_phone',type:'0'},
-        {title:'传真',key:'pk_linkman.fax',type:'0'},
-        {title:'是否合同授权人',key:'is_cont_grantor',type:'0'},
-        {title:'是否合同联系人',key:'is_cont_link',type:'0'},
-        {title:'是否短信催收',key:'is_collection',type:'0'}
+        {title:'联络人',key:'pkLinkman.name',type:'0'},
+        {title:'部门',key:'pkLinkman.department',type:'0'},
+        {title:'职务',key:'pkLinkman.duty',type:'0'},
+        {title:'手机',key:'pkLinkman.mobile',type:'0'},
+        {title:'邮箱',key:'pkLinkman.email',type:'0'},
+        {title:'办公电话',key:'pkLinkman.officePhone',type:'0'},
+        {title:'传真',key:'pkLinkman.fax',type:'0'},
+        {title:'是否合同授权人',key:'isContGrantor',type:'0'},
+        {title:'是否合同联系人',key:'isContLink',type:'0'},
+        {title:'是否短信催收',key:'isCollection',type:'0'}
     ];
     // 联系人信息 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLinkMan = [];
