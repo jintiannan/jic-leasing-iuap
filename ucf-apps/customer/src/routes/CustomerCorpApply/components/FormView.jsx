@@ -1,24 +1,11 @@
 import React, {Component} from 'react';
-import {
-    Form,
-    Icon,
-    Button,
-    Label,
-    Switch,
-    Checkbox,
-    Radio,
-    Select,
-    Col,
-    Row,
-    FormControl,
-    Collapse
-} from 'tinper-bee';
+import {Button, Checkbox, Col, Collapse, Form, FormControl, Icon, Label, Radio, Row, Select, Switch} from 'tinper-bee';
 import {deepClone} from "utils";
 import {SelectField} from 'components/RowField/SelectField'
 import FormSplitHeader from 'components/FormSplitHeader'
 import DatePicker from "tinper-bee/lib/Datepicker";
 import TableFormRef from 'components/FormRef/TableFormRef';
-import FormInputNumber from 'components/FormRef/FormInputNumber';
+import FormInputNumber from '../../../../../../ucf-common/src/components/FormRef/FormInputNumber';
 import FormTreeRef from "../../../../../../ucf-common/src/components/FormTreeRef/FormTreeRef";
 
 import './index.less';
@@ -63,8 +50,8 @@ class FormView extends Component {
         }
     };
     form = [
-        {label: '客户名称', field: 'customer_name', com: FormControl, required: true},
-        {label: '客户编号', field: 'customer_code', com: FormControl, required: true, disabled: true},
+        {label: '客户名称', field: 'customerName', com: FormControl, required: true},
+        {label: '客户编号', field: 'customerCode', com: FormControl, required: true, disabled: true},
         {label: '客户英文名', field: 'customer_eng_name', com: FormControl, required: true},
         {label: '客户简称', field: 'customer_short', com: FormControl, required: true},
         {label: '是否授权征信客户', field: 'if_warrant_cust', com: Select, data: enumConstant("yesOrNo"), required: true},
@@ -75,10 +62,10 @@ class FormView extends Component {
         {label: '注册地址', field: 'reg_address', com: FormControl, required: true, col: 12},
     ];
     form1 = [
-        {label: '行业门类', field: 'industry', com: FormTreeRef},
-        {label: '行业门类(大类)', field: 'industry1', com: FormTreeRef},
-        {label: '行业门类(中类)', field: 'industry2', com: FormTreeRef},
-        {label: '行业门类(小类)', field: 'industry3', com: FormTreeRef},
+        // {label: '行业门类', field: 'industry', com: FormTreeRef},
+        // {label: '行业门类(大类)', field: 'industry1', com: FormTreeRef},
+        // {label: '行业门类(中类)', field: 'industry2', com: FormTreeRef},
+        // {label: '行业门类(小类)', field: 'industry3', com: FormTreeRef},
         {label: '资产总额(万元)', field: 'assets_total', com: FormInputNumber},
         {label: '营业收入(万元)', field: 'operating_income', com: FormInputNumber},
         {label: '学校等级', field: 'school_grade', com: Select, data: enumConstant("yesOrNo")},
@@ -105,13 +92,13 @@ class FormView extends Component {
         {label: '营业执照到期日', field: 'end_date_license', com: DatePicker},
         {label: '营业执照最新年审日', field: 'recent_inspect_date_license', com: DatePicker},
         {label: '法定代表人(文本类型)', field: 'legal_representative', com: FormControl},
-        {label: '法定代表人', field: 'pk_customer_person', com: TableFormRef},
-        {label: '证件类型', field: 'pk_customer_person.identity_type', com: Select, data: enumConstant("yesOrNo")},
-        {label: '证件号码', field: 'industpk_customer_person.identity_nory', com: FormControl},
+        // {label: '法定代表人', field: 'pk_customer_person', com: TableFormRef},
+        // {label: '证件类型', field: 'pk_customer_person.identity_type', com: Select, data: enumConstant("yesOrNo")},
+        // {label: '证件号码', field: 'industpk_customer_person.identity_nory', com: FormControl},
         {label: '实际控制人(文本类型)', field: 'actual_controller', com: FormControl},
-        {label: '实际控制人', field: 'actual_control', com: TableFormRef},
-        {label: '证件类型', field: 'actual_control.identity_type', com: Select, data: enumConstant("yesOrNo")},
-        {label: '证件号码', field: 'actual_control.identity_no', com: FormControl},
+        // {label: '实际控制人', field: 'actual_control', com: TableFormRef},
+        // {label: '证件类型', field: 'actual_control.identity_type', com: Select, data: enumConstant("yesOrNo")},
+        // {label: '证件号码', field: 'actual_control.identity_no', com: FormControl},
         {label: '注册资本币种', field: 'capital_cur', com: TableFormRef},
         {label: '注册资本', field: 'capital', com: FormInputNumber},
         {label: '实收资本币种', field: 'capital_cur_paidin', com: TableFormRef},
@@ -133,12 +120,12 @@ class FormView extends Component {
         {label: '是否重点监测客户', field: 'if_important_corp', com: Select, data: enumConstant("yesOrNo")},
     ];
     form4 = [
-        {label: '所在国家(地区)', field: 'country', com: Select, data: enumConstant("yesOrNo")},
-        {label: '区域', field: 'region', com: Select, data: enumConstant("yesOrNo")},
-        {label: '注册地隶属', field: 'reg_address_membership', com: Select, data: enumConstant("yesOrNo")},
-        {label: '地区(省)', field: 'province', com: Select, data: enumConstant("yesOrNo")},
-        {label: '地区(市)', field: 'city', com: Select, data: enumConstant("yesOrNo")},
-        {label: '地区(区/县)', field: 'district', com: Select, data: enumConstant("yesOrNo")},
+        // {label: '所在国家(地区)', field: 'country', com: Select, data: enumConstant("yesOrNo")},
+        // {label: '区域', field: 'region', com: Select, data: enumConstant("yesOrNo")},
+        // {label: '注册地隶属', field: 'reg_address_membership', com: Select, data: enumConstant("yesOrNo")},
+        // {label: '地区(省)', field: 'province', com: Select, data: enumConstant("yesOrNo")},
+        // {label: '地区(市)', field: 'city', com: Select, data: enumConstant("yesOrNo")},
+        // {label: '地区(区/县)', field: 'district', com: Select, data: enumConstant("yesOrNo")},
         {label: '实际告知地址', field: 'inform_address', com: FormControl, col: 12},
         {label: '实际告知地址邮编', field: 'inform_address_zip', com: FormControl},
         {label: '通讯地址', field: 'comm_address', com: FormControl, col: 12},
@@ -213,7 +200,7 @@ class FormView extends Component {
         return (
             <div className="jic-form">
                 <div>
-                    <div> <span onClick={() => this.setState({open: !this.state.open})}>
+                    <div  className={this.form.length === 0 ? "display-none": ""}> <span onClick={() => this.setState({open: !this.state.open})}>
                                         <FormSplitHeader open={this.state.open} title={'客户基本信息'}/>
                                       </span>
                     </div>
@@ -223,7 +210,7 @@ class FormView extends Component {
                         </Form>
                     </Collapse>
 
-                    <div>
+                    <div  className={this.form1.length === 0 ? "display-none": ""}>
                                         <span onClick={() => this.setState({open1: !this.state.open1})}>
                                             <FormSplitHeader open={this.state.open1} title={'客户规模信息'}/>
                                         </span>
@@ -233,7 +220,7 @@ class FormView extends Component {
                             {loop(this.form1)}
                         </Form>
                     </Collapse>
-                    <div>
+                    <div  className={this.form2.length === 0 ? "display-none": ""}>
                     <span onClick={() => this.setState({open2: !this.state.open2})}>
                         <FormSplitHeader open={this.state.open2} title={'客户证件信息'}/>
                     </span>
@@ -243,7 +230,7 @@ class FormView extends Component {
                             {loop(this.form2)}
                         </Form>
                     </Collapse>
-                    <div>
+                    <div  className={this.form3.length === 0 ? "display-none": ""}>
                     <span onClick={() => this.setState({open3: !this.state.open3})}>
                         <FormSplitHeader open={this.state.open3} title={'客户重要标志'}/>
                     </span>
@@ -254,7 +241,7 @@ class FormView extends Component {
                         </Form>
                     </Collapse>
 
-                    <div>
+                    <div className={this.form4.length === 0 ? "display-none": ""}>
                     <span onClick={() => this.setState({open4: !this.state.open4})}>
                         <FormSplitHeader open={this.state.open4} title={'客户地址信息'}/>
                     </span>
@@ -265,7 +252,7 @@ class FormView extends Component {
                         </Form>
                     </Collapse>
 
-                    <div>
+                    <div className={this.form5.length === 0 ? "display-none": ""}>
                     <span onClick={() => this.setState({open5: !this.state.open5})}>
                         <FormSplitHeader open={this.state.open5} title={'客户评级信息'}/>
                     </span>
@@ -277,7 +264,7 @@ class FormView extends Component {
                         </Form>
                     </Collapse>
 
-                    <div>
+                    <div className={this.form6.length === 0 ? "display-none": ""}>
                     <span onClick={() => this.setState({open6: !this.state.open6})}>
                         <FormSplitHeader open={this.state.open6} title={'客户其他信息'}/>
                     </span>
@@ -287,7 +274,7 @@ class FormView extends Component {
                             {loop(this.form6)}
                         </Form>
                     </Collapse>
-                    <div>
+                    <div className={this.form7.length === 0 ? "display-none": ""}>
                     <span onClick={() => this.setState({open7: !this.state.open7})}>
                         <FormSplitHeader open={this.state.open7} title={'操作信息'}/>
                     </span>

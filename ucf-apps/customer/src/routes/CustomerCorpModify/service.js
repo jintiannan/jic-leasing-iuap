@@ -5,7 +5,7 @@ import request from 'ucf-request';
 import * as mock from "./mock";
 //定义接口地址
 const URL = {
-    "LIST":  `${GROBAL_HTTP_CTX}/customerCorpApply/list`,
+    "LIST":  `${GROBAL_HTTP_CTX}/customer/corpForGrid`,
     "SAVE": `${GROBAL_HTTP_CTX}/customerCorpApply/saveOrUpdate`,
     "DELETE": `${GROBAL_HTTP_CTX}/customerCorpApply/delete`,
 };

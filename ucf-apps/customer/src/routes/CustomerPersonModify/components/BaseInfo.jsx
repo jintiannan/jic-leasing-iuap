@@ -17,7 +17,6 @@ import moment from "moment";
 import DatePicker from "tinper-bee/lib/Datepicker";
 import './index.less';
 import {enumConstant} from "../../../../../../ucf-common/src/utils/enums";
-import FormTreeRef from "../../../../../../ucf-common/src/components/FormTreeRef/FormTreeRef";
 const format = "YYYY-MM-DD";
 const format_time = "YYYY-MM-DD HH:mm:ss";
 
@@ -42,8 +41,8 @@ class BaseInfo extends  Component{
         };
     }
     form = [
-        {label:'客户名称',field:'customer_name',com:FormControl,required:true},
-        {label:'客户编号',field:'customer_code',com:FormControl,required:true},
+        {label:'客户名称',field:'customerName',com:FormControl,required:true},
+        {label:'客户编号',field:'customerCode',com:FormControl,required:true},
         {label:'客户英文名',field:'customer_eng_name',com:FormControl,required:true},
         {label:'是否授权征信客户',field:'if_warrant_cust',com:Select, data: enumConstant("yesOrNo"), required:true},
         {label:'客户性质',field:'customer_property',com:Select,required:true},

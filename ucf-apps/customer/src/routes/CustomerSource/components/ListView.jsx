@@ -5,7 +5,10 @@ import {deepClone, getHeight} from "utils";
 import {genGridColumn,checkListSelect} from "utils/service";
 
 import './index.less';
+import GridMain from "../../../../../../ucf-common/src/components/GridMain";
 
+// 在此自定义无数据时的展示内容
+const emptyFunc = () => '无数据';
 class ListView extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +33,7 @@ class ListView extends Component {
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
-        actions.customerSource.loadList(this.props.queryParam);
+
     }
 
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
@@ -134,8 +137,8 @@ class ListView extends Component {
 
     //列属性定义
     grid = [
-        {title:'关联中介名称',key:'role_name',type:'0'},
-        {title:'关联中介编号',key:'role_code',type:'0'},
+        {title:'关联中介名称',key:'pkCustomerRef.name',type:'0'},
+        {title:'关联中介编号',key:'pkCustomerRef.code',type:'0'},
         {title:'客户关系',key:'memo',type:'0'},
         {title:'来源方式',key:'ts',type:'0'},
         {title:'备注',key:'dr',type:'6',enumType:'yesOrNo'},
@@ -149,6 +152,26 @@ class ListView extends Component {
         return (
             this.props.subForm === 'source'?
             <div className="grid-parent" style={{display:this.state.listView}}>
+
+                {/*<GridMain*/}
+                    {/*ref={(el) => this.grid = el} //存模版*/}
+                    {/*columns={this.gridColumn} //字段定义*/}
+                    {/*data={this.props.list} //数据数组*/}
+                    {/*tableHeight={1} //表格高度 1主表 2字表*/}
+
+                    {/*//分页对象*/}
+                    {/*paginationObj = {{*/}
+                        {/*activePage : this.props.queryParam.pageIndex,//活动页*/}
+                        {/*total : this.props.list.length,//总条数*/}
+                        {/*items: this.props.queryObj.totalPages,//总页数*/}
+                        {/*freshData: this.freshData, //活动页改变,跳转指定页数据*/}
+                        {/*onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页*/}
+                    {/*}}*/}
+                    {/*//onRowClick={this.onRowSelect}*/}
+                    {/*getSelectedDataFunc={this.getSelectedDataFunc}*/}
+                    {/*//afterFilter={this.afterFilter}*/}
+
+                {/*/>*/}
                     <Grid
                         ref={(el) => this.grid = el} //存模版
                         columns={this.gridColumn} //字段定义

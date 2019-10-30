@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import InputNumber from 'components/InputNumber';
+import {InputNumber} from 'tinper-bee';
 import { TableFormRef  } from './TableFormRef';
 
 import './index.less';
@@ -15,8 +15,8 @@ class FormInputNumber extends Component {
         toThousands:false,
         precision:0,
         toPercent:false,
-        
-    }    
+
+    }
     static propTypes = {
         disabled: PropTypes.bool,
         precision:PropTypes.number,
@@ -30,7 +30,7 @@ class FormInputNumber extends Component {
         let {disabled,toThousands,toPercent,precision,...otherProps} = _inputProps;
         //console.log('进入FormInputNumber');
         return (
-            <InputNumber                
+            <InputNumber
                 disabled={disabled}
                 toThousands={toThousands}
                 precision={precision}
