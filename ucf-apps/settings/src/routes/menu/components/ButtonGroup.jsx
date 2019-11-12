@@ -48,8 +48,8 @@ class ButtonGroup extends Component {
 
     //菜单删除按钮判断是否可用
     powerdeleteDisabled = (param) =>{
-        if(param.SelectformObj!=undefined&&param.SelectformObj.func_code!=undefined){
-            if(param.SelectformObj.func_code=='0'||param.SelectformObj.first_enable_menu){
+        if(param.SelectformObj!=undefined&&param.SelectformObj.funcCode!=undefined){
+            if(param.SelectformObj.funcCode=='0'||param.SelectformObj.ifFirstEnabled){
                 return true;
             }else{
                 return false;
@@ -61,8 +61,8 @@ class ButtonGroup extends Component {
 
     //菜单修改按钮判断是否可用
     powereditDsiabled =(param)=>{
-        if(param.SelectformObj!=undefined&&param.SelectformObj.func_code!=undefined){
-            if(param.SelectformObj.func_code=='0'){
+        if(param.SelectformObj!=undefined&&param.SelectformObj.funcCode!=undefined){
+            if(param.SelectformObj.funcCode=='0'){
                 return true;
             }else{
                 return false;

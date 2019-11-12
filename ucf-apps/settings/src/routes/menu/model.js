@@ -13,6 +13,10 @@ export default {
     // 设置当前 Model 所需的初始化 state
     initialState: {
         showLoading: false,
+        queryParam: {
+            pageIndex: 1,
+            pageSize: 10,
+        },
         // 缓存行过滤条件
         isEdit: false,         //编辑态调整
         SelectformObj: {},     //选中菜单项
@@ -40,25 +44,27 @@ export default {
          * @param {*} param
          * @param {*} getState
          */
-        async loadList(param = {}, getState) {
+        async loadList(param, getState) {
             actions.menu.updateState({showLoading: true});
-            let data = processData(await api.getList(param));  // 调用 getList 请求数据
+            let res = processData(await api.getList(param));  // 调用 getList 请求数据
             let updateData = {
                 showLoading: false,
-                treeData: data
+                treeData:res.data
             };
             actions.menu.updateState(updateData); // 更新数据和查询条件
+            return res.data;
         },
 
         /**
-         * 获取行过滤的下拉数据
-         * @param {*} tree 树
+         * 
+         * @param {*} param 新增菜单vo数据
          */
-        async save(tree) {
-            console.log(tree);
+        async addData(param={}) {
+            let{vo} = param;
             actions.menu.updateState({showLoading: true});
 
-            let data = processData(await api.saveTree({data: '1'}));
+            let data = processData(await api.addData(vo));
+
             actions.menu.updateState({showLoading: false});
 
             if (data.success) {
@@ -68,6 +74,44 @@ export default {
             }
         },
 
+
+        /**
+         * 
+         * @param {*} param 更新菜单vo数据
+         */
+        async updateData(param={}) {
+            let{vo} = param;
+            actions.menu.updateState({showLoading: true});
+
+            let data = processData(await api.updateData(vo));
+
+            actions.menu.updateState({showLoading: false});
+
+            if (data.success) {
+                Message.create({ content: "修改完成", color : 'success'});
+            } else {
+                Message.create({ content: "修改失败", color : 'danger'});
+            }
+        },
+
+        /**
+         * 
+         * @param {*} param 删除菜单vo
+         */
+        async deleteData(param={}) {
+            let{vo} = param;
+            actions.menu.updateState({showLoading: true});
+
+            let data = processData(await api.deleteData(vo));
+
+            actions.menu.updateState({showLoading: false});
+
+            if (data.success) {
+                Message.create({ content: "删除成功", color : 'success'});
+            } else {
+                Message.create({ content: "删除失败", color : 'danger'});
+            }
+        },
     }
 };
 

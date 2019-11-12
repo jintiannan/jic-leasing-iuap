@@ -43,14 +43,26 @@ class AddModalView extends Component {
       //关闭之前更新 树表数据
       let nodeItem = this.props.form.getFieldsValue();  //当前选中节点数据（包含新增的插入数据）
       let obj ={};
-      obj.key = 'fsak';   //测试新增插入主键
-      obj.parent_key = this.props.SelectformObj.key;
-      obj.func_code = nodeItem.func_code1;
-      obj.func_name = nodeItem.func_name1;
-      obj.menu_property = nodeItem.menu_property1;
-      obj.if_power_menu = nodeItem.if_power_menu1;
+      if(this.props.SelectformObj!=undefined&&this.props.SelectformObj.key=='function_register'){  //如是功能注册父节点 置空父节点属性
+           obj.pkParent=null;
+      }else{
+           obj.pkParent = this.props.SelectformObj;
+      } 
+      
+      obj.funcCode = nodeItem.funcCode1;
+      obj.funcName = nodeItem.funcName1;
+      obj.menuProperty = nodeItem.menuProperty1;
+      if(nodeItem.ifPower){
+        obj.ifPower=0;
+      }else{
+        obj.ifPower=1;
+      }
+      obj.ifEnabled=1;
+      obj.pkSystem = this.props.SelectformObj.pkSystem;
       obj.children = [];
-      //更新数节点数据
+      //调用后台接口插入数据
+      actions.menu.addData({vo:obj})
+      //更新树节点数据
       this.doInsert(this.props.treeData,obj);
       this.close();
     }
@@ -61,18 +73,22 @@ class AddModalView extends Component {
      * @param obj 新增数据
      */
     doInsert = (data,obj) => {
-        data.map((item)=>{
-            if(item.key == obj.parent_key){
-                if(item.children&&item.children.length>0){
-                    item.children.push(obj);
-                }else{
-                    item.children=[];
-                    item.children.push(obj);
+        if(obj.pkParent==null){   //父节点为空  证明新增的为1级菜单节点
+            data.push(obj);
+        }else{
+            data.map((item)=>{
+                if(item.pkFuncmenu == obj.pkParent.pkFuncmenu){
+                    if(item.children&&item.children.length>0){
+                        item.children.push(obj);
+                    }else{
+                        item.children=[];
+                        item.children.push(obj);
+                    }
+                }else if(item.children && item.children.length > 0){
+                    this.doInsert(item.children,obj);
                 }
-            }else if(item.children && item.children.length > 0){
-                this.doInsert(item.children,obj);
-            }
-        })
+            })
+        }
         actions.menu.updateState({treeData:data});
     };
 
@@ -81,7 +97,7 @@ class AddModalView extends Component {
     }
 
     changeCheckBox = (value)=>{
-        this.props.form.setFieldsValue({if_power_menu1:value});
+        this.props.form.setFieldsValue({ifPower:value});
     }
   
 
@@ -114,7 +130,7 @@ class AddModalView extends Component {
                                     <FormItem>
                                     <Label><Icon type="uf-mi" className='mast'></Icon>节点编码:</Label>
                                         <FormControl  disabled={true}
-                                            {...getFieldProps('func_code1', {
+                                            {...getFieldProps('funcCode1', {
                                                 rules: [{
                                                     required: true,
                                                 }],
@@ -124,7 +140,7 @@ class AddModalView extends Component {
                                     <FormItem>
                                     <Label><Icon type="uf-mi" className='mast'></Icon>节点名称:</Label>
                                         <FormControl
-                                            {...getFieldProps('func_name1', {
+                                            {...getFieldProps('funcName1', {
                                                 rules: [{
                                                     required: true,
                                                 }],
@@ -134,7 +150,7 @@ class AddModalView extends Component {
                                     <FormItem>
                                         <Label><Icon type="uf-mi" className='mast'></Icon>节点路径:</Label>
                                             <FormControl
-                                                {...getFieldProps('path1', {
+                                                {...getFieldProps('menuPath1', {
                                                     rules: [{
                                                         required: true,
                                                     }],
@@ -144,9 +160,9 @@ class AddModalView extends Component {
                                     <FormItem>
                                     <Label><Icon type="uf-mi" className='mast'></Icon>菜单性质:</Label>
                                         <Radio.RadioGroup
-                                                    selectedValue={this.props.form.getFieldsValue()['menu_property1']}
+                                                    selectedValue={this.props.form.getFieldsValue()['menuProperty1']}
                                                     {
-                                                    ...getFieldProps('menu_property1', {
+                                                    ...getFieldProps('menuProperty1', {
                                                         }
                                                     )}
                                                 >
@@ -158,10 +174,11 @@ class AddModalView extends Component {
                                     <FormItem>
                                         <Label><Icon type="uf-mi" className='mast'></Icon>是否过滤数据权限:</Label>
                                             <Checkbox 
-                                            checked={this.props.form.getFieldsValue()['if_power_menu1']} 
+                                            checked={this.props.form.getFieldsValue()['ifPower']} 
+                                            onChange={this.changeCheckBox}
                                             {
-                                                ...getFieldProps('if_power_menu1', {
-                                                        onChange: this.changeCheckBox
+                                                ...getFieldProps('ifPower', {
+                                                        
                                                     }
                                                 )}
                                             >

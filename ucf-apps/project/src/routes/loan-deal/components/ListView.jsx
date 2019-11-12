@@ -2,27 +2,17 @@ import React, {Component} from 'react'
 import {actions} from 'mirrorx';
 import {Tabs} from 'tinper-bee';
 import Grid from 'components/Grid';
-import Header from 'components/Header';
 import {deepClone, Warning,getHeight} from "utils";
 import {genGridColumn,checkListSelect} from "utils/service";
 import './index.less'
 
 const {TabPane} = Tabs;
-const format = "YYYY-MM-DD";
 
 class ListView extends Component {
     constructor(props) {
         super(props);
         this.state = {
             tableHeight: 0,
-            planIndex: 0,   //业务申请单索引
-            accountIndex: 0,  //付款账户索引
-            filterable: false,
-            record: {}, // 存储关联数据信息
-            isGrid:true,//是否列表界面 true:列表界面 false:卡片界面
-            formView:'none',
-            listView:'',
-            selectList:[],
         }
 
     }
@@ -50,8 +40,6 @@ class ListView extends Component {
     resetTableHeight = (isopen) => {
         let tableHeight = 0;
         tableHeight = getHeight()*0.5;
-        console.log(getHeight());
-        console.log(tableHeight);
         this.setState({ tableHeight});
     }
 
@@ -84,7 +72,8 @@ class ListView extends Component {
         {title:'客户名称',key:'customer_name',type:'0'},
         {title:'合同编号',key:'contract_code',type:'0'},
         {title:'计划日期',key:'plan_date',type:'0'},
-        {title:'收取期次',key:'time',type:'0'}
+        {title:'收取期次',key:'time',type:'0'},
+        {title:'合同金额',key:'contract_money',type:'0'}
     ]
     accountgrid = [
         {title:'收款方户名',key:'gather_account',type:'0'},
@@ -104,55 +93,16 @@ class ListView extends Component {
      */
     onChangeTab = (tabKey) => {
         actions.loandeal.updateState({tabKey});
-        actions.loandeal.loadSubList(this.props.queryParam);
+        actions.loandeal.loadSubList();
     }
 
-    onClickForm = ()=>{
-        if(this.state.formView == ''){
-            this.setState({formView:'none'})
-        } else {
-            this.setState({formView:''})
-        }
-        if(this.state.listView  == ''){
-            this.setState({listView:'none'})
-        } else {
-            this.setState({listView:''})
-        }
-    }
-
-
-    /**
-     * 行单击事件,同步行首checkbox
-     * 可能会有性能问题,暂时实现功能,待后期再取舍
-     * #关闭功能,如果有页面特殊要求再打开#
-     */
-    onRowSelect = (record, index, event) => {
-        //actions.loandeal.updateState({loandealIndex: index});
-        //actions.loandeal.loadSubList(this.props.queryParam);
-        // console.log('行点击事件');
-        // let _record = deepClone(record);
-        // _record._checked = _record._checked ? false : true;
-        // let param = {
-        //     record:_record,
-        //     index:index,
-        // }
-        // let _selectedList = deepClone(this.props.selectedList);
-        // if(_record._checked){
-        //     _selectedList.push(_record);
-        // } else {
-        //     _selectedList.splice(_selectedList.findIndex(item => item.pk === record.pk), 1)
-        // }
-        // actions.loandeal.updateRowData(param,index);
-        // actions.loandeal.updateState({ selectedList : _selectedList });  
-    }
 
     /**
      *
      * @param {Number} pageIndex 当前分页值 第几页
-     * @param {string} tableObj 分页 table 名称
      */
-    freshData = (pageIndex, tableObj) => {
-        this.onPageSelect(pageIndex, 0, tableObj);
+    freshData = (pageIndex) => {
+        this.onPageSelect(pageIndex, 0);
     }
 
 
@@ -160,10 +110,9 @@ class ListView extends Component {
      *
      * @param {number} pageIndex 当前分页值 第几条
      * @param {number} value 分页条数
-     * @param {string} tableObj 分页table名称
      */
-    onDataNumSelect = (pageIndex, value, tableObj) => {
-        this.onPageSelect(value, 1, tableObj);
+    onDataNumSelect = (pageIndex, value) => {
+        this.onPageSelect(value, 1);
     }
 
     /**
@@ -173,34 +122,15 @@ class ListView extends Component {
      * @param {string} type  type为0标识为 pageIndex,为1标识 pageSize,
      * @param {string} tableName 分页table名称
      */
-    onPageSelect = (value, type, tableName) => {
+    onPageSelect = (value, type) => {
         let queryParam = deepClone(this.props.queryParam); // 深拷贝查询条件从 action 里
-        if (tableName === "loandealObj") { //主表分页
-            if (type === 0) {
-                queryParam.pageIndex = value;
-            } else {
-                queryParam.pageSize = value.toLowerCase() !== 'all' && value || 1;
-                queryParam.pageIndex = 1;
-            }
-            actions.loandeal.loadList(queryParam);
-        }else if(tableName ==="loanplanObj"){   //业务申请单分页
-            if (type === 0) {
-                queryParam.planIndex= value;
-            } else {
-                queryParam.planpageSize = value.toLowerCase() !== 'all' && value || 1;
-                queryParam.planIndex = 1;
-            }
-            actions.loandeal.loadSubList(queryParam);
+        if (type === 0) {
+            queryParam.pageIndex = value;
+        } else {
+            queryParam.pageSize = value.toLowerCase() !== 'all' && value || 1;
+            queryParam.pageIndex = 1;
         }
-        else if(tableName ==="payaccountObj") {   //付款账户分页
-            if (type === 0) {
-                queryParam.accountIndex= value;
-            } else {
-                queryParam.accountpageSize= value.toLowerCase() !== 'all' && value || 1;
-                queryParam.accountIndex = 1;
-            }
-            actions.loandeal.loadSubList(queryParam);
-        }
+        actions.loandeal.loadList(queryParam);
     }
 
     /**
@@ -245,11 +175,7 @@ class ListView extends Component {
 
 
     render() {
-        let {
-            loandealObj, loanplanObj, payaccountObj, showLoading,
-            showPlanLoading, showAccountLoading, tabKey, loandealIndex
-        } = this.props;
-
+        let {tabKey} = this.props;
         let { tableHeight} = this.state;
         return (
             <div className='loan_deal' style={{display:this.state.listView}}>
@@ -279,23 +205,15 @@ class ListView extends Component {
                     total : this.props.list.length,//总条数
                     items: this.props.loandealObj.totalPages,//总页数
                     freshData: (pageSize) => {                     //活动页改变,跳转指定页数据
-                        this.freshData(pageSize, "loandealObj");
+                        this.freshData(pageSize);
                     },
                     dataNumSelect:['5','10','20','30'],
                     dataNum:0,
                     onDataNumSelect: (index, value) => {
-                        this.onDataNumSelect(index, value, "loandealObj");//每页行数改变,跳转首页
+                        this.onDataNumSelect(index, value);//每页行数改变,跳转首页
                     },
                     verticalPosition:'bottom'
                 }}
-                rowClassName={(record,index,indent)=>{
-                    if (record._checked) {
-                        return 'selected';
-                    } else {
-                        return '';
-                    }
-                }}
-                onRowClick={this.onRowSelect}
                 getSelectedDataFunc={this.getSelectedDataFunc}
                 
                 />
@@ -324,31 +242,7 @@ class ListView extends Component {
                                     hideHeaderScroll={false} //无数据时是否显示表头
                                     // 分页
                                     paginationObj={{
-                                        activePage : this.props.queryParam.planIndex,//活动页
-                                        total : this.props.loanplanList.length,//总条数
-                                        items: this.props.loanplanObj.totalPages,//总页数
-                                        freshData: (pageSize) => {
-                                            this.freshData(pageSize, "loanplanObj");
-                                        },
-                                        onDataNumSelect: (index, value) => {
-                                            this.onDataNumSelect(index, value, "loanplanObj");
-                                        },
-                                        dataNumSelect:['5','10','20','30'],
-                                        dataNum:0
-
-                                    }}
-                                    onRowClick={(record, index) => {
-                                        this.setState({planIndex: index});
-                                    }}
-                                    rowClassName={(record, index, indent) => {
-                                        if (this.state.planIndex === index) {
-                                            return 'selected';
-                                        } else {
-                                            return '';
-                                        }
-                                    }}
-                                    loading={{
-                                        show: (showPlanLoading && showLoading === false),
+                                        verticalPosition:'none'
                                     }}
                                 />
                             </div>
@@ -373,31 +267,8 @@ class ListView extends Component {
                                     hideHeaderScroll={false} //无数据时是否显示表头
                                     // 分页
                                     paginationObj={{
-                                        activePage : this.props.queryParam.accountIndex,//活动页
-                                        total : this.props.payaccountList.length,//总条数
-                                        items: this.props.payaccountObj.totalPages,//总页数
-                                        freshData: (pageSize) => {
-                                            this.freshData(pageSize, "payaccountObj");
-                                        },
-                                        onDataNumSelect: (index, value) => {
-                                            this.onDataNumSelect(index, value, "payaccountObj");
-                                        },
-                                        dataNumSelect:['5','10','20','30'],
+                                        verticalPosition:'none'
                                     }}
-                                    onRowClick={(record, index) => {
-                                        this.setState({accountIndex: index});
-                                    }}
-                                    rowClassName={(record, index, indent) => {
-                                        if (this.state.accountIndex === index) {
-                                            return 'selected';
-                                        } else {
-                                            return '';
-                                        }
-                                    }}
-                                    loading={{
-                                        show: (showAccountLoading && showLoading === false),
-                                    }}
-
                                 />
                             </div>
                         </TabPane>

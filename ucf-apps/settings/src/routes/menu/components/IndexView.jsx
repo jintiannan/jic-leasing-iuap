@@ -51,27 +51,27 @@ class IndexView extends Component {
      * 点击button事件
      */
     onAdd = () => {
-        if (this.props.SelectformObj.func_code === undefined) {
+        if (this.props.SelectformObj.funcCode === undefined) {
             Message.create({ content: "请选中父节点", color : 'danger'});
-        }else if(this.props.SelectformObj.menu_property=='third_menu'){
+        }else if(this.props.SelectformObj.menuProperty=='third_menu'){
             Message.create({ content: "可执行功能节点无法继续新增子节点", color : 'danger'});
         }
          else {
             actions.menu.updateState({showaddModal: true});
-            if(this.props.SelectformObj.key == 'function_register'){    //选中主菜单  默认添加一级菜单
-                this.props.form.setFieldsValue({func_code1:this.getFuncCode(),func_name1:'222',path1:'',menu_property1:'first_menu',if_power_menu1:false});
-            }else if(this.props.SelectformObj.menu_property=='first_menu'){   //选中一级菜单 默认生成二级菜单
-                this.props.form.setFieldsValue({func_code1:this.getFuncCode(),func_name1:'22',path1:'',menu_property1:'second_menu',if_power_menu1:false});
-            }else if(this.props.SelectformObj.menu_property=='second_menu'){  //选中二级菜单 默认生成三级菜单
-                this.props.form.setFieldsValue({func_code1:this.getFuncCode(),func_name1:'2',path1:'',menu_property1:'third_menu',if_power_menu1:false});
+            if(this.props.SelectformObj.pkFuncmenu == 'function_register'){    //选中主菜单  默认添加一级菜单
+                this.props.form.setFieldsValue({funcCode1:this.getFuncCode(),funcName1:'',menuPath1:'',menuProperty1:'first_menu',ifPower:false});
+            }else if(this.props.SelectformObj.menuProperty=='first_menu'){   //选中一级菜单 默认生成二级菜单
+                this.props.form.setFieldsValue({funcCode1:this.getFuncCode(),funcName1:'',menuPath1:'',menuProperty1:'second_menu',ifPower:false});
+            }else if(this.props.SelectformObj.menuProperty=='second_menu'){  //选中二级菜单 默认生成三级菜单
+                this.props.form.setFieldsValue({funcCode1:this.getFuncCode(),funcName1:'',menuPath1:'',menuProperty1:'third_menu',ifPower:false});
             }
         }
     };
     // 取消功能
     onCancel = () => {
         let node = this.props.SelectformObj;
-        node.func_name=node.func_name ==null ? '':node.func_name;
-        node.path=node.path ==null ? '':node.path;
+        node.funcName=node.funcName ==null ? '':node.funcName;
+        node.menuPath=node.menuPath ==null ? '':node.menuPath;
         this.child.alterformvalue(node);
     };
 
@@ -80,16 +80,26 @@ class IndexView extends Component {
         let nodeItem = this.props.form.getFieldsValue();
         //先更新表单数据  
         const formObj = deepClone(this.props.SelectformObj);
-        formObj.func_name= nodeItem.func_name;
-        formObj.path=nodeItem.path;
-        formObj.if_power_menu = nodeItem.if_power_menu;
+        formObj.funcName= nodeItem.funcName;
+        formObj.menuPath=nodeItem.menuPath;
+        if(nodeItem.ifPower){
+            formObj.ifPower='0';
+        }else{
+            formObj.ifPower='1';
+        }
+        formObj.ifEnabled = nodeItem.ifEnabled;
         //后更新树节点数据
         this.doUpdate(this.props.treeData,nodeItem);
+        //调用后台接口更新数据库中的数据
+        actions.menu.updateData({vo:formObj})
         actions.menu.updateState({SelectformObj:formObj,isEdit: false,treeDisabled: true});
     };
 
     // 删除方法
     onDelete = () => {
+        //调用后台接口删除数据库中的vo
+        actions.menu.deleteData({vo:this.props.SelectformObj});
+        //更新树节点数据
         this.doDelete(this.props.treeData);
     };
 
@@ -98,10 +108,10 @@ class IndexView extends Component {
         actions.menu.updateState({isEdit: true,treeDisabled: false});
     };
     doDelete = (nodes) => {
-        let key = this.props.SelectformObj.key;
+        let pkFuncmenu = this.props.SelectformObj.pkFuncmenu;
         let data = nodes;
         for (let i = 0; i < data.length; i++) {
-            if (data[i].key == key) {
+            if (data[i].pkFuncmenu == pkFuncmenu) {
                 data.splice(i, 1);
             } else if (data[i].children && data[i].children.length > 0) {
                 this.doDelete(data[i].children);
@@ -115,12 +125,12 @@ class IndexView extends Component {
      * @param nodeItem 数据集合
      */
     doUpdate = (data,nodeItem) => {
-        let key = this.props.SelectformObj.key;
+        let pkFuncmenu = this.props.SelectformObj.pkFuncmenu;
         data.map((item)=>{
-            if(item.key == key){
-                item.func_name=nodeItem.func_name;
-                item.path=nodeItem.path;
-                item.if_power_menu=nodeItem.if_power_menu;
+            if(item.pkFuncmenu == pkFuncmenu){
+                item.funcName=nodeItem.funcName;
+                item.menuPath=nodeItem.menuPath;
+                item.ifPower=nodeItem.ifPower;
             }else if(item.children && item.children.length > 0){
                 this.doUpdate(item.children,nodeItem);
             }
@@ -130,32 +140,36 @@ class IndexView extends Component {
 
     // 获取新增节点的功能编码
     getFuncCode = () => {
-        let func_code = '';
+        let funcCode = '';
         let data = this.props.treeData;
-        let parentKey = this.props.SelectformObj.key;
+        let parentKey = this.props.SelectformObj.pkFuncmenu;
         let parNode = this.getNodeByKey(data, parentKey);
-        let _func_code = this.props.SelectformObj.func_code;
+        let _func_code = this.props.SelectformObj.funcCode;
         if (parNode.children) {
             let length = parNode.children.length;
             if (length < 9) {
-                func_code = _func_code + "0" + (length + 1);
+                funcCode = _func_code + "0" + (length + 1);
             } else {
-                func_code = _func_code + (length + 1);
+                funcCode = _func_code + (length + 1);
             }
         } else {
-            func_code = _func_code + "01";
+            funcCode = _func_code + "01";
         }
-        return func_code;
+        return funcCode;
     };
 
     getNodeByKey = (data, key) => {
         this.parentNode = undefined;
         for (let i = 0; i < data.length; i++) {
-            if (data[i].key === key) {
+            if(key == 'function_register'){   //新建一级菜单 key为功能注册主键
+                this.parentNode = key;
+                return this.parentNode;
+            }else if (data[i].pkFuncmenu === key) {
                 this.parentNode = data[i];
-                break;
+                // break;
+                return this.parentNode;
             } else if (data[i].children&&data[i].children.length>0) {
-                return this.getNodeByKey(data[i].children, key);
+                this.getNodeByKey(data[i].children, key);
             }
         }
         return this.parentNode;

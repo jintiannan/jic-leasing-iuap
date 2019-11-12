@@ -14,24 +14,11 @@ export default {
         tabKey: "loanplan", // table 页切换
         loandealIndex: 0,
         showLoading: false,
-        showLoanplanLoading: false,
-        showPayaccountLoading: false,
-        pageParams: {},
         queryParam: {
             pageIndex: 1,
             pageSize: 10,
-            planIndex:1,
-            planpageSize:5,
-            accountIndex:1,
-            accountpageSize:5
         },
         loandealObj: {pageIndex:1,
-            pageSize:5,
-            totalPages:0},
-        loanplanObj: {pageIndex:1,
-            pageSize:5,
-            totalPages:0},
-        payaccountObj: {pageIndex:1,
             pageSize:5,
             totalPages:0},
         //页面数据集
@@ -57,6 +44,13 @@ export default {
         showModal:false,
         //新增页form表单绑定数据
         formObjAdd:{},
+        //两个子表模态框定义显示
+        showModalPlan:false,
+        ifplanAdd:true,
+        ifaccountAdd:true,
+        showModalAccount:false,
+        planformObj:{},
+        accountformObj:{},
     },
     reducers: {
         /**
@@ -106,71 +100,26 @@ export default {
 
         async loadSubList(param = {}, getState) {
             let state = getState().loandeal;
-            let { tabKey, list, loandealIndex} = state;
+            let { tabKey,list,selectedList} = state;
             if (list.length > 0) {
-                let deal = list[loandealIndex];
+                let deal = selectedList[0];
                 let _param = {};
                 if (deal) {
                     if (tabKey === 'loanplan') {
                     _param = Object.assign({}, {
                         search_dealId: deal.id,
-                        pageIndex: param.planIndex,
-                        pageSize: param.planpageSize
                     }, param);
                 }else if (tabKey === 'payaccount'){
                     _param = Object.assign({}, {
                         search_dealId: deal.id,
-                        pageIndex: param.accountIndex,
-                        pageSize: param.accountpageSize
                     }, param);
                 }
-                    let apiService = null;
-                    let loadingKey = ''; //子表loading显示key
-                    if (tabKey === 'loanplan') {
-                        apiService = api.getLoanPlan;
-                        loadingKey = 'showPlanLoading';
-                    } else if (tabKey === 'payaccount') {
-                        apiService = api.getPayAccount;
-                        loadingKey = 'showAccountLoading';
-                    }
-                    actions.loandeal.updateState({[loadingKey]: true});
-                    let sondata = processData(await apiService(_param));
-                    let newObj = null;
-                    let updateData = {[loadingKey]: false};
+                let updateData = {};
+                    let sondata =processData(await api.getLoanPlan(_param));
                     if(tabKey ==='loanplan'){
-                        newObj = {
-                            pageIndex:param.planIndex,
-                            pageSize:param.planpageSize,
-                            totalPages:Math.ceil(sondata.loanplan.length/param.planpageSize)
-                        };
-                        updateData.loanplanObj = newObj;
-                        updateData.queryParam = param;
-                        let reallist=[];
-                        let startindex=(newObj.pageIndex-1)*newObj.pageSize;
-                        let endindex =(newObj.pageIndex)*newObj.pageSize-1;
-                        if(endindex>=sondata.loanplan.length)  endindex=sondata.loanplan.length-1;
-                        for(var i=startindex;i<=endindex;i++){
-                            sondata.loanplan[i]['_edit']=param['_edit'];
-                            reallist.push(sondata.loanplan[i]);
-                        }
-                        updateData.loanplanList = reallist;
+                        updateData.loanplanList = sondata.loanplan;
                     }else if (tabKey === 'payaccount') {
-                        newObj = {
-                            pageIndex:param.accountIndex,
-                            pageSize:param.accountpageSize,
-                            totalPages:Math.ceil(sondata.payaccount.length/param.accountpageSize)
-                        };
-                        updateData.payaccountObj = newObj;
-                        updateData.queryParam = param;
-                        let reallist=[];
-                        let startindex=(newObj.pageIndex-1)*newObj.pageSize;
-                        let endindex =(newObj.pageIndex)*newObj.pageSize-1;
-                        if(endindex>=sondata.payaccount.length)  endindex=sondata.payaccount.length-1;
-                        for(var i=startindex;i<=endindex;i++){
-                            sondata.payaccount[i]['_edit']=param['_edit'];
-                            reallist.push(sondata.payaccount[i]);
-                        }
-                        updateData.payaccountList = reallist;  
+                        updateData.payaccountList = sondata.payaccount;  
                     }
                     actions.loandeal.updateState(updateData);
                 }

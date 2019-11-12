@@ -3,97 +3,97 @@
 //模拟项目申请数据
 export const LoandealList = [
     {'id':1,'billstatus':'9','loan_code':'10010','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001001','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9001','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'3','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'3','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
     
     {'id':2,'billstatus':'9','loan_code':'10011','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001004','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9003','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'3','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'4','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'3','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'4','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'3','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
 
     {'id':3,'billstatus':'204','loan_code':'10012','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001002','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9002','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
 
     {'id':4,'billstatus':'99','loan_code':'10013','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001005','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9005','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
 
     {'id':5,'billstatus':'20','loan_code':'10014','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001003','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9009','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
 
     {'id':6,'billstatus':'20','loan_code':'10015','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001007','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9006','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
 
     {'id':7,'billstatus':'20','loan_code':'10016','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001006','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9008','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
 
     {'id':8,'billstatus':'20','loan_code':'10017','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001002','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9002','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
 
     {'id':9,'billstatus':'20','loan_code':'10018','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001009','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9004','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
 
     {'id':10,'billstatus':'20','loan_code':'10019','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001008','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9007','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
 
     {'id':11,'billstatus':'20','loan_code':'10020','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001011','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9011','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
 
     {'id':12,'billstatus':'20','loan_code':'10021','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001010','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9014','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
 
     {'id':13,'billstatus':'20','loan_code':'10022','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001012','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9012','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
     
     {'id':14,'billstatus':'20','loan_code':'10023','pay_type':'业务资金付款','gather_name':'南宁工行','gather_account':'001013','gather_cust':'南宁工口建行','customer_name':'南宁公司','cont_code':'9010','pk_dept':'市场部','fact_pay_amount':1000,'pay_station':'收取保证金后','project_type':'普通项目','pk_mainorg':'中建投','pk_org':'中建投','rent_type':'直租','cont_manager':'看天天','currency':'人民币','customer_scale':'个体大户','renting_type':'大类','deposit':100,'srvfee':100,'pk_operator':'侯莹莹'
-    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1},
-    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1}],
+    ,loanplan:[{'planid':'1','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000},
+    {'planid':'2','customer_name':'南宁公司','contract_code':'10010','plan_date':'2010-02-05','time':1,'contract_money':1000}],
     payaccount:[{'accountid':'1','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'},
     {'accountid':'2','gather_account':'中建投','gather_number':'100010','payer_account':'南宁公司','payer_number':'100020'}]},
 ]

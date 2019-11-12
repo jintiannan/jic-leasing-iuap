@@ -7,217 +7,7 @@ import './index.less';
 const TreeNode = Tree.TreeNode;
 const FormItem = Form.FormItem;
 const {TabPane} = Tabs;
-
-const transData = [                     //传递测试假数据    后台传递时菜单注册字段也要同时传递进来JSON解析
-    {
-      func_name: "参数管理",             //节点名称
-      key: "parameter_management",  //目前相当于主键
-      func_code:1,                       //节点编码
-      if_power_menu:false,          //是否过滤数据权限
-      menu_property:"first_menu",   //菜单性质: 一级菜单  二级菜单:菜单标题  三级菜单:可执行功能节点
-      data_power_property:[],       //数据权限字段
-      if_enabled:true,              //是否启用
-      first_enable_menu:false,       //首次启用标志(若已首次启用则菜单不可删除))
-      parent_key:null,              //父节点主键              
-      path:null,                     //url路径
-      children:[],
-    },
-    {
-      func_name: "系统管理",
-      key: "system_management",
-      func_code:2,
-      if_power_menu:false,
-      menu_property:"first_menu",
-      data_power_property:[],
-      if_enabled:true,
-      first_enable_menu:true,
-      parent_key:null,
-      path:null,
-      children:[],
-    },
-    {
-        func_name: "报价测算",
-      key: "quote_calculate",
-      func_code:3,
-      if_power_menu:false,
-      menu_property:"first_menu",
-      data_power_property:[],
-      if_enabled:false,
-      first_enable_menu:false,
-      parent_key:null,
-      path:null,
-      children:[],
-    },
-    {
-        func_name: "资金管理",
-      key: "fund_management",
-      func_code:4,
-      if_power_menu:false,
-      menu_property:"first_menu",
-      data_power_property:[],
-      if_enabled:true,
-      first_enable_menu:true,
-      parent_key:null,
-      path:null,
-      children:[],
-    },
-    {
-        func_name: "客户管理",
-      key: "customer_management",
-      func_code:5,
-      if_power_menu:false,
-      menu_property:"first_menu",
-      data_power_property:[],
-      if_enabled:true,
-      first_enable_menu:true,
-      parent_key:null,
-      path:null,
-      children:[],
-    },
-    {
-        func_name: "项目管理",
-      key: "project_management",
-      func_code:6,
-      if_power_menu:false,
-      menu_property:"first_menu",
-      data_power_property:[],
-      if_enabled:true,
-      first_enable_menu:true,
-      parent_key:null,
-      path:null,
-      children:[],
-    },
-    {
-        func_name: "合同管理",
-      key: "cont_management",
-      func_code:7,
-      if_power_menu:false,
-      menu_property:"first_menu",
-      data_power_property:[],
-      if_enabled:true,
-      first_enable_menu:true,
-      parent_key:null,
-      path:null,
-      children:[],
-    },
-    {
-        func_name: "收付款管理",
-      key: "payment_management",
-      func_code:8,
-      if_power_menu:false,
-      menu_property:"first_menu",
-      data_power_property:[],
-      if_enabled:true,
-      first_enable_menu:true,
-      parent_key:null,
-      path:null,
-      children:[],
-    },
-    {
-        func_name: "租后管理",
-      key: "rent_management",
-      func_code:9,
-      if_power_menu:false,
-      menu_property:"first_menu",
-      data_power_property:[],
-      if_enabled:true,
-      first_enable_menu:true,
-      parent_key:null,
-      path:null,
-      children:[],
-    },
-    {
-        func_name: "票据管理",
-      key: "ticket_management",
-      func_code:10,
-      if_power_menu:false,
-      menu_property:"first_menu",
-      data_power_property:[],
-      if_enabled:true,
-      first_enable_menu:true,
-      parent_key:null,
-      path:null,
-      children:[],
-    },
-    {
-        func_name: "规则报价",
-      key: "regular_quote",
-      func_code:301,
-      if_power_menu:false,
-      menu_property:"second_menu",
-      data_power_property:[],
-      if_enabled:true,
-      first_enable_menu:false,
-      parent_key:"quote_calculate",
-      path:null,
-      children:[],
-    },
-    {
-        func_name: "不规则报价",
-        key: "illregular_quote",
-        func_code:302,
-        if_power_menu:false,
-        menu_property:"second_menu",
-        data_power_property:[],
-        if_enabled:true,
-        first_enable_menu:false,
-        parent_key:"quote_calculate",
-        path:null,
-        children:[],
-      },
-      {
-        func_name: "精算报价",
-        key: "calculate-zt",
-        func_code:30101,
-        if_power_menu:false,
-        menu_property:"third_menu",
-        data_power_property:[],
-        if_enabled:true,
-        first_enable_menu:false,
-        parent_key:"regular_quote",
-        path:null,
-        children:[],
-      },
-      {
-        func_name: "快速报价",
-        key: "calculate-normalzt",
-        func_code:30102,
-        if_power_menu:false,
-        menu_property:"third_menu",
-        data_power_property:[],
-        if_enabled:true,
-        first_enable_menu:false,
-        parent_key:"regular_quote",
-        path:null,
-        children:[],
-      },
-      {
-        func_name: "不规则报价",
-        key: "illregulator_calculate_zt",
-        func_code:30201,
-        if_power_menu:false,
-        menu_property:"third_menu",
-        data_power_property:[],
-        if_enabled:true,
-        first_enable_menu:false,
-        parent_key:"illregular_quote",
-        path:null,
-        children:[],
-      },
-      {
-        func_name: "费率测算",
-        key: "rate_calculate",
-        func_code:30104,
-        if_power_menu:false,
-        menu_property:"third_menu",
-        data_power_property:[],
-        if_enabled:true,
-        first_enable_menu:false,
-        parent_key:"illregular_quote",
-        path:null,
-        children:[],
-      },
-];                      
+                   
 const result_menu = [];   //一级菜单  结果集菜单
 const second_menu = [];   //二级菜单 过滤用
 const third_menu = [];    //三级菜单  过滤用
@@ -435,7 +225,6 @@ class FormView extends Component {
         ],
         this.state = {
             expandedKeys: ['function_register'],
-            transData:transData,
             result_menu :[],
             tabKey:'table_list',
             columns:this.columns,
@@ -451,24 +240,32 @@ class FormView extends Component {
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
-        // actions.menu.loadList();
-        if(this.state.transData.length>0){
-            this.state.transData.map((item)=>{
-                if(item.menu_property=='first_menu'){
+        this.loadList();
+        console.log(this.props.treeData);  
+    }
+
+    async loadList(){
+        var menus = await actions.menu.loadList(this.props.queryParam);
+        if(menus.length>0){
+            menus.map((item)=>{
+                if(item.menuProperty=='first_menu'){
+                    item.children=[];
                     result_menu.push(item);
-                }else if(item.menu_property=='second_menu'){
+                }else if(item.menuProperty=='second_menu'){
+                    item.children=[];
                     second_menu.push(item);
-                }else if(item.menu_property=='third_menu'){
+                }else if(item.menuProperty=='third_menu'){
+                    item.children=[];
                     third_menu.push(item);
                 }
             });
             //菜单级别过滤
             result_menu.map((item)=>{
                 second_menu.map((value2)=>{
-                    if(value2.parent_key==item.key){
+                    if(value2.pkParent.pkFuncmenu==item.pkFuncmenu){
                         item.children.push(value2);
                         third_menu.map((value3)=>{
-                            if(value3.parent_key==value2.key){
+                            if(value3.pkParent.pkFuncmenu==value2.pkFuncmenu){
                                 value2.children.push(value3);
                             }
                         })
@@ -495,33 +292,46 @@ class FormView extends Component {
             let _MenuSelectedValue = 1;
             let _if_start_value = 1;
             let _if_data_checked = false;
-            _formObj['func_name'] = node.node.props.title;
-            _formObj['func_code'] = node.node.props.ext.func_code;
-            _formObj['data_power_property'] = node.node.props.ext.data_power_property;
-            _formObj['first_enable_menu'] = node.node.props.ext.first_enable_menu;
-            _formObj['if_power_menu'] = node.node.props.ext.if_power_menu;
-            _if_data_checked = _formObj['if_power_menu'];           //过滤数据权限
-            _formObj['if_enabled'] = node.node.props.ext.if_enabled;
-            if(_formObj['if_enabled']==false){
-                _if_start_value = '0';                              //是否启用
-            }else if(_formObj['if_enabled']==true){
-                _if_start_value = '1';
+            _formObj['funcName'] = node.node.props.title;
+            _formObj['funcCode'] = node.node.props.ext.funcCode;
+            _formObj['ifFirstEnabled'] = node.node.props.ext.ifFirstEnabled;
+            _formObj['ifPower'] = node.node.props.ext.ifPower;
+            if(_formObj['ifPower']=='0'){
+                _if_data_checked = true;
+            }else{
+                _if_data_checked = false;
             }
-            _formObj['if_power_menu'] = node.node.props.ext.if_power_menu;
-            _formObj['menu_property'] = node.node.props.ext.menu_property;
-            if(_formObj['menu_property']=='first_menu'){             //级联菜单修改
+            //_if_data_checked = _formObj['ifPower'];           //过滤数据权限
+            _formObj['ifEnabled'] = node.node.props.ext.ifEnabled;
+            if(_formObj['ifEnabled']==0){
+                _if_start_value='0';
+            }else{
+                _if_start_value='1';
+            }
+            // _if_start_value = _formObj['ifEnabled'];
+            // if(_formObj['ifEnabled']==false){
+            //     _if_start_value = '0';                              //是否启用
+            // }else if(_formObj['ifEnabled']==true){
+            //     _if_start_value = '1';
+            // }
+            _formObj['menuProperty'] = node.node.props.ext.menuProperty;
+            if(_formObj['menuProperty']=='first_menu'){             //级联菜单修改
                 _MenuSelectedValue='0';
-            }else if(_formObj['menu_property']=='second_menu'){
+            }else if(_formObj['menuProperty']=='second_menu'){
                 _MenuSelectedValue='1';
-            }else if(_formObj['menu_property']=='third_menu'){
+            }else if(_formObj['menuProperty']=='third_menu'){
                 _MenuSelectedValue='2';
             }
+            _formObj['pk']=info[0];
+            _formObj['ts']=node.node.props.ext.ts;
             _formObj['key']=info[0];
-            _formObj['parent_key'] = node.node.props.ext.parent_key;
-            _formObj['path'] = node.node.props.ext.path;
+            _formObj['pkFuncmenu']=info[0];
+            _formObj['pkParent'] = node.node.props.ext.pkParent;
+            _formObj['menuPath'] = node.node.props.ext.menuPath;
+            _formObj['pkSystem'] = node.node.props.ext.pkSystem;
             this.setState({MenuSelectedValue:_MenuSelectedValue,if_start_value:_if_start_value,if_data_checked:_if_data_checked});
             actions.menu.updateState({SelectformObj:_formObj});
-            this.props.form.setFieldsValue({'func_name':_formObj['func_name'],'path':_formObj['path']==null ?'':_formObj['path']});
+            this.props.form.setFieldsValue({'funcName':_formObj['funcName'],'menuPath':_formObj['menuPath']==null ?'':_formObj['menuPath']});
         }else{
             Message.create({ content: "请退出编辑态再次更换选中节点", color : 'danger'});
         }
@@ -541,18 +351,18 @@ class FormView extends Component {
         this.setState({if_start_value:value})
     }
 
-    changeCheckBox = ()=>{
+    changeCheckBox = (value)=>{
         this.setState({if_data_checked:!this.state.if_data_checked});
     }
 
     //修改表单内部数据   只改变可修改的值   其他值不动
     alterformvalue = (node) =>{
-        if(node.if_power_menu){
+        if(node.ifPower){
             this.setState({if_data_checked:true});
         }else{
             this.setState({if_data_checked:false});
         }
-        this.props.form.setFieldsValue({'func_name':node.func_name,'path':node.path==null ?'':node.path});
+        this.props.form.setFieldsValue({'funcCode':node.funcCode,'menuPath':node.menuPath==null ?'':node.menuPath});
         actions.menu.updateState({isEdit: false,treeDisabled: true});
     }
 
@@ -562,14 +372,14 @@ class FormView extends Component {
         const {getFieldProps} = this.props.form;
         const loop = data => data.map((item)=>{
             if(item.children && item.children.length){
-                return <TreeNode title={item.func_name} key={item.key} icon={<Icon type="uf-list-s-o" />} ext={{'func_code':item.func_code,'if_power_menu':item.if_power_menu,'menu_property':item.menu_property,'data_power_property':item.data_power_property,'if_enabled':item.if_enabled,'first_enable_menu':item.first_enable_menu,'parent_key':item.parent_key,'path':item.path}} >
+                return <TreeNode title={item.funcName} key={item.pkFuncmenu} icon={<Icon type="uf-list-s-o" />} ext={{'funcCode':item.funcCode,'ifPower':item.ifPower,'menuProperty':item.menuProperty,'ifEnabled':item.ifEnabled,'ifFirstEnabled':item.ifFirstEnabled,'pkParent':item.pkParent,'menuPath':item.menuPath,'pkSystem':item.pkSystem,'pk':item.pkFuncmenu,'ts':item.ts}} >
                     {loop(item.children)}
                 </TreeNode>
             }
-            if(item.menu_property=="third_menu"){
-                return <TreeNode title={item.func_name} key={item.key} icon={<Icon type="uf-book" />} ext={{'func_code':item.func_code,'if_power_menu':item.if_power_menu,'menu_property':item.menu_property,'data_power_property':item.data_power_property,'if_enabled':item.if_enabled,'first_enable_menu':item.first_enable_menu,'parent_key':item.parent_key,'path':item.path}} />
+            if(item.menuProperty=="third_menu"){
+                return <TreeNode title={item.funcName} key={item.pkFuncmenu} icon={<Icon type="uf-book" />} ext={{'funcCode':item.funcCode,'ifPower':item.ifPower,'menuProperty':item.menuProperty,'ifEnabled':item.ifEnabled,'ifFirstEnabled':item.ifFirstEnabled,'pkParent':item.pkParent,'menuPath':item.menuPath,'pkSystem':item.pkSystem,'pk':item.pkFuncmenu,'ts':item.ts}}  />
             }
-            return <TreeNode title={item.func_name} key={item.key} icon={<Icon type="uf-list-s-o" />} ext={{'func_code':item.func_code,'if_power_menu':item.if_power_menu,'menu_property':item.menu_property,'data_power_property':item.data_power_property,'if_enabled':item.if_enabled,'first_enable_menu':item.first_enable_menu,'parent_key':item.parent_key,'path':item.path}} />
+            return <TreeNode title={item.funcName} key={item.pkFuncmenu} icon={<Icon type="uf-list-s-o" />} ext={{'funcCode':item.funcCode,'ifPower':item.ifPower,'menuProperty':item.menuProperty,'ifEnabled':item.ifEnabled,'ifFirstEnabled':item.ifFirstEnabled,'pkParent':item.pkParent,'menuPath':item.menuPath,'pkSystem':item.pkSystem,'pk':item.pkFuncmenu,'ts':item.ts}}  />
         })
         const treeNodes = loop(this.props.treeData);
 
@@ -587,7 +397,7 @@ class FormView extends Component {
                         }}
                         onSelect = {this.onTreeRowSelect}
                     >
-                        <TreeNode title="功能注册" key="function_register" icon={<Icon type="uf-treefolder"/>} ext={{'func_code':'0','if_power_menu':'','menu_property':'','data_power_property':[],'if_enabled':'0','first_enable_menu':true,'parent_key':null,'path':null}} >
+                        <TreeNode title="功能注册" key="function_register" icon={<Icon type="uf-treefolder"/>} ext={{'funcCode':'80L','ifPower':'','menuProperty':'','ifEnabled':0,'ifFirstEnabled':0,'pkParent':null,'menuPath':null}} >
                             {treeNodes}
                         </TreeNode>
                     </Tree>
@@ -606,8 +416,8 @@ class FormView extends Component {
                                             <FormControl disabled={true}
                                                          {
 
-                                                             ...getFieldProps('func_code', {
-                                                                 initialValue: _props.SelectformObj.func_code,
+                                                             ...getFieldProps('funcCode', {
+                                                                 initialValue: _props.SelectformObj.funcCode,
                                                                  rules: [{
                                                                      required: true
                                                                  }],
@@ -627,7 +437,7 @@ class FormView extends Component {
                                         <Col md={9} xs={9}>
                                             <FormControl disabled={!_props.isEdit}
                                                          {
-                                                             ...getFieldProps('func_name', {
+                                                             ...getFieldProps('funcName', {
                                                                  rules: [{
                                                                      required: true,
                                                                  }],
@@ -647,7 +457,7 @@ class FormView extends Component {
                                                 <Radio.RadioGroup
                                                     selectedValue={this.state.MenuSelectedValue}
                                                     {
-                                                    ...getFieldProps('menu_property', {
+                                                    ...getFieldProps('menuProperty', {
                                                             initialValue: this.state.MenuSelectedValue,
                                                         }
                                                     )}
@@ -665,7 +475,7 @@ class FormView extends Component {
                                         <Col md={9} xs={9}>
                                             <FormControl disabled={!_props.isEdit}
                                                          {
-                                                             ...getFieldProps('path', {
+                                                             ...getFieldProps('menuPath', {
                                                                  rules: [{
                                                                      required: true,
                                                                  }],
@@ -685,7 +495,7 @@ class FormView extends Component {
                                                 disabled={!_props.isEdit}
                                                 checked={this.state.if_data_checked} 
                                                 {
-                                                    ...getFieldProps('if_power_menu', {
+                                                    ...getFieldProps('ifPower', {
                                                             onChange: this.changeCheckBox
                                                         }
                                                     )}
@@ -702,14 +512,13 @@ class FormView extends Component {
                                             <Radio.RadioGroup
                                             selectedValue={this.state.if_start_value}
                                             {
-                                            ...getFieldProps('if_enabled', {
-                                                    initialValue: this.state.if_start_value,
-                                                    onChange: this.onRadioMenuChange
+                                            ...getFieldProps('ifEnabled', {
+                                                    onChange:this.onRadioMenuChange
                                                 }
                                             )}
                                             >
-                                                <Radio value="0" disabled>是</Radio>
-                                                <Radio value="1" disabled>否</Radio>
+                                                <Radio value='0' disabled={!_props.isEdit}>是</Radio>
+                                                <Radio value='1' disabled={!_props.isEdit}>否</Radio>
                                     </Radio.RadioGroup>
                                         </Col>
                                     </FormItem>

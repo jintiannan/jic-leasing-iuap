@@ -94,22 +94,7 @@ class IndexView extends Component {
         this.setState({
             isEdit:!this.state.isEdit,
         })
-        let _loanplanList=deepClone(this.props.loanplanList);
-        let _payaccountList= deepClone(this.props.payaccountList);
-        this.state.formObj['_edit'] = this.state.formObj['_edit'] ? false : true;
-        if(_loanplanList && _loanplanList.length > 0){
-            _loanplanList.map(item => {
-                item['_edit']=item['_edit']?false:true;
-            });
-        }
-        if(_payaccountList && _payaccountList.length > 0){
-            _payaccountList.map(item => {
-                item['_edit']=item['_edit']?false:true;
-            });
-        }
-        let _queryParam = deepClone(this.props.queryParam);
-        _queryParam['_edit']=_queryParam['_edit']?false:true;
-        actions.loandeal.updateState({isEdit : !this.state.isEdit,loanplanList:_loanplanList,payaccountList:_payaccountList,queryParam:_queryParam});
+        actions.loandeal.updateState({isEdit : !this.state.isEdit});
     }
 
     /**
@@ -155,12 +140,8 @@ class IndexView extends Component {
 
     onSave = () => {
         let obj = this.listchild.submit();
-        let loanlist= this.listchild.tableonesubmit();
-        let accountlist= this.listchild.tabletwosubmit();
         let _formObj = deepClone(this.props.formObject);
         Object.assign(_formObj,obj);
-        Object.assign(_formObj.loanplan,loanlist);
-        Object.assign(_formObj.payaccount,accountlist);
         actions.loandeal.updateRowData({'record':_formObj});
         this.switchEdit(); 
 
