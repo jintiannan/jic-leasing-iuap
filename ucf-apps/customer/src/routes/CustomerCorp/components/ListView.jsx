@@ -30,7 +30,7 @@ class ListView extends Component {
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
-        actions.customerCorpModify.loadList(this.props.queryParam);
+        actions.customerCorp.loadList(this.props.queryParam);
     }
 
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
@@ -45,7 +45,7 @@ class ListView extends Component {
     freshData = (pageIndex) => {
         let queryParam = deepClone(this.props.queryParam); // 深拷贝查询条件从 action 里
         queryParam['pageIndex'] = pageIndex;
-        actions.customerCorpModify.loadList(queryParam);
+        actions.customerCorp.loadList(queryParam);
     };
 
     /**
@@ -60,7 +60,7 @@ class ListView extends Component {
         if (value && value.toString().toLowerCase() === "all") { // 对分页 pageSize 为 all 进行处理，前后端约定
 
         }
-        actions.customerCorpModify.loadList(queryParam);
+        actions.customerCorp.loadList(queryParam);
     };
 
     /**
@@ -82,11 +82,8 @@ class ListView extends Component {
         // } else {
         //     _selectedList.splice(_selectedList.findIndex(item => item.pk === record.pk), 1)
         // }
-        // actions.projectInfo.updateRowData(param,index);
-        // actions.projectInfo.updateState({ selectedList : _selectedList });
-
-
-
+        // actions.customerCorp.updateRowData(param,index);
+        // actions.customerCorp.updateState({ selectedList : _selectedList });
     };
 
     /**
@@ -119,7 +116,7 @@ class ListView extends Component {
             _formObj = deepClone(_selectedList[0]);
         }
 
-        actions.customerCorpModify.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj});
+        actions.customerCorp.updateState({ list : _list,selectedList : _selectedList,formObject : _formObj});
     };
     /**
      * 重置表格高度计算回调
@@ -137,40 +134,40 @@ class ListView extends Component {
         {title: '单据状态', key: 'billstatus', type: '0'},
         {title: '客户编号', key: 'customerCode', type: '0'},
         {title: '客户名称', key: 'customerName', type: '0',width: 240},
-        {title: '组织机构代码证', key: 'identityNo', type: '0'},
-        {title: '客户性质', key: 'customerProperty.paramName', type: '0'},
-        // {title: '客户性质(内部)', key: 'customerPropertyIn.paramName', type: '0'},
-        {title: '行业门类', key: 'industry.paramName', type: '0'},
-        {title: '行业门类(大类)', key: 'industry1.paramName', type: '0'},
-        {title: '行业门类(中类)', key: 'industry2.paramName', type: '0'},
-        {title: '地区(省)', key: 'province.areaclname', type: '0'},
+        {title: '组织机构代码证', key: 'identity_no', type: '0'},
+        {title: '客户性质', key: 'customer_property.name', type: '0'},
+        {title: '客户性质(内部)', key: 'customer_property_in.name', type: '0'},
+        {title: '行业门类', key: 'industry.name', type: '0'},
+        {title: '行业门类(大类)', key: 'industry1.name', type: '0'},
+        {title: '行业门类(中类)', key: 'industry2.name', type: '0'},
+        {title: '地区(省)', key: 'province.name', type: '0'},
         {title: '地区(市)', key: 'city.name', type: '0'},
-        {title: '部门名称', key: 'pkDept.deptname', type: '0'},
-        {title: '客户号', key: 'customerNo', type: '0'},
+        {title: '部门名称', key: 'pk_dept', type: '0'},
+        {title: '客户号', key: 'customer_no', type: '0'},
         {title: '传真', key: 'fax', type: '0'},
         {title: '电话', key: 'phone', type: '0'},
-        {title: '实际办公地址', key: 'officeAddress', type: '0'},
-        {title: '实际办公地址邮编', key: 'officeAddressZip', type: '0'},
-        {title: '客户类型', key: 'cusotmerClassTemp', type: '0'},
-        // {title: '业务领域', key: 'industryType', type: '0'},
-        // {title: '二级业务领域', key: 'industryType1', type: '0'},
-        // {title: '学校等级', key: 'schoolGrade', type: '0'},
-        // {title: '医院等级', key: 'hospitalGrade', type: '0'},
+        // {title: '实际办公地址', key: 'office_address', type: '0'},
+        // {title: '实际办公地址邮编', key: 'office_address_zip', type: '0'},
+        // {title: '客户类型', key: 'cusotmer_class_temp', type: '0'},
+        // {title: '业务领域', key: 'industry_type', type: '0'},
+        // {title: '二级业务领域', key: 'industry_type1', type: '0'},
+        // {title: '学校等级', key: 'school_grade', type: '0'},
+        // {title: '医院等级', key: 'hospital_grade', type: '0'},
         // {title: '隶属', key: 'subjection', type: '0'},
         {title: '称号', key: 'title', type: '0'},
-        {title: '从业人数', key: 'employeeNum', type: '0'},
-        // {title: '备注', key: 'remarks', type: '0'},
-        {title: '客户状态', key: 'customerStatus', type: '0'},
-        // {title: '客户经理', key: 'pkPrjManager', type: '0'},
-        // {title: '最新变更人', key: 'pkOperatorLst', type: '0'},
-        // {title: '操作日期', key: 'operateDate', type: '0'},
-        // {title: '最新变更日期', key: 'operateDateLst', type: '0'},
-        // {title: '版本号', key: 'versionNum', type: '0'},
-        {title: '注册登记号类型', key: 'regNumberType', type: '0'},
-        {title: '注册登记号', key: 'regNumber', type: '0'},
-        {title: '是否授权征信客户', key: 'ifWarrantCust', type: '0'},
-        {title: '机构信用代码', key: 'orgCreditCode', type: '0'},
-        {title: '生效日期', key: 'effectiveDate', type: '0'},
+        {title: '从业人数', key: 'employee_num', type: '0'},
+        {title: '备注', key: 'remarks', type: '0'},
+        {title: '客户状态', key: 'customer_status', type: '0'},
+        // {title: '客户经理', key: 'pk_prj_manager', type: '0'},
+        // {title: '最新变更人', key: 'pk_operator_lst', type: '0'},
+        {title: '操作日期', key: 'operate_date', type: '0'},
+        {title: '最新变更日期', key: 'operate_date_lst', type: '0'},
+        {title: '版本号', key: 'version_num', type: '0'},
+        {title: '注册登记号类型', key: 'reg_number_type', type: '0'},
+        {title: '注册登记号', key: 'reg_number', type: '0'},
+        {title: '是否授权征信客户', key: 'if_warrant_cust', type: '0'},
+        {title: '机构信用代码', key: 'org_credit_code', type: '0'},
+        {title: '生效日期', key: 'effective_date', type: '0'},
 
     ];
     //列属性定义=>通过前端service工具类自动生成
@@ -192,7 +189,7 @@ class ListView extends Component {
                         headerDisplayInRow={true}//表头换行用...来表示
                         bodyDisplayInRow={true}//表体换行用...来表示
                         headerHeight={40} //表头高度
-                        bodyStyle={{'height':tableHeight ,'background-color':'rgb(241, 242, 245)'}} //表体样式
+                        bodyStyle={{'height':tableHeight,'background-color':'rgb(241, 242, 245)'}} //表体样式
                         sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
                         hideHeaderScroll={false} //无数据时是否显示表头
                         //排序属性设置
@@ -203,7 +200,7 @@ class ListView extends Component {
                         //分页对象
                         paginationObj = {{
                             activePage : this.props.queryParam.pageIndex,//活动页
-                            total : this.props.list.length,//总条数
+                            total : this.props.total,//总条数
                             items: this.props.queryObj.totalPages,//总页数
                             freshData: this.freshData, //活动页改变,跳转指定页数据
                             dataNumSelect:['5','25','50','100'],
@@ -220,7 +217,6 @@ class ListView extends Component {
                         }}
                         onRowClick={this.onRowSelect}
                         getSelectedDataFunc={this.getSelectedDataFunc}
-
                     />
             </div>
         );

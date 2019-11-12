@@ -71,11 +71,11 @@ export default {
             updateData.queryObj = {
                 pageIndex: param.pageIndex,
                 pageSize: param.pageSize,
-                totalPages: data.totalPages
+                totalPages: Math.ceil(data.data.total / param.pageSize)
             };
             updateData.queryParam = param;
-            updateData.list = data.rows;
-            updateData.total = data.total;
+            updateData.list = data.data.pageData;
+            updateData.total = data.data.total;
 
             actions.customerCorpModify.updateState(updateData); // 更新数据和查询条件
         },

@@ -1,13 +1,14 @@
 /**
  * 服务请求类
  */
-import request from 'ucf-request';
+import request from 'axios';
+// import request from 'ucf-request';
 import * as mock from "./mock";
 //定义接口地址
 const URL = {
-    "LIST":  `${GROBAL_HTTP_CTX}/customer/corpForGrid`,
-    "SAVE": `${GROBAL_HTTP_CTX}/customerCorpApply/saveOrUpdate`,
-    "DELETE": `${GROBAL_HTTP_CTX}/customerCorpApply/delete`,
+    "LIST":  `${GROBAL_HTTP_CTX}/customer/list`,
+    "SAVE": `${GROBAL_HTTP_CTX}/customer/customerCorp/save`,
+    "DELETE": `${GROBAL_HTTP_CTX}/customer/customerCorp/delete`,
 };
 
 /**
@@ -17,7 +18,7 @@ const URL = {
 export const getList = (params) => {
     return request(URL.LIST, {
         method : "post",
-        params : {data: JSON.stringify(params)}
+        params : {query: JSON.stringify(params)}
     });
 };
 
