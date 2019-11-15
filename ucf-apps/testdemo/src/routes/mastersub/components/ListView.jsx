@@ -28,6 +28,7 @@ class ListView extends Component {
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount() {
         actions.calculatorNormalzt.loadList(this.props.queryParam);
+        this.props.onListRef(this);
     }
 
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
@@ -187,17 +188,20 @@ class ListView extends Component {
                     data:数据数组
                     rowKey:生成元数据行的唯一性key
                     tableHeight:表格高度 为1时代表主表高度 不写或不为1时代表子表高度
+                    exportFileName:导出表格的名称
+                    exportData:导出表格内部的数据
                     paginationObj:分页对象 其中activePage:当前展示页 total:总数据条数  items:总页数 
                                               freshData:选择跳转指定页函数 onDataNumSelect:选中每页展示多少条数据
                     columnFilterAble:隐藏列表头标题内部的列过滤面板
                     getSelectedDataFunc:选中数据触发事件
                  */}
                     <GridMain
-                        ref={"mainlist"} //存模版
+                        ref="mainlist" //存模版
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组                     
                         tableHeight={1} //表格高度 1主表 2字表
-
+                        exportFileName="测试导出表格"　    //导出表格名称
+                        exportData={this.props.list}      //导出表格数据
                         //分页对象
                         paginationObj={{
                             activePage: this.props.queryParam.pageIndex,//活动页

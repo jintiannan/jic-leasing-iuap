@@ -21,13 +21,49 @@
     height: 85px !important;
 }
 
+//表参照body样式
+.ref_table{
+    .u-modal-dialog{
+      .u-table-body{
+        height: calc(100vh*0.4);
+        overflow: auto;
+      }
+    }
+  }
+  //树节点参照样式
+  .ref-walsin-modal{
+    .u-modal-content{
+      width: 500px;
+    }
+  }
+
 .jic-form {
+    .jic-form-content{
+        height: calc(100vh*0.58);
+        overflow: scroll;
+        .u-panel{
+            margin-bottom:0 ;
+        }
+        .u-panel-heading{
+            background: #fff;
+            height: 32px;
+        }
+        .u-panel-title{
+            font-size: 12px;
+            color: #333333;
+            font-weight: 600;
+        }
+        .u-panel-body{
+            background-color: #ebecec;
+            .ref-red .u-form-control[disabled] {
+                background:#F7F9FB;
+            }
+        }
+    }
     //text-align: right;
     background-color: rgb(241, 242, 245);
+    padding: 8px 8px 0 8px;
     border: 1px solid rgb(193, 199, 208);
-    padding: 8px;
-    height: calc(100vh*0.58);
-    overflow: scroll;
     .u-form-item .u-label {
         width: 40%;
         padding-right: 5px;
@@ -92,10 +128,10 @@
         width: 100% !important;
     }
 }
-.jic-form >div >div {
-    margin-top: 3px;
-    background: #c5c5c5;
-}
+// .jic-form >div >div {
+//     margin-top: 3px;
+//     background: #c5c5c5;
+// }
 .jic-model {
     .steps-content{
         min-height: 400px;

@@ -63,7 +63,7 @@ class GridMain extends Component {
     };
 
     exportExcel = () => {
-        this.grid.exportExcel();
+        this.ref.exportExcel();
     };
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
@@ -73,18 +73,20 @@ class GridMain extends Component {
     }
     
     render() {
-        const {paginationObj, columns, tableHeight, data, ...otherProps} = this.props;
+        const {paginationObj, columns, tableHeight,ref,exportFileName,exportData, data, ...otherProps} = this.props;
         const _paginationObj = {...defualtPaginationParam, ...paginationObj};
         const { tableHeightMain,  tableHeightChild} = this.state;
         return (
             <div className='gridMain'>
                 <Grid
-                    ref={el => this.grid = el}
+                    ref={ref}
                     columns={columns} //字段定义
                     data={data} //数据数组
                     columnFilterAble={tableHeight==1?true:false} //是否显示列过滤功能 默认主表显示 字表不显示
                     rowKey={(r, i) => {r._index = i; return i}} //生成行的key
-                    multiSelect={true}  //false 单选，默认多选                        
+                    multiSelect={true}  //false 单选，默认多选     
+                    exportFileName={exportFileName}  
+                    exportData={exportData}                 
                     scroll={{y: tableHeight==1?tableHeightMain:tableHeightChild}} //滚动轴高度
                     height={28} //行高度
                     bordered //表格有边界
