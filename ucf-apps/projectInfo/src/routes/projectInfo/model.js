@@ -71,10 +71,10 @@ export default {
             updateData.queryObj = {
                 pageIndex: param.pageIndex,
                 pageSize: param.pageSize,
-                totalPages: Math.ceil(data.length / param.pageSize)
+                totalPages: Math.ceil(data.data.total / param.pageSize)
             };
             updateData.queryParam = param;
-            updateData.list = data;
+            updateData.list = data.data.pageData;
 
             actions.projectInfo.updateState(updateData); // 更新数据和查询条件
         },
@@ -105,8 +105,8 @@ export default {
             actions.projectInfo.updateState({list:_list});
         },
         async saveOrUpdate(formObj) {
-            actions.projectInfo.updateState({showLoading: true});
-            let data = processData(await api.save({data: formObj}));  // 调用 getList 请求数据
+            // actions.projectInfo.updateState({showLoading: true});
+            let data = processData(await api.save(formObj));  // 调用 getList 请求数据
             actions.projectInfo.updateState({showLoading: false, isEdit: false});
 
         },
@@ -114,7 +114,7 @@ export default {
 
         async delete (id) {
             actions.projectInfo.updateState({showLoading: true});
-            let data = processData(await api.requestDelete({id: id}));  // 调用 getList 请求数据
+            let data = processData(await api.requestDelete({id: id}));  // 调用 删除 请求数据
             actions.projectInfo.updateState({showLoading: false});
             if (data.success) {
 

@@ -48,6 +48,8 @@ class BaseInfo extends  Component{
 
 
         };
+        this.getValue = this.getValue.bind(this);
+
     }
 
     form999 = [
@@ -62,197 +64,197 @@ class BaseInfo extends  Component{
     ];
 
     form = [
-        {label:'立项名称',field:'pk_project_approval',com:TableFormRef},
-        {label:'立项编码',field:'pk_project_approval.code',com:FormControl, disabled: true},
-        {label:'承租人名称',field:'pk_consumer',com:TableFormRef},
-        {label:'项目名称',field:'project_name',com:FormControl},
-        {label:'项目编号',field:'project_code',com:FormControl, disabled: true},
-        {label:'项目批次',field:'project_batch',com:FormControl},
-        {label:'项目状态',field:'project_status',com:Select, data: enumConstant(""), disabled: true},
-        {label:'租赁类别',field:'lease_categry',com:Select, data: enumConstant("")},
-        {label:'项目类型',field:'project_type',com:Select, data: enumConstant("")},
-        {label:'项目来源',field:'project_source',com:Select, data: enumConstant("")},
-        {label:'租赁方式',field:'lease_type',com:Select, data: enumConstant("")},
-        {label:'回租类别',field:'leaseback_type',com:Select, data: enumConstant(""), disabled: true},
-        {label:'项目税种',field:'project_tax_type',com:Select, data: enumConstant(""), disabled: true},
-        {label:'是否投保',field:'is_insure',com:Select, data: enumConstant("")},
-        {label:'是否有共同承租人',field:'if_co_lessee',com:Select, data: enumConstant("")},
-        {label:'客户评级',field:'client_rating',com:TableFormRef, disabled: true},
-        {label:'预计投放日期',field:'plan_release_date',com:TableFormRef},
-        {label:'项目金额',field:'release_amount',com:FormControl},
-        {label:'设备金额',field:'purchase_total_amount',com:FormControl},
-        {label:'资金渠道',field:'funding_sources',com:Select, data: enumConstant("")},
-        {label:'交易框架',field:'trading_schemes',com:Select, data: enumConstant("")},
-        {label:'项目风险',field:'project_sort',com:Select, data: enumConstant("")},
-        {label:'项目主办人',field:'pk_cust_main',com:TableFormRef},
-        {label:'项目协办人',field:'pk_cust_help',com:TableFormRef},
-        {label:'确认业务领域',field:'industry_type',com:TableFormRef, disabled: true},
-        {label:'资金用途',field:'capital_use',com:FormControl, disabled: true},
-        {label:'是否项目合同一一对应',field:'is_onetoone',com:Select, data: enumConstant("")},
-        {label:'实际融资客户',field:'pk_cust_finance',com:TableFormRef},
-        {label:'是否预约资金',field:'is_precapital',com:Select, data: enumConstant("")},
-        {label:'出租方账户',field:'pk_account',com:TableFormRef},
-        {label:'出租方账号',field:'pk_account.code',com:FormControl, disabled: true},
-        {label:'出租方开户银行',field:'pk_account.account_bank',com:FormControl, disabled: true},
-        {label:'是否允许提前还款',field:'is_canrefund',com:Select, data: enumConstant("")},
-        {label:'出租方开户银行行号',field:'pk_account.bank_no',com:FormControl, disabled: true},
-        {label:'提前还款期限(月)',field:'refund_times',com:FormControl},
-        {label:'提前还款手续费率(%)',field:'refund_rate',com:FormControl},
-        {label:'地区审批总额',field:'pk_project_approval.area_approve_total',com:FormControl, disabled: true},
-        {label:'地区实际投放总额',field:'pk_project_approval.area_loan_total',com:FormControl, disabled: true},
-        {label:'地区剩余投放总额',field:'pk_project_approval.area_surplus_total',com:FormControl, disabled: true},
-        {label:'地区可用授信额度',field:'pk_project_approval.area_usable_total',com:FormControl, disabled: true},
-        {label:'行业审批总额',field:'pk_project_approval.industry_approve_total',com:FormControl, disabled: true},
-        {label:'行业实际投放总额',field:'pk_project_approval.industry_loan_total',com:FormControl, disabled: true},
-        {label:'行业剩余投放总额',field:'pk_project_approval.industry_surplus_total',com:FormControl, disabled: true},
-        {label:'行业可用授信额度',field:'pk_project_approval.industry_usable_total',com:FormControl, disabled: true},
-        {label:'让利方式',field:'benefit_method',com:Select, data: enumConstant("")},
-        {label:'宽限天数',field:'grace_days',com:FormControl},
-        {label:'建议日扣减金额',field:'suggest_deduct_amt',com:FormControl},
-        {label:'约定日扣减金额',field:'appoint_deduct_amt',com:FormControl},
+        {label:'立项名称',field:'pkProjectApproval.projectFilingName',com:TableFormRef},
+        {label:'立项编码',field:'pkProjectApproval.projectFilingCode',com:FormControl, disabled: true},
+        {label:'承租人名称',field:'pkConsumer.customerName',com:TableFormRef},
+        {label:'项目名称',field:'projectName',com:FormControl},
+        {label:'项目编号',field:'projectCode',com:FormControl, disabled: true},
+        {label:'项目批次',field:'projectBatch',com:FormControl},
+        {label:'项目状态',field:'projectStatus',com:Select, data: enumConstant(""), disabled: true},
+        {label:'租赁类别',field:'leaseCategry',com:Select, data: enumConstant("")},
+        {label:'项目类型',field:'projectType',com:Select, data: enumConstant("")},
+        {label:'项目来源',field:'projectSource',com:Select, data: enumConstant("")},
+        {label:'租赁方式',field:'leaseType',com:Select, data: enumConstant("")},
+        {label:'回租类别',field:'leasebackType',com:Select, data: enumConstant(""), disabled: true},
+        {label:'项目税种',field:'projectTaxType',com:Select, data: enumConstant(""), disabled: true},
+        {label:'是否投保',field:'isInsure',com:Select, data: enumConstant("")},
+        {label:'是否有共同承租人',field:'ifCoLessee',com:Select, data: enumConstant("")},
+        {label:'客户评级',field:'clientRating.serialNumber',com:TableFormRef, disabled: true},
+        {label:'预计投放日期',field:'planReleaseDate',com:TableFormRef},
+        {label:'项目金额',field:'releaseAmount',com:FormControl},
+        {label:'设备金额',field:'purchaseTotalAmount',com:FormControl},
+        {label:'资金渠道',field:'fundingSources',com:Select, data: enumConstant("")},
+        {label:'交易框架',field:'tradingSchemes',com:Select, data: enumConstant("")},
+        {label:'项目风险',field:'projectSort',com:Select, data: enumConstant("")},
+        {label:'项目主办人',field:'pkCustMain.userName',com:TableFormRef},
+        {label:'项目协办人',field:'pkCustHelp.userName',com:TableFormRef},
+        {label:'确认业务领域',field:'industryType.paramName',com:TableFormRef, disabled: true},
+        {label:'资金用途',field:'capitalUse',com:FormControl, disabled: true},
+        {label:'是否项目合同一一对应',field:'isOnetoone',com:Select, data: enumConstant("")},
+        {label:'实际融资客户',field:'pkCustFinance.customerName',com:TableFormRef},
+        {label:'是否预约资金',field:'isPrecapital',com:Select, data: enumConstant("")},
+        {label:'出租方账户',field:'pkAccount.accountName',com:TableFormRef},
+        {label:'出租方账号',field:'pkAccount.accountNo',com:FormControl, disabled: true},
+        {label:'出租方开户银行',field:'pkAccount.accountBank',com:FormControl, disabled: true},
+        {label:'是否允许提前还款',field:'isCanrefund',com:Select, data: enumConstant("")},
+        {label:'出租方开户银行行号',field:'pkAccount.bankNo',com:FormControl, disabled: true},
+        {label:'提前还款期限(月)',field:'refundTimes',com:FormControl},
+        {label:'提前还款手续费率(%)',field:'refundRate',com:FormControl},
+        {label:'地区审批总额',field:'pkProjectApproval.areaApproveTotal',com:FormControl, disabled: true},
+        {label:'地区实际投放总额',field:'pkProjectApproval.areaLoanTotal',com:FormControl, disabled: true},
+        {label:'地区剩余投放总额',field:'pkProjectApproval.areaSurplusTotal',com:FormControl, disabled: true},
+        {label:'地区可用授信额度',field:'pkProjectApproval.areaUsableTotal',com:FormControl, disabled: true},
+        {label:'行业审批总额',field:'pkProjectApproval.industryApproveTotal',com:FormControl, disabled: true},
+        {label:'行业实际投放总额',field:'pkProjectApproval.industryLoanTotal',com:FormControl, disabled: true},
+        {label:'行业剩余投放总额',field:'pkProjectApproval.industrySurplusTotal',com:FormControl, disabled: true},
+        {label:'行业可用授信额度',field:'pkProjectApproval.industryUsableTotal',com:FormControl, disabled: true},
+        {label:'让利方式',field:'benefitMethod',com:Select, data: enumConstant("")},
+        {label:'宽限天数',field:'graceDays',com:FormControl},
+        {label:'建议日扣减金额',field:'suggestDeductAmt',com:FormControl},
+        {label:'约定日扣减金额',field:'appointDeductAmt',com:FormControl},
     ];
 
     form1 = [
-        {label:'授信分类',field:'limit_class',com:Select, data: enumConstant(""), disabled: true},
-        {label:'授信类型',field:'granting_type',com:Select, data: enumConstant("")},
-        {label:'本次授信额度',field:'limit_amt',com:FormControl},
-        {label:'授信起始日期',field:'granting_start_date',com:TableFormRef},
-        {label:'授信有效期',field:'granting_times',com:FormControl},
-        {label:'授信截止日期',field:'granting_end_date',com:TableFormRef, disabled: true},
-        {label:'原授信额度(元)',field:'granting_original_limit',com:FormControl, disabled: true},
-        {label:'已用额度(元)',field:'granting_used_limit',com:FormControl, disabled: true},
-        {label:'调整额度(元)',field:'granting_add_limit',com:FormControl, disabled: true},
-        {label:'可用额度(元)',field:'granting_surplus_limit',com:FormControl, disabled: true},
-        {label:'授信币种',field:'granting_currency',com:TableFormRef},
-        {label:'租赁最大期限',field:'max_deadline',com:FormControl, disabled: true},
+        {label:'授信分类',field:'limitClass',com:Select, data: enumConstant(""), disabled: true},
+        {label:'授信类型',field:'grantingType',com:Select, data: enumConstant("")},
+        {label:'本次授信额度',field:'limitAmt',com:FormControl},
+        {label:'授信起始日期',field:'grantingStartDate',com:TableFormRef},
+        {label:'授信有效期',field:'grantingTimes',com:FormControl},
+        {label:'授信截止日期',field:'grantingEndDate',com:TableFormRef, disabled: true},
+        {label:'原授信额度(元)',field:'grantingOriginalLimit',com:FormControl, disabled: true},
+        {label:'已用额度(元)',field:'grantingUsedLimit',com:FormControl, disabled: true},
+        {label:'调整额度(元)',field:'grantingAddLimit',com:FormControl, disabled: true},
+        {label:'可用额度(元)',field:'grantingSurplusLimit',com:FormControl, disabled: true},
+        {label:'授信币种',field:'grantingCurrency.currtypename',com:TableFormRef},
+        {label:'租赁最大期限',field:'maxDeadline',com:FormControl, disabled: true},
     ];
 
     form2 = [
-        {label:'是否调息',field:'if_adjust',com:Select, data: enumConstant("")},
-        {label:'调息渠道',field:'adjust_type',com:Select, data: enumConstant(""), disabled: true},
-        {label:'调息响应方式',field:'adjust_time',com:Select, data: enumConstant(""), disabled: true},
-        {label:'调息方法 ',field:'adjust_method',com:Select, data: enumConstant(""), disabled: true},
-        {label:'调息起始日',field:'adjust_start_date',com:TableFormRef, disabled: true},    ];
+        {label:'是否调息',field:'ifAdjust',com:Select, data: enumConstant("")},
+        {label:'调息渠道',field:'adjustType',com:Select, data: enumConstant(""), disabled: true},
+        {label:'调息响应方式',field:'adjustTime',com:Select, data: enumConstant(""), disabled: true},
+        {label:'调息方法 ',field:'adjustMethod',com:Select, data: enumConstant(""), disabled: true},
+        {label:'调息起始日',field:'adjustStartDate',com:TableFormRef, disabled: true},    ];
 
     form3 = [
-        {label:'承租人编码',field:'pk_consumer.code',com:FormControl, disabled: true},
-        {label:'客户号',field:'pk_consumer.customer_no',com:FormControl, disabled: true},
-        {label:'地区（省）',field:'pk_consumer.province',com:TableFormRef, disabled: true},
-        {label:'地区（市）',field:'pk_consumer.city',com:TableFormRef, disabled: true},
-        {label:'地区（县/区）',field:'pk_consumer.district',com:TableFormRef, disabled: true},
-        {label:'行业门类',field:'pk_consumer.industry',com:TableFormRef, disabled: true},
-        {label:'行业门类(大类)',field:'pk_consumer.industry1',com:FormControl, disabled: true},
-        {label:'行业门类(中类)',field:'pk_consumer.industry2',com:FormControl, disabled: true},
-        {label:'企业规模（内部管理）',field:'pk_consumer.enter_scale_inner',com:Select, data: enumConstant(""), disabled: true},
-        {label:'企业规模（四部委）',field:'pk_consumer.enter_scale_6m',com:Select, data: enumConstant(""), disabled: true},
-        {label:'法定代表人',field:'pk_consumer.legal_rep',com:FormControl, disabled: true},
-        {label:'告知地址',field:'pk_consumer.inform_address',com:FormControl, disabled: true},
-        {label:'经济性质',field:'pk_consumer.economic_type',com:FormControl, disabled: true},
-        {label:'注册地址',field:'pk_consumer.reg_address',com:FormControl, disabled: true},
-        {label:'实际控制人',field:'pk_consumer.customer_person',com:FormControl, disabled: true},
-        {label:'注册币种',field:'pk_consumer.capital_cur',com:TableFormRef, disabled: true},    ];
+        {label:'承租人编码',field:'pkConsumer.customerName',com:FormControl, disabled: true},
+        {label:'客户号',field:'pkConsumer.customerCode',com:FormControl, disabled: true},
+        {label:'地区（省）',field:'pkConsumer.province',com:TableFormRef, disabled: true},
+        {label:'地区（市）',field:'pkConsumer.city',com:TableFormRef, disabled: true},
+        {label:'地区（县/区）',field:'pkConsumer.district',com:TableFormRef, disabled: true},
+        {label:'行业门类',field:'pkConsumer.industry',com:TableFormRef, disabled: true},
+        {label:'行业门类(大类)',field:'pkConsumer.industry1',com:FormControl, disabled: true},
+        {label:'行业门类(中类)',field:'pkConsumer.industry2',com:FormControl, disabled: true},
+        {label:'企业规模（内部管理）',field:'pkConsumer.enterScaleInner',com:Select, data: enumConstant(""), disabled: true},
+        {label:'企业规模（四部委）',field:'pkConsumer.enterScale6m',com:Select, data: enumConstant(""), disabled: true},
+        {label:'法定代表人',field:'pkConsumer.legalRep',com:FormControl, disabled: true},
+        {label:'告知地址',field:'pkConsumer.informAddress',com:FormControl, disabled: true},
+        {label:'经济性质',field:'pkConsumer.economicType',com:FormControl, disabled: true},
+        {label:'注册地址',field:'pkConsumer.regAddress',com:FormControl, disabled: true},
+        {label:'实际控制人',field:'pkConsumer.customerPerson',com:FormControl, disabled: true},
+        {label:'注册币种',field:'pkConsumer.capitalCur.currtypename',com:TableFormRef, disabled: true},    ];
 
     form4 = [
-        {label:'报价名称',field:'projectCalculatorRefVO',com:TableFormRef, disabled: true},
-        {label:'报价编号',field:'projectCalculatorRefVO.code',com:FormControl, disabled: true},
-        {label:'租赁方式',field:'projectCalculatorRefVO.lease_method',com:Select, data: enumConstant(""), disabled: true},
-        {label:'税种',field:'projectCalculatorRefVO.tax_mode',com:Select, data: enumConstant(""), disabled: true},
-        {label:'租赁期限（月）',field:'projectCalculatorRefVO.lease_times',com:FormControl, disabled: true},
-        {label:'支付频率',field:'projectCalculatorRefVO.lease_freq',com:Select, data: enumConstant(""), disabled: true},
-        {label:'计算方式',field:'projectCalculatorRefVO.lease_cal_method',com:Select, data: enumConstant(""), disabled: true},
-        {label:'报价利率',field:'projectCalculatorRefVO.final_rate',com:FormControl, disabled: true},
-        {label:'净融资额(元)',field:'projectCalculatorRefVO.net_finance_cash',com:FormControl, disabled: true},
-        {label:'商业折扣(元)',field:'projectCalculatorRefVO.trade_discount',com:FormControl, disabled: true},
-        {label:'实际投放金额(元)',field:'projectCalculatorRefVO.fact_cash_loan',com:FormControl, disabled: true},
-        {label:'首付款金额(元)',field:'projectCalculatorRefVO.down_payment',com:FormControl, disabled: true},
-        {label:'保证金金额(元)',field:'projectCalculatorRefVO.deposit_cash',com:FormControl, disabled: true},
-        {label:'服务费收入总金额(元)',field:'projectCalculatorRefVO.srvfee_cash_in',com:FormControl, disabled: true},
-        {label:'服务费支出总金额(元)',field:'projectCalculatorRefVO.srvfee_cash_out',com:FormControl, disabled: true},
-        {label:'总租金(元)',field:'projectCalculatorRefVO.lease_cash',com:FormControl, disabled: true},
-        {label:'总利息(元)',field:'projectCalculatorRefVO.lease_interest',com:FormControl, disabled: true},
-        {label:'总本金(元)',field:'projectCalculatorRefVO.lease_corpus',com:FormControl, disabled: true},
-        {label:'市场IRR',field:'projectCalculatorRefVO.commercial_irr',com:FormControl, disabled: true},
-        {label:'增值税下IRR',field:'projectCalculatorRefVO.vat_irr',com:FormControl, disabled: true},
-        {label:'会计IRR',field:'projectCalculatorRefVO.finance_irr',com:FormControl, disabled: true},
-        {label:'租金IRR',field:'projectCalculatorRefVO.rent_irr',com:FormControl, disabled: true},
-        {label:'市场IRR',field:'projectCalculatorRefVO.project_irr',com:FormControl, disabled: true},
-        {label:'项目去税IRR',field:'projectCalculatorRefVO.project_notax_irr',com:FormControl, disabled: true},
-        {label:'手续费分配IRR',field:'projectCalculatorRefVO.fee_distr_irr',com:FormControl, disabled: true},
-        {label:'租赁合同IRR',field:'projectCalculatorRefVO.contract_irr',com:FormControl, disabled: true},
-        {label:'审计IRR',field:'projectCalculatorRefVO.audit_irr',com:FormControl, disabled: true},
-        {label:'承租人IRR',field:'projectCalculatorRefVO.lessee_irr',com:FormControl, disabled: true},
-        {label:'会计去税IRR',field:'projectCalculatorRefVO.finance_notax_irr',com:FormControl, disabled: true},    ];
+        {label:'报价名称',field:'projectcalculatorrefvo.quotName',com:TableFormRef, disabled: true},
+        {label:'报价编号',field:'projectcalculatorrefvo.quotCode',com:FormControl, disabled: true},
+        {label:'租赁方式',field:'projectcalculatorrefvo.leaseMethod',com:Select, data: enumConstant(""), disabled: true},
+        {label:'税种',field:'projectcalculatorrefvo.taxMode',com:Select, data: enumConstant(""), disabled: true},
+        {label:'租赁期限（月）',field:'projectcalculatorrefvo.leaseTimes',com:FormControl, disabled: true},
+        {label:'支付频率',field:'projectcalculatorrefvo.leaseFreq',com:Select, data: enumConstant(""), disabled: true},
+        {label:'计算方式',field:'projectcalculatorrefvo.leaseCalMethod',com:Select, data: enumConstant(""), disabled: true},
+        {label:'报价利率',field:'projectcalculatorrefvo.finalRate',com:FormControl, disabled: true},
+        {label:'净融资额(元)',field:'projectcalculatorrefvo.netFinanceCash',com:FormControl, disabled: true},
+        {label:'商业折扣(元)',field:'projectcalculatorrefvo.tradeDiscount',com:FormControl, disabled: true},
+        {label:'实际投放金额(元)',field:'projectcalculatorrefvo.factCashLoan',com:FormControl, disabled: true},
+        {label:'首付款金额(元)',field:'projectcalculatorrefvo.downPayment',com:FormControl, disabled: true},
+        {label:'保证金金额(元)',field:'projectcalculatorrefvo.depositCash',com:FormControl, disabled: true},
+        {label:'服务费收入总金额(元)',field:'projectcalculatorrefvo.srvfeeCashIn',com:FormControl, disabled: true},
+        {label:'服务费支出总金额(元)',field:'projectcalculatorrefvo.srvfeeCashOut',com:FormControl, disabled: true},
+        {label:'总租金(元)',field:'projectcalculatorrefvo.leaseCash',com:FormControl, disabled: true},
+        {label:'总利息(元)',field:'projectcalculatorrefvo.leaseInterest',com:FormControl, disabled: true},
+        {label:'总本金(元)',field:'projectcalculatorrefvo.leaseCorpus',com:FormControl, disabled: true},
+        {label:'市场irr',field:'projectcalculatorrefvo.commercialIrr',com:FormControl, disabled: true},
+        {label:'增值税下irr',field:'projectcalculatorrefvo.vatIrr',com:FormControl, disabled: true},
+        {label:'会计irr',field:'projectcalculatorrefvo.financeIrr',com:FormControl, disabled: true},
+        {label:'租金irr',field:'projectcalculatorrefvo.rentIrr',com:FormControl, disabled: true},
+        {label:'市场irr',field:'projectcalculatorrefvo.projectIrr',com:FormControl, disabled: true},
+        {label:'项目去税irr',field:'projectcalculatorrefvo.projectNotaxIrr',com:FormControl, disabled: true},
+        {label:'手续费分配irr',field:'projectcalculatorrefvo.feeDistrIrr',com:FormControl, disabled: true},
+        {label:'租赁合同irr',field:'projectcalculatorrefvo.contractIrr',com:FormControl, disabled: true},
+        {label:'审计irr',field:'projectcalculatorrefvo.auditIrr',com:FormControl, disabled: true},
+        {label:'承租人irr',field:'projectcalculatorrefvo.lesseeIrr',com:FormControl, disabled: true},
+        {label:'会计去税irr',field:'projectcalculatorrefvo.financeNotaxIrr',com:FormControl, disabled: true},    ];
 
     form5 = [
-        {label:'租赁物名称',field:'projectRentThingRefVO.name',com:FormControl, disabled: true},
-        {label:'租赁物编号',field:'projectRentThingRefVO.code',com:FormControl, disabled: true},
-        {label:'型号',field:'projectRentThingRefVO.model',com:FormControl, disabled: true},
-        {label:'租赁物分类',field:'projectRentThingRefVO.param_name',com:FormControl, disabled: true},
-        {label:'设备总价',field:'projectRentThingRefVO.total_cost',com:FormControl, disabled: true},
-        {label:'净值',field:'projectRentThingRefVO.net_worth',com:FormControl, disabled: true},
-        {label:'估值',field:'projectRentThingRefVO.valuation',com:FormControl, disabled: true},
-        {label:'交货日期',field:'projectRentThingRefVO.delivery_date',com:TableFormRef, disabled: true},
-        {label:'交货地点',field:'projectRentThingRefVO.delivery_address',com:FormControl, disabled: true},
-        {label:'使用地址',field:'projectRentThingRefVO.use_address',com:FormControl, disabled: true},    ];
+        {label:'租赁物名称',field:'projectrentthingrefvo.name',com:FormControl, disabled: true},
+        {label:'租赁物编号',field:'projectrentthingrefvo.code',com:FormControl, disabled: true},
+        {label:'型号',field:'projectrentthingrefvo.model',com:FormControl, disabled: true},
+        {label:'租赁物分类',field:'projectrentthingrefvo.paramName',com:FormControl, disabled: true},
+        {label:'设备总价',field:'projectrentthingrefvo.totalCost',com:FormControl, disabled: true},
+        {label:'净值',field:'projectrentthingrefvo.netWorth',com:FormControl, disabled: true},
+        {label:'估值',field:'projectrentthingrefvo.valuation',com:FormControl, disabled: true},
+        {label:'交货日期',field:'projectrentthingrefvo.deliveryDate',com:TableFormRef, disabled: true},
+        {label:'交货地点',field:'projectrentthingrefvo.deliveryAddress',com:FormControl, disabled: true},
+        {label:'使用地址',field:'projectrentthingrefvo.useAddress',com:FormControl, disabled: true},    ];
 
     form6 = [
-        {label:'担保方式',field:'projectPledgeRefVO.guarantee_method',com:FormControl, disabled: true},
-        {label:'单位客户',field:'projectPledgeRefVO.corp_cust',com:FormControl, disabled: true},
-        {label:'自然人客户',field:'projectPledgeRefVO.pers_cust',com:FormControl, disabled: true},
-        {label:'担保总金额',field:'projectPledgeRefVO.plan_cash',com:FormControl, disabled: true},
-        {label:'抵押金额',field:'projectPledgeRefVO.pledge_amount',com:FormControl, disabled: true},
-        {label:'质押金额',field:'projectPledgeRefVO.prenda_amount',com:FormControl, disabled: true},
+        {label:'担保方式',field:'projectpledgerefvo.guaranteeMethod',com:FormControl, disabled: true},
+        {label:'单位客户',field:'projectpledgerefvo.corpCust',com:FormControl, disabled: true},
+        {label:'自然人客户',field:'projectpledgerefvo.persCust',com:FormControl, disabled: true},
+        {label:'担保总金额',field:'projectpledgerefvo.planCash',com:FormControl, disabled: true},
+        {label:'抵押金额',field:'projectpledgerefvo.pledgeAmount',com:FormControl, disabled: true},
+        {label:'质押金额',field:'projectpledgerefvo.prendaAmount',com:FormControl, disabled: true},
     ];
 
     form7 = [
-        {label:'供应商合作协议',field:'pk_framework_agreem',com:TableFormRef},
-        {label:'供应商限额方案',field:'pk_quota_scheme',com:TableFormRef, disabled: true},
-        {label:'供应商限额结果',field:'quota_result',com:FormControl, disabled: true},    ];
+        {label:'供应商合作协议',field:'pkFrameworkAgreem.protocolName',com:TableFormRef},
+        {label:'供应商限额方案',field:'pkQuotaScheme.limitName',com:TableFormRef, disabled: true},
+        {label:'供应商限额结果',field:'quotaResult',com:FormControl, disabled: true},    ];
 
     form8 = [
-        {label:'项目部门(大区)',field:'belongs_area',com:TableFormRef},
-        {label:'项目部门(片区)',field:'project_dept',com:TableFormRef},
-        {label:'项目经理',field:'pk_prj_manager',com:TableFormRef},
-        {label:'大区经理',field:'region_manager',com:TableFormRef},
-        {label:'片区经理',field:'area_manager',com:TableFormRef},    ];
+        {label:'项目部门(大区)',field:'belongsArea.deptname',com:TableFormRef},
+        {label:'项目部门(片区)',field:'projectDept.deptname',com:TableFormRef},
+        {label:'项目经理',field:'pkPrjManager.userName',com:TableFormRef},
+        {label:'大区经理',field:'regionManager.userName',com:TableFormRef},
+        {label:'片区经理',field:'areaManager.userName',com:TableFormRef},    ];
 
     form9 = [
-        {label:'财务相关',field:'pk_consumer.finance_related',com:FormControl, disabled: true},
-        {label:'设备相关',field:'pk_consumer.equipment_related',com:FormControl, disabled: true},
-        {label:'其他部门',field:'pk_consumer.other_dept',com:FormControl, disabled: true},
-        {label:'政府相关',field:'pk_consumer.government_related',com:FormControl, disabled: true},
-        {label:'政府财政相关',field:'pk_consumer.govern_finance_related',com:FormControl, disabled: true},
-        {label:'政府其他部门',field:'pk_consumer.govern_other_sectors',com:FormControl, disabled: true},    ];
+        {label:'财务相关',field:'pkConsumer.financeRelated',com:FormControl, disabled: true},
+        {label:'设备相关',field:'pkConsumer.equipmentRelated',com:FormControl, disabled: true},
+        {label:'其他部门',field:'pkConsumer.otherDept',com:FormControl, disabled: true},
+        {label:'政府相关',field:'pkConsumer.governmentRelated',com:FormControl, disabled: true},
+        {label:'政府财政相关',field:'pkConsumer.governFinanceRelated',com:FormControl, disabled: true},
+        {label:'政府其他部门',field:'pkConsumer.governOtherSectors',com:FormControl, disabled: true},    ];
 
     form10 = [
         {label:'保险费比例',field:'premium',com:FormControl},
-        {label:'公证费比例',field:'notarial_fees_rate',com:FormControl},
-        {label:'符合风险政策及准入标准',field:'is_fit_admittance',com:Select, data: enumConstant("")},
-        {label:'审批文档生成规则',field:'pk_contract_rule',com:TableFormRef},    ];
+        {label:'公证费比例',field:'notarialFeesRate',com:FormControl},
+        {label:'符合风险政策及准入标准',field:'isFitAdmittance',com:Select, data: enumConstant("")},
+        {label:'审批文档生成规则',field:'pkContractRule.ruleName',com:TableFormRef},    ];
 
     form11 = [
-        {label:'项目审批审批结果',field:'project_approve_result',com:Select, data: enumConstant(""), disabled: true},
-        {label:'项目审批日期',field:'project_approve_date',com:TableFormRef, disabled: true},    ];
+        {label:'项目审批审批结果',field:'projectApproveResult',com:Select, data: enumConstant(""), disabled: true},
+        {label:'项目审批日期',field:'projectApproveDate',com:TableFormRef, disabled: true},    ];
 
     form12 = [
         {label:'单据状态',field:'billstatus',com:Select, data: enumConstant(""), disabled: true},
-        {label:'操作人',field:'pk_operator',com:TableFormRef, disabled: true},
-        {label:'操作日期',field:'operate_date',com:TableFormRef, disabled: true},
-        {label:'操作时间',field:'operate_time',com:FormControl, disabled: true},
-        {label:'审核人',field:'pk_checker',com:TableFormRef, disabled: true},
-        {label:'审核日期',field:'check_date',com:TableFormRef, disabled: true},
-        {label:'审核时间',field:'check_time',com:FormControl, disabled: true},
-        {label:'机构',field:'pk_org',com:TableFormRef, disabled: true},
-        {label:'所属公司',field:'pk_pro_org',com:TableFormRef},
-        {label:'法定代表人',field:'pk_consumer.legal_representative',com:FormControl, disabled: true},
-        {label:'合同金额(元)',field:'projectCalculatorRefVO.total_amount_equipment',com:FormControl, disabled: true},
-        {label:'审批结果',field:'project_approve_note',com:FormControl, col: 12, class: 'textarea', disabled: true},
-        {label:'租赁物类别',field:'lease_classification',com:Select, data: enumConstant("")},
-        {label:'增信措施类别',field:'increase_credit_type',com:Select, data: enumConstant("")},
-        {label:'行业门类(集团口径)',field:'pk_consumer.industry3',com:FormControl, disabled: true},
-        {label:'会计IRR按最新算法',field:'projectCalculatorRefVO.finance_irr_method',com:Select, data: enumConstant(""), disabled: true},
-        {label:'会计IRR算法启用年份',field:'projectCalculatorRefVO.finance_irr_year',com:Select, data: enumConstant(""), disabled: true},
-        {label:'业务领域',field:'business_domain',com:TableFormRef, disabled: true},
+        {label:'操作人',field:'pkOperator.userName',com:TableFormRef, disabled: true},
+        {label:'操作日期',field:'operateDate',com:TableFormRef, disabled: true},
+        {label:'操作时间',field:'operateTime',com:FormControl, disabled: true},
+        {label:'审核人',field:'pkChecker.userName',com:TableFormRef, disabled: true},
+        {label:'审核日期',field:'checkDate',com:TableFormRef, disabled: true},
+        {label:'审核时间',field:'checkTime',com:FormControl, disabled: true},
+        {label:'机构',field:'pkOrg.orgName',com:TableFormRef, disabled: true},
+        {label:'所属公司',field:'pkProOrg.orgName',com:TableFormRef},
+        {label:'法定代表人',field:'pkConsumer.legalRepresentative',com:FormControl, disabled: true},
+        {label:'合同金额(元)',field:'projectcalculatorrefvo.totalAmountEquipment',com:FormControl, disabled: true},
+        {label:'审批结果',field:'projectApproveNote',com:FormControl, col: 12, class: 'textarea', disabled: true},
+        {label:'租赁物类别',field:'leaseClassification',com:Select, data: enumConstant("")},
+        {label:'增信措施类别',field:'increaseCreditType',com:Select, data: enumConstant("")},
+        {label:'行业门类(集团口径)',field:'pkConsumer.industry3',com:FormControl, disabled: true},
+        {label:'会计irr按最新算法',field:'projectcalculatorrefvo.financeIrrMethod',com:Select, data: enumConstant(""), disabled: true},
+        {label:'会计irr算法启用年份',field:'projectcalculatorrefvo.financeIrrYear',com:Select, data: enumConstant(""), disabled: true},
+        {label:'业务领域',field:'businessDomain.paramName',com:TableFormRef, disabled: true},
         {label:'是否跨境业务',field:'ifCrossborder',com:Select, data: enumConstant("")},
         {label:'是否孵化及创新业务',field:'ifInnovate',com:Select, data: enumConstant("")},
         {label:'是否关联交易方',field:'ifRelation',com:Select, data: enumConstant("")},    ];
@@ -261,11 +263,25 @@ class BaseInfo extends  Component{
 
     }
 
+    getValue = (Object,field) =>{
+
+        let _value = field.toString().split(".");
+        let _value_1 = Object[_value[0]];
+        if(JSON.stringify(_value_1) === "null" || JSON.stringify(_value_1)===undefined){
+            return '';
+        }else {
+            return _value_1[_value[1]];
+        }
+    }
+
     render () {
         const {getFieldProps, getFieldError} = this.props.form;
         // let _formObject = deepClone(this.props.formObject);
         let _formObject = this.props.formObject;
         let formObject = deepClone(_formObject);
+        if(this.props.isGrid){
+            return <div></div>
+        }
         const loop = data => data.map((value, key) => {
             return (
                 <Col md={value.col ? value.col : 4} xs={value.col ? value.col : 4} sm={value.col ? value.col : 4}>
@@ -286,7 +302,7 @@ class BaseInfo extends  Component{
                                    componentClass={value.class ? value.class : 'input'}
                                    {
                                        ...getFieldProps(value.field, {
-                                           initialValue: formObject[value.field],
+                                           initialValue: value.field &&value.field.indexOf(".")>0 ?this.getValue(formObject,value.field):formObject[value.field],
                                            rules: [{
                                                required: true,
                                            }],

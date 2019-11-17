@@ -440,8 +440,8 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('clientRating', {
-                                                                         initialvalue: _formObject.clientRating,
+                                                                     ...getFieldProps('clientRating.serialNumber', {
+                                                                         initialvalue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -759,8 +759,8 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('pkCustFinance', {
-                                                                         initialvalue: _formObject.pkCustFinance,
+                                                                     ...getFieldProps('pkCustFinance.name', {
+                                                                         initialvalue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -1553,8 +1553,8 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('grantingCurrency', {
-                                                                         initialvalue: _formObject.grantingCurrency,
+                                                                     ...getFieldProps('grantingCurrency.name', {
+                                                                         initialvalue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -2106,7 +2106,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('pkConsumer.capitalCur', {
+                                                                     ...getFieldProps('pkConsumer.capitalCur.name', {
                                                                          initialValue: '',
 
                                                                          rules: [{
@@ -2136,7 +2136,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('projectCalculatorRefVO.name', {
+                                                                     ...getFieldProps('projectcalculatorrefvo.name', {
                                                                          initialValue: '',
 
                                                                          rules: [{
@@ -2158,7 +2158,7 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('projectCalculatorRefVO.code', {
+                                                                     ...getFieldProps('projectcalculatorrefvo.code', {
                                                                          initialValue: '',
 
                                                                          rules: [{
@@ -3191,8 +3191,8 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('pkFrameworkAgreem', {
-                                                                         initialvalue: _formObject.pkFrameworkAgreem,
+                                                                     ...getFieldProps('pkFrameworkAgreem.name', {
+                                                                         initialvalue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -3210,8 +3210,8 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={true}
                                                                  {
-                                                                     ...getFieldProps('pkQuotaScheme', {
-                                                                         initialvalue: _formObject.pkQuotaScheme,
+                                                                     ...getFieldProps('pkQuotaScheme.name', {
+                                                                         initialvalue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -3313,8 +3313,8 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('regionManager', {
-                                                                         initialvalue: _formObject.regionManager,
+                                                                     ...getFieldProps('regionManager.name', {
+                                                                         initialvalue: '',
 
                                                                          rules: [{
                                                                              required: true,
@@ -3332,8 +3332,8 @@ class AddFormView extends Component {
                                                     </Label>
                                                     <FormControl disabled={!this.props.isEdit}
                                                                  {
-                                                                     ...getFieldProps('areaManager', {
-                                                                         initialvalue: _formObject.areaManager,
+                                                                     ...getFieldProps('areaManager.name', {
+                                                                         initialvalue: '',
 
                                                                          rules: [{
                                                                              required: true,

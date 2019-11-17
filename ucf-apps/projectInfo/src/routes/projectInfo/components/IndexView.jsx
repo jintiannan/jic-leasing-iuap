@@ -2,7 +2,7 @@
  * App模块
  */
 import React, { Component } from 'react';
-import {Tooltip, Menu, Icon, Loading, Form,Col, FormControl, Label, Row} from 'tinper-bee';
+import {Tooltip, Menu, Icon, Loading, Form, Col, FormControl, Label, Row, Message} from 'tinper-bee';
 import {actions} from 'mirrorx';
 import {singleRecordOper} from "utils/service";
 import {deepClone} from "utils";
@@ -124,14 +124,16 @@ class IndexView extends Component {
 
 
     onSave = () => {
-        actions.projectInfo.saveOrUpdate(this.props.formObject);
+        let _formObject = this.props.formObject;
+        let formObject = deepClone(_formObject);
+        actions.projectInfo.saveOrUpdate(formObject);
 
     };
 
     onDelete = () => {
         singleRecordOper(this.props.selectedList,(param) => {
             let _selected = deepClone(param);
-            actions.projectInfo.delete(_selected.role_code);
+            actions.projectInfo.delete(_selected.pkProjectInfo);
         });
     };
 
@@ -160,6 +162,7 @@ class IndexView extends Component {
                         View={this.onView}
                         Add={this.onAdd}
                         Delete={this.onDelete}
+                        Save={this.onSave}
                         {...this.props}
                     />
                 </div>
