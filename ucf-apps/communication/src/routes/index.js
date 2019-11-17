@@ -5,11 +5,11 @@
 
 import React from "react";
 import { Route } from "mirrorx";
-// import {ProjectInfo} from "./projectInfo/container";
+import {CommunicationContract} from "./contract/container";
 
 export default () => (
     <div className="route-content">
-        {/*<Route exact path='/projectInfo' component={ProjectInfo} />*/}
+        <Route exact path='/contract' component={CommunicationContract} />
     </div>
 
 );
