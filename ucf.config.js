@@ -25,6 +25,7 @@ module.exports = (env, argv) => {
             "portal",
             "projectInfo",
             "testdemo",
+            "communication"
         ],
         // 代理的配置
         proxy: [
