@@ -1,13 +1,11 @@
 import React, {Component} from "react";
-import BeeGrid from "bee-complex-grid";
 import Grid from 'components/Grid';
-import Icon from "bee-icon";
 import {deepClone, getHeight} from "utils";
 import './index.less'
 
 
 const defualtPaginationParam = {
-    dataNumSelect:['5','25','50','100'],
+    dataNumSelect:['50','100','1000','10000'],
     dataNum:2,
     verticalPosition:'bottom'
 }
@@ -84,7 +82,8 @@ class GridMain extends Component {
                     data={data} //数据数组
                     columnFilterAble={tableHeight==1?true:false} //是否显示列过滤功能 默认主表显示 字表不显示
                     rowKey={(r, i) => {r._index = i; return i}} //生成行的key
-                    multiSelect={true}  //false 单选，默认多选     
+                    multiSelect= {{ type:"checkbox" }}  //false 单选，默认多选    
+                    autoCheckedByClickRows={false} 
                     exportFileName={exportFileName}  
                     exportData={exportData}                 
                     scroll={{y: tableHeight==1?tableHeightMain:tableHeightChild}} //滚动轴高度
@@ -96,7 +95,7 @@ class GridMain extends Component {
                     showFilterPopover={false}
                     bodyStyle={{'height':tableHeight==1?tableHeightMain:"auto!important"}} //表体样式
                     sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
-                    hideHeaderScroll={false} //无数据时是否显示表头
+                    hideHeaderScroll={false} //无数据时是否显示表头   
                     //排序属性设置
                     sort={{
                         mode: 'multiple', //多列排序

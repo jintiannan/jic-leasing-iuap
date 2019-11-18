@@ -2,6 +2,7 @@ import {actions} from "mirrorx";
 // 引入services，如不需要接口请求可不写
 import * as api from "./service";
 // 接口返回数据公共处理方法，根据具体需要
+import Message from 'bee-message';
 
 /**
  * processData : 调用service.js中的请求数据的承接
@@ -11,19 +12,13 @@ import {processData,deepClone} from "utils";
 
 
 export default {
-    // 当前节点所通用model名称 使用actions修改状态时必须与此名称一致才可修改
-    name: "calculatorNormalzt",
-    /**
-     * 整个model.js分为三个作用域
-     * initialState ： 整个props内使用的数据集 对应该节点域范围使用this.props访问的数据 通常用来设置全局使用的初始化参数、
-     * reducers ：目前仅设定updateState一个函数 通过this.name.updateState调用 以json格式更新当前域范围内部的数据 与指定界面内部的this.setState功能一致
-     * effects ：实现与后台进行异步交互的函数 用于与对接后台业务接口进行业务逻辑交互并返回需要的数据
-     */
+    name: "customer",
     initialState: {
         showLoading: false,  //主表加载Loading图标
         queryParam: {        //初始化分页查询的参数
-            pageIndex: 0,
-            pageSize: 50,
+            pageIndex: 1,    //初始化列表页数
+            pageSize: 50,    //初始每页显示条数
+            dataNum:0,       //每页显示条数索引
         },
         queryObj: {},        //查询结果参数 用以完成列表内部的分页 参见loadList中使用的形式
         //页面数据集
@@ -82,18 +77,20 @@ export default {
          */
         async loadList(param = {}, getState) {
             // 正在加载数据，显示加载 Loading 图标
-            actions.calculatorNormalzt.updateState({showLoading: true});
-            let data = processData(await api.getList(param));  // 调用 getList 请求数据
+            actions.customer.updateState({showLoading: true});
+            let response = processData(await api.getList(param));  // 调用 getList 请求数据
             let updateData = {showLoading: false};
+            let data = response.data;
             let queryObj = {
                 pageIndex:param.pageIndex,
                 pageSize:param.pageSize,
-                totalPages:Math.ceil(data.length/param.pageSize)
+                total:data.total,
+                totalPages:Math.ceil(data.total/param.pageSize)
             };
             updateData.queryObj = queryObj;
             updateData.queryParam = param;
-            updateData.list = data;
-            actions.calculatorNormalzt.updateState(updateData); // 更新数据和查询条件
+            updateData.list = data.pageData;
+            actions.customer.updateState(updateData); // 更新数据和查询条件
         },
 
         /**
@@ -101,21 +98,21 @@ export default {
          * @param {*} param
          * @param {*} getState
          */
-        async loadChildList(param = {}, getState) {
-            // 正在加载数据，显示加载 Loading 图标
-            actions.calculatorNormalzt.updateState({showLoading: true});
-            let data = processData(await api.getList(param));  // 调用 getList 请求数据
-            let updateData = {showLoading: false};
-            let queryObj = {
-                pageIndex:param.pageIndex,
-                pageSize:param.pageSize,
-                totalPages:Math.ceil(data.length/param.pageSize)
-            };
-            updateData.queryObj = queryObj;
-            updateData.queryParam = param;
-            updateData.list2 = data;
-            actions.calculatorNormalzt.updateState(updateData); // 更新数据和查询条件
-        },
+        // async loadChildList(param = {}, getState) {
+        //     // 正在加载数据，显示加载 Loading 图标
+        //     actions.customer.updateState({showLoading: true});
+        //     let data = processData(await api.getList(param));  // 调用 getList 请求数据
+        //     let updateData = {showLoading: false};
+        //     let queryObj = {
+        //         pageIndex:param.pageIndex,
+        //         pageSize:param.pageSize,
+        //         totalPages:Math.ceil(data.length/param.pageSize)
+        //     };
+        //     updateData.queryObj = queryObj;
+        //     updateData.queryParam = param;
+        //     updateData.list2 = data;
+        //     actions.customer.updateState(updateData); // 更新数据和查询条件
+        // },
 
 
         /**
@@ -126,7 +123,7 @@ export default {
          */
         async updateRowData(param={},getState){
             let{index,record} = param;
-            let list = getState().calculatorNormalzt.list;
+            let list = getState().customer.list;
             let _list = deepClone(list);
             if(index != undefined){
                 _list[index] = record;
@@ -134,18 +131,19 @@ export default {
                 _list[record._index] = record;
             } else {
                 for(let key of list){
-                    // if(key['pk'] == record['pk']){
-                    //     key = record;
-                    //     break;
-                    // }
- 
                     if(key['_index'] == record._index){
                         _list[key] = record;
                         break;
                     }
                 }                
-            }            
-            actions.calculatorNormalzt.updateState({list:_list});
+            }
+            let data = processData(await api.updateData(record));
+            if (data.success) {
+                Message.create({ content: "修改成功", color : 'success'});
+            } else {
+                Message.create({ content: "修改失败", color : 'danger'});
+            }
+            actions.customer.updateState({list:_list});
         },
     }
 };

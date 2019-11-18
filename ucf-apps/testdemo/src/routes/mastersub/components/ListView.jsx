@@ -136,6 +136,8 @@ class ListView extends Component {
     grid = [
         { title: '操作日期', key: 'operate_date', type: '0' },
         { title: '测算方案名称', key: 'quot_name', type: '0' },
+        { title: '测试显示', key: 'project_manager.code', type: '0' },
+
         { title: '投放日期', key: 'plan_date_loan', type: '0' },
         { title: '计划投放金额(元)', key: 'plan_cash_loan', type: '0' },
         { title: '租赁方式', key: 'lease_method', type: '0' },

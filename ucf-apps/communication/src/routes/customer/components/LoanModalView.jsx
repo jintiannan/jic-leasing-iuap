@@ -107,8 +107,6 @@ class LoanModalView extends Component {
         if(this.props.TabKey == '1'){
             pageinfo = loop(this.mainForm1);
         }
-        console.log(_props.TabKey);
-        debugger
         return (
                 <Modal
                     show={this.props.showLoanModal}

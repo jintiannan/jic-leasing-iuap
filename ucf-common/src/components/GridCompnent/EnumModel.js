@@ -29,9 +29,14 @@ class EnumModel extends Component {
     render() {
         let {type,text,record,index,dataIndex} = this.props;
         let data = enumConstant(type);
-        return (
-            <div>
-                {record._edit ? <div className="enum_model">
+        if(data[text] != undefined){
+          return <div>{data[text].key}</div>
+        }else{
+          return <div>{text}</div>
+        }
+        {/*
+        return  ( 
+              <div className="enum_model">
                 <Select 
                     showSearch
                     autoFocus
@@ -42,10 +47,10 @@ class EnumModel extends Component {
                     onSelect={this.handleSelect}
                     onBlur={this.commitChange}
                     onChange ={this.handleChange.bind(this,dataIndex,type)}
-                    /></div> : <div>{text ? text : ""}</div>}
-            </div>
-            
+                  />
+              </div>
         );
+        */}
     }
 }
 
