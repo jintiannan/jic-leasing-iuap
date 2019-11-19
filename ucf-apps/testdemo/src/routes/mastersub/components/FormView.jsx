@@ -252,7 +252,6 @@ class FormView extends Component {
         let _formObject = this.props.formObject;
         let formObject = deepClone(_formObject);
         let _props = this.props;
-        debugger
         const loop = data => data.map((value, key) => {
             return (
                 <Col md={value.col ? value.col : 4} xs={value.col ? value.col : 4} sm={value.col ? value.col : 4}>

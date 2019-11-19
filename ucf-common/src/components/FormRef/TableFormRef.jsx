@@ -73,8 +73,8 @@ class TableFormRef extends Component {
         "strFieldName" : data.strFieldName,
       }
       let bodyData = {
-        "data" : data.data,
-        "page" : data.page,
+        "data" : data.pageData,
+        "page" : {pageCount:data.pageCount,total:data.total,pageSize:5,curPage:1},
       }
       this.launchTableHeader(columnsData);
       this.launchTableData(bodyData);
@@ -170,8 +170,8 @@ class TableFormRef extends Component {
     Promise.all(requestList).then(([response]) => {
       let data = response.data.data;
       let bodyData = {
-        "data" : data.data,
-        "page" : data.page,
+        "data" : data.pageData,
+        "page" : {pageCount:data.pageCount,total:data.total,pageSize:pagination.pageSize,curPage:pagination.curPage},
       }
       this.launchTableData(bodyData);
       this.setState({
