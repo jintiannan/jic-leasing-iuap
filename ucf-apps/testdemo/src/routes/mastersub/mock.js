@@ -2,7 +2,7 @@
  * 当前节点所需展示渲染的假数据
  */
 export const data = [
-    {project_manager:{"code":"1003","name":"中建投租赁股份有限公司","pk":"1003","orgCode":"1003","pkOrg":"1003","orgName":"中建投租赁股份有限公司"},pk:1,operate_date:'2019-09-05', quot_name:'测算方案名称',pk_limit_plan:{"code":"1003","name":"中建投租赁(上海机构)","pk":"1003","orgCode":"1003","pkOrg":"1003","orgName":"中建投租赁(上海机构)"},lease_method:'0',if_corpus_tickets:'0',rent_tax_rate:'0',pk_currtype:'1',
+    {project_manager:{"code":"1003","name":"中建投租赁股份有限公司","test":{"code":"110000"},"pk":"1003","orgCode":"1003","pkOrg":"1003","orgName":"中建投租赁股份有限公司"},pk:1,operate_date:'2019-09-05', quot_name:'测算方案名称',pk_limit_plan:{"code":"1003","name":"中建投租赁(上海机构)","pk":"1003","orgCode":"1003","pkOrg":"1003","orgName":"中建投租赁(上海机构)"},lease_method:'0',if_corpus_tickets:'0',rent_tax_rate:'0',pk_currtype:'1',
     plan_date_loan:'2019-02-05',plan_cash_loan:'15000',total_amount_equipment:10000,fact_cash_loan:10000,down_payment_ratio:5,down_payment:50000,net_finance_ratio:5,
     net_finance_cash:10000,nominal_price:10000,assets_margin:1000000,deposit_method:'1',deposit_ratio:'5',deposit_cash:20000,
     return_method_depos:'1',if_interest_depos:'0',final_rate_depos:5,srvfee_method_in:'0',srvfee_base:'0',srvfee_ratio_in:'5',srvfee_cash_in_ft:4,srvfee_cash_in:10000,

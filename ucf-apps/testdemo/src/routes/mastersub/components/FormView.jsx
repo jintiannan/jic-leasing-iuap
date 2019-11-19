@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {actions} from "mirrorx";
 import { Form, Icon, Button, Label, Select, Col, FormControl, Collapse, Tabs, ButtonGroup,Panel } from 'tinper-bee';
 import { deepClone } from "utils";
-import FormSplitHeader from 'components/FormSplitHeader'
 import DatePicker from "tinper-bee/lib/Datepicker";
 import FormInputNumber from 'components/FormRef/FormInputNumber';
 import TableFormRef from 'components/FormRef/TableFormRef';
@@ -136,6 +135,16 @@ class FormView extends Component {
         }
     }
 
+    getValue = (formObject,value) =>{
+        if(value.indexOf('.')>0){
+            let field = value.substr(value.indexOf('.')+1);
+            value = value.substring(0,value.indexOf("."));
+            formObject = formObject[value];
+            return this.getValue(formObject,field);
+        }
+        return formObject[value];
+    }
+
     /**
      * 表单内部数据处理通用写入格式
      * label:属性名称
@@ -150,7 +159,7 @@ class FormView extends Component {
     mainForm1 = [
         { label: '测算方案名称', field: 'quot_name', com: FormControl, required: true },
         { label: '测试显示', field: 'project_manager.code', com: FormControl, required: true },
-
+        { label: '测试显示2', field: 'project_manager.test.code', com: FormControl, required: true },
         { label: '限额方案', field: 'pk_limit_plan', com: TableFormRef, required: true ,refurl:'/sys/queryOrg'},
         { label: '租赁方式', field: 'lease_method', com: Select, required: true, data: [{ key: '直租', value: '0' }, { key: '回租', value: '1' }] },
         { label: '本金是否开票', field: 'if_corpus_tickets', com: Select, required: true, data: [{ key: '是', value: '0' }, { key: '否', value: '1' }] },
@@ -274,7 +283,7 @@ class FormView extends Component {
                                    componentClass={value.class ? value.class : 'input'}
                                    {
                                        ...getFieldProps(value.field, {
-                                           initialValue:value.field&&value.field.indexOf(".")>0 ? formObject[value.field.substring(0,value.field.indexOf("."))][value.field.substr(value.field.indexOf(".")+1)]: formObject[value.field],
+                                           initialValue:value.field&&value.field.indexOf(".")>0 ? this.getValue(formObject,value.field): formObject[value.field],
                                            rules: [{
                                                required: true,
                                            }],
