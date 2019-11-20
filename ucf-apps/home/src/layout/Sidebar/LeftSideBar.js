@@ -66,33 +66,34 @@ class LeftSideBar extends Component {
       <div className={!leftExpanded?"left-side-bar-menu":"left-side-bar-menu left-side-bar-menu-expand"}>
           {
               menu.map(function (item,index1) {
-                  let blank = item.openview=="newpage"&&item.urltype=='url'?"_blank":"";
+                  // let blank = item.openview=="newpage"&&item.urltype=='url'?"_blank":"";
+                  let blank = "";
                   var noSecond = 'only-second-menu';
                   if(Array.isArray(item.children)&&item.children.length>0){
                       let list = [];
                       var menulist = [[],[]];
 
-                      let title = (<a href="javascript:;" data-ahref={self.changeAhref(item)}  key={item.id} className="first-child" name={item['name'+locale_serial]} data-licenseControlFlag ={item.licenseControlFlag} data-areaId ={item.areaId}><i className={'icon '+item.icon}></i><span className={index1===dddd?'left-sidebar-active':''}><label className="uf uf-triangle-left"></label>{item['name'+locale_serial]}</span></a>);
+                      let title = (<a href="javascript:;" data-ahref={self.changeAhref(item)}  key={item.pkFuncmenu} className="first-child" name={item['funcName'+locale_serial]} data-licenseControlFlag ={0} data-areaId ={null}><i className={'icon '+item.icon}></i><span className={index1===dddd?'left-sidebar-active':''}><label className="uf uf-triangle-left"></label>{item['funcName'+locale_serial]}</span></a>);
                       item.children.map(function(it,index2){
 
-                          let blank =it.openview=="newpage"&&it.urltype=='url'?"_blank":"";
+                          let blank = "";
                           if(Array.isArray(it.children)&&it.children.length>0){
                               let list2 = [];
                               let searchlist =[];
-                              let title = (<a href="javascript:;" data-ahref={self.changeAhref(it)} key={it.id} className="child-title" data-areaId={it.areaId} data-licenseControlFlag={it.licenseControlFlag}><i className={'icon-child'}></i><span title={it['name'+locale_serial]}>{it['name'+locale_serial]}</span></a>);
+                              let title = (<a href="javascript:;" data-ahref={self.changeAhref(it)} key={it.pkFuncmenu} className="child-title" data-areaId={null} data-licenseControlFlag={0}><i className={'icon-child'}></i><span title={it['funcName'+locale_serial]}>{it['funcName'+locale_serial]}</span></a>);
                               noSecond = 'no-second-menu';
                               it.children.map(function(itit,index3){
-                                  let blank =itit.openview=="newpage"&&itit.urltype=='url'?"_blank":"";
-                                  let html = <li key={itit.menuId+"m"}><a target={blank} value={itit.id}
-                                                    data-areaId={itit.areaId}
-                                                    title={itit['name'+locale_serial]}
+                                  let blank = "";
+                                  let html = <li key={itit.pkFuncmenu+"m"}><a target={blank} value={itit.pkFuncmenu}
+                                                    data-areaId={item.pkFuncmenu}
+                                                    title={itit['funcName'+locale_serial]}
                                                     data-ahref={self.changeAhref(itit)}
-                                                    data-licenseControlFlag={itit.licenseControlFlag}
+                                                    data-licenseControlFlag={0}
                                                     onClick={(e) => {self.handleDefault(e, blank);self.openTab(e,'',itit)}}
-                                                    ref={itit.id} name={itit['name'+locale_serial]}
-                                                    href={self.formmaterUrl(itit)}>{itit['name'+locale_serial]}</a><i className={ itit.collected?"shoucanged iconfont icon-star":"shoucang iconfont icon-star1" }
+                                                    ref={itit.pkFuncmenu} name={itit['funcName'+locale_serial]}
+                                                    href={self.formmaterUrl(itit)}>{itit['funcName'+locale_serial]}</a><i className={ itit.collected?"shoucanged iconfont icon-star":"shoucang iconfont icon-star1" }
                                                                                                      onClick={(e) =>{e.preventDefault();self.collectefunc(e,itit,index1,index2,index3)} }
-                                                                                                     data-menuId={itit.menuId} title={'收藏'}></i></li>
+                                                                                                     data-menuId={itit.pkFuncmenu} title={'收藏'}></i></li>
                                   list2.push(html)
                               });
                               if( list2.length>0) {
@@ -112,9 +113,9 @@ class LeftSideBar extends Component {
 
                           } else {
                               let  html = <div className={'menu-popup menu-popup-one'}>
-                                  <a target={blank} value={it.id} data-areaId ={it.areaId}
-                                     data-ahref ={self.changeAhref(it)} data-licenseControlFlag={it.licenseControlFlag}
-                                     onClick={(e)=>{self.handleDefault(e,blank);self.openTab(e,'',it)}} ref={it.id} name={it['name'+locale_serial]}
+                                  <a target={blank} value={it.pkFuncmenu} data-areaId ={item.pkFuncmenu}
+                                     data-ahref ={self.changeAhref(it)} data-licenseControlFlag={0}
+                                     onClick={(e)=>{self.handleDefault(e,blank);self.openTab(e,'',it)}} ref={it.pkFuncmenu} name={it['funcName'+locale_serial]}
                                      href={self.formmaterUrl(it)}>{it.name}
                                      <i className={ it.collected?"shoucanged iconfont icon-star":"shoucang iconfont icon-star1" }
                                         onClick={(e) =>{e.preventDefault();self.collectefunc(e,it,index1,index2)} }
@@ -140,14 +141,14 @@ class LeftSideBar extends Component {
                       )
                   }
                   else {
-                      let blank =item.openview=="newpage"&&item.urltype=='url' ?"_blank":"";
+                      let blank ="";
 
-                      if(item.id == 'index'){
+                      if(item.pkFuncmenu.trim() == 'index'){
                           return false;
                       }
 
                       let title = (
-                          <a target={blank} key={item.id} value={item.id} className="first-child" data-areaId={item.areaId} data-ahref={self.changeAhref(item)} data-licenseControlFlag ={item.licenseControlFlag} onClick={(e)=>{self.handleDefault(e,blank);self.openTab(e,'',item)}} ref={item.id} href={self.formmaterUrl(item)} name={item['name'+locale_serial]}><i className={'icon '+item.icon}></i><span className={item.menuId===item.menuId?'left-sidebar-active':''}><label className="uf uf-triangle-left"></label>{item['name'+locale_serial]}</span></a>
+                          <a target={blank} key={item.pkFuncmenu} value={item.pkFuncmenu} className="first-child" data-areaId={item.pkFuncmenu} data-ahref={self.changeAhref(item)} data-licenseControlFlag ={0} onClick={(e)=>{self.handleDefault(e,blank);self.openTab(e,'',item)}} ref={item.pkFuncmenu} href={self.formmaterUrl(item)} name={item['funcName'+locale_serial]}><i className={'icon '+item.icon}></i><span className={item.pkFuncmenu===item.pkFuncmenu?'left-sidebar-active':''}><label className="uf uf-triangle-left"></label>{item['funcName'+locale_serial]}</span></a>
                       );
                       return (
                           <div onClick={(e)=>self.openTab(e,'',item)} className="side-bar-first">
