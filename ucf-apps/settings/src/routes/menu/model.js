@@ -49,7 +49,7 @@ export default {
             let res = processData(await api.getList(param));  // 调用 getList 请求数据
             let updateData = {
                 showLoading: false,
-                treeData:res.data
+                treeData:res.data,
             };
             actions.menu.updateState(updateData); // 更新数据和查询条件
             return res.data;

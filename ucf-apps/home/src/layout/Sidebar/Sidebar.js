@@ -159,14 +159,9 @@ class App extends Component {
         // var router =  dom.getAttribute('href');
 
         var options = {
-            title:item.name,
-            title2:item.name2,
-            title3:item.name3,
-            title4:item.name4,
-            title5:item.name5,
-            title6:item.name6,
+            title:item.funcName,
             router:window.formmaterUrl(item),
-            id:item.menuId
+            id:item.pkFuncmenu
         };
         if(item.urltype=='url'&& item.openview =='newpage') {
         } else {
@@ -328,21 +323,13 @@ class App extends Component {
         //获取第一个节点数据
 
         var item = menu[0]?menu[0]:{
-            "location" : "pages/default/index.js",
-            "name" : "首页",
-            "name2" : "Home",
-            "name3" : "首頁",
-            "name4" : "Home",
-            "name5" : "Home",
-            "name6" : "Home",
-            "menustatus" : "Y",
+            "menuPath" : "pages/default/index.js",
+            "funcName" : "首页",
+            "menuProperty" : "default_page",
             "children" : null,
             "icon" : "iconfont icon-C-home",
             "openview" : "curnpage",
-            "menuId" : "M0000000000002",
-            "urltype" : "plugin",
             "id" : "index",
-            "isDefault" : null,
             "licenseControlFlag" : 0,
         };
         if (window.location.hash == ''|| window.location.hash == '#/') {
@@ -351,14 +338,9 @@ class App extends Component {
                 if(menus.length==0){
                     //true设定加载第一个tab
                     var options = {
-                        title:item.name,
-                        title2: item.name2,
-                        title3: item.name3,
-                        title4: item.name4,
-                        title5: item.name5,
-                        title6: item.name6,
+                        title:item.funcName,
                         router:window.formmaterUrl(item),
-                        id:item.id,
+                        id:item.pkFuncmenu,
                     };
                     window.createTab(options);
                 }
@@ -403,8 +385,8 @@ class App extends Component {
     }
 
     changeAhref(target){
-        var uri=target.location;
-        if(target.urltype === 'url'){
+        var uri=target.menuPath;
+        if(target.menuProperty === 'third_menu'){
             if(uri&&uri.indexOf('?')!=-1){
                 uri+="&modulefrom=sidebar";
             }else{

@@ -94,6 +94,12 @@ class ButtonGroup extends Component {
         }
     }
 
+    handleSelect = ({ key }) =>{
+        console.log(`${key} selected`);
+        debugger
+        this.props.Export();
+    }
+
     /**
      * 个性化控制是否可用
      * 例如控制审批流中的权限等

@@ -1,6 +1,10 @@
 import React, {Component} from "react";
 import BeeGrid from "bee-complex-grid";
-import Icon from "bee-icon";
+// import { Table,Checkbox,Icon,Popover } from 'tinper-bee';
+// import BigData from "bee-table/build/lib/bigData";
+// import multiSelect from 'bee-table/build/lib/multiSelect';
+// import filterColumn from 'bee-table/build/lib/filterColumn';
+// let  ComplexTable = filterColumn(multiSelect(BigData(Table), Checkbox), Popover, Icon);
 import './index.less'
 
 
@@ -58,6 +62,7 @@ class Grid extends Component {
                 <BeeGrid
                     className="ucf-example-grid"
                     data={data}
+                    loadLazy={true}
                     {...otherProps}
                     exportData={_exportData}
                     paginationObj={_paginationObj}

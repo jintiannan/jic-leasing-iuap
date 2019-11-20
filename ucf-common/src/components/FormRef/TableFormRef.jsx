@@ -7,11 +7,10 @@
 import React, { Component } from 'react';
 import { RefMultipleTableWithInput } from 'ref-multiple-table';
 import 'ref-multiple-table/lib/index.css';
-import { Button } from 'tinper-bee';
 import Radio from 'bee-radio';
 import 'bee-radio/build/Radio.css';
-import request from 'utils/request.js'
-import {actions} from 'mirrorx';
+import request from "axios";
+import './index.less';
 
 let options = {}
 class TableFormRef extends Component {
@@ -20,28 +19,31 @@ class TableFormRef extends Component {
     this.state = {
       showLoading: false,
       showModal: false,
+      refModelUrl: `${GROBAL_HTTP_CTX}`+this.props.refurl, //参照查询的url
+      wherecondition :'',    //参照查询条件
       matchData: [
         this.props.formObject[this.props.name]?this.props.formObject[this.props.name]:{} //参照中选中的对象
       ],
-      value: this.props.formObject[this.props.name]?JSON.stringify(this.props.formObject[this.props.name]):"", //表单页显示的值
-    };
-    this.page = {
-      pageCount: 0,
-      pageSize: 10,
-      currPageIndex: 1,
+      value:this.props.formObject[this.props.name]?JSON.stringify({"refname":this.props.formObject[this.props.name]['name'],
+      "refpk":this.props.formObject[this.props.name]['pk'],"name":this.props.formObject[this.props.name]['name'],"code":this.props.formObject[this.props.name]['code']
+      ,"pk":this.props.formObject[this.props.name]['pk']}):"", //表单页显示的值      
+      page : {
+        pageCount: 0,  //总页数
+        pageSize: 5,   //每页显示条数
+        currPageIndex: 1,  //当前页数
+        totalElements: 0,  //总条数
+      }
     };
     this.tableData = [];
     this.columnsData = [];
 
   }
 
-  componentDidMount(){
-    this.loadData();
-  }
+    //组件生命周期方法-在第一次渲染后调用，只在客户端
+    componentDidMount(){
+      this.loadData();
+    }
 
-  componentWillUpdata(nextProps, nextState){
-
-  }
 
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
     componentWillReceiveProps(nextProps) {
@@ -53,60 +55,42 @@ class TableFormRef extends Component {
    * @param {type}
    * @return:
    */
-  // loadData = async () => {
-  //   let refModelUrl = {
-  //     refInfo: 'https://mock.yonyoucloud.com/mock/1264/pap_basedoc/common-ref/refInfo',//表头请求
-  //     tableBodyUrl: 'https://mock.yonyoucloud.com/mock/1264/pap_basedoc/common-ref/blobRefTreeGrid',//表体请求
-  //   }
-  //   let requestList = [
-  //     request(refModelUrl.refInfo, { method: 'get' }),//表头数据
-  //     request(refModelUrl.tableBodyUrl, { method: 'get' }), //表体数据
-  //   ];
-  //   Promise.all(requestList).then(([columnsData, bodyData]) => {
-  //     this.launchTableHeader(columnsData.data);
-  //     this.launchTableData(bodyData.data);
-  //     this.setState({
-  //       showLoading: false
-  //     });
-  //   }).catch((e) => {
-  //     this.launchTableHeader({});
-  //     this.launchTableData({});
-  //     this.setState({
-  //       showLoading: false
-  //     });
-  //     console.log(e)
-  //   });
-  // }
-
-    /**
-   * @msg: 请求mock数据，包含表头数据和表体数据 自定义
-   * @param {type}
-   * @return:
-   */
   loadData = async () => {
     let data = {
-      columnsData : {
-        "strFieldCode":["code","name","email","mobile"],
-        "strFieldName":["人员编码","人员名称","人员邮箱","人员电话"],
-      },
-      bodyData : {
-        "data":[
-          {"rownum_":1,"code":"001","mobile":"15011430230","name":"人员1","refcode":"001","refpk":"cc791b77-bd18-49ab-b3ec-ee83cd40012a","id":"cc791b77-bd18-49ab-b3ec-ee83cd40012a","refname":"人员1","email":"11@11.com"},
-          {"rownum_":2,"code":"002","mobile":"15011323234","name":"人员2","refcode":"002","refpk":"de2d4d09-51ec-4108-8def-d6a6c5393c3b","id":"de2d4d09-51ec-4108-8def-d6a6c5393c3b","refname":"人员2","email":"22@11.com"},
-          {"rownum_":3,"code":"003","mobile":"15011430232","name":"人员3","refcode":"003","refpk":"004989bb-a705-45ce-88f3-662f87ee6e52","id":"004989bb-a705-45ce-88f3-662f87ee6e52","refname":"人员3","email":"33@33.com"},
-          {"rownum_":4,"code":"004","mobile":"15011430234","name":"人员4","refcode":"004","refpk":"3570cbde-0d43-49ce-ad53-ab27ee6ee7dd","id":"3570cbde-0d43-49ce-ad53-ab27ee6ee7dd","refname":"人员4","email":"33@34.com"},
-          {"rownum_":5,"code":"005","mobile":"15011430235","name":"人员5","refcode":"005","refpk":"5e3a85ec-5e14-4734-8b3a-1e6168426c89","id":"5e3a85ec-5e14-4734-8b3a-1e6168426c89","refname":"人员5","email":"55@26.com"},
-
-        ],
-        "page":{"pageSize":10,"currPageIndex":0,"pageCount":2,"totalElements":15},
+      where : {},
+      pagination:{
+        curPage : 1,
+        pageSize : 5,
+      }
     }
-    };
-    this.launchTableHeader(data.columnsData);
-    this.launchTableData(data.bodyData);
-    this.setState({
-      showLoading: false
+    let requestList = [
+      request(this.state.refModelUrl, { method: 'post' , data:data }),//表头数据
+    ];
+    Promise.all(requestList).then(([response]) => {
+      let data = response.data.data;
+      let columnsData = {
+        "strFieldCode" : data.strFieldCode,
+        "strFieldName" : data.strFieldName,
+      }
+      let bodyData = {
+        "data" : data.pageData,
+        "page" : {pageCount:data.pageCount,total:data.total,pageSize:5,curPage:1},
+      }
+      this.launchTableHeader(columnsData);
+      this.launchTableData(bodyData);
+      this.setState({
+        showLoading: false
+      });
+    }).catch((e) => {
+      this.launchTableHeader({});
+      this.launchTableData({});
+      this.setState({
+        showLoading: false
+      });
+      console.log(e)
     });
   }
+
 
   /**
  * 根据 refinfo 返回结果拆解并渲染表格表头
@@ -160,11 +144,7 @@ class TableFormRef extends Component {
       return record;
     });
     this.tableData = data;
-    this.page = {
-      pageCount: page.pageCount || 0,
-      currPageIndex: page.currPageIndex + 1 || 0,
-      totalElements: page.totalElements || 0
-    }
+    this.setState({page:{pageCount: page.pageCount || 0,currPageIndex: page.curPage || 1,totalElements: page.total || 0,pageSize:page.pageSize || 5}});
   }
   /**
    * @msg: 简单搜索的回调，与复杂搜索的回调不是同一个
@@ -176,18 +156,57 @@ class TableFormRef extends Component {
   }
 
   /**
+   * 以指定条件查询参照数据
+   * @param where 查询条件 pagination 分页数据
+   */
+  loadDataByCondition = (where,pagination) =>{
+    let data = {
+      where : where,
+      pagination : pagination,
+    }
+    let requestList = [
+      request(this.state.refModelUrl, { method: 'post' , data:data }),//表头数据
+    ];
+    Promise.all(requestList).then(([response]) => {
+      let data = response.data.data;
+      let bodyData = {
+        "data" : data.pageData,
+        "page" : {pageCount:data.pageCount,total:data.total,pageSize:pagination.pageSize,curPage:pagination.curPage},
+      }
+      this.launchTableData(bodyData);
+      this.setState({
+        showLoading: false
+      });
+    }).catch((e) => {
+      this.launchTableData({});
+      this.setState({
+        showLoading: false
+      });
+      console.log(e)
+    });
+
+  }
+
+  /**
    * 跳转到制定页数的操作
    * @param {number} index 跳转页数
    */
   handlePagination = (index) => {
-    this.page.currPageIndex = index;
-    this.setState({ number: Math.random() })
+    let pagination = {
+      curPage : index,
+      pageSize : this.state.page.pageSize,
+    }
+    this.loadDataByCondition(this.state.wherecondition,pagination);
   }
 	/**
 	 * 选择每页数据个数
 	 */
   dataNumSelect = (index, pageSize) => {
-    console.log(index, pageSize)
+    let pagination = {
+      curPage : 1,
+      pageSize : pageSize,
+    }
+    this.loadDataByCondition(this.state.wherecondition,pagination);
   }
   /**
    * @msg: modal框确认按钮
@@ -195,11 +214,6 @@ class TableFormRef extends Component {
    * @return:
    */
   onSave = (item) => {
-    let obj = {}
-    //obj[this.props.key] = item[0].refpk;
-    obj[this.props.name] = item[0];
-    actions.calculatorNormalzt.updateState({formObject:obj});
-    this.checkedArray = item;
     this.setState({
       showModal: false,
       matchData: item,
@@ -225,41 +239,49 @@ class TableFormRef extends Component {
   clearFunc = () => {
     this.setState({
       matchData: [],
-      value: `{"refname":"","refpk":"${Math.random()}"}`,
+      value: `{"name":"","pk":"${Math.random()}"}`,
     })
   }
   render() {
-
+    const { getFieldProps, getFieldError } = this.props.form;
     let { showLoading, showModal, matchData, value } = this.state;
-    let { columnsData, tableData, page } = this;
+    let { columnsData, tableData} = this;
     options = {
-      miniSearch: true,
-      multiple: false,
-      valueField: "refpk",
-      displayField: "{refname}",
+      miniSearch: true,            //是否添加搜索栏
+      multiple: false,             //是否多选
+      valueField: "pk",            //展示内容值主键
+      displayField: "{name}",      //展示内容格式
     }
     let childrenProps = Object.assign({}, options, {
-      showModal: showModal,
-      showLoading: showLoading,
-      columnsData: columnsData,
-      tableData: tableData,
-      ...page,
-      matchData:this.state.matchData,
-      value ,
-      miniSearchFunc: this.miniSearchFunc,
-      dataNumSelect: this.dataNumSelect,
-      handlePagination: this.handlePagination,
-      onSave: this.onSave,
-      onCancel: this.onCancel,
+      showModal: showModal,      //是否展示参照
+      showLoading: showLoading,  //请求数据时的过渡
+      columnsData: columnsData,  //参照表头
+      tableData: tableData,      //参照表体
+      ...this.state.page,        //分页信息
+      matchData:matchData,       //匹配内容
+      miniSearchFunc: this.miniSearchFunc,  //搜索框内容回调
+      dataNumSelect: this.dataNumSelect,    //选择显示条数回调函数
+      handlePagination: this.handlePagination,  //选择指定页码回调函数
+      onSave: this.onSave,       //保存回调函数
+      onCancel: this.onCancel,   //取消回调函数
     });
     return (
 
       <div>
         <RefMultipleTableWithInput
-         disabled={this.props.disabled}
+        　className = "ref_table"
+          disabled={this.props.disabled}
           title = {this.props.title}
+          backdrop="static"
           {...childrenProps}
-          //filterUrl={'https://mock.yonyoucloud.com/mock/1264/pap_basedoc/common-ref/blobRefTreeGrid'}
+          {
+            ...getFieldProps(this.props.name, {  //因为参照的值特殊 此处特殊处理传值后再重写了getFieldProps
+              initialValue: value,
+              rules: [{
+                message: '请选择对应的'+this.props.formObject[this.props.name]['name'],
+              }]
+            })
+        }
         />
       </div>
     )

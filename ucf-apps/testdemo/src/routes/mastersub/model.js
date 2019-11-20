@@ -49,6 +49,8 @@ export default {
         showLoanModal:false,
         //标记区别子表添加/修改的标志
         ifplanAdd:false,
+        //子表选中页签key
+        TabKey:'1',
         //子表选中list
         selectedPlanList:[],
         //子表选中form
@@ -57,9 +59,6 @@ export default {
         isGrid:true,
         //是否加载 详情修改页
         showForm:false,
-        //子表验证
-        error: false 
-
     },
     reducers: {
         /**

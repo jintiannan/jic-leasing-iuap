@@ -286,39 +286,50 @@ class App extends Component {
     }
     formmaterUrl(item) {
         var uri = " ";
-        if (item.urltype === 'url') {
-            var target=item.openview=="newpage"?"_blank":"";
-            if(target){
-                uri = item.location;
-            }else{
-                uri = '#/ifr/' + encodeURIComponent(encodeURIComponent(item.location));
-                // uri = '#/ifr/' + item.location;
-            }
-            return  uri;
-        } else if (item.urltype === 'plugin') {
-            uri = item.id ? ('#/' + item.id) : "#/index_plugin";
-
-            uri = `${GROBAL_HTTP_CTX}/`+encodeURIComponent(encodeURIComponent('index-view.html'+uri));
-            return  uri;
-        } else if (item.urltype === 'view') {
-            uri = item.location;
-            uri= uri.replace("#", "/");
-
-            if(uri[0]=='/'){
-                uri = "/sidebar"+uri;
-            }else{
-                uri = "/sidebar/"+uri;
-            }
-            // window.addRouter(uri);
-            // return  "#"+uri;
-            return `${GROBAL_HTTP_CTX}/`+'index-view.html#'+uri;
-        }else if(item.urltype == undefined){
-            item.location = '404';
-            return  '#/ifr/' + encodeURIComponent(encodeURIComponent(item.location));
+        if(item.menuProperty === 'third_menu'){
+          var target = "";
+          if(target){
+            uri = item.menuPath;
+          }else{
+            uri = '#/ifr/' + encodeURIComponent(encodeURIComponent(item.menuPath));
+          }
+          return uri;
+        }else{
+          return item.menuPath;
         }
-        else {
-            return item.location;
-        }
+        // if (item.urltype === 'url') {
+        //     var target=item.openview=="newpage"?"_blank":"";
+        //     if(target){
+        //         uri = item.location;
+        //     }else{
+        //         uri = '#/ifr/' + encodeURIComponent(encodeURIComponent(item.location));
+        //         // uri = '#/ifr/' + item.location;
+        //     }
+        //     return  uri;
+        // } else if (item.urltype === 'plugin') {
+        //     uri = item.id ? ('#/' + item.id) : "#/index_plugin";
+
+        //     uri = `${GROBAL_HTTP_CTX}/`+encodeURIComponent(encodeURIComponent('index-view.html'+uri));
+        //     return  uri;
+        // } else if (item.urltype === 'view') {
+        //     uri = item.location;
+        //     uri= uri.replace("#", "/");
+
+        //     if(uri[0]=='/'){
+        //         uri = "/sidebar"+uri;
+        //     }else{
+        //         uri = "/sidebar/"+uri;
+        //     }
+        //     // window.addRouter(uri);
+        //     // return  "#"+uri;
+        //     return `${GROBAL_HTTP_CTX}/`+'index-view.html#'+uri;
+        // }else if(item.urltype == undefined){
+        //     item.location = '404';
+        //     return  '#/ifr/' + encodeURIComponent(encodeURIComponent(item.location));
+        // }
+        // else {
+        //     return item.location;
+        // }
     }
 
     handleDefault(e,isDefault) {

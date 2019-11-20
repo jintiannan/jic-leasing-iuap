@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {actions} from "mirrorx";
-import { Form, Icon, Button, Label, Select, Col, FormControl, Collapse, Tabs, ButtonGroup } from 'tinper-bee';
+import { Form, Icon, Button, Label, Select, Col, FormControl, Collapse, Tabs, ButtonGroup,Panel } from 'tinper-bee';
 import { deepClone } from "utils";
-import FormSplitHeader from 'components/FormSplitHeader'
 import DatePicker from "tinper-bee/lib/Datepicker";
 import FormInputNumber from 'components/FormRef/FormInputNumber';
 import TableFormRef from 'components/FormRef/TableFormRef';
+import TableTreeRef from 'components/FormRef/TableTreeRef';
 import {genGridColumn} from "utils/service";
 import GridMain from 'components/GridMain';
 import '../../../../../../ucf-common/src/styles/public.less'
@@ -55,6 +55,24 @@ class FormView extends Component {
         this.setState({
             activeKey,
         });
+        this.updateState({TabKey:activeKey});
+    }
+
+    //编辑Panel是否展开折叠
+    handleSelect = (key)=> {
+        if(key =='1'){
+            this.setState({open:!this.state.open});
+        }else if(key =='2'){
+            this.setState({open2:!this.state.open2});
+        }else if(key =='3'){
+            this.setState({open3:!this.state.open3});
+        }else if(key =='4'){
+            this.setState({open4:!this.state.open4});
+        }else if(key =='5'){
+            this.setState({open5:!this.state.open5});
+        }else if(key =='6'){
+            this.setState({open6:!this.state.open6});
+        }
     }
 
     //子表添加数据
@@ -117,6 +135,16 @@ class FormView extends Component {
         }
     }
 
+    getValue = (formObject,value) =>{
+        if(value.indexOf('.')>0){
+            let field = value.substr(value.indexOf('.')+1);
+            value = value.substring(0,value.indexOf("."));
+            formObject = formObject[value];
+            return this.getValue(formObject,field);
+        }
+        return formObject[value];
+    }
+
     /**
      * 表单内部数据处理通用写入格式
      * label:属性名称
@@ -130,7 +158,9 @@ class FormView extends Component {
      */
     mainForm1 = [
         { label: '测算方案名称', field: 'quot_name', com: FormControl, required: true },
-        { label: '限额方案', field: 'pk_limit_plan', com: TableFormRef, required: true },
+        { label: '测试显示', field: 'project_manager.code', com: FormControl, required: true },
+        { label: '测试显示2', field: 'project_manager.test.code', com: FormControl, required: true },
+        { label: '限额方案', field: 'pk_limit_plan', com: TableFormRef, required: true ,refurl:'/sys/queryOrg'},
         { label: '租赁方式', field: 'lease_method', com: Select, required: true, data: [{ key: '直租', value: '0' }, { key: '回租', value: '1' }] },
         { label: '本金是否开票', field: 'if_corpus_tickets', com: Select, required: true, data: [{ key: '是', value: '0' }, { key: '否', value: '1' }] },
         { label: '租金税率', field: 'rent_tax_rate', com: Select, required: true, data: [{ key: '0%', value: '0' }, { key: '3%', value: '3' }, { key: '6%', value: '6' }, { key: '10%', value: '10' }] },
@@ -138,7 +168,8 @@ class FormView extends Component {
         { label: '投放日期', field: 'plan_date_loan', com: DatePicker, required: true, format: 'YYYY-MM-DD' },
         { label: '投放金额', field: 'total_amount_equipment', com: FormInputNumber, required: true, toThousands: true, precision: 2 },
         { label: '租赁本金', field: 'fact_cash_loan', com: FormInputNumber, required: true, toThousands: true, precision: 2 },
-        { label: '净融资比例', field: 'project_manager', com: FormInputNumber, required: true, toPercent: true, precision: 4 },
+        // { label: '净融资比例', field: 'project_manager', com: FormInputNumber, required: true, toPercent: true, precision: 4 },
+        { label: '净融资比例', field: 'project_manager', com: TableTreeRef, refurl:'/sys/queryTreeOrg'},
         { label: '净融资额(元)', field: 'net_finance_cash', com: FormInputNumber, required: true, toThousands: true, precision: 2 },
     ]
 
@@ -150,7 +181,7 @@ class FormView extends Component {
 
     mainForm3 = [
         { label: '手续费收取方式', field: 'srvfee_method_in', com: Select, required: true, data: [{ key: '每满一年收取', value: '0' }, { key: '每年年初收取', value: '1' }, { key: '初期收取', value: '2' }] },
-        { label: '手续费比例', field: 'srvfee_ratio_in', com: TableFormRef, required: true, toPercent: true, precision: 4 },
+        { label: '手续费比例', field: 'srvfee_ratio_in', com: FormInputNumber, required: true, toPercent: true, precision: 4 },
         { label: '首期手续费金额(元)', field: 'srvfee_cash_in_ft', com: FormInputNumber, required: true, toThousands: true, precision: 2 },
         { label: '手续费总金额(元)', field: 'srvfee_cash_in', com: Select, required: true, toThousands: true, precision: 2 },
         { label: '手续费收入税率(增值税)', field: 'srvfee_taxrate_in', com: FormControl, required: true },
@@ -230,299 +261,83 @@ class FormView extends Component {
         let _formObject = this.props.formObject;
         let formObject = deepClone(_formObject);
         let _props = this.props;
+        const loop = data => data.map((value, key) => {
+            return (
+                <Col md={value.col ? value.col : 4} xs={value.col ? value.col : 4} sm={value.col ? value.col : 4}>
+                    <FormItem
+                        className={(value.col === 12 ? (value.class && value.class === 'textarea' ? "remark flex jic-textArea" : "remark flex ") : '')}>
+                        <Label className={value.col === 12 ? "line-height-32" : ''}>
+                            {(value.required && value.required === true) ?
+                                <Icon type="uf-mi" className='mast'></Icon> : ''}
+                            {value.label}
+                        </Label>
+                        <value.com {...this.props}
+                                   title={value.label}
+                                   name={value.field}
+                                   format={value.format}
+                                   disabled={value.disabled ? value.disabled : !this.props.isEdit}
+                                   data={value.data ? value.data : ''}
+                                   refurl={value.refurl}
+                                   toThousands={value.com === FormInputNumber ? (value.toThousands ? value.toThousands : true) : ''}  //是否显示千分位
+                                   precision={value.com === FormInputNumber ? (value.precision ? value.precision : 2) : ''} //保留2位小数
+                                   componentClass={value.class ? value.class : 'input'}
+                                   {
+                                       ...getFieldProps(value.field, {
+                                           initialValue:value.field&&value.field.indexOf(".")>0 ? this.getValue(formObject,value.field): formObject[value.field],
+                                           rules: [{
+                                               required: true,
+                                           }],
+                                       })
+                                   }>
+                        </value.com>
+                    </FormItem>
+                </Col>)
+        });
         if (_props.showForm) {
             return (
                 <div>
                     <div className='jic-form'>
-                        <div>
-                            <span onClick={() => this.setState({ open: !this.state.open })} >
-                                <FormSplitHeader title={'投放信息'} />
-                            </span>
-                        </div>
-                        <Collapse in={this.state.open}>
+                        <div className = 'jic-form-content'>
+                        <Panel header={this.state.open ? <Icon type="uf-reduce-c-o">投放信息</Icon>:<Icon type="uf-add-c-o">投放信息</Icon>} eventKey="1" collapsible defaultExpanded="true" expanded={this.state.open} onSelect={this.handleSelect.bind(this,'1')} >
                             <Form>
-                                {
-                                    this.mainForm1.map((value, key) => {
-                                        return (
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        {value.label}
-                                                    </Label>
-                                                    {/**
-                                                        表单内容循环渲染的通用格式
-                                                    */}
-                                                    <value.com {...this.props}
-                                                        title={value.label}
-                                                        name={value.field}
-                                                        format={value.format}
-                                                        iconStyle={value.iconStyle}
-                                                        toThousands={value.toThousands}
-                                                        precision={value.precision}
-                                                        toPercent={value.toPercent}
-                                                        disabled={!_props.isEdit}
-                                                        data={value.data}
-                                                        {
-                                                        ...getFieldProps(value.field, {
-                                                            initialValue: formObject[value.field],
-                                                            rules: [{
-                                                                required: true,
-                                                            }],
-                                                        })
-                                                        }>
-                                                    </value.com>
-                                                </FormItem>
-                                            </Col>)
-                                    })
-                                }
-
+                                {loop(this.mainForm1)}
                             </Form>
+                        </Panel>
 
-                        </Collapse>
 
-
-                        <div>
-                            <span onClick={() => this.setState({ open2: !this.state.open2 })} >
-                                <FormSplitHeader title={'留购价款及保证金设置'} />
-                            </span>
-                        </div>
-                        <Collapse in={this.state.open2}>
+                        <Panel header={this.state.open2 ? <Icon type="uf-reduce-c-o">留购价款及保证金设置</Icon>:<Icon type="uf-add-c-o">留购价款及保证金设置</Icon>} eventKey="2" collapsible defaultExpanded="true" expanded={this.state.open2} onSelect={this.handleSelect.bind(this,'2')} >
                             <Form>
-
-                                <div>
-                                    {
-                                        this.mainForm2.map((value, key) => {
-                                            return (
-                                                <Col md={4} xs={4} sm={4}>
-                                                    <FormItem>
-                                                        <Label>
-                                                            <Icon type="uf-mi" className='mast'></Icon>
-                                                            {value.label}
-                                                        </Label>
-                                                        <value.com {...this.props}
-                                                            title={value.label}
-                                                            name={value.field}
-                                                            format={value.format}
-                                                            iconStyle={value.iconStyle}
-                                                            toThousands={value.toThousands}
-                                                            precision={value.precision}
-                                                            toPercent={value.toPercent}
-                                                            disabled={!_props.isEdit}
-                                                            data={value.data}
-                                                            {
-                                                            ...getFieldProps(value.field, {
-                                                                initialValue: formObject[value.field],
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                            }>
-                                                        </value.com>
-                                                    </FormItem>
-                                                </Col>)
-                                        })
-                                    }
-
-                                </div>
-
+                                    {loop(this.mainForm2)}
                             </Form>
-                        </Collapse>
+                            </Panel>
 
-
-                        <div>
-                            <span onClick={() => this.setState({ open3: !this.state.open3 })} >
-                                <FormSplitHeader title={'手续费及中间费用支出设置'} />
-                            </span>
-                        </div>
-                        <Collapse in={this.state.open3}>
+                        <Panel header={this.state.open3 ? <Icon type="uf-reduce-c-o">手续费及中间费用支出设置</Icon>:<Icon type="uf-add-c-o">手续费及中间费用支出设置</Icon>} eventKey="3" collapsible defaultExpanded="true" expanded={this.state.open3} onSelect={this.handleSelect.bind(this,'3')} >
 
                             <Form>
-
-                                <div>
-                                    {
-                                        this.mainForm3.map((value, key) => {
-                                            return (
-                                                <Col md={4} xs={4} sm={4}>
-                                                    <FormItem>
-                                                        <Label>
-                                                            <Icon type="uf-mi" className='mast'></Icon>
-                                                            {value.label}
-                                                        </Label>
-                                                        <value.com {...this.props}
-                                                            title={value.label}
-                                                            name={value.field}
-                                                            format={value.format}
-                                                            iconStyle={value.iconStyle}
-                                                            toThousands={value.toThousands}
-                                                            precision={value.precision}
-                                                            toPercent={value.toPercent}
-                                                            disabled={!_props.isEdit}
-                                                            data={value.data}
-                                                            {
-                                                            ...getFieldProps(value.field, {
-                                                                initialValue: formObject[value.field],
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                            }>
-                                                        </value.com>
-                                                    </FormItem>
-                                                </Col>)
-                                        })
-                                    }
-
-                                </div>
-
+                                {loop(this.mainForm3)}
                             </Form>
+                            </Panel>
 
-                        </Collapse>
-
-
-                        <div>
-                            <span onClick={() => this.setState({ open4: !this.state.open4 })} >
-                                <FormSplitHeader title={'收租设置'} />
-                            </span>
-                        </div>
-                        <Collapse in={this.state.open4}>
+                        <Panel header={this.state.open4 ? <Icon type="uf-reduce-c-o">收租设置</Icon>:<Icon type="uf-add-c-o">收租设置</Icon>} eventKey="4" collapsible defaultExpanded="true" expanded={this.state.open4} onSelect={this.handleSelect.bind(this,'4')} >
 
                             <Form>
-                                <div>
-                                    {
-                                        this.mainForm4.map((value, key) => {
-                                            return (
-                                                <Col md={4} xs={4} sm={4}>
-                                                    <FormItem>
-                                                        <Label>
-                                                            <Icon type="uf-mi" className='mast'></Icon>
-                                                            {value.label}
-                                                        </Label>
-                                                        <value.com {...this.props}
-                                                            title={value.label}
-                                                            name={value.field}
-                                                            format={value.format}
-                                                            iconStyle={value.iconStyle}
-                                                            toThousands={value.toThousands}
-                                                            precision={value.precision}
-                                                            toPercent={value.toPercent}
-                                                            disabled={!_props.isEdit}
-                                                            data={value.data}
-                                                            {
-                                                            ...getFieldProps(value.field, {
-                                                                initialValue: formObject[value.field],
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                            }>
-                                                        </value.com>
-                                                    </FormItem>
-                                                </Col>)
-                                        })
-                                    }
-
-                                </div>
+                                {loop(this.mainForm4)}
                             </Form>
+                            </Panel>
 
-                        </Collapse>
+                        <Panel header={this.state.open5 ? <Icon type="uf-reduce-c-o">租息率设置</Icon>:<Icon type="uf-add-c-o">租息率设置</Icon>} eventKey="5" collapsible defaultExpanded="true" expanded={this.state.open5} onSelect={this.handleSelect.bind(this,'5')} >
+                            <Form>
+                                {loop(this.mainForm5)}
+                            </Form>
+                            </Panel>
 
-
-                        <div>
-                            <span onClick={() => this.setState({ open5: !this.state.open5 })} >
-                                <FormSplitHeader title={'租息率设置'} />
-                            </span>
-                        </div>
-                        <Collapse in={this.state.open5}>
+                        <Panel header={this.state.open6 ? <Icon type="uf-reduce-c-o">IRR信息</Icon>:<Icon type="uf-add-c-o">IRR信息</Icon>} eventKey="6" collapsible defaultExpanded="true" expanded={this.state.open6} onSelect={this.handleSelect.bind(this,'6')} >
 
                             <Form>
-                                <div>
-                                    {
-                                        this.mainForm5.map((value, key) => {
-                                            return (
-                                                <Col md={4} xs={4} sm={4}>
-                                                    <FormItem>
-                                                        <Label>
-                                                            <Icon type="uf-mi" className='mast'></Icon>
-                                                            {value.label}
-                                                        </Label>
-                                                        <value.com {...this.props}
-                                                            title={value.label}
-                                                            name={value.field}
-                                                            format={value.format}
-                                                            iconStyle={value.iconStyle}
-                                                            toThousands={value.toThousands}
-                                                            precision={value.precision}
-                                                            toPercent={value.toPercent}
-                                                            disabled={!_props.isEdit}
-                                                            data={value.data}
-                                                            {
-                                                            ...getFieldProps(value.field, {
-                                                                initialValue: formObject[value.field],
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                            }>
-                                                        </value.com>
-                                                    </FormItem>
-                                                </Col>)
-                                        })
-                                    }
-
-                                </div>
+                                {loop(this.mainForm6)}
                             </Form>
-
-                        </Collapse>
-
-
-                        <div>
-                            <span onClick={() => this.setState({ open6: !this.state.open6 })} >
-                                <FormSplitHeader title={'IRR信息'} />
-                            </span>
+                            </Panel>
                         </div>
-                        <Collapse in={this.state.open6}>
-
-                            <Form>
-                                <div>
-                                    {
-                                        this.mainForm6.map((value, key) => {
-                                            return (
-                                                <Col md={4} xs={4} sm={4}>
-                                                    <FormItem>
-                                                        <Label>
-                                                            <Icon type="uf-mi" className='mast'></Icon>
-                                                            {value.label}
-                                                        </Label>
-                                                        <value.com {...this.props}
-                                                            title={value.label}
-                                                            name={value.field}
-                                                            format={value.format}
-                                                            iconStyle={value.iconStyle}
-                                                            toThousands={value.toThousands}
-                                                            precision={value.precision}
-                                                            toPercent={value.toPercent}
-                                                            disabled={!_props.isEdit}
-                                                            data={value.data}
-                                                            {
-                                                            ...getFieldProps(value.field, {
-                                                                initialValue: formObject[value.field],
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                            }>
-                                                        </value.com>
-                                                    </FormItem>
-                                                </Col>)
-                                        })
-                                    }
-
-                                </div>
-                            </Form>
-
-                        </Collapse>
-
                     </div>
 
 

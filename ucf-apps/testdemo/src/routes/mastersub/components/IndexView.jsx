@@ -75,6 +75,10 @@ class IndexView extends Component {
         this.child = ref;        
     }
 
+    onListRef = (ref) =>{
+        this.listchild = ref;
+    }
+
     onsearchRef = (ref) =>{
         this.serachRef = ref;
     }
@@ -112,7 +116,6 @@ class IndexView extends Component {
         this.setState({
             isEdit:!this.state.isEdit,
         })
-        this.state.formObject['_edit'] = this.state.formObject['_edit'] ? false : true;
         actions.calculatorNormalzt.updateState({isEdit : !this.state.isEdit});
     }
 
@@ -227,7 +230,10 @@ class IndexView extends Component {
      * 导出数据按钮 使用GridMain组件中定义的引用ref直接调用即可导出数据
      */
     onClickExport = () => {
-        this.mainlist.exportExcel();
+        console.log(this.refs);
+        console.log(this.listchild);
+        debugger
+        this.listchild.refs.mainlist.exportExcel();
     }
 
     /**
@@ -242,15 +248,12 @@ class IndexView extends Component {
 
     // 保存当前界面的编辑数据
     onSave = () => {
-        if(!this.props.error){
-            Info('子表数据填写不正确');
-        }else{
-            let obj = this.child.submit();
-            let _formObj = deepClone(this.props.formObject);
-            Object.assign(_formObj,obj);
-            actions.calculatorNormalzt.updateRowData({'record':_formObj});
-            this.switchEdit();
-        }
+        debugger
+        let obj = this.child.submit();
+        let _formObj = deepClone(this.props.formObject);
+        Object.assign(_formObj,obj);
+        actions.calculatorNormalzt.updateRowData({'record':_formObj});
+        this.switchEdit();
     }
 
     render() {
@@ -274,8 +277,9 @@ class IndexView extends Component {
                     <ButtonGroup
                         BtnPower= {ButtonPower}    
                         Query= {this.onQuery}
+                        Export={this.onClickExport}
                         Edit= {this.onEdit}
-                        Add= {this.onAdd.bind(this)}
+                        Add= {this.onAdd}
                         View={this.onView}
                         Return={this.onReturn}
                         Save={this.onSave}
@@ -284,7 +288,7 @@ class IndexView extends Component {
                 </div>
                 {/**所有页面内部添加组件必须由html内部标签如div标签等包裹 便于维护样式 且避免报错 */}
                 <div style={{display:this.state.showListView}}>
-                    <ListView {...this.props}/>
+                    <ListView {...this.props}　onListRef={this.onListRef} />
                 </div>      
                 <div style={{display:this.state.showFormView}}>
                     <FormView {...this.props} onRef={this.onRef}/>

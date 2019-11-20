@@ -23,34 +23,46 @@ class UserMenus extends Component {
     }
     formmaterUrl(item) {
         var uri = " ";
-        if (item.urlType === 'url') {
-            var target=item.openview=="blank"?"_blank":"";
-            if(target){
-                uri = '#/ifrNoHead/' + encodeURIComponent(encodeURIComponent(item.url));
-            }else{
-                uri = '#/ifr/' + encodeURIComponent(encodeURIComponent(item.url));
-            }
-            return  uri;
-        } else if (item.urlType === 'plugin') {
-            uri = item.code ? ('#/' + item.code) : "#/index_plugin";
-            //window.registerRouter(uri.replace("#", ""), item.location);
-
-            uri = `${GROBAL_HTTP_CTX}/`+encodeURIComponent(encodeURIComponent('index-view.html'+uri));
-            return  uri;
-        } else if (item.urlType === 'view') {
-            uri = item.code;
-
-            uri= uri.replace("#", "/");
-
-            return `${GROBAL_HTTP_CTX}/`+encodeURIComponent(encodeURIComponent('index-view.html#'+uri));
-
-        }else if(item.urlType == undefined){
-            item.code = '404';
-            return  '#/ifr/' + encodeURIComponent(encodeURIComponent(item.code));
+        if(item.menuProperty === 'third_menu'){
+          var target = "";
+          if(target){
+            uri = item.menuPath;
+          }else{
+            uri = '#/ifr/' + encodeURIComponent(encodeURIComponent(item.menuPath));
+          }
+          return uri;
+        }else{
+          return item.menuPath;
         }
-        else {
-            return item.code;
-        }
+        // var uri = " ";
+        // if (item.urlType === 'url') {
+        //     var target=item.openview=="blank"?"_blank":"";
+        //     if(target){
+        //         uri = '#/ifrNoHead/' + encodeURIComponent(encodeURIComponent(item.url));
+        //     }else{
+        //         uri = '#/ifr/' + encodeURIComponent(encodeURIComponent(item.url));
+        //     }
+        //     return  uri;
+        // } else if (item.urlType === 'plugin') {
+        //     uri = item.code ? ('#/' + item.code) : "#/index_plugin";
+        //     //window.registerRouter(uri.replace("#", ""), item.location);
+
+        //     uri = `${GROBAL_HTTP_CTX}/`+encodeURIComponent(encodeURIComponent('index-view.html'+uri));
+        //     return  uri;
+        // } else if (item.urlType === 'view') {
+        //     uri = item.code;
+
+        //     uri= uri.replace("#", "/");
+
+        //     return `${GROBAL_HTTP_CTX}/`+encodeURIComponent(encodeURIComponent('index-view.html#'+uri));
+
+        // }else if(item.urlType == undefined){
+        //     item.code = '404';
+        //     return  '#/ifr/' + encodeURIComponent(encodeURIComponent(item.code));
+        // }
+        // else {
+        //     return item.code;
+        // }
     }
     async componentDidMount(){
 

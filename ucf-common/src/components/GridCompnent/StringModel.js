@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './index.less';
 import {FormControl} from "tinper-bee";
-
 class StringModel extends Component {
     constructor(props) {
         super(props);

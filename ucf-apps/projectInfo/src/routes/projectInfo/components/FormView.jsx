@@ -81,6 +81,10 @@ class FormView extends Component {
         this.props.parent.switchToListView();
     };
 
+    onSave = ()=>{
+        this.props.parent.onSave();
+    }
+
     render() {
 
         let project = {
