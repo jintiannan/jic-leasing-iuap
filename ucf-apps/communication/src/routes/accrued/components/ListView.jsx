@@ -95,6 +95,7 @@ class ListView extends Component {
         } else {
             actions.communicationAccrued.updateState({ list2: [] });
         }
+        debugger
         actions.communicationAccrued.updateState({ list: _list, selectedList: _selectedList, formObject: _formObj });
 
     }
@@ -157,11 +158,11 @@ class ListView extends Component {
         { title: '客户名称', key: 'pkCustomer', type: '0' },
         { title: '合同名称', key: 'pkContractC', type: '0' },
         { title: '合同编号', key: 'pkContractC', type: '0' },
-        { title: '起租流程', key: '', type: '0' },
+        { title: '起租流程', key: 'ddd', type: '0' },
         { title: '资产状态', key: 'assetStatus', type: '0' },
         { title: '资产五级分类', key: 'assetsClassify', type: '0' },
         { title: '计税方式', key: 'assetStatus', type: '0' },
-        { title: '部门名称', key: '', type: '0' },
+        { title: '部门名称', key: 'aaa', type: '0' },
         { title: '计提月份', key: 'accruedMonth', type: '0' },
         { title: '租赁利息计提金额', key: 'interestAmount', type: '0' },
         { title: '手续费收入计提金额', key: 'feeAmount', type: '0' },
@@ -170,9 +171,9 @@ class ListView extends Component {
         { title: '币种', key: 'pkCurrtype', type: '0' },
         { title: '汇率', key: 'exchgRate', type: '0' },
         { title: '核算主体', key: 'pkGlorgbook', type: '0' },
-        { title: '租赁方式', key: '', type: '0' },
-        { title: '税目类别', key: '', type: '0' },
-        { title: '资产类型', key: '', type: '0' }
+        { title: '租赁方式', key: 'bbb', type: '0' },
+        { title: '税目类别', key: 'ccc', type: '0' },
+        { title: '资产类型', key: 'ddd', type: '0' }
     ]
     // 子表 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];
