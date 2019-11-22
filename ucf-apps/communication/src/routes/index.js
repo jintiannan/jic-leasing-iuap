@@ -8,6 +8,8 @@ import { Route } from "mirrorx";
 import {CommunicationContract} from "./contract/container";
 import {CommunicationInvoice} from "./invoice/container";
 import {CommunicationCustomer} from "./customer/container"
+import {CommunicationWithdraw} from "./withdraw/container";
+import {CommunicationCapital} from "./capital/container";
 import {CommunicationAccrued} from "./accrued/container"
 
 export default () => (
@@ -16,6 +18,8 @@ export default () => (
         <Route exact path='/invoice' component={CommunicationInvoice} />
         <Route exact path='/customer' component={CommunicationCustomer} />
         <Route exact path='/accrued' component={CommunicationAccrued} />
+        <Route exact path='/withdraw' component={CommunicationWithdraw} />
+        <Route exact path='/capital' component={CommunicationCapital} />
     </div>
 
 );
