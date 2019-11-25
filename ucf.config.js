@@ -13,7 +13,7 @@ module.exports = (env, argv) => {
         bootList: true,
         // 启动这两个模块，启动调试、构建
         bootList: [
-            "singletable-query",
+            "login",
             "home",
             "project",
             "testdemo",
@@ -25,7 +25,7 @@ module.exports = (env, argv) => {
             "portal",
             "projectInfo",
             "testdemo",
-            "communication"
+            "communication",
         ],
         // 代理的配置
         proxy: [

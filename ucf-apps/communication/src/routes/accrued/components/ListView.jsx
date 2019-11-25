@@ -95,7 +95,6 @@ class ListView extends Component {
         } else {
             actions.communicationAccrued.updateState({ list2: [] });
         }
-        debugger
         actions.communicationAccrued.updateState({ list: _list, selectedList: _selectedList, formObject: _formObj });
 
     }

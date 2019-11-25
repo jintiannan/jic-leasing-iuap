@@ -10,7 +10,6 @@ class PercentModel extends Component {
     }
 
     onchange = (text) => {
-        debugger;
         let digit =2;
         this.setState({
             value: (text * 100).toFixed(digit).toString() + '%'

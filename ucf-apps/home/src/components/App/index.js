@@ -36,7 +36,6 @@ class App extends Component {
         window.sessionStorage.removeItem('userId');
         // window.sessionStorage.clear();
         window.sessionStorage['u_logints'] = uLogints;
-        // debugger;
 
       }
       actions.app.themeRequest();

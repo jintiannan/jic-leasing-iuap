@@ -8,6 +8,7 @@ const URL = {
     "GET_LOCALE": `${GROBAL_HTTP_CTX}/i18n/classification/serial`,
     "GET_LANGLIST": `${GROBAL_HTTP_CTX}/i18n/classification/list`,
     "GET_MENU":  `${GROBAL_HTTP_CTX}/sys/getMenuList`,
+    "LOG_OUT" : `${GROBAL_HTTP_CTX}/sys/logout`,
     "GET_MENU_PORTAL":  `${GROBAL_HTTP_CTX}/appmenumgr/listSidebarByApportalCode`,
     "GET_USER_MENU":  `${GROBAL_HTTP_CTX}/moreMenu/list`,
     "GET_UNREADMSG":`/iuap-saas-message-center/message/getUnReadMsg`,
@@ -27,9 +28,20 @@ const URL = {
 export const getList = (params) => {
     return request(URL.GET_MENU, {
       method : "post",
-      param : params
+      data : params
   });
 };
+
+/**
+ * 注销登陆用户
+ * @param {} params 
+ */
+export const logout = (data) =>{
+    return request(URL.LOG_OUT,{
+        method : "post",
+        data : data,
+    })
+}
 
 /**
  * 获取用户菜单数据

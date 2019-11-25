@@ -322,7 +322,7 @@ class App extends Component {
         router.init();
         //获取第一个节点数据
 
-        var item = menu[0]?menu[0]:{
+        var item = menu[0] && menu[0].pkFuncmenu.trim() == 'index'?menu[0]:{
             "menuPath" : "pages/default/index.js",
             "funcName" : "首页",
             "menuProperty" : "default_page",

@@ -231,7 +231,6 @@
   background: #fff;
   right: 16px;
   box-shadow:0px 3px 6px 0px rgba(23,43,77,0.32);
-  overflow: auto;
   display: none;
 }
 .header-right-applet-list {

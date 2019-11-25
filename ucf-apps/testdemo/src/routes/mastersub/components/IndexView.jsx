@@ -232,7 +232,6 @@ class IndexView extends Component {
     onClickExport = () => {
         console.log(this.refs);
         console.log(this.listchild);
-        debugger
         this.listchild.refs.mainlist.exportExcel();
     }
 
@@ -248,7 +247,6 @@ class IndexView extends Component {
 
     // 保存当前界面的编辑数据
     onSave = () => {
-        debugger
         let obj = this.child.submit();
         let _formObj = deepClone(this.props.formObject);
         Object.assign(_formObj,obj);

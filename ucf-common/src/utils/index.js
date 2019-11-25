@@ -53,6 +53,9 @@ export const processData = (response, successMsg) => {
         }
         if (response.status == '200') {
             let data = response.data;
+            if(data === 306){
+                window.top.location.href = `/${GROBAL_PORTAL_ID}/login`;
+            }
             if (successMsg) {
                 success(successMsg);
             } else if (response.data.msg){

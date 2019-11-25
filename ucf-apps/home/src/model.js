@@ -199,9 +199,9 @@ export default {
      */
     async loadList(param, getState) {
       // 正在加载数据，显示加载 Loading 图标
-
+      let currentSystem = localStorage.getItem("currentSystem");
       // 调用 getList 请求数据
-      let res = processData(await api.getList());
+      let res = processData(await api.getList({currentSystem:currentSystem}));
       let menus;
       if (!res || !res.data) {
         menus = [{
@@ -357,6 +357,19 @@ export default {
         // }
         // }
       }
-    }
+    },
+    /**
+     * 注销登陆
+     */
+    async logout(){
+        let data = localStorage.getItem("user");
+        if(data!=null){
+          let user = JSON.parse(data);
+          let res = processData(await api.logout(user));     //后端注销  移除session
+          localStorage.removeItem("user");                   //前端session 移除登陆用户
+          localStorage.removeItem("currentSystem");          //前段session 移除当前选择系统
+          window.top.location.href = `/${GROBAL_PORTAL_ID}/login`;   //重定向回登录页
+        }    
+    },
   }
 };

@@ -127,7 +127,6 @@ class IndexView extends Component {
     }
 
     onSave = () => {
-        debugger;
         console.log('save save')
         console.log(this);
         let obj = this.conchild.submit();

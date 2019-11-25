@@ -255,7 +255,6 @@ class App extends Component {
           }
         }
 
-        // debugger;
         for (var i = 0; i < menu.length; i++) {
           if(menu[i].id === options.id) {
             menu[i].notCreateIframe = false;
@@ -362,7 +361,6 @@ class App extends Component {
         // })
     }
     maxfunc(e){
-      // debugger;
         let de  = document.documentElement;
         if (de.requestFullscreen) {
             de.requestFullscreen();
@@ -375,7 +373,6 @@ class App extends Component {
         }
     }
     minifunc(e){
-      // debugger;
         let de = document;
         if (de.exitFullscreen) {
             de.exitFullscreen();

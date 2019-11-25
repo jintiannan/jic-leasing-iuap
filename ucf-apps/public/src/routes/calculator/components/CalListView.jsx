@@ -60,7 +60,6 @@ class CalListView extends Component {
      * 绑定选中数据数组到数据模型中
      */
     getSelectedDataFunc = (selectedList,record,index) => {
-        debugger
         let {callist} = this.props;
         let _list = deepClone(callist);
         let _selectedList = deepClone(selectedList);

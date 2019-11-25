@@ -78,7 +78,6 @@ class Tab extends Component {
     }
 
     del (id) {
-      // debugger;
         const {menus,current} = this.props;
 
         var menuCloned = JSON.parse(JSON.stringify(menus));

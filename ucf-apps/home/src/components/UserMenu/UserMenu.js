@@ -64,6 +64,11 @@ class UserMenus extends Component {
         //     return item.code;
         // }
     }
+
+    logout = () =>{
+      actions.app.logout();
+    }
+
     async componentDidMount(){
 
         //调用 loadUserMenuList 请求数据
@@ -87,14 +92,14 @@ class UserMenus extends Component {
         if(locale_serial == 1) {
             locale_serial = "";
         }
+        let user = JSON.parse(localStorage.getItem("user"));
         let portalId = `${GROBAL_PORTAL_ID}`;
-        let h = `${GROBAL_PORTAL_CTX}/user/logout`;
         return (
             <div mode="horizontal" className="dropdown header-right-dropdown" style={{ width: '100%' }}>
                 {<div className="header-right-info">
                     <div role="button" id="username"  aria-expanded="false" data-toggle="dropdown" className="navbar-avatar dropdown-toggle">
                         {/* <span className="avatar-name"> {decodeURIComponent(decodeURIComponent(cookie.load('_A_P_userName')))} </span> */}
-                        <span className="avatar-name"> 测试用户 </span>
+                        <span className="avatar-name"> {user != null ? user.userName : '测试用户'} </span>
                         <span className="header-right-icon"><i className="uf uf-treearrow-down"></i></span>
                     </div>
                 </div>}
@@ -117,7 +122,7 @@ class UserMenus extends Component {
                     }
                   </div>
                   <div className="header-right-applet-logout">
-                    <a ref="setting3" title={intl.formatMessage({id: 'tabs.header.signout'})}  value="logout" href={h}><i aria-hidden="true" className="qy-iconfont icon-tubiao-zhuxiao"></i>{intl.formatMessage({id: 'tabs.header.signout'})} </a>
+                    <a ref="setting3" title={intl.formatMessage({id: 'tabs.header.signout'})}  value="logout" onClick={this.logout}><i aria-hidden="true" className="qy-iconfont icon-tubiao-zhuxiao"></i>{intl.formatMessage({id: 'tabs.header.signout'})} </a>
                   </div>
                 </div>
             </div>
