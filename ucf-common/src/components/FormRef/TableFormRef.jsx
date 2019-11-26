@@ -20,7 +20,7 @@ class TableFormRef extends Component {
       showLoading: false,
       showModal: false,
       refModelUrl: `${GROBAL_HTTP_CTX}`+this.props.refurl, //参照查询的url
-      wherecondition :'',    //参照查询条件
+      where :'',    //参照查询条件
       matchData: [
         this.props.formObject[this.props.name]?this.props.formObject[this.props.name]:{} //参照中选中的对象
       ],
@@ -196,7 +196,7 @@ class TableFormRef extends Component {
       curPage : index,
       pageSize : this.state.page.pageSize,
     }
-    this.loadDataByCondition(this.state.wherecondition,pagination);
+    this.loadDataByCondition(this.state.where,pagination);
   }
 	/**
 	 * 选择每页数据个数
@@ -206,7 +206,7 @@ class TableFormRef extends Component {
       curPage : 1,
       pageSize : pageSize,
     }
-    this.loadDataByCondition(this.state.wherecondition,pagination);
+    this.loadDataByCondition(this.state.where,pagination);
   }
   /**
    * @msg: modal框确认按钮

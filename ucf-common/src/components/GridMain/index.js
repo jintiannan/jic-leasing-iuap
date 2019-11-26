@@ -1,11 +1,11 @@
 import React, {Component} from "react";
-import Grid from 'components/Grid';
+import BaseGrid from 'components/Grid';
 import {deepClone, getHeight} from "utils";
 import './index.less'
 
 
 const defualtPaginationParam = {
-    dataNumSelect:['50','100','1000','10000'],
+    dataNumSelect:['10','20','50','100'],
     dataNum:2,
     verticalPosition:'bottom'
 }
@@ -76,7 +76,7 @@ class GridMain extends Component {
         const { tableHeightMain,  tableHeightChild} = this.state;
         return (
             <div className='gridMain'>
-                <Grid
+                <BaseGrid
                     ref={ref}
                     columns={columns} //字段定义
                     data={data} //数据数组
@@ -118,5 +118,5 @@ class GridMain extends Component {
     }
 }
 
-Grid.GridMain = defaultProps;
+BaseGrid.GridMain = defaultProps;
 export default GridMain;

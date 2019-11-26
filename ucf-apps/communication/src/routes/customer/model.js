@@ -17,7 +17,7 @@ export default {
         showLoading: false,  //主表加载Loading图标
         queryParam: {        //初始化分页查询的参数
             pageIndex: 1,    //初始化列表页数
-            pageSize: 50,    //初始每页显示条数
+            pageSize: 10,    //初始每页显示条数
             dataNum:0,       //每页显示条数索引
         },
         queryObj: {},        //查询结果参数 用以完成列表内部的分页 参见loadList中使用的形式

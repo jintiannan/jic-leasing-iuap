@@ -1,11 +1,12 @@
 import React, {Component} from "react";
-import BeeGrid from "bee-complex-grid";
+import Grid from "bee-complex-grid";
 // import { Table,Checkbox,Icon,Popover } from 'tinper-bee';
 // import BigData from "bee-table/build/lib/bigData";
 // import multiSelect from 'bee-table/build/lib/multiSelect';
 // import filterColumn from 'bee-table/build/lib/filterColumn';
 // let  ComplexTable = filterColumn(multiSelect(BigData(Table), Checkbox), Popover, Icon);
-import './index.less'
+import './index.less';
+import 'bee-complex-grid/build/Grid.css';
 
 
 const defualtPaginationParam = {
@@ -26,7 +27,7 @@ const defaultProps = {
     data: []
 };
 
-class Grid extends Component {
+class BaseGrid extends Component {
     constructor(props) {
         super(props);
     }
@@ -59,10 +60,10 @@ class Grid extends Component {
         let _exportData = exportData || data;
         return (
             <div className='demo-grid-wrapper'>
-                <BeeGrid
+                <Grid
                     className="ucf-example-grid"
                     data={data}
-                    loadLazy={true}
+                    loadLazy={false}
                     {...otherProps}
                     exportData={_exportData}
                     paginationObj={_paginationObj}
@@ -74,4 +75,4 @@ class Grid extends Component {
 }
 
 Grid.defaultProps = defaultProps;
-export default Grid;
+export default BaseGrid;

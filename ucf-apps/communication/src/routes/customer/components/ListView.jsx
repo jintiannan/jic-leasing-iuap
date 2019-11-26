@@ -220,7 +220,7 @@ class ListView extends Component {
                         tableHeight={1}                   //表格高度 1主表 2字表
                         //分页对象
                         paginationObj={{
-                            dataNumSelect:['50','100','1000','10000'],        //每页显示条数动态修改
+                            dataNumSelect:['10','20','50','100'],        //每页显示条数动态修改
                             dataNum:this.props.queryParam.dataNum,            //每页显示条数Index
                             activePage: this.props.queryParam.pageIndex,      //活动页
                             total: this.props.queryObj.total,                 //总条数
