@@ -190,8 +190,6 @@ class IndexView extends Component {
                     finace_irr_method:'0',
                     //会计IRR算法启用年份
                     finace_irr_year:'1',
-
-
                 }});
         }
         //填出新增窗口
@@ -217,6 +215,10 @@ class IndexView extends Component {
             this.switchToCardView(param);
             actions.communicationWithdraw.updateState({bt:false});
         });
+    };
+
+    onGatherWithdraw = () => {
+
     };
 
     /**
@@ -272,6 +274,7 @@ class IndexView extends Component {
                         View={this.onView}
                         Return={this.onReturn}
                         Save={this.onSave}
+                        GatherWithdraw={this.onGatherWithdraw}
                         {...this.props}
                     />
                 </div>

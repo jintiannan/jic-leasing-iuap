@@ -24,7 +24,6 @@ class MainLayout extends Component {
     }
     render() {
         const {location,Routes} = this.props;
-        debugger
         const currentKey = location.pathname.split('/')[1] || '/'
         const timeout = { enter: 500, exit: 500 }
         return (
