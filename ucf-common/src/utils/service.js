@@ -150,6 +150,19 @@ export function singleRecordOper(param = [],fn =(obj) => {}){
 }
 
 /**
+ * 提升请选择一条数据
+ * @param {*} param
+ * @param {*} fn
+ */
+export function multiRecordOper(param = [],fn =(obj) => {}){
+    if(param && param.length == 0){
+        Info("您当前选中 0 条数据,请选择 1 条数据后再进行操作!");
+    } else {
+        fn(param)
+    }
+}
+
+/**
  *
  * @param {页面对象} param
  * @param {状态权限集合} status

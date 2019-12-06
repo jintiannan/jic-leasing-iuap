@@ -7,7 +7,9 @@ import * as mock from "./mock";
 const URL = {
     "GET_LIST":  `${GROBAL_HTTP_CTX}/sales/list`,
     "LIST":  `${GROBAL_HTTP_CTX}/communication/accrued/queryForGrid`,
-
+    "ON_ADD": `${GROBAL_HTTP_CTX}/communication/accrued/onAdd`,
+    "ON_SAVE": `${GROBAL_HTTP_CTX}/communication/accrued/save`,
+    "FIND_ONE": `${GROBAL_HTTP_CTX}/communication/accrued/findOne`,
 }
 
 /**
@@ -27,7 +29,40 @@ export const getList = (params) => {
      */
     return request(URL.LIST, {
         method : "post",
-        params : {page:0,pageSize:50,data: JSON.stringify(params)}
+        data : {page:0,pageSize:50,data: JSON.stringify(params)}
+    });
+}
+
+/**
+ * 获取子表数据
+ * @param {*} params
+ */
+export const findOne = (params) => {
+    return request(URL.FIND_ONE, {
+        method : "post",
+        data : params
+    });
+}
+
+/**
+ * 获取主列表
+ * @param {*} params
+ */
+export const onAdd = (params) => {
+    return request(URL.ON_ADD, {
+        method : "post",
+        data : params
+    });
+}
+
+/**
+ * 保存
+ * @param {*} params
+ */
+export const onSave = (params) => {
+    return request(URL.ON_SAVE, {
+        method : "post",
+        data : params
     });
 }
 

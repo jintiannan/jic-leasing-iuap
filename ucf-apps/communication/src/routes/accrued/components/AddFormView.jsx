@@ -106,10 +106,13 @@ class AddFormView extends Component {
     }
     //点击保存存储对应新增数据 移除缓存 并重置模态框
     alertDone = () => {
-        Message.create({ content: '完成', color: 'successlight' });
+        //Message.create({ content: '完成', color: 'successlight' });
         localStorage.removeItem("addKey");
         this.initDiv();
         this.close();
+        let objectForm = this.props.form.getFieldsValue();
+        objectForm.pkOrg = JSON.parse(objectForm.pkOrg)
+        this.props.Edit(objectForm);
     }
     //关闭模态框
     close = () => {
@@ -179,14 +182,14 @@ class AddFormView extends Component {
                                                     name={'pkOrg'}
                                                     refurl={'/sys/queryOrg'}
                                                     required={true}
-                                                        {
-                                                            ...getFieldProps('pkOrg', {
-                                                                initialValue: '',
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
+                                                        // {
+                                                        //     ...getFieldProps('pkOrg', {
+                                                        //         initialValue: '',
+                                                        //         rules: [{
+                                                        //             required: true,
+                                                        //         }],
+                                                        //     })
+                                                        // }
                                                     />
                                                 </FormItem>
 
@@ -202,8 +205,8 @@ class AddFormView extends Component {
                                                      */}
                                                     <DatePicker
                                                         {
-                                                            ...getFieldProps('contSignedDate', {
-                                                                initialValue: formObject.contSignedDate,
+                                                            ...getFieldProps('accrualMonth', {
+                                                                initialValue: formObject.accrualMonth,
                                                                 rules: [{
                                                                     required: true,
                                                                 }],
@@ -240,9 +243,11 @@ class AddFormView extends Component {
                                     this.state.current === steps.length - 1
                                     &&
                                     <Button colors="primary" style={{ marginRight: 8 }} onClick={() => this.alertDone()}>完成</Button>
-                                }{
-                                <Button colors="secondary" onClick={() => this.close()}> 关闭 </Button>
-                            }
+                                }
+                                {
+                                    <Button colors="secondary" onClick={() => this.close()}> 关闭 </Button>
+                                }
+                                
                             </div>
 
                         </Modal.Body>

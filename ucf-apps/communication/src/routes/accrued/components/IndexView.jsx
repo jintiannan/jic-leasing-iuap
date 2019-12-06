@@ -92,21 +92,33 @@ class IndexView extends Component {
             showFormView:'none',
             formObject:{},
         })
-        actions.communicationAccrued.updateState({ formObject : {},isGrid : true,isEdit : false, showForm : false});
+        actions.communicationAccrued.updateState({ formObject : {}, list3:[], isGrid : true,isEdit : false, showForm : false});
     }
 
     /**
      * 切换为卡片界面
      */
     switchToCardView = (obj) =>{
-        let _formObj = deepClone(obj);
+        let _formObj = "";
         this.setState({
             showListView:'none',
             showFormView:'',
             formObject:_formObj,
         })
+        actions.communicationAccrued.updateState({formObject: _formObj, isGrid : false,isEdit : false, showForm : true});
+    }
 
-        actions.communicationAccrued.updateState({ formObject : _formObj,isGrid : false,isEdit : false, showForm : true});
+        /**
+     * 切换为卡片界面
+     */
+    switchToCardView2 = (obj) =>{
+        let _formObj = deepClone(obj);  
+        this.setState({
+            showListView:'none',
+            showFormView:'',
+            formObject:_formObj,
+        }) 
+        actions.communicationAccrued.updateState({formObject: _formObj, isGrid : false,isEdit : false, showForm : true});
     }
 
     /**
@@ -147,19 +159,22 @@ class IndexView extends Component {
      * 当前页按钮点击事件  添加数据  所有页面内部函数统一采用Es6箭头函数语法形式 避免this指针获取不到存在错误的问题
      */
     onAdd = () =>{
+        let _formObj = {};
+        this.setState({
+            formObject:_formObj,
+        })
         //填出新增窗口
-        actions.communicationAccrued.updateState({showModal : true});
+        actions.communicationAccrued.updateState({formObject: _formObj, showModal : true});
     }
 
 
     /**
      * 修改按钮
      */
-    onEdit = () =>{
-        singleRecordOper(this.props.selectedList,(param) => {
-            this.switchToCardView(param);
-            this.switchEdit();
-        });
+    onEdit = (objectForm) =>{
+        actions.communicationAccrued.getObject(objectForm);
+        this.switchToCardView();
+        this.switchEdit();
     }
 
     /**
@@ -167,7 +182,9 @@ class IndexView extends Component {
      */
     onView = () =>{
         singleRecordOper(this.props.selectedList,(param) => {  //查看选中项数据前进行一次单选校验
-            this.switchToCardView(param);
+            //加载子组件列表
+            actions.communicationAccrued.loadChildFormList({pk: this.props.selectedList[0].pk});
+            this.switchToCardView2(param);
             actions.communicationAccrued.updateState({bt:false});
         });
     }
@@ -194,11 +211,9 @@ class IndexView extends Component {
 
     // 保存当前界面的编辑数据
     onSave = () => {
-        debugger
         let obj = this.child.submit();
-        let _formObj = deepClone(this.props.formObject);
-        Object.assign(_formObj,obj);
-        actions.communicationAccrued.updateRowData({'record':_formObj});
+        obj['leaseAccruedB'] = this.props.list3;
+        actions.communicationAccrued.onSave(obj);
         this.switchEdit();
     }
 
@@ -240,7 +255,7 @@ class IndexView extends Component {
                     <FormView {...this.props} onRef={this.onRef}/>
                 </div>
                 <div>
-                    <AddFormView { ...this.props } />
+                    <AddFormView { ...this.props }  Edit= {this.onEdit}/>
                 </div>
                 <div>
                     <SearchPanel {...this.props} IfShow = {this.state.showSearchPanel} onRef = {this.onsearchRef} closeSearch={this.oncloseSearch} alterSerach={this.onalterSearch}/>

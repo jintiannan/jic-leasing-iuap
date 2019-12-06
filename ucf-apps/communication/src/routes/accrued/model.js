@@ -29,6 +29,7 @@ export default {
         //页面数据集
         list: [],
         list2: [],
+        list3: [], //form表单列表数据
         //主表form表单绑定数据
         formObject:{},
         //当前页选中的数据
@@ -99,10 +100,11 @@ export default {
          * @param {*} param
          * @param {*} getState
          */
-        async loadChildList(data) {
+        async loadChildList(param) {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationAccrued.updateState({showLoading: true});
             let updateData = {showLoading: false};
+            let data = processData(await api.findOne(param));
             // let queryObj = {
             //     pageIndex:0,
             //     pageSize:1000,
@@ -114,7 +116,32 @@ export default {
             //     pageSize: 50,
             // };
             // updateData.queryParam = param;
-            updateData.list2 = data;
+            updateData.list2 = data.data.leaseAccruedB;
+            actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
+        },
+
+                /**
+         * 加载子列表数据
+         * @param {*} param
+         * @param {*} getState
+         */
+        async loadChildFormList(param) {
+            // 正在加载数据，显示加载 Loading 图标
+            actions.communicationAccrued.updateState({showLoading: true});
+            let updateData = {showLoading: false};
+            let data = processData(await api.findOne(param));
+            // let queryObj = {
+            //     pageIndex:0,
+            //     pageSize:1000,
+            //     totalPages:Math.ceil(data.length/1000)
+            // };
+            // updateData.queryObj = queryObj;
+            // let param = {
+            //     pageIndex: 0,
+            //     pageSize: 50,
+            // };
+            // updateData.queryParam = param;
+            updateData.list3 = data.data.leaseAccruedB;
             actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
         },
 
@@ -148,5 +175,34 @@ export default {
             }
             actions.communicationAccrued.updateState({list:_list});
         },
+
+        /**
+         * onAdd加载数据
+         * @param {*} param
+         * @param {*} getState
+         */
+        async getObject(param) {
+            // 正在加载数据，显示加载 Loading 图标
+            actions.communicationAccrued.updateState({showLoading: true});
+            let data = processData(await api.onAdd(param));  // 调用 onAdd 请求数据
+            let updateData = {showLoading: false};
+            updateData.formObject = data.data;
+            updateData.list3 = data.data.leaseAccruedB;
+            actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
+        },
+
+        /**
+         * 保存
+         * @param {*} param
+         * @param {*} getState
+         */
+        async onSave(param) {
+            // 正在加载数据，显示加载 Loading 图标
+            actions.communicationAccrued.updateState({showLoading: true});
+            let data = processData(await api.onSave(param));  // 调用 onSave 请求数据
+            let updateData = {showLoading: false};
+            actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
+        },
+
     }
 };

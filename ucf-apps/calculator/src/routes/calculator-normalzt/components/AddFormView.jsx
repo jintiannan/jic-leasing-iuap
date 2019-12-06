@@ -253,7 +253,6 @@ class AddFormView extends Component {
                                                
                                                 <TableFormRef
                                                 {...this.props}
-                                                isEdit={true} 
                                                 ref="tableRefAdd" 
                                                 title={"限额方案"} 
                                                 name = {"pk_limit_plan"} 
