@@ -11,6 +11,9 @@ import {CommunicationCustomer} from "./customer/container"
 import {CommunicationWithdraw} from "./withdraw/container";
 import {CommunicationCapital} from "./capital/container";
 import {CommunicationAccrued} from "./accrued/container"
+import {CommunicationCbOverdueContract} from "./cbOverdueContract/container"
+import {CommunicationCbBadContract} from "./cbBadContract/container"
+import {CommunicationCbEarlySettlement} from "./cbEarlySettlement/container"
 
 export default () => (
     <div className="route-content">
@@ -20,6 +23,9 @@ export default () => (
         <Route exact path='/accrued' component={CommunicationAccrued} />
         <Route exact path='/withdraw' component={CommunicationWithdraw} />
         <Route exact path='/capital' component={CommunicationCapital} />
+        <Route exact path='/cbOverdueContract' component={CommunicationCbOverdueContract} />
+        <Route exact path='/cbBadContract' component={CommunicationCbBadContract} />
+        <Route exact path='/cbEarlySettlement' component={CommunicationCbEarlySettlement} />
     </div>
 
 );

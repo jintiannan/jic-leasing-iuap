@@ -258,12 +258,15 @@ class TableFormRef extends Component {
       columnsData: columnsData,  //参照表头
       tableData: tableData,      //参照表体
       ...this.state.page,        //分页信息
-      matchData:matchData,       //匹配内容
+      matchData:JSON.stringify(matchData) == "[{}]"?this.props.formObject[this.props.name]?this.props.formObject[this.props.name]:{} : matchData,       //匹配内容
       miniSearchFunc: this.miniSearchFunc,  //搜索框内容回调
       dataNumSelect: this.dataNumSelect,    //选择显示条数回调函数
       handlePagination: this.handlePagination,  //选择指定页码回调函数
       onSave: this.onSave,       //保存回调函数
       onCancel: this.onCancel,   //取消回调函数
+      value: value==""?this.props.formObject[this.props.name]?JSON.stringify({"refname":this.props.formObject[this.props.name]['name'],
+              "refpk":this.props.formObject[this.props.name]['pk'],"name":this.props.formObject[this.props.name]['name'],"code":this.props.formObject[this.props.name]['code']
+              ,"pk":this.props.formObject[this.props.name]['pk']}):"":value
     });
     return (
 
@@ -276,9 +279,11 @@ class TableFormRef extends Component {
           {...childrenProps}
           {
             ...getFieldProps(this.props.name, {  //因为参照的值特殊 此处特殊处理传值后再重写了getFieldProps
-              initialValue: value,
+              initialValue: value==""?this.props.formObject[this.props.name]?JSON.stringify({"refname":this.props.formObject[this.props.name]['name'],
+              "refpk":this.props.formObject[this.props.name]['pk'],"name":this.props.formObject[this.props.name]['name'],"code":this.props.formObject[this.props.name]['code']
+              ,"pk":this.props.formObject[this.props.name]['pk']}):"":value,
               rules: [{
-                message: '请选择对应的'+this.props.formObject[this.props.name]['name'],
+                message: '',
               }]
             })
         }
