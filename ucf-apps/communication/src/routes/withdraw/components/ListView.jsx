@@ -137,14 +137,14 @@ class ListView extends Component {
         { title: '付款交易批次号', key: 'paymentBatchNo', type: '0' },
         { title: '收款人', key: 'payeeName', type: '0' },
         { title: '收款帐号', key: 'receivingAccount', type: '0' },
-        { title: '银行开户行', key: 'openBank', type: '0' },
+        { title: '银行开户行', key: 'openingBank', type: '0' },
         { title: '行号', key: 'accountNumber', type: '0' },
         { title: '合同金额', key: 'contAmount', type: '0' },
         { title: '租赁方式', key: 'leaseType', type: '0' },
         { title: '实际放款金额（汇总）', key: 'actualLoanAmount', type: '0' },
         { title: '付款帐号', key: 'paymentAccount', type: '0' },
         { title: '实付日期', key: 'realPayDate', type: '0' },
-        { title: '币种', key: 'pkCurrency', type: '0' },
+        { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyMainBody', type: '0' },
         { title: '来源系统', key: 'pkSys', type: '0' }
     ];
@@ -156,11 +156,26 @@ class ListView extends Component {
         { title: '付款交易批次号', key: 'paymentBatchNo', type: '0' },
         { title: '合同编号', key: 'contCode', type: '0' },
         { title: '合同名称', key: 'contName', type: '0' },
+        { title: '收款人', key: 'payeeName', type: '0' },
+        { title: '收款账号', key: 'receivingAccount', type: '0' },
+        { title: '银行开户行', key: 'openingBank', type: '0' },
+        { title: '行号', key: 'accountNumber', type: '0' },
         { title: '客户名称', key: 'customerName', type: '0' },
         { title: '单位名称', key: 'employerName', type: '0' },
         { title: '合同金额', key: 'contAmount', type: '0' },
+        { title: '起租日期', key: 'dateFrom', type: '0' },
+        { title: '合同签订日期', key: 'contSignedDate', type: '0' },
+        { title: '运营商套餐金额（月）', key: 'operatorAmount', type: '0' },
+        { title: '运营商套餐期限（月）', key: 'operatorDeadline', type: '0' },
+        { title: '终端名称', key: 'terminalName', type: '0' },
+        { title: '终端型号', key: 'terminalType', type: '0' },
         { title: '租赁方式', key: 'leaseType', type: '0' },
         { title: '实际放款金额（明细）', key: 'actualLoanAmount', type: '0' },
+        { title: '付款账号', key: 'paymentAccount', type: '0' },
+        { title: '实付日期', key: 'realPayDate', type: '0' },
+        { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
+        { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
+        { title: '公司主体', key: 'companyMainBody', type: '0' },
         { title: '来源系统', key: 'pkSys', type: '0' }
     ];
     // 投放计划 列属性定义=>通过前端service工具类自动生成
@@ -172,6 +187,13 @@ class ListView extends Component {
         this.setState({
             activeKey,
         });
+    };
+    onRowSelect = (record, index, event) => {
+        let updateData = {
+            list2: record.pkWithdrawDetail
+        };
+        actions.communicationWithdraw.updateState(updateData);
+        // this.gridColumnOnTheLoan = record.pkWithdrawDetail
     };
 
 
@@ -208,6 +230,7 @@ class ListView extends Component {
                             freshData: this.freshData, //活动页改变,跳转指定页数据
                             onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
                         }}
+                        onRowClick={this.onRowSelect}
                         getSelectedDataFunc={this.getSelectedDataFunc}
 
                     />

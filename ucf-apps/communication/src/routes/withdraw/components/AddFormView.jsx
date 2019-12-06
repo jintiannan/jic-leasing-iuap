@@ -49,7 +49,7 @@ class AddFormView extends Component {
     saveCache = () => {
         let objectForm = this.props.form.getFieldsValue();
         localStorage.setItem("addKey", JSON.stringify(objectForm));  //以JSON ：key-value形式置入缓存
-    }
+    };
 
     //模态框下一步操作
     next = () => {
@@ -57,7 +57,7 @@ class AddFormView extends Component {
         this.setState({ current });
         this.nextController();
         this.saveCache();
-    }
+    };
 
     //模态框上一步操作
     prev = () => {
