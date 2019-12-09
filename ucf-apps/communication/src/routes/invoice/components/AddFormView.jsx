@@ -7,19 +7,16 @@
 import React, { Component } from 'react';
 import { Step, Button, Message, Modal, Form, Icon, Label, Col, Row, Select, FormControl, Tabs } from 'tinper-bee';
 import { actions } from 'mirrorx';
-import TableFormRef from 'components/FormRef/TableFormRef';
-import { deepClone } from "utils";
-import DatePicker from "tinper-bee/lib/Datepicker";
-import FormInputNumber from 'components/FormRef/FormInputNumber';
-import { enumConstant } from '../../../../../../ucf-common/src/utils/enums';
+import { deepClone,getHeight } from "utils";
+import Grid from 'components/Grid';
+import {genGridColumn,checkListSelect} from "utils/service";
 import './index.less';
 
-const Steps = Step.Steps;         //步骤条组件使用定义 如不定义则只能使用Step.Steps 此处定义全局变量是为了方便使用
-const FormItem = Form.FormItem;   //表单组件使用定义   与上述情况相同
+// const Steps = Step.Steps;         //步骤条组件使用定义 如不定义则只能使用Step.Steps 此处定义全局变量是为了方便使用
 const addTitle = "基本信息";       //模态框标题
-const steps = [                   //步骤条每步使用标题  对应嵌套模态框内部标题
-    { title: '基本信息' }
-];
+// const steps = [                   //步骤条每步使用标题  对应嵌套模态框内部标题
+//     { title: '基本信息' }
+// ];
 
 class AddFormView extends Component {
     constructor(props) {
@@ -28,16 +25,15 @@ class AddFormView extends Component {
         this.state = {
             current: 0,        //初始模态框进入页签参数
             showDiv1: '',      //控制模态框内部每个页签的显示隐藏 为''时显示 为none时隐藏
-            // showDiv2: 'none',
-            // showDiv3: 'none',
-            // showDiv4: 'none',
-            // showDiv5: 'none',
-            // showDiv6: 'none',
+            tableHeight: 0,
         };
     }
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
+        //计算表格滚动条高度
+        // this.resetTableHeight(false);
+        this.addGridColumn = [...genGridColumn(this.addGrid)];
     }
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
@@ -47,116 +43,93 @@ class AddFormView extends Component {
     componentWillReceiveProps(nextProps) {
     }
 
-    //将新增数据存入缓存 避免因为异常情况关闭页面重新输入数据
-    saveCache = () => {
-        let objectForm = this.props.form.getFieldsValue();
-        localStorage.setItem("addKey", JSON.stringify(objectForm));  //以JSON ：key-value形式置入缓存
-    }
 
-    //模态框下一步操作
-    next = () => {
-        const current = this.state.current + 1;
-        this.setState({ current });
-        this.nextController();
-        this.saveCache();
-    }
+    /**
+     * 重置表格高度计算回调
+     *
+     * @param {Boolean} isopen 是否展开
+     */
+    resetTableHeight = (isopen) => {
+        let tableHeight = 0;
+        tableHeight = getHeight() - 155;
+        this.setState({ tableHeight });
+    };
 
-    //模态框上一步操作
-    prev = () => {
-        const current = this.state.current - 1;
-        this.setState({ current });
-        this.prevController();
-    }
-
-    //控制下一步 显示那个div
-    nextController = () => {
-        let key = 'showDiv';
-        let num = this.state.current + 2;
-        let showDiv = key + num;
-        let noneDiv = key + (num - 1);
-        let map = {};
-        map[showDiv] = '';
-        map[noneDiv] = 'none';
-        this.setState(map)
-    }
-
-    //控制上一步 显示那个div
-    prevController = () => {
-        let key = 'showDiv';
-        let num = this.state.current;
-        let showDiv = key + num;
-        let noneDiv = key + (num + 1);
-        let map = {};
-        map[showDiv] = '';
-        map[noneDiv] = 'none';
-        this.setState(map)
-    }
-
-    //关闭模态框后重置初始化数据
-    initDiv = () => {
-        this.setState({
-            current: 0,
-            showDiv1: '',
-            // showDiv2: 'none',
-            // showDiv3: 'none',
-            // showDiv4: 'none',
-            // showDiv5: 'none',
-            // showDiv6: 'none',
-        });
-    }
     //点击保存存储对应新增数据 移除缓存 并重置模态框
     alertDone = () => {
-        Message.create({ content: '完成', color: 'successlight' });
-        localStorage.removeItem("addKey");
-        this.initDiv();
+
+        actions.communicationInvoice.saveInvoice(this.props.addSelectedList);
         this.close();
-    }
+    };
     //关闭模态框
     close = () => {
-        actions.communicationInvoice.updateState({ showModal: false });
-        this.initDiv();
-    }
+        actions.communicationInvoice.updateState({ showModal: false, list1: [] });
+    };
+    /**
+     * 跳转到指定页数据
+     * @param {Number} pageIndex 跳转指定页数
+     */
+    freshData = (pageIndex) => {
+        let queryParam = deepClone(this.props.addQueryParam); // 深拷贝查询条件从 action 里
+        queryParam['pageIndex'] = pageIndex;
+        actions.communicationInvoice.loadList(queryParam);
+    };
 
-    //onChange方法 保证金比例
-    handleChangeDeposit_ratio = (value) => {
-        let objectForm = this.props.form.getFieldsValue();
-        let val = objectForm.total_amount_equipment * value;
-        this.props.form.setFieldsValue({ 'deposit_cash': val });
-    }
+    getSubSelectedDataFunc = (selectedList, record, index) => {
+        let { list1 } = this.props;
+        let _list = deepClone(list1);
+        let _selectedList = deepClone(selectedList);
+        if (index != undefined) {
+            _list[index]['_checked'] = !_list[index]['_checked'];
+        } else {
+            if (_selectedList && _selectedList.length > 0) {
+                _list.map(item => {
+                    if (!item['_disabled']) {
+                        item['_checked'] = true;
+                    }
+                });
+            } else {
+                _list.map(item => {
+                    if (!item['_disabled']) {
+                        item['_checked'] = false;
+                    }
+                });
+            }
+        }
+        actions.communicationInvoice.updateState({ list1: _list, addSelectedList: _selectedList });
+    };
 
-    //onChange方法 保证金金额
-    handleChangeDeposit_cash = (value) => {
-        let objectForm = this.props.form.getFieldsValue();
-        let val = (objectForm.total_amount_equipment > 0 ? value / objectForm.total_amount_equipment : 0)
-        this.props.form.setFieldsValue({ 'deposit_ratio': val });
-    }
-    //租金税率
-    handleChangeRent_tax_rate = (value) => {
-        this.props.form.setFieldsValue({ 'srvfee_taxrate_in': value });
-    }
-    //租赁方式
-    handleChangeLease_method = (value) => {
-        this.props.form.setFieldsValue({ 'if_corpus_tickets': value });
-    }
-    //onChange方法 手续费比例
-    handleChangeSrvfee_ratio_in = (value) => {
-        let objectForm = this.props.form.getFieldsValue();
-        let val = objectForm.total_amount_equipment * value;
-        this.props.form.setFieldsValue({ 'srvfee_cash_in_ft': val });
-    }
+    addGrid = [
+        { title: '合同编号', key: 'contCode', type: '0' },
+        { title: '合同名称', key: 'contName', type: '0' },
+        { title: '发票抬头', key: 'invoiceTitle', type: '0' },
+        { title: '起租流程', key: 'leaseFlow', type: '0' },
+        { title: '税号', key: 'ein', type: '0' },
+        { title: '单位地址', key: 'employerAddress', type: '0' },
+        { title: '电话号码', key: 'telephoneNumber', type: '0' },
+        { title: '开户银行', key: 'openingBank', type: '0' },
+        { title: '银行账号', key: 'bankAccount', type: '0' },
+        { title: '邮寄地址', key: 'mailingAddress', type: '0' },
+        { title: '客户名称', key: 'customerName', type: '0' },
+        { title: '单位名称', key: 'employerName', type: '0' },
+        { title: '电话号码', key: 'telephoneNumber', type: '0' },
+        { title: '租赁方式', key: 'leaseType', type: '0' },
+        { title: '期次', key: 'leaseTime', type: '0' },
+        { title: '应收日期', key: 'planDate', type: '0' },
+        { title: '租赁方式', key: 'leaseType', type: '0' },
+        { title: '税率', key: 'taxRate', type: '0' },
+        { title: '税额', key: 'leaseCashTax', type: '0' },
+        { title: '不含税金额', key: 'excludingTax', type: '0' },
+        { title: '开票状态', key: 'billingStatus', type: '0' },
+        { title: '开票内容', key: 'invoiceContents', type: '0' },
+        { title: '公司主体', key: 'companyMainBody', type: '0' }
 
-    //onChange方法 首期手续费金额
-    handleChangeSrvfee_cash_in_ft = (value) => {
-        let objectForm = this.props.form.getFieldsValue();
-        let val = (objectForm.total_amount_equipment > 0 ? value / objectForm.total_amount_equipment : 0)
-        this.props.form.setFieldsValue({ 'srvfee_ratio_in': val });
-    }
+    ];
+    //列属性定义=>通过前端service工具类自动生成
+    addGridColumn = [];
 
     render() {
-        const { current } = this.state;
-        const { getFieldProps } = this.props.form;
-        let _formObject = this.props.formObject;
-        let formObject = deepClone(_formObject);
+        let { tableHeight} = 600;
         if (this.props.showModal == false) {
             return <div></div>;
         } else {
@@ -185,849 +158,56 @@ class AddFormView extends Component {
                                  * 单个步骤条子组件Step key为唯一性索引 title为步骤条标题
                                  */
                             }
-                            <Steps current={current}>
-                                {steps.map(item => <Step key={item.title} title={item.title} />)}
-                            </Steps>
-
-                            <div className="steps-content jic-form">
-                                {/**
-                                 表单内容组件Form 包含表单的内容放置在组件内部
-                                 其中 Row Col 为处理格式的栅格布局 Row控制单行 Col 控制 md xs sm 即 中 大 小三种分辨率的列排序占比 单行12列
-                                 FormItem为单个表单域 囊括 标签Label与输入框FormControl 其中输入框同样可以换为下拉框Select等组件
-                                 FormControl的 getFieldProps为固定使用形式 内部填写当前单个表单域的属性名称
-                                 initiaValue为表单初始默认值
-                                 rules表单常用校验规则 内部required 为必输属性控制
-                                 */}
-                                <Form>
-                                    <div style={{ display: this.state.showDiv1 }}>
-
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        业务名称
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('businessName', {
-                                                                initialValue: formObject.businessName,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        集团名称
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('groupName', {
-                                                                initialValue: formObject.groupName,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        合同状态
-                                                    </Label>
-
-                                                    <Select
-                                                        data={[{ key: '已生成', value: '0' }, { key: '已生效', value: '1' },
-                                                            { key: '已起租', value: '2' },{ key: '已结清', value: '3' }]}
-                                                        {...getFieldProps('lease_method', {
-                                                            onChange: this.handleChangeLease_method,
-                                                            initialValue: formObject.contStatus,
-                                                            rules: [{
-                                                                required: true, message: '请选择',
-                                                            }],
-                                                        })}
-                                                    />
-
-
-                                                </FormItem>
-
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        合同编号
-                                                    </Label>
-                                                    {/**
-                                                     下拉框选取Select组件 disabled控制是否可编辑
-                                                     下拉选取数据通过枚举项处理工具使用enumConstant解析加入字段
-                                                     也可通过自定义枚举数据以key-value形式定义 其中key为名称 value为值
-                                                     可编辑时使用onChange事件作为编辑处理函数
-                                                     */}
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('contCode', {
-                                                                initialValue: formObject.contCode,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-
-
-                                                </FormItem>
-
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        客户名称
-                                                    </Label>
-
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('customerName', {
-                                                                initialValue: formObject.customerName,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        客户身份证号
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('identityNo', {
-                                                                initialValue: formObject.identityNo,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        合同签订日
-                                                    </Label>
-                                                    {/**
-                                                     日期组件DatePicker 除固有属性外 加入format处理格式类型
-                                                     */}
-                                                    <DatePicker
-                                                        {
-                                                            ...getFieldProps('contSignedDate', {
-                                                                initialValue: formObject.contSignedDate,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                        format={'YYYY-MM-DD'}
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        合同投放日
-                                                    </Label>
-                                                    {/**
-                                                     日期组件DatePicker 除固有属性外 加入format处理格式类型
-                                                     */}
-                                                    <DatePicker
-                                                        {
-                                                            ...getFieldProps('contLoan', {
-                                                                initialValue: formObject.contLoan,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                        format={'YYYY-MM-DD'}
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        起租流程
-                                                    </Label>
-                                                    {/**
-                                                     金额数字组件FormInputNumber 除固有属性外
-                                                     toThousands为true时金额类型会做千分位的转换
-                                                     toPercent为true时控制显示百分号 即用作百分比数据使用
-                                                     precision定义保留小数位的位数                                                        toPercent={true}  //是否显示百分号
-                                                     min控制数字金额的最小值 max控制数字金额的最大值
-                                                     */}
-                                                    <Select
-                                                        data={[{ key: '约定日起租', value: '0' }]}
-                                                        {...getFieldProps('leaseFlow', {
-                                                            onChange: this.handleChangeLease_method,
-                                                            initialValue: formObject.leaseFlow,
-                                                            rules: [{
-                                                                required: true, message: '请选择',
-                                                            }],
-                                                        })}
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-
-                                        </Row>
-
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        合同实际起租日
-                                                    </Label>
-                                                    {/**
-                                                     日期组件DatePicker 除固有属性外 加入format处理格式类型
-                                                     */}
-                                                    <DatePicker
-                                                        {
-                                                            ...getFieldProps('leaseDateFact', {
-                                                                initialValue: formObject.leaseDateFact,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                        format={'YYYY-MM-DD'}
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        合同结束日期
-                                                    </Label>
-                                                    {/**
-                                                     日期组件DatePicker 除固有属性外 加入format处理格式类型
-                                                     */}
-                                                    <DatePicker
-                                                        {
-                                                            ...getFieldProps('合同结束日期', {
-                                                                initialValue: formObject.合同结束日期,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                        format={'YYYY-MM-DD'}
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        还款频率
-                                                    </Label>
-                                                    {/**
-                                                     金额数字组件FormInputNumber 除固有属性外
-                                                     toThousands为true时金额类型会做千分位的转换
-                                                     toPercent为true时控制显示百分号 即用作百分比数据使用
-                                                     precision定义保留小数位的位数                                                        toPercent={true}  //是否显示百分号
-                                                     min控制数字金额的最小值 max控制数字金额的最大值
-                                                     */}
-                                                    <Select
-                                                        data={[{ key: '月', value: '0' }, { key: '季度', value: '1' },
-                                                            { key: '半年', value: '2' },{ key: '年度', value: '3' }]}
-                                                        {...getFieldProps('refundFrequency', {
-                                                            onChange: this.handleChangeLease_method,
-                                                            initialValue: formObject.refundFrequency,
-                                                            rules: [{
-                                                                required: true, message: '请选择',
-                                                            }],
-                                                        })}
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        还款结构
-                                                    </Label>
-                                                    {/**
-                                                     金额数字组件FormInputNumber 除固有属性外
-                                                     toThousands为true时金额类型会做千分位的转换
-                                                     toPercent为true时控制显示百分号 即用作百分比数据使用
-                                                     precision定义保留小数位的位数                                                        toPercent={true}  //是否显示百分号
-                                                     min控制数字金额的最小值 max控制数字金额的最大值
-                                                     */}
-                                                    <Select
-                                                        data={[{ key: '等额本金', value: '0' }, { key: '等额本息', value: '1' }]}
-                                                        {...getFieldProps('refundStructure', {
-                                                            onChange: this.handleChangeLease_method,
-                                                            initialValue: formObject.refundStructure,
-                                                            rules: [{
-                                                                required: true, message: '请选择',
-                                                            }],
-                                                        })}
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        租金总计
-                                                    </Label>
-                                                    <FormInputNumber
-                                                        disabled={true}
-                                                        toPercent={true}  //是否显示百分号
-                                                        precision={2} //保留2位小数
-                                                        {
-                                                            ...getFieldProps('leaseCashSum', {
-                                                                initialValue: formObject.leaseCashSum,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        本金金额
-                                                    </Label>
-                                                    <FormInputNumber
-                                                        disabled={true}
-                                                        toThousands={true}  //是否显示千分位
-                                                        precision={2} //保留2位小数
-                                                        {
-                                                            ...getFieldProps('corpusAmount', {
-                                                                initialValue: formObject.corpusAmount,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                        </Row>
-
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        租赁方式
-                                                    </Label>
-                                                    {/**
-                                                     金额数字组件FormInputNumber 除固有属性外
-                                                     toThousands为true时金额类型会做千分位的转换
-                                                     toPercent为true时控制显示百分号 即用作百分比数据使用
-                                                     precision定义保留小数位的位数                                                        toPercent={true}  //是否显示百分号
-                                                     min控制数字金额的最小值 max控制数字金额的最大值
-                                                     */}
-                                                    <Select
-                                                        data={[{ key: '直租', value: '0' }, { key: '回租', value: '1' }]}
-                                                        {...getFieldProps('refundStructure', {
-                                                            onChange: this.handleChangeLease_method,
-                                                            initialValue: formObject.refundStructure,
-                                                            rules: [{
-                                                                required: true, message: '请选择',
-                                                            }],
-                                                        })}
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        利息金额
-                                                    </Label>
-                                                    <FormInputNumber
-                                                        disabled={true}
-                                                        toPercent={true}  //是否显示百分号
-                                                        precision={2} //保留2位小数
-                                                        {
-                                                            ...getFieldProps('interestAmount', {
-                                                                initialValue: formObject.interestAmount,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        市场IRR
-                                                    </Label>
-                                                    <FormInputNumber
-                                                        disabled={true}
-                                                        toThousands={true}  //是否显示千分位
-                                                        precision={2} //保留2位小数
-                                                        {
-                                                            ...getFieldProps('marketIrr', {
-                                                                initialValue: formObject.marketIrr,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                        </Row>
-
-
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        客户所属地区
-                                                    </Label>
-                                                    {/**
-                                                     金额数字组件FormInputNumber 除固有属性外
-                                                     toThousands为true时金额类型会做千分位的转换
-                                                     toPercent为true时控制显示百分号 即用作百分比数据使用
-                                                     precision定义保留小数位的位数                                                        toPercent={true}  //是否显示百分号
-                                                     min控制数字金额的最小值 max控制数字金额的最大值
-                                                     */}
-                                                    <Select
-                                                        data={[{ key: '省', value: '0' }, { key: '市', value: '1' }, { key: '县', value: '2' }]}
-                                                        {...getFieldProps('customerRegion', {
-                                                            onChange: this.handleChangeLease_method,
-                                                            initialValue: formObject.customerRegion,
-                                                            rules: [{
-                                                                required: true, message: '请选择',
-                                                            }],
-                                                        })}
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        会计IRR
-                                                    </Label>
-                                                    <FormInputNumber
-                                                        disabled={true}
-                                                        toPercent={true}  //是否显示百分号
-                                                        precision={2} //保留2位小数
-                                                        {
-                                                            ...getFieldProps('financeIrr', {
-                                                                initialValue: formObject.financeIrr,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        收票类型
-                                                    </Label>
-                                                    <Select
-                                                        data={[{ key: '投放前收取', value: '0' }, { key: '投放后收取', value: '1' }]}
-                                                        {...getFieldProps('ticketType', {
-                                                            onChange: this.handleChangeLease_method,
-                                                            initialValue: formObject.ticketType,
-                                                            rules: [{
-                                                                required: true, message: '请选择',
-                                                            }],
-                                                        })}
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                        </Row>
-
-
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        供应商名称
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('supplierName', {
-                                                                initialValue: formObject.supplierName,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        供应商银行账号
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('supplierBankAccount', {
-                                                                initialValue: formObject.supplierBankAccount,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        出租人名称
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('lessorName', {
-                                                                initialValue: formObject.lessorName,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                        </Row>
-
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        租金回收方式
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('leaseRecycling', {
-                                                                initialValue: formObject.leaseRecycling,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        收款银行账号
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('gatherBankAccount', {
-                                                                initialValue: formObject.gatherBankAccount,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        收款银行开户行
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('gatherOpenBank', {
-                                                                initialValue: formObject.gatherOpenBank,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        是否有平台方保证金增信
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('ifDepositCredit', {
-                                                                initialValue: formObject.ifDepositCredit,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        合作平台方
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('cooperationPlatform', {
-                                                                initialValue: formObject.cooperationPlatform,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        保证金额度/保证金比例
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('depositRatio', {
-                                                                initialValue: formObject.depositRatio,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        运营商套餐金额
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('operatorAmount', {
-                                                                initialValue: formObject.operatorAmount,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        运营商套餐期限
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('operatorDeadline', {
-                                                                initialValue: formObject.operatorDeadline,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        终端名称
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('terminalName', {
-                                                                initialValue: formObject.terminalName,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-                                                </FormItem>
-
-                                            </Col>
-                                        </Row>
-
-                                        <Row>
-                                            <Col md={4} xs={4} sm={4}>
-                                                <FormItem>
-
-                                                    <Label>
-                                                        <Icon type="uf-mi" className='mast'></Icon>
-                                                        终端型号
-                                                    </Label>
-                                                    <FormControl
-                                                        {
-                                                            ...getFieldProps('terminalType', {
-                                                                initialValue: formObject.terminalType,
-                                                                rules: [{
-                                                                    required: true,
-                                                                }],
-                                                            })
-                                                        }
-                                                    />
-
-                                                </FormItem>
-
-                                            </Col>
-
-                                        </Row>
-                                    </div>
-
-                                </Form>
-
+                            <div className="grid-parent">
+                                <Grid
+                                    ref={(el) => this.addGrid = el} //存模版
+                                    columns={this.addGridColumn} //字段定义
+                                    data={this.props.list1} //数据数组
+                                    rowKey={(r, i) => {r._index = i; return i}} //生成行的key
+                                    multiSelect={true}  //false 单选，默认多选
+                                    scroll={{y: tableHeight}} //滚动轴高度
+                                    height={28} //行高度
+                                    bordered //表格有边界
+                                    headerDisplayInRow={true}//表头换行用...来表示
+                                    bodyDisplayInRow={true}//表体换行用...来表示
+                                    headerHeight={40} //表头高度
+                                    bodyStyle={{'height':tableHeight,'background-color':'rgb(241, 242, 245)'}} //表体样式
+                                    sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
+                                    hideHeaderScroll={false} //无数据时是否显示表头
+                                    //排序属性设置
+                                    sort={{
+                                        mode: 'multiple', //多列排序
+                                        backSource: false, //前端排序
+                                    }}
+                                    //分页对象
+                                    paginationObj = {{
+                                        activePage : this.props.addQueryParam.pageIndex,//活动页
+                                        total : this.props.total,//总条数
+                                        items: this.props.addQueryObj.totalPages,//总页数
+                                        freshData: this.freshData, //活动页改变,跳转指定页数据
+                                        dataNumSelect:['5','25','50','100'],
+                                        dataNum:2,
+                                        onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
+                                        verticalPosition:'bottom'
+                                    }}
+                                    rowClassName={(record,index,indent)=>{
+                                        if (record._checked) {
+                                            return 'selected';
+                                        } else {
+                                            return '';
+                                        }
+                                    }}
+                                    // onRowClick={this.onRowSelect}
+                                    getSelectedDataFunc={this.getSubSelectedDataFunc}
+                                />
                             </div>
                             <div className="steps-action">
-                                {/**
-                                 react的条件渲染支持以下形式处理 但必须使用{}包含
-                                 */}
-                                {
-                                    this.state.current > 0
-                                    &&
-                                    <Button bordered style={{ marginRight: 8 }} onClick={() => this.prev()}>上一步</Button>
-                                }
-                                {
-                                    this.state.current < steps.length - 1
-                                    &&
-                                    <Button colors="primary" style={{ marginRight: 8 }} onClick={() => this.next()}>下一步</Button>
-                                }
-                                {
-                                    this.state.current === steps.length - 1
-                                    &&
-                                    <Button colors="primary" style={{ marginRight: 8 }} onClick={() => this.alertDone()}>完成</Button>
-                                }{
+                                <Button colors="primary" style={{marginRight: 8}}
+                                        onClick={() => this.alertDone()}>完成</Button>
                                 <Button colors="secondary" onClick={() => this.close()}> 关闭 </Button>
-                            }
                             </div>
+
+
 
                         </Modal.Body>
                     </Modal>

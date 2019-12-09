@@ -230,7 +230,7 @@ class ListView extends Component {
                             freshData: this.freshData, //活动页改变,跳转指定页数据
                             onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
                         }}
-                        onRowClick={this.onRowSelect}
+                        // onRowClick={this.onRowSelect}
                         getSelectedDataFunc={this.getSelectedDataFunc}
 
                     />

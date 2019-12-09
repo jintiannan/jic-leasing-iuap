@@ -128,77 +128,63 @@ class IndexView extends Component {
         })
     }
 
-    oncloseSearch = () =>{
-        this.setState({
-            showSearchPanel:false,
-        })
-    }
-
-    onalterSearch = () =>{
-        const dataSource = this.serachRef.alterSerach();
-        console.log(dataSource);
-        localStorage.setItem('testdemosearch',JSON.stringify(dataSource));
-        this.setState({
-            showSearchPanel:false,
-        })
-    }
-
     /**
      * 当前页按钮点击事件  添加数据  所有页面内部函数统一采用Es6箭头函数语法形式 避免this指针获取不到存在错误的问题
      */
     onAdd = () =>{
-        let objectForm = localStorage.getItem("addKey");
-        if(objectForm){
-            let _formObject = deepClone(JSON.parse(objectForm));
-            actions.communicationInvoice.updateState({formObject:_formObject});
-        }else{
-
-            //新增完成初始化form表单
-            actions.communicationInvoice.updateState({formObject:{
-                    //租赁方式
-                    lease_method:'0',
-                    //本金是否开票
-                    if_corpus_tickets:'0',
-                    //投放日期
-                    plan_date_loan: moment(), //系统当前时间
-                    //基准利率
-                    interrate:'0.0435',
-                    //报价利率
-                    final_rate:'0.0435',
-                    //手续费收取方式
-                    srvfee_method_in:'0',
-                    //租赁期限(月)
-                    lease_times:'12',
-                    //先付后付标志
-                    prepay_or_not:'1',
-                    //支付频率
-                    lease_freq:'0',
-                    //计算方式
-                    lease_cal_method:'0',
-                    //总投放金额的计息方式
-                    interest_method_total_loan:'0',
-                    //现金流日期计算方式
-                    year_days_flow:'0',
-                    //计算精度
-                    cal_digit:'1',
-                    //年化天数
-                    year_days:'0',
-                    //利率类型
-                    interrate_type:'0',
-                    //币种
-                    pk_currtype:'0',
-                    //利率浮动方式
-                    float_method:'0',
-                    //利率档次
-                    interrate_level:'0',
-                    //会计IRR按最新算法
-                    finace_irr_method:'0',
-                    //会计IRR算法启用年份
-                    finace_irr_year:'1',
-
-
-                }});
-        }
+        // let objectForm = localStorage.getItem("addKey");
+        // if(objectForm){
+        //     let _formObject = deepClone(JSON.parse(objectForm));
+        //     actions.communicationInvoice.updateState({formObject:_formObject});
+        // }else{
+        //
+        //     //新增完成初始化form表单
+        //     actions.communicationInvoice.updateState({formObject:{
+        //             //租赁方式
+        //             lease_method:'0',
+        //             //本金是否开票
+        //             if_corpus_tickets:'0',
+        //             //投放日期
+        //             plan_date_loan: moment(), //系统当前时间
+        //             //基准利率
+        //             interrate:'0.0435',
+        //             //报价利率
+        //             final_rate:'0.0435',
+        //             //手续费收取方式
+        //             srvfee_method_in:'0',
+        //             //租赁期限(月)
+        //             lease_times:'12',
+        //             //先付后付标志
+        //             prepay_or_not:'1',
+        //             //支付频率
+        //             lease_freq:'0',
+        //             //计算方式
+        //             lease_cal_method:'0',
+        //             //总投放金额的计息方式
+        //             interest_method_total_loan:'0',
+        //             //现金流日期计算方式
+        //             year_days_flow:'0',
+        //             //计算精度
+        //             cal_digit:'1',
+        //             //年化天数
+        //             year_days:'0',
+        //             //利率类型
+        //             interrate_type:'0',
+        //             //币种
+        //             pk_currtype:'0',
+        //             //利率浮动方式
+        //             float_method:'0',
+        //             //利率档次
+        //             interrate_level:'0',
+        //             //会计IRR按最新算法
+        //             finace_irr_method:'0',
+        //             //会计IRR算法启用年份
+        //             finace_irr_year:'1',
+        //
+        //
+        //         }});
+        // }
+        actions.communicationInvoice.loadAddList(this.props.addQueryParam);
         //填出新增窗口
         actions.communicationInvoice.updateState({showModal : true});
     }
