@@ -145,9 +145,9 @@ class ListView extends Component {
         { title: '实收租金', key: 'paidinRent', type: '0' },
         { title: '应收本金', key: 'receivableCorpus', type: '0' },
         { title: '剩余本金', key: 'corpusBalance', type: '0' },
-        { title: '币种', key: 'pkCurrtype.currtypename', type: '0' },
+        { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyBody', type: '0' },
-        { title: '来源系统', key: 'pkSystem.systemName', type: '0' },
+        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];

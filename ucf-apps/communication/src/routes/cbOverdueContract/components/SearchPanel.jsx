@@ -11,74 +11,32 @@ import {deepClone} from "utils";
 const TreeNode = Tree.TreeNode;   //树节点使用组件定义
 const transData = [               //树节点使用假数据定义 后续从后端传入
       {
-        title: "本币汇率",
-        key: "currency_rate",
-        _edit:true,
-        type:'String',
-        between:false,
-      },
-      {
-        title: "币种",
-        key: "current_type",
-        _edit:true,
-        type:'String',
-        between:false,
-      },
-      {
-        title: "现金流量项目",
-        key: "currency_code",
-        _edit:true,
-        type:'String',
-        between:false,
-      },
-      {
-        title: "合同日期",
-        key: "cont_date",
-        _edit:true,
-        type:'Date',
-        between:false,
-      },
-      {
         title: "合同编号",
-        key: "cont_code",
+        key: "contCode",
         _edit:true,
         fixcon:true,
         type:'String',
         between:false,
       },
       {
-        title: "项目编号",
-        key: "project_code",
+        title: "合同名称",
+        key: "contName",
         _edit:true,
         fixcon:true,
         type:'String',
         between:false,
       },
       {
-        title: "项目名称",
-        key: "project_name",
+        title: "客户名称",
+        key: "customerName",
         _edit:true,
         fixcon:true,
         type:'String',
         between:false,
       },
       {
-        title: "项目经理",
-        key: "project_manager",
-        _edit:true,
-        type:'Ref',
-        between:false,
-      },
-      {
-        title: "借款单号",
-        key: "loan_bill_code",
-        _edit:true,
-        type:'String',
-        between:false,
-      },
-      {
-        title: "项目金额",
-        key: "old_currency_amount",
+        title: "交易批次号",
+        key: "paymentBatchNo",
         _edit:true,
         type:'String',
         between:false,
@@ -120,30 +78,13 @@ class SearchPanel extends React.Component {
             width:100,
           },
           {
-            title: "比较条件",
-            dataIndex: "key",
-            key: "key",
-            width:100,
-            render: (text, record, index) => {
-              //字符串数值不存在介于区间   参照类型只有等于选择     日期类型存在介于区间  此处分类处理
-              if(record.type=='String'){
-                return <EnumModel text={text} record={record} index={index} type={'compareCon'} dataIndex = {'condition'} onChange={this.onCellChange(index, "key")} />
-              }else if(record.type=='Date'){
-                return <EnumModel text={text} record={record} index={index} type={'datecompareCon'} dataIndex = {'condition'} onChange={this.onCellChange(index, "key")} />
-              }else if(record.type=='Ref'){
-                return <EnumModel text={text} record={record} index={index} type={'compareCon'} dataIndex = {'condition'} onChange={this.onCellChange(index, "key")} />
-              }
-              
-            }
-          },
-          {
             title: "条件内容",
             dataIndex: "content",
             key: "content",
-            width: 100,
+            width: 200,
             render: (text, record, index) => {
               if(record.type=='String'){
-                return <StringModel  record={record} index={index} dataIndex={'content'}/>
+                return <StringModel text={text} record={record} index={index} dataIndex={'content'}/>
               }else if(record.type=='Date'&&!record.between){
                 return <DateModel  record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content'}  />
               }else if(record.type=='Date'&&record.between){
@@ -235,7 +176,13 @@ class SearchPanel extends React.Component {
     }
 
     alterSerach = ()=>{
-      return this.state.dataSource;
+      let queryData={};
+      this.state.dataSource.map((item,key)=>{
+        if(item != undefined && item.key != undefined && item.content != undefined && item.content != ''){
+          queryData[item.key] = item.content;
+        }
+      });
+      return queryData;
     }
     
 
@@ -298,9 +245,9 @@ class SearchPanel extends React.Component {
             </TreeNode>
           </Tree>
           </div>
-                    <div className="search_from_right">
-                        <Table data={this.state.dataSource} columns={this.state.columns} height={30}/>
-                    </div>
+                <div className="search_from_right">
+                    <Table data={this.state.dataSource} columns={this.state.columns} height={30}/>
+                </div>
                 </Modal.Body>
                 <Modal.Footer>
                 <div>

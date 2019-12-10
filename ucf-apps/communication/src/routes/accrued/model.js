@@ -200,6 +200,7 @@ export default {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationAccrued.updateState({showLoading: true});
             let data = processData(await api.onSave(param));  // 调用 onSave 请求数据
+            
             let updateData = {showLoading: false};
             actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
         },

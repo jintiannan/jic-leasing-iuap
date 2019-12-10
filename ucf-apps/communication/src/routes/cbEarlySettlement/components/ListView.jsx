@@ -134,20 +134,17 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        { title: '付款交易批次号', key: 'paymentTransactionBatch', type: '0' },
         { title: '合同编号', key: 'contCode', type: '0' },
         { title: '合同名称', key: 'contName', type: '0' },
         { title: '客户名称', key: 'customerName', type: '0' },
         { title: '单位名称', key: 'employerName', type: '0' },
         { title: '起租日期', key: 'rentDate', type: '0' },
         { title: '租赁方式', key: 'leaseType', type: '0' },
-        { title: '应收租金', key: 'receivableRent', type: '0' },
-        { title: '实收租金', key: 'paidinRent', type: '0' },
-        { title: '应收本金', key: 'receivableCorpus', type: '0' },
+        { title: '剩余应还租金', key: 'payableRentBalance', type: '0' },
         { title: '剩余本金', key: 'corpusBalance', type: '0' },
-        { title: '币种', key: 'pkCurrtype.currtypename', type: '0' },
+        { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyBody', type: '0' },
-        { title: '来源系统', key: 'pkSystem.systemName', type: '0' },
+        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];

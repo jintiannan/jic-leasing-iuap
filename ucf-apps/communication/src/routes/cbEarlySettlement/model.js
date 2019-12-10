@@ -88,7 +88,7 @@ export default {
             let queryObj = {
                 pageIndex:param.pageIndex,
                 pageSize:param.pageSize,
-                totalPages:Math.ceil(data.length/param.pageSize)
+                totalPages:Math.ceil(data.data.total/param.pageSize)
             };
             updateData.queryObj = queryObj;
             updateData.queryParam = param;
@@ -96,26 +96,26 @@ export default {
             actions.communicationCbEarlySettlement.updateState(updateData); // 更新数据和查询条件
         },
 
-        /**
-         * 加载子列表数据
-         * @param {*} param
-         * @param {*} getState
-         */
-        async loadChildList(param = {}, getState) {
-            // 正在加载数据，显示加载 Loading 图标
-            actions.communicationCbEarlySettlement.updateState({showLoading: true});
-            let data = processData(await api.getList(param));  // 调用 getList 请求数据
-            let updateData = {showLoading: false};
-            let queryObj = {
-                pageIndex:param.pageIndex,
-                pageSize:param.pageSize,
-                totalPages:Math.ceil(data.length/param.pageSize)
-            };
-            updateData.queryObj = queryObj;
-            updateData.queryParam = param;
-            updateData.list2 = data;
-            actions.communicationCbEarlySettlement.updateState(updateData); // 更新数据和查询条件
-        },
+        // /**
+        //  * 加载子列表数据
+        //  * @param {*} param
+        //  * @param {*} getState
+        //  */
+        // async loadChildList(param = {}, getState) {
+        //     // 正在加载数据，显示加载 Loading 图标
+        //     actions.communicationCbEarlySettlement.updateState({showLoading: true});
+        //     let data = processData(await api.getList(param));  // 调用 getList 请求数据
+        //     let updateData = {showLoading: false};
+        //     let queryObj = {
+        //         pageIndex:param.pageIndex,
+        //         pageSize:param.pageSize,
+        //         totalPages:Math.ceil(data.data.pageData.length/param.pageSize)
+        //     };
+        //     updateData.queryObj = queryObj;
+        //     updateData.queryParam = param;
+        //     updateData.list2 = data;
+        //     actions.communicationCbEarlySettlement.updateState(updateData); // 更新数据和查询条件
+        // },
 
 
         /**

@@ -134,9 +134,15 @@ class IndexView extends Component {
     }
 
     onalterSearch = () =>{
-        const dataSource = this.serachRef.alterSerach();
-        console.log(dataSource);
-        localStorage.setItem('testdemosearch',JSON.stringify(dataSource));
+        const queryData = this.serachRef.alterSerach();
+        let queryParam = {
+            pageIndex: 1,
+            pageSize: this.props.queryParam.pageSize,
+            queryData: '{}'==JSON.stringify(queryData)?null:queryData
+        };
+        actions.communicationCbOverdueContract.loadList(queryParam);
+        //console.log(queryData);
+        //localStorage.setItem('testdemosearch',JSON.stringify(queryData));
         this.setState({
             showSearchPanel:false,
         })
