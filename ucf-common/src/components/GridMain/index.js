@@ -42,7 +42,7 @@ class GridMain extends Component {
         this.setState({ tableHeightMain });
 
         let tableHeightChild = 0;
-        tableHeightChild = getHeight() * 0.2;
+        tableHeightChild = getHeight() * 0.27;
         this.setState({ tableHeightChild });
 
         let tableHeightSingle = 0;
@@ -87,7 +87,8 @@ class GridMain extends Component {
                     data={data} //数据数组
                     columnFilterAble={tableHeight==1?true:false} //是否显示列过滤功能 默认主表显示 字表不显示
                     rowKey={(r, i) => {r._index = i; return i}} //生成行的key
-                    multiSelect= {{ type:"checkbox" }}  //false 单选，默认多选    
+                    multiSelect= {{ type:"checkbox" }}  //false 单选，默认多选   
+                    dragborder={true}               //表头可拖拽
                     autoCheckedByClickRows={false} 
                     exportFileName={exportFileName}  
                     exportData={exportData}                 

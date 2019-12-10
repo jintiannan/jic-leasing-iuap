@@ -53,8 +53,8 @@ export const processData = (response, successMsg) => {
         }
         if (response.status == '200') {
             let data = response.data;
-            if(data === 306){
-                window.top.location.href = `/${GROBAL_PORTAL_ID}/login`;
+            if(typeof(data) == 'string'&&data.indexOf("token") != -1 ){
+                window.top.location.href = `/${GROBAL_PORTAL_ID}/login`;  //token验证失败  返回登录页
             }
             if (successMsg) {
                 success(successMsg);

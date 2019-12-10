@@ -12,6 +12,7 @@ import ListView from './ListView';
 import FormView from './FormView';
 import AddFormView from './AddFormView';
 import SearchPanel from './SearchPanel'
+import Voucher from 'components/Voucher'
 import moment from 'moment';
 import './index.less';
 
@@ -43,6 +44,7 @@ class IndexView extends Component {
             formObject: {},//当前卡片界面对象
             listObj: [],//列表对象
             showSearchPanel:false,
+            showVoucherModal:false,     //凭证对话框是否显示
             ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
             powerButton: props.powerButton,//按钮权限列表
             ifGridColumn:props.ifGridColumn,//是否自定义显示字段
@@ -124,13 +126,20 @@ class IndexView extends Component {
      */
     onQuery = () =>{        
         this.setState({
-            showSearchPanel:true
+            // showSearchPanel:true
+            showVoucherModal:true,
         })
     }
 
     oncloseSearch = () =>{
         this.setState({
             showSearchPanel:false,
+        })
+    }
+
+    oncloseVoucher = () =>{
+        this.setState({
+            showVoucherModal:false,
         })
     }
 
@@ -296,6 +305,9 @@ class IndexView extends Component {
                 </div>
                 <div>
                     <SearchPanel {...this.props} IfShow = {this.state.showSearchPanel} onRef = {this.onsearchRef} closeSearch={this.oncloseSearch} alterSerach={this.onalterSearch}/>
+                </div>
+                <div>
+                    <Voucher {...this.props} showVoucherModal = {this.state.showVoucherModal} closeVoucher={this.oncloseVoucher} />
                 </div>
             </div>
             

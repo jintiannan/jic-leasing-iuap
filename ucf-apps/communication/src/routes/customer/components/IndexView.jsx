@@ -62,10 +62,6 @@ class IndexView extends Component {
         this.listchild = ref;
     }
 
-    onsearchRef = (ref) =>{
-        this.serachRef = ref;
-    }
-
     /**
      * 切换为列表界面
      */
@@ -102,24 +98,6 @@ class IndexView extends Component {
      * 查询方法
      */
     onQuery = () =>{        
-        this.setState({
-            showSearchPanel:true
-        })
-    }
-
-    oncloseSearch = () =>{
-        this.setState({
-            showSearchPanel:false,
-        })
-    }
-
-    onalterSearch = () =>{
-        const dataSource = this.serachRef.alterSerach();
-        console.log(dataSource);
-        localStorage.setItem('testdemosearch',JSON.stringify(dataSource));
-        this.setState({
-            showSearchPanel:false,
-        })
     }
 
      /**

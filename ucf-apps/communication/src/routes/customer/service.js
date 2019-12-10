@@ -13,16 +13,13 @@ const URL = {
  * @param {*} params
  */
 export const getList = (params) => {
-    let data = {
+    let qdata = {
         pagination:{
             curPage : params.pageIndex,
             pageSize : params.pageSize
         }
     }
-    return request(URL.GET_LIST, {              
-        method : "post",                         
-        data : data
-    });
+    return requestBusiness(qdata,URL.GET_LIST);
 }
 
 
