@@ -7,7 +7,7 @@ import GridMain from 'components/GridMain';
 
 const { TabPane } = Tabs;
 import './index.less';
-
+import {Button, ButtonGroup, Icon} from 'tinper-bee';
 class ListView extends Component {
     constructor(props) {
         super(props);
@@ -91,7 +91,7 @@ class ListView extends Component {
         }
         if (_selectedList && _selectedList.length == 1) {
             _formObj = deepClone(_selectedList[0]);
-            // this.childList(_formObj);
+            this.childList(_formObj.pkCapitalDetail);
         } else {
             actions.communicationCapital.updateState({ list2: [] });
         }
@@ -101,7 +101,7 @@ class ListView extends Component {
 
     childList = (obj) => {
         //加载子组件列表
-        actions.communicationCapital.loadChildList(this.props.queryParam);
+        actions.communicationCapital.loadChildList(obj);
     };
 
     /**
@@ -134,6 +134,23 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
+        { title: '收款批次', key: 'capitalBatchNo', type: '0' },
+        { title: '应收金额', key: 'receivableAmount', type: '0' },
+        { title: '到账金额', key: 'intoAccountAmount', type: '0' },
+        { title: '到账日期', key: 'intoAccountDate', type: '0' },
+        { title: '是否逾期', key: 'ifOverdue', type: '0' },
+        { title: '抵扣状态', key: 'deductionStatus', type: '0' },
+        { title: '抵扣日期', key: 'deductionDate', type: '0' },
+        { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
+        { title: '公司主体', key: 'companyBody', type: '0' },
+        { title: '来源系统', key: 'pkSys', type: '0' },
+    ];
+    //主表 列属性定义=>通过前端service工具类自动生成
+    gridColumn = [];
+
+    // 投放计划 列属性定义
+    gridOnTheLoan = [
+        { title: '收款批次', key: 'capitalBatchNo', type: '0' },
         { title: '合同编号', key: 'contCode', type: '0' },
         { title: '合同名称', key: 'contName', type: '0' },
         { title: '客户名称', key: 'customerName', type: '0' },
@@ -157,26 +174,9 @@ class ListView extends Component {
         { title: '实收本金', key: 'paidinCorpus', type: '0' },
         { title: '实收利息', key: 'paidinInterest', type: '0' },
         { title: '是否逾期', key: 'ifOverdue', type: '0' },
-        { title: '币种', key: 'pkCurrency', type: '0' },
+        { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyBody', type: '0' },
         { title: '来源系统', key: 'pkSys', type: '0' },
-    ];
-    //主表 列属性定义=>通过前端service工具类自动生成
-    gridColumn = [];
-
-    // 投放计划 列属性定义
-    gridOnTheLoan = [
-        { title: '计划投放日期', key: 'plan_date_loan', type: '0' },
-        { title: '投放金额(元)', key: 'plan_cash_loan', type: '0' },
-        { title: '不含税投放金额(元)', key: 'plan_cash_corpus', type: '0' },
-        { title: '税率', key: 'tax_rate', type: '0' },
-        { title: '税额(元)', key: 'tax_cash', type: '0' },
-        { title: '投放付款方式', key: 'pay_method_loan', type: '0' },
-        { title: '银票开票日期', key: 'make_date_draft', type: '0' },
-        { title: '银票到期日期', key: 'end_date_loan', type: '0' },
-        { title: '银票保证金比例', key: 'deposit_ratio4draft', type: '0' },
-        { title: '银票保证金利率', key: 'interrate_ratio4draft', type: '0' },
-        { title: '计息金额计算方式', key: 'calinter_amount_style', type: '0' },
     ];
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];
@@ -187,6 +187,9 @@ class ListView extends Component {
         this.setState({
             activeKey,
         });
+    };
+    onExportSub = () => {
+
     };
 
 
@@ -239,9 +242,16 @@ class ListView extends Component {
                         defaultActiveKey="1"
                         onChange={this.onChange}
                         className="list-tabs"
+                        extraContent={
+                            <div className="addAndDelChildList demoPadding" >
+                                <ButtonGroup style={{ margin: 1 }}>
+                                    <Button shape='border' onClick={this.onExportSub}><Icon type='uf-add-c-o' />导出</Button>
+                                </ButtonGroup>
+                            </div>
+                        }
                     >
 
-                        <TabPane tab='预留子表' key="1">
+                        <TabPane tab='收款明细表' key="1">
                             <div>
                                 <GridMain
                                     ref={(el) => this.gridOnTheLoan = el} //存模版

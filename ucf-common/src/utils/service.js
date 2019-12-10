@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import {Tooltip} from "tinper-bee";
 import EnumModel from 'components/GridCompnent/EnumModel';
 import {deepClone, Info} from "utils";
 const TYPE_STRING = '0';
@@ -9,6 +10,7 @@ const TYPE_DATE = '3';
 const TYPE_TIME = '4';
 const TYPE_REF = '5';
 const TYPE_ENUM = '6';
+const TYPE_CURRENCY = '7';
 import StringModel from 'components/GridCompnent/StringModel'
 
 const dateFormat = "YYYY-MM-DD";
@@ -16,47 +18,76 @@ const dateTimeFormat = "YYYY-MM-DD HH:mm:ss";
 /**
  * 生成业务单据列表
  * @param {数组参数:界面列表字段描述} param
- * 0:字符串,1:数字,2:百分数,3:日期,4:日期时间,5:参照,6:下拉
+ * 0:字符串,1:数字,2:百分数,3:日期,4:日期时间,5:参照,6:下拉,7:金额
  *
  */
 export function genGridColumn(param){
     let gridColumn = param.map(function(element,index,param){
-        let{type,title,key,width,digit,enumType,ifshow} = element;
+        let{type,title,key,width,digit,enumType,ifshow,sorter} = element;
         if(ifshow == null) ifshow = true; //ifshow:false 不显示该列  默认显示
         if(width == null) width = 120;
         if(digit == null) digit = 0;
+        if(sorter == null) sorter = 1;   //默认1 排序   0不排序
 
         switch(type){
             case TYPE_STRING :
-                return {
-                    title:title,
-                    dataIndex:key,
-                    key:key,
-                    ifshow:ifshow,
-                    width: width,
-                    sorter: (pre, after) => {
-                        if(pre[key].length > after[key].length){
-                            return 1;
-                        } else {
-                            return pre[key].localeCompare(after[key],'zh-CN')
+                if(sorter == 1){
+                    return {
+                        title:title,
+                        dataIndex:key,
+                        key:key,
+                        ifshow:ifshow,
+                        width: width,
+                        sorter: (pre, after) => {
+                            if(pre[key].length > after[key].length){
+                                return 1;
+                            } else {
+                                return pre[key].toString().localeCompare(after[key].toString(),'zh-CN')
+                            }
+                        },
+                        render: (text, record, index) => {
+                            return(<Tooltip inverse overlay={text}>
+                                    <span tootip={text}>{text}</span>
+                                </Tooltip>)
                         }
-                    },
-                    render: (text, record, index) => {
-                        return <StringModel text={text} record={record} index={index} dataIndex={key}/>
-                    }
-                };
+                    };
+                }else{
+                    return {
+                        title:title,
+                        dataIndex:key,
+                        key:key,
+                        ifshow:ifshow,
+                        width: width,
+                        render: (text, record, index) => {
+                            return(<Tooltip inverse overlay={text}>
+                                    <span tootip={text}>{text}</span>
+                                </Tooltip>)
+                        }
+                    };
+                }
             case TYPE_NUMBER :
-                return {
-                    title:title,
-                    dataIndex:key,
-                    key:key,
-                    width: width,
-                    sorter: (pre, after) => {return pre[key] - after[key]},
-                    className:'column-number-right',
-                    render: (text, record, index) => {
-                        return (<span>{(typeof text)==='number'? text.toFixed(digit):""}</span>)
-                    }
-                };
+                if(sorter == 0){
+                    return {
+                        title:title,
+                        dataIndex:key,
+                        key:key,
+                        width: width,
+                        render: (text, record, index) => {
+                            return (<span style={{'float':'right'}}>{(typeof text)==='number'? text.toFixed(digit):""}</span>)
+                        }
+                    };
+                }else{
+                    return {
+                        title:title,
+                        dataIndex:key,
+                        key:key,
+                        width: width,
+                        sorter: (pre, after) => {return pre[key] - after[key]},
+                        render: (text, record, index) => {
+                            return (<span style={{'float':'right'}}>{(typeof text)==='number'? text.toFixed(digit):""}</span>)
+                        }
+                    };
+                }
             case TYPE_PERCENT :
                 return {
                     title:title,
@@ -66,7 +97,7 @@ export function genGridColumn(param){
                     sorter: (pre, after) => {return pre[key] - after[key]},
                     className:'column-number-right',
                     render: (text, record, index) => {
-                        return (<span>{(typeof text)==='number'? (text * 100).toFixed(digit).toString + '%':""}</span>)
+                        return (<span style={{'float':'right'}}>{(typeof text)==='number'? (text * 100).toFixed(digit).toString + '%':""}</span>)
                     }
                 };
             case TYPE_DATE :
@@ -121,7 +152,16 @@ export function genGridColumn(param){
                         return (<EnumModel type={enumType} text={text} record={record} index={index}/>)
                     }
                 };
-
+            case TYPE_CURRENCY :
+                return {
+                    title: title,
+                    dataIndex: key,
+                    key: key,
+                    width: width,
+                    render: (text, record, index) => {
+                        return (<span style={{'float':'right'}}>{(typeof text)==='number'? text.toFixed(digit).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'):""}</span>)
+                    }
+            }
         }
     });
     return gridColumn;

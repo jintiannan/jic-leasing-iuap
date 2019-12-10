@@ -8,6 +8,7 @@ import * as api from "./service";
  * deepClone : 克隆当前指定对象的数据 通常用于数据更新
  */
 import {processData,deepClone} from "utils";
+import {Message} from "tinper-bee";
 
 
 export default {
@@ -25,14 +26,21 @@ export default {
             pageIndex: 0,
             pageSize: 50,
         },
+        addQueryParam: {
+            pageIndex: 0,
+            pageSize: 50,
+        },
         queryObj: {},        //查询结果参数 用以完成列表内部的分页 参见loadList中使用的形式
+        addQueryObj: {},
         //页面数据集
         list: [],
         list2: [],
+        list1: [],
         //主表form表单绑定数据
         formObject:{},
         //当前页选中的数据
         selectedList:[],
+        addSelectedList:[],
         //按钮权限集
         powerButton:[],
         //是否过滤按钮权限
@@ -83,12 +91,11 @@ export default {
             actions.communicationInvoice.updateState({showLoading: true});
             let data = processData(await api.getList(param));  // 调用 getList 请求数据
             let updateData = {showLoading: false};
-            let queryObj = {
+            updateData.queryObj = {
                 pageIndex:param.pageIndex,
                 pageSize:param.pageSize,
                 totalPages:Math.ceil(data.data.length/param.pageSize)
             };
-            updateData.queryObj = queryObj;
             updateData.queryParam = param;
             updateData.list = data.data.pageData;
             actions.communicationInvoice.updateState(updateData); // 更新数据和查询条件
@@ -96,25 +103,47 @@ export default {
 
         /**
          * 加载子列表数据
-         * @param {*} param
-         * @param {*} getState
+         * @param {*} mainPk
          */
-        async loadChildList(param = {}, getState) {
+        async loadChildList(mainPk) {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationInvoice.updateState({showLoading: true});
-            let data = processData(await api.getList(param));  // 调用 getList 请求数据
+            let param = {pkInvoiceApply: mainPk};
+            let data = processData(await api.getSubList(param));  // 调用 getList 请求数据
             let updateData = {showLoading: false};
-            let queryObj = {
-                pageIndex:param.pageIndex,
-                pageSize:param.pageSize,
-                totalPages:Math.ceil(data.length/param.pageSize)
-            };
-            updateData.queryObj = queryObj;
-            updateData.queryParam = param;
-            updateData.list2 = data;
+            updateData.list2 = data.data;
             actions.communicationInvoice.updateState(updateData); // 更新数据和查询条件
         },
 
+        async loadAddList(param = {}, getState) {
+            actions.communicationInvoice.updateState({showLoading: true});
+            param['billingStatus'] = 1;
+            let data = processData(await api.getSubList(param));  // 调用 getList 请求数据
+            let updateData = {showLoading: false};
+            updateData.addQueryObj = {
+                pageIndex:param.pageIndex,
+                pageSize:param.pageSize,
+                totalPages:Math.ceil(data.data.length/param.pageSize)
+            };
+            updateData.list1 = data.data;
+            actions.communicationInvoice.updateState(updateData); // 更新数据和查询条件
+        },
+
+        async saveInvoice(selectedList) {
+            actions.communicationInvoice.updateState({showLoading: true});
+
+            let data = processData(await api.save(selectedList));  // 调用 getList 请求数据
+
+            if (data.code === 200) {
+                Message.create({ content: '完成', color: 'successlight' });
+
+                // this.loadList(this.queryParam);
+
+            }
+            let updateData = {showLoading: false};
+            actions.communicationInvoice.updateState(updateData); // 更新数据和查询条件
+
+        },
 
         /**
          * 更新界面单行数据,使用之前请对需要更新的对象进行深拷贝再传入!!

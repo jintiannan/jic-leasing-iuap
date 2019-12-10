@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import { actions } from 'mirrorx';
-import { Tabs } from 'tinper-bee';
-import { deepClone, getHeight } from "utils";
-import { genGridColumn } from "utils/service";
-import GridMain from 'components/GridMain';
-import Grid from 'components/Grid';
-const { TabPane } = Tabs;
+import React, {Component} from 'react';
+import {actions} from 'mirrorx';
+import {Tabs} from 'tinper-bee';
+import {deepClone, getHeight} from "utils";
+import {genGridColumn} from "utils/service";
+
 import './index.less';
+import GridMain from 'components/GridMain';
+
+const { TabPane } = Tabs;
 
 class ListView extends Component {
     constructor(props) {
@@ -46,7 +47,7 @@ class ListView extends Component {
         let queryParam = deepClone(this.props.queryParam); // 深拷贝查询条件从 action 里
         queryParam['pageIndex'] = pageIndex;
         actions.communicationInvoice.loadList(queryParam);
-    }
+    };
 
     /**
      * 重置表格高度计算回调
@@ -58,7 +59,7 @@ class ListView extends Component {
         tableHeight = getHeight() - 155;
         this.setState({ tableHeight });
 
-    }
+    };
 
     /**
      * 设置每页显示行数
@@ -73,7 +74,7 @@ class ListView extends Component {
             pageSize = 1;
         }
         actions.communicationInvoice.loadList(queryParam);
-    }
+    };
 
 
     // }
@@ -106,18 +107,20 @@ class ListView extends Component {
         }
         if (_selectedList && _selectedList.length == 1) {
             _formObj = deepClone(_selectedList[0]);
-            // this.childList(_formObj);
+            this.childList(_formObj);
         } else {
             actions.communicationInvoice.updateState({ list2: [] });
         }
         actions.communicationInvoice.updateState({ list: _list, selectedList: _selectedList, formObject: _formObj });
 
-    }
+    };
 
     childList = (obj) => {
+        //选中的主表记录主键
+        let mainPk = obj.pkInvoiceApply;
         //加载子组件列表
-        actions.communicationInvoice.loadChildList(this.props.queryParam);
-    }
+        actions.communicationInvoice.loadChildList(mainPk);
+    };
 
     /**
      * 过滤需要处理的字段
@@ -140,15 +143,29 @@ class ListView extends Component {
             })
         });
         return grid;
-    }
+    };
 
     //gridColumn 需要显示的字段  grid全部的字段
     getColumnByShow = (gridColumn, grid) => {
 
-    }
+    };
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
+        { title: '单据状态', key: 'billstatus', type: '0' },
+        { title: '开票批次号', key: 'invoiceBatchNo', type: '0' },
+        { title: '发票总额', key: 'invoiceAmount', type: '0' },
+        { title: '发票税额', key: 'leaseCashTax', type: '0' },
+        { title: '不含税金额', key: 'excludingTax', type: '0' },
+        { title: '开票状态', key: 'billingStatus', type: '0' },
+        { title: '开票日期', key: 'billingData', type: '0' },
+        { title: '发票代码', key: 'invoiceCode', type: '0' }
+    ];
+    //主表 列属性定义=>通过前端service工具类自动生成
+    gridColumn = [];
+
+    // 投放计划 列属性定义
+    gridOnTheLoan = [
         { title: '合同编号', key: 'contCode', type: '0' },
         { title: '合同名称', key: 'contName', type: '0' },
         { title: '发票抬头', key: 'invoiceTitle', type: '0' },
@@ -172,24 +189,7 @@ class ListView extends Component {
         { title: '开票状态', key: 'billingStatus', type: '0' },
         { title: '开票内容', key: 'invoiceContents', type: '0' },
         { title: '公司主体', key: 'companyMainBody', type: '0' }
-    ]
-    //主表 列属性定义=>通过前端service工具类自动生成
-    gridColumn = [];
-
-    // 投放计划 列属性定义
-    gridOnTheLoan = [
-        { title: '计划投放日期', key: 'plan_date_loan', type: '0' },
-        { title: '投放金额(元)', key: 'plan_cash_loan', type: '0' },
-        { title: '不含税投放金额(元)', key: 'plan_cash_corpus', type: '0' },
-        { title: '税率', key: 'tax_rate', type: '0' },
-        { title: '税额(元)', key: 'tax_cash', type: '0' },
-        { title: '投放付款方式', key: 'pay_method_loan', type: '0' },
-        { title: '银票开票日期', key: 'make_date_draft', type: '0' },
-        { title: '银票到期日期', key: 'end_date_loan', type: '0' },
-        { title: '银票保证金比例', key: 'deposit_ratio4draft', type: '0' },
-        { title: '银票保证金利率', key: 'interrate_ratio4draft', type: '0' },
-        { title: '计息金额计算方式', key: 'calinter_amount_style', type: '0' },
-    ]
+    ];
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];
 
@@ -199,7 +199,7 @@ class ListView extends Component {
         this.setState({
             activeKey,
         });
-    }
+    };
 
 
     render() {
@@ -222,98 +222,56 @@ class ListView extends Component {
                      columnFilterAble:隐藏列表头标题内部的列过滤面板
                      getSelectedDataFunc:选中数据触发事件
                      */}
-
-                    <Grid
-                        ref={(el) => this.grid = el} //存模版
+                    <GridMain
+                        ref="mainlist" //存模版
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组
-                        rowKey={(r, i) => {r._index = i; return i}} //生成行的key
-                        multiSelect={true}  //false 单选，默认多选
-                        scroll={{y: tableHeight}} //滚动轴高度
-                        height={28} //行高度
-                        bordered //表格有边界
-                        headerDisplayInRow={true}//表头换行用...来表示
-                        bodyDisplayInRow={true}//表体换行用...来表示
-                        headerHeight={40} //表头高度
-                        bodyStyle={{'height':tableHeight ,'background-color':'rgb(241, 242, 245)'}} //表体样式
-                        sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
-                        hideHeaderScroll={false} //无数据时是否显示表头
-                        //排序属性设置
-                        sort={{
-                            mode: 'multiple', //多列排序
-                            backSource: false, //前端排序
-                        }}
+                        tableHeight={1} //表格高度 1主表 2字表
+                        exportFileName="测试导出表格"　    //导出表格名称
+                        exportData={this.props.list}      //导出表格数据
                         //分页对象
-                        paginationObj = {{
-                            activePage : this.props.queryParam.pageIndex,//活动页
-                            total : this.props.list.length,//总条数
+                        paginationObj={{
+                            activePage: this.props.queryParam.pageIndex,//活动页
+                            total: this.props.list.length,//总条数
                             items: this.props.queryObj.totalPages,//总页数
                             freshData: this.freshData, //活动页改变,跳转指定页数据
-                            dataNumSelect:['5','25','50','100'],
-                            dataNum:2,
                             onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页
-                            verticalPosition:'bottom'
-                        }}
-                        rowClassName={(record,index,indent)=>{
-                            if (record._checked) {
-                                return 'selected';
-                            } else {
-                                return '';
-                            }
                         }}
                         // onRowClick={this.onRowSelect}
                         getSelectedDataFunc={this.getSelectedDataFunc}
 
                     />
-                    {/*<GridMain*/}
-                    {/*    ref="mainlist" //存模版*/}
-                    {/*    columns={this.gridColumn} //字段定义*/}
-                    {/*    data={this.props.list} //数据数组                     */}
-                    {/*    tableHeight={1} //表格高度 1主表 2字表*/}
-                    {/*    exportFileName="测试导出表格"　    //导出表格名称*/}
-                    {/*    exportData={this.props.list}      //导出表格数据*/}
-                    {/*    //分页对象*/}
-                    {/*    paginationObj={{*/}
-                    {/*        activePage: this.props.queryParam.pageIndex,//活动页*/}
-                    {/*        total: this.props.list.length,//总条数*/}
-                    {/*        items: this.props.queryObj.totalPages,//总页数*/}
-                    {/*        freshData: this.freshData, //活动页改变,跳转指定页数据*/}
-                    {/*        onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页*/}
-                    {/*    }}*/}
-                    {/*    getSelectedDataFunc={this.getSelectedDataFunc}*/}
-
-                    {/*/>*/}
                 </div>
-                {/*<div>*/}
-                {/*    /!***/}
-                {/*     子表多页签组件Tabs*/}
-                {/*     defaultActiveKeky:默认展示页签key*/}
-                {/*     className:定义在index.less中的样式属性名称*/}
-                {/*     extraContent:额外属性 通常用来添加表头右侧的按钮即 增删改查的小图标*/}
-                {/*     TabPane : 单个子表子组件 嵌套在Tabs中使用 key为唯一主键*/}
-                {/*     *!/*/}
-                {/*    /!*<Tabs*!/*/}
-                {/*    /!*    defaultActiveKey="1"*!/*/}
-                {/*    /!*    onChange={this.onChange}*!/*/}
-                {/*    /!*    className="list-tabs"*!/*/}
-                {/*    /!*>*!/*/}
+                <div>
+                    {/**
+                     子表多页签组件Tabs
+                     defaultActiveKeky:默认展示页签key
+                     className:定义在index.less中的样式属性名称
+                     extraContent:额外属性 通常用来添加表头右侧的按钮即 增删改查的小图标
+                     TabPane : 单个子表子组件 嵌套在Tabs中使用 key为唯一主键
+                     */}
+                    <Tabs
+                        defaultActiveKey="1"
+                        onChange={this.onChange}
+                        className="list-tabs"
+                    >
 
-                {/*    /!*    <TabPane tab='预留子表' key="1">*!/*/}
-                {/*    /!*        <div>*!/*/}
-                {/*    /!*            <GridMain*!/*/}
-                {/*    /!*                ref={(el) => this.gridOnTheLoan = el} //存模版*!/*/}
-                {/*    /!*                columns={this.gridColumnOnTheLoan} //字段定义*!/*/}
-                {/*    /!*                multiSelect={false}  //false 单选，默认多选 *!/*/}
-                {/*    /!*                data={this.props.list2} //数据数组*!/*/}
-                {/*    /!*                //分页对象*!/*/}
-                {/*    /!*                paginationObj={{*!/*/}
-                {/*    /!*                    verticalPosition: 'none'*!/*/}
-                {/*    /!*                }}*!/*/}
-                {/*    /!*            />*!/*/}
-                {/*    /!*        </div>*!/*/}
-                {/*    /!*    </TabPane>*!/*/}
-                {/*    /!*</Tabs>*!/*/}
-                {/*</div>*/}
+                        <TabPane tab="开票明细" key="1">
+                            <div>
+                                <GridMain
+                                    ref={(el) => this.gridOnTheLoan = el} //存模版
+                                    columns={this.gridColumnOnTheLoan} //字段定义
+                                    multiSelect={false}  //false 单选，默认多选
+                                    data={this.props.list2} //数据数组
+                                    //分页对象
+                                    paginationObj={{
+                                        verticalPosition: 'none'
+                                    }}
+                                />
+                            </div>
+                        </TabPane>
+                    </Tabs>
+                </div>
             </div>
 
         );

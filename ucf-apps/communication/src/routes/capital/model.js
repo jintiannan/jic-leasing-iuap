@@ -96,23 +96,22 @@ export default {
 
         /**
          * 加载子列表数据
-         * @param {*} param
-         * @param {*} getState
+         * @param data
          */
-        async loadChildList(param = {}, getState) {
+        async loadChildList(data) {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationCapital.updateState({showLoading: true});
-            let data = processData(await api.getList(param));  // 调用 getList 请求数据
-            let updateData = {showLoading: false};
-            let queryObj = {
-                pageIndex:param.pageIndex,
-                pageSize:param.pageSize,
-                totalPages:Math.ceil(data.length/param.pageSize)
-            };
-            updateData.queryObj = queryObj;
-            updateData.queryParam = param;
-            updateData.list2 = data;
-            actions.communicationCapital.updateState(updateData); // 更新数据和查询条件
+            // let data = processData(await api.getList(param));  // 调用 getList 请求数据
+            // let updateData = {showLoading: false};
+            // let queryObj = {
+            //     pageIndex:param.pageIndex,
+            //     pageSize:param.pageSize,
+            //     totalPages:Math.ceil(data.length/param.pageSize)
+            // };
+            // updateData.queryObj = queryObj;
+            // updateData.queryParam = param;
+            // updateData.list2 = data;
+            actions.communicationCapital.updateState({list2: data}); // 更新数据和查询条件
         },
 
 

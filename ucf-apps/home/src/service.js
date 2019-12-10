@@ -2,6 +2,7 @@
  * 服务请求类
  */
 import request from "axios";
+import { requestBusiness } from "utils/business";
 //定义接口地址
 const URL = {
     "GET_LIST":  `${GROBAL_HTTP_CTX}/order/list`,
@@ -26,21 +27,15 @@ const URL = {
  * @param {*} params
  */
 export const getList = (params) => {
-    return request(URL.GET_MENU, {
-      method : "post",
-      data : params
-  });
+    return requestBusiness(params,URL.GET_MENU);
 };
 
 /**
  * 注销登陆用户
  * @param {} params 
  */
-export const logout = (data) =>{
-    return request(URL.LOG_OUT,{
-        method : "post",
-        data : data,
-    })
+export const logout = (params) =>{
+    return requestBusiness(params,URL.LOG_OUT);
 }
 
 /**

@@ -148,17 +148,16 @@ class FormView extends Component {
 // { label: '租赁本金', field: 'fact_cash_loan', com: FormInputNumber, required: true, toThousands: true, precision: 2 },
 
 mainForm1 = [
-    { label: '付款交易批次号', field: 'paymentBatchNo', com: FormControl, required: true },
-    { label: '收款人', field: 'payeeName', com: FormControl, required: true },
-    { label: '收款帐号', field: 'receivingAccount', com: FormControl, required: true },
-    { label: '银行开户行', field: 'openBank', com: FormControl, required: true },
-    { label: '合同金额', field: 'contAmount', com: FormInputNumber, required: true, toThousands: true, precision: 2},
-    { label: '租赁方式', field: 'ifOverdue', com: Select, required: true, data: [{ key: '直租', value: '0' }, { key: '回租', value: '1' }] },
-    { label: '实际放款金额（汇总）', field: 'receivableAmount', com: FormInputNumber, required: true, toThousands: true, precision: 2},
-    { label: '付款帐号', field: 'paymentAccount', com: FormControl, required: true },
-    { label: '实付日期', field: 'realPayDate', com: DatePicker, required: true, format: 'YYYY-MM-DD' },
-    { label: '币种', field: 'supplierName', com: FormControl, required: true},
-    { label: '公司主体', field: 'companyMainBody', com: FormControl, required: true},
+    { label: '付款交易批次号', field: 'capitalBatchNo', com: FormControl, required: true },
+    { label: '应收金额', field: 'receivableAmount', com: FormInputNumber, required: true, toThousands: true, precision: 2 },
+    { label: '到账金额', field: 'intoAccountAmount', com: FormInputNumber, required: true , toThousands: true, precision: 2},
+    { label: '到账日期', field: 'intoAccountDate', com: DatePicker, required: true, format: 'YYYY-MM-DD' },
+    { label: '是否逾期', field: 'ifOverdue', com: Select, required: true, data: [{ key: '已逾期', value: 0 }, { key: '未逾期', value: 1 }]},
+    { label: '抵扣状态', field: 'deductionStatus', com: Select, required: true, data: [{ key: '未抵扣', value: 0 }, { key: '已抵扣', value: 1 }, { key: '已归还', value: 2 }]},
+    { label: '抵扣日期', field: 'deductionDate', com: DatePicker, required: true, format: 'YYYY-MM-DD' },
+    { label: '租赁方式', field: 'ifOverdue', com: Select, required: true, data: [{ key: '直租', value: 0 }, { key: '回租', value: 1 }] },
+    { label: '币种', field: 'pkCurrency.currtypename', com: FormControl, required: true},
+    { label: '公司主体', field: 'companyBody', com: FormControl, required: true},
     { label: '来源系统', field: 'pkSys', com: FormControl, required: true}
     ];
 
@@ -168,19 +167,33 @@ mainForm1 = [
      *表格列属性定义 title:属性中文名  key:字段名称  type:封装在service.js中的枚举类型 具体类型控制见js
      */
     gridOnTheLoan = [
-        { title: '付款交易批次号', key: 'paymentBatchNo', type: '0' },
-        { title: '收款人', key: 'payeeName', type: '0' },
-        { title: '收款帐号', key: 'receivingAccount', type: '0' },
-        { title: '银行开户行', key: 'openBank', type: '0' },
-        { title: '行号', key: 'accountNumber', type: '0' },
-        { title: '合同金额', key: 'contAmount', type: '0' },
+        { title: '收款批次', key: 'capitalBatchNo', type: '0' },
+        { title: '合同编号', key: 'contCode', type: '0' },
+        { title: '合同名称', key: 'contName', type: '0' },
+        { title: '客户名称', key: 'customerName', type: '0' },
+        { title: '单位名称', key: 'employerName', type: '0' },
         { title: '租赁方式', key: 'leaseType', type: '0' },
-        { title: '实际放款金额（汇总）', key: 'actualLoanAmount', type: '0' },
-        { title: '付款帐号', key: 'paymentAccount', type: '0' },
-        { title: '实付日期', key: 'realPayDate', type: '0' },
-        { title: '币种', key: 'pkCurrency', type: '0' },
-        { title: '公司主体', key: 'companyMainBody', type: '0' },
-        { title: '来源系统', key: 'pkSys', type: '0' }
+        { title: '事件类别', key: 'eventType', type: '0' },
+        { title: '期次', key: 'periodTime', type: '0' },
+        { title: '应收日期', key: 'receivableDate', type: '0' },
+        { title: '应收金额', key: 'receivableAmount', type: '0' },
+        { title: '应收本金', key: 'receivableCorpus', type: '0' },
+        { title: '应收利息', key: 'receivableInterest', type: '0' },
+        { title: '剩余本金', key: 'surplusCorpus', type: '0' },
+        { title: '到账金额', key: 'intoAccountAmount', type: '0' },
+        { title: '到账日期', key: 'intoAccountDate', type: '0' },
+        { title: '核销状态', key: 'verificationState', type: '0' },
+        { title: '核销日期', key: 'verificationDate', type: '0' },
+        { title: '收款银行', key: 'gatherBank', type: '0' },
+        { title: '收款帐号', key: 'gatherAccount', type: '0' },
+        { title: '核销金额', key: 'gatherBalance', type: '0' },
+        { title: '应收余额', key: 'receivableBalance', type: '0' },
+        { title: '实收本金', key: 'paidinCorpus', type: '0' },
+        { title: '实收利息', key: 'paidinInterest', type: '0' },
+        { title: '是否逾期', key: 'ifOverdue', type: '0' },
+        { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
+        { title: '公司主体', key: 'companyBody', type: '0' },
+        { title: '来源系统', key: 'pkSys', type: '0' },
     ];
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];
@@ -265,7 +278,7 @@ mainForm1 = [
                                 </div>
                             }
                         >
-                            <TabPane tab='投放计划' key="1">
+                            <TabPane tab='收款明细表' key="1">
                                 <div>
                                     <GridMain
                                         ref={(el) => this.gridOnTheLoan = el} //存模版

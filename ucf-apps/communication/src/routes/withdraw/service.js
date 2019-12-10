@@ -1,7 +1,7 @@
 /**
  * 服务请求类  定义请求后台接口地址url ${GROBAL_HTTP_CTX}为全局配置在config中 + 后台controller路径
  */
-import request from "axios";
+import request from 'ucf-request';
 //定义接口地址
 const URL = {
     "LIST":  `${GROBAL_HTTP_CTX}/communication/withdraw/list`,

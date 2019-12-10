@@ -103,7 +103,6 @@ class ButtonGroup extends Component {
 
     handleSelect = ({ key }) =>{
         console.log(`${key} selected`);
-        debugger
         this.props.Export();
     }
 

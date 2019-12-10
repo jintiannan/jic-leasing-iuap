@@ -172,7 +172,6 @@ class LoginForm extends Component {
     
     render() {
         let {errMsg,checked,username,password,currentSystem,systemList} = this.props; 
-        debugger
         return (            
             <div className="login-main">
             <div className="login-top"></div>

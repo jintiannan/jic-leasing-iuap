@@ -147,8 +147,8 @@ class ListView extends Component {
         { title: '手续费总金额(元)', key: 'srvfee_cash_in', type: '0' },
         { title: '会计IRR按最新算法', key: 'finace_irr_method', type: '0' },
         { title: '会计IRR算法启用年份', key: 'finace_irr_year', type: '0' },
-        { title: '市场IRR', key: 'project_irr', type: '0' },
-        { title: '会计IRR', key: 'finance_irr', type: '0' },
+        { title: '市场IRR', key: 'project_irr', type: '1', digit:2},
+        { title: '会计IRR', key: 'finance_irr', type: '1', digit:2},
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];

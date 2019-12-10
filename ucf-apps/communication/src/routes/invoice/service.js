@@ -2,11 +2,13 @@
  * 服务请求类  定义请求后台接口地址url ${GROBAL_HTTP_CTX}为全局配置在config中 + 后台controller路径
  */
 import request from "axios";
+// import request from 'ucf-request';
 import * as mock from "./mock";
 //定义接口地址
 const URL = {
-    "GET_LIST":  `${GROBAL_HTTP_CTX}/sales/list`,
     "LIST":  `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/queryForGrid`,
+    "SUB_LIST": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/subList`,
+    "SAVE": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/save`
 
 }
 
@@ -29,5 +31,17 @@ export const getList = (params) => {
         method : "post",
         params : {page:0,pageSize:50,data: JSON.stringify(params)}
     });
-}
+};
+export const getSubList = (params) => {
+    return request(URL.SUB_LIST, {
+        method : "post",
+        params : {page:0,pageSize:50,data: JSON.stringify(params)}
+    });
+};
+export const save = (selected) => {
+    return request(URL.SAVE, {
+        method : "post",
+        data : selected
+    });
+};
 
