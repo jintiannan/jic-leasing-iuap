@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import {Tooltip} from "tinper-bee";
 import EnumModel from 'components/GridCompnent/EnumModel';
 import {deepClone, Info} from "utils";
 const TYPE_STRING = '0';

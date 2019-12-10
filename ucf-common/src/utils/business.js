@@ -13,5 +13,7 @@ export const requestBusiness = (params, url) => {
       method : "post",
       data : params,
       headers: {'token': user !=null ? user.tokenid:null} //设置header信息
-  });
+  }).catch((error)=>{          //后台抛出异常 也要统一返回信息处理
+        return error.response;
+    })
 }
