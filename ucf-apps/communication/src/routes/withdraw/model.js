@@ -83,12 +83,11 @@ export default {
             actions.communicationWithdraw.updateState({showLoading: true});
             let data = processData(await api.getList(param));  // 调用 getList 请求数据
             let updateData = {showLoading: false};
-            let queryObj = {
+            updateData.queryObj = {
                 pageIndex:param.pageIndex,
                 pageSize:param.pageSize,
-                totalPages:Math.ceil(data.data.length/param.pageSize)
+                totalPages:Math.ceil(data.data.total/param.pageSize)
             };
-            updateData.queryObj = queryObj;
             updateData.queryParam = param;
             updateData.list = data.data.pageData;
             actions.communicationWithdraw.updateState(updateData); // 更新数据和查询条件
@@ -96,22 +95,21 @@ export default {
 
         /**
          * 加载子列表数据
-         * @param {*} param
-         * @param {*} getState
+         * @param param
          */
-        async loadChildList(param = {}, getState) {
+        async loadChildList(param) {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationWithdraw.updateState({showLoading: true});
-            let data = processData(await api.getList(param));  // 调用 getList 请求数据
+
+            let data = processData(await api.getSubList(param));  // 调用 getList 请求数据
             let updateData = {showLoading: false};
-            let queryObj = {
-                pageIndex:param.pageIndex,
-                pageSize:param.pageSize,
-                totalPages:Math.ceil(data.length/param.pageSize)
-            };
-            updateData.queryObj = queryObj;
-            updateData.queryParam = param;
-            updateData.list2 = data;
+            // updateData.queryObj = {
+            //     pageIndex:param.pageIndex,
+            //     pageSize:param.pageSize,
+            //     totalPages:Math.ceil(data.length/param.pageSize)
+            // };
+            // updateData.queryParam = param;
+            updateData.list2 = data.data;
             actions.communicationWithdraw.updateState(updateData); // 更新数据和查询条件
         },
 

@@ -94,7 +94,7 @@ export default {
             updateData.queryObj = {
                 pageIndex:param.pageIndex,
                 pageSize:param.pageSize,
-                totalPages:Math.ceil(data.data.length/param.pageSize)
+                totalPages:Math.ceil(data.data.total/param.pageSize)
             };
             updateData.queryParam = param;
             updateData.list = data.data.pageData;
@@ -103,12 +103,11 @@ export default {
 
         /**
          * 加载子列表数据
-         * @param {*} mainPk
+         * @param param
          */
-        async loadChildList(mainPk) {
+        async loadChildList(param) {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationInvoice.updateState({showLoading: true});
-            let param = {pkInvoiceApply: mainPk};
             let data = processData(await api.getSubList(param));  // 调用 getList 请求数据
             let updateData = {showLoading: false};
             updateData.list2 = data.data;
@@ -117,8 +116,7 @@ export default {
 
         async loadAddList(param = {}, getState) {
             actions.communicationInvoice.updateState({showLoading: true});
-            param['billingStatus'] = 1;
-            let data = processData(await api.getSubList(param));  // 调用 getList 请求数据
+            let data = processData(await api.getSubNotInvoice());  // 调用 getList 请求数据
             let updateData = {showLoading: false};
             updateData.addQueryObj = {
                 pageIndex:param.pageIndex,
@@ -134,10 +132,10 @@ export default {
 
             let data = processData(await api.save(selectedList));  // 调用 getList 请求数据
 
-            if (data.code === 200) {
+            if (data.success === true) {
                 Message.create({ content: '完成', color: 'successlight' });
 
-                // this.loadList(this.queryParam);
+                actions.communicationInvoice.loadList(this.props.queryParam);
 
             }
             let updateData = {showLoading: false};

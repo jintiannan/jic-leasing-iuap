@@ -116,10 +116,8 @@ class ListView extends Component {
     };
 
     childList = (obj) => {
-        //选中的主表记录主键
-        let mainPk = obj.pkInvoiceApply;
         //加载子组件列表
-        actions.communicationInvoice.loadChildList(mainPk);
+        actions.communicationInvoice.loadChildList({pkInvoiceApply: obj.pkInvoiceApply});
     };
 
     /**

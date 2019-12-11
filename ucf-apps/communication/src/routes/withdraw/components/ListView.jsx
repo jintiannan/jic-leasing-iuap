@@ -91,7 +91,7 @@ class ListView extends Component {
         }
         if (_selectedList && _selectedList.length == 1) {
             _formObj = deepClone(_selectedList[0]);
-            // this.childList(_formObj);
+            this.childList(_formObj.pkWithdraw);
         } else {
             actions.communicationWithdraw.updateState({ list2: [] });
         }
@@ -99,9 +99,9 @@ class ListView extends Component {
 
     };
 
-    childList = (obj) => {
+    childList = (mainPk) => {
         //加载子组件列表
-        actions.communicationWithdraw.loadChildList(this.props.queryParam);
+        actions.communicationWithdraw.loadChildList({ pkWithdraw: mainPk });
     };
 
     /**
