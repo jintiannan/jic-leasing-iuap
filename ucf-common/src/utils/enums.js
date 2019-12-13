@@ -1,4 +1,5 @@
 import request from "axios";
+import Item from "antd/lib/list/Item";
 //定义接口地址
 const URL = {
     "ENUM_CONSTANT": `${GROBAL_HTTP_CTX}/sales/list`
@@ -14,7 +15,7 @@ export function enumConstant(type) {
     /* ↓使用临时数据↓ */
     switch (type) {
         case "billstatus": //工厂
-            return [{key: '审核通过', value: '9'}, {key: '暂存', value: '20'}];
+            return [{key: '审核通过', value: 9}, {key: '暂存', value: 20}];
         case 'yesOrNo':
             return [{value: "0", key: '是'}, {value: '1', key: '否'}];
         case 'datecompareCon':
@@ -35,7 +36,22 @@ export function enumConstant(type) {
             return [{ key: '3年以下', value: '0' }, { key: '3-10年', value: '1' }, { key: '10年以上', value: '2' }];
         case 'relationship':
             return [{ key: '直系亲属', value: '0' }, { key: '朋友', value: '1' }, { key: '同事', value: '2' }, { key: '其他', value: '3' }];
+        case 'leaseFlow':
+            return [{ key: '约定日起租', value: 3 }];
+        case 'assetsClassify':
+            return [{ key: '正常', value: '0' }, { key: '关注', value: '1' }, { key: '次级', value: '2' }];
         default:
             break;
     }
+}
+
+export function enumConstantValue(type, value) {
+    let array = enumConstant(type);
+    let request = '未定义';
+    array.map((item) =>{
+        if(item.value == value){
+            request = item.key;
+        }
+    })
+    return request;
 }

@@ -29,7 +29,7 @@ export const getList = (params) => {
      */
     return request(URL.LIST, {
         method : "post",
-        data : {page:0,pageSize:50,data: JSON.stringify(params)}
+        data : params
     });
 }
 

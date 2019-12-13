@@ -90,7 +90,7 @@ class ListView extends Component {
             }
         }
         if (_selectedList && _selectedList.length == 1) {
-            this.childList({pk:_selectedList[0].pkLeaseAccrued});
+            this.childList({pk:_selectedList[0].pkAccrued});
         } else {
             actions.communicationAccrued.updateState({ list2: [] });
         }
@@ -133,7 +133,7 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        { title: '单据状态', key: 'billstatus', type: '0' },
+        { title: '单据状态', key:'billstatus', type: '6', enumType :'billstatus'},
         { title: '计提月份', key: 'accrualMonth', type: '0' },
         { title: '租赁利息计提', key: 'interestAmount', type: '0' },
         { title: '手续费收入计提总额', key: 'feeAmount', type: '0' },
@@ -145,22 +145,22 @@ class ListView extends Component {
         { title: '审核人', key: 'pkChecker.userName', type: '0' },
         { title: '审核日期', key: 'checkDate', type: '0' },
         { title: '审核时间', key: 'checkTime', type: '0' },
-        { title: '签约主体', key: 'pkCorp.orgName', type: '0' },
-        { title: '机构', key: 'pkCorp.orgName', type: '0' }
+        { title: '签约主体', key: 'pkOrg.orgName', type: '0' },
+        { title: '机构', key: 'pkOrg.orgName', type: '0' }
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
 
     // 子表
     gridOnTheLoan = [
-        { title: '客户名称', key: 'pkCustomer.customerName', type: '0' },
-        { title: '合同名称', key: 'pkContract.contName', type: '0' },
+        { title: '客户名称', key: 'customerName', type: '0' },
+        // { title: '合同名称', key: 'pkContract.contName', type: '0' },
         { title: '合同编号', key: 'pkContract.contCode', type: '0' },
-        { title: '起租流程', key: 'pkContract.leaseFlow', type: '0' },
-        { title: '资产状态', key: 'assetStatus', type: '0' },
-        { title: '资产五级分类', key: 'assetsClassify', type: '0' },
-        { title: '计税方式', key: 'assetStatus', type: '0' },
-        { title: '部门名称', key: 'aaa', type: '0' },
+        { title: '起租流程', key: 'leaseFlow', type: '6' , enumType :'leaseFlow'},
+        // { title: '资产状态', key: 'assetStatus', type: '0' },
+        { title: '资产五级分类', key: 'assetsClassify', type: '6' , enumType :'assetsClassify'},
+        // { title: '计税方式', key: 'assetStatus', type: '0' },
+        // { title: '部门名称', key: 'aaa', type: '0' },
         { title: '计提月份', key: 'accruedMonth', type: '0' },
         { title: '租赁利息计提金额', key: 'interestAmount', type: '0' },
         { title: '手续费收入计提金额', key: 'feeAmount', type: '0' },
@@ -168,10 +168,10 @@ class ListView extends Component {
         { title: '其他支出计提金额', key: 'otherExpensesAmount', type: '0' },
         { title: '币种', key: 'pkCurrtype.currtypename', type: '0' },
         { title: '汇率', key: 'exchgRate', type: '0' },
-        { title: '核算主体', key: 'pkGlorgbook', type: '0' },
-        { title: '租赁方式', key: 'bbb', type: '0' },
-        { title: '税目类别', key: 'ccc', type: '0' },
-        { title: '资产类型', key: 'ddd', type: '0' }
+        // { title: '核算主体', key: 'pkGlorgbook', type: '0' },
+        // { title: '租赁方式', key: 'bbb', type: '0' },
+        // { title: '税目类别', key: 'ccc', type: '0' },
+        // { title: '资产类型', key: 'ddd', type: '0' }
     ]
     // 子表 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];

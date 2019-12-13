@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Select} from "tinper-bee";
-import {enumConstant} from "utils/enums";
+import {enumConstant, enumConstantValue} from "utils/enums";
 import './index.less';
 
 class EnumModel extends Component {
@@ -28,12 +28,14 @@ class EnumModel extends Component {
 
     render() {
         let {type,text,record,index,dataIndex} = this.props;
-        let data = enumConstant(type);
-        if(data[text] != undefined){
-          return <div>{data[text].key}</div>
-        }else{
-          return <div>{text}</div>
-        }
+        let data = enumConstantValue(type, text);
+        return <div>{data}</div>
+        
+        // if(data[text] != undefined){
+        //   return <div>{data[text].key}</div>
+        // }else{
+        //   return <div>{text}</div>
+        // }
         {/*
         return  ( 
               <div className="enum_model">

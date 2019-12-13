@@ -7,7 +7,7 @@ import * as api from "./service";
  * processData : 调用service.js中的请求数据的承接
  * deepClone : 克隆当前指定对象的数据 通常用于数据更新
  */
-import {processData,deepClone} from "utils";
+import {processData, deepClone, Info} from "utils";
 
 
 export default {
@@ -116,7 +116,7 @@ export default {
             //     pageSize: 50,
             // };
             // updateData.queryParam = param;
-            updateData.list2 = data.data.leaseAccruedB;
+            updateData.list2 = data.data.pkAccruedDetail;
             actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
         },
 
@@ -141,7 +141,7 @@ export default {
             //     pageSize: 50,
             // };
             // updateData.queryParam = param;
-            updateData.list3 = data.data.leaseAccruedB;
+            updateData.list3 = data.data.pkAccruedDetail;
             actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
         },
 
@@ -186,8 +186,14 @@ export default {
             actions.communicationAccrued.updateState({showLoading: true});
             let data = processData(await api.onAdd(param));  // 调用 onAdd 请求数据
             let updateData = {showLoading: false};
-            updateData.formObject = data.data;
-            updateData.list3 = data.data.leaseAccruedB;
+            if(data.data.pkAccruedDetail != undefined && data.data.pkAccruedDetail.length > 0){
+                updateData.isEdit = true;
+                updateData.formObject = data.data;
+                updateData.list3 = data.data.pkAccruedDetail;
+            }else{
+                updateData.isEdit = false;
+                Info("没有可以计提的数据!")
+            }
             actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
         },
 
@@ -200,7 +206,9 @@ export default {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationAccrued.updateState({showLoading: true});
             let data = processData(await api.onSave(param));  // 调用 onSave 请求数据
-            
+            if(data.success == true){
+                Info("操作成功!");
+            }
             let updateData = {showLoading: false};
             actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
         },

@@ -107,7 +107,7 @@ class AddFormView extends Component {
     //点击保存存储对应新增数据 移除缓存 并重置模态框
     alertDone = () => {
         //Message.create({ content: '完成', color: 'successlight' });
-        localStorage.removeItem("addKey");
+        //localStorage.removeItem("addKey");
         this.initDiv();
         this.close();
         let objectForm = this.props.form.getFieldsValue();

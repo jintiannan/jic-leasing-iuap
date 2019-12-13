@@ -195,14 +195,14 @@ class FormView extends Component {
      *表格列属性定义 title:属性中文名  key:字段名称  type:封装在service.js中的枚举类型 具体类型控制见js
      */
     gridOnTheLoan = [
-        { title: '客户名称', key: 'pkCustomer.customerName', type: '0' },
-        { title: '合同名称', key: 'pkContract.contName', type: '0' },
+        { title: '客户名称', key: 'customerName', type: '0' },
+        // { title: '合同名称', key: 'pkContract.contName', type: '0' },
         { title: '合同编号', key: 'pkContract.contCode', type: '0' },
-        { title: '起租流程', key: 'pkContract.leaseFlow', type: '0' },
-        { title: '资产状态', key: 'assetStatus', type: '0' },
-        { title: '资产五级分类', key: 'assetsClassify', type: '0' },
-        { title: '计税方式', key: 'assetStatus', type: '0' },
-        { title: '部门名称', key: 'aaa', type: '0' },
+        { title: '起租流程', key: 'leaseFlow', type: '6', enumType :'leaseFlow' },
+        // { title: '资产状态', key: 'assetStatus', type: '0' },
+        { title: '资产五级分类', key: 'assetsClassify', type: '6', enumType :'assetsClassify' },
+        // { title: '计税方式', key: 'assetStatus', type: '0' },
+        // { title: '部门名称', key: 'aaa', type: '0' },
         { title: '计提月份', key: 'accruedMonth', type: '0' },
         { title: '租赁利息计提金额', key: 'interestAmount', type: '1' },
         { title: '手续费收入计提金额', key: 'feeAmount', type: '1' },
@@ -210,10 +210,10 @@ class FormView extends Component {
         { title: '其他支出计提金额', key: 'otherExpensesAmount', type: '1' },
         { title: '币种', key: 'pkCurrtype.currtypename', type: '0' },
         { title: '汇率', key: 'exchgRate', type: '0' },
-        { title: '核算主体', key: 'pkGlorgbook', type: '0' },
-        { title: '租赁方式', key: 'bbb', type: '0' },
-        { title: '税目类别', key: 'ccc', type: '0' },
-        { title: '资产类型', key: 'ddd', type: '0' }
+        // { title: '核算主体', key: 'pkGlorgbook', type: '0' },
+        // { title: '租赁方式', key: 'bbb', type: '0' },
+        // { title: '税目类别', key: 'ccc', type: '0' },
+        // { title: '资产类型', key: 'ddd', type: '0' }
     ]
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];
@@ -283,15 +283,15 @@ class FormView extends Component {
                             defaultActiveKey="1"
                             onChange={this.onChange}
                             className="list-tabs"
-                            extraContent={
-                                <div className="addAndDelChildList demoPadding" style={{ display: _props.isEdit ? '' : 'none' }} >
-                                    <ButtonGroup style={{ margin: 1 }}>
-                                        {/* <Button shape='border' onClick={this.add}><Icon type='uf-add-c-o' /></Button> */}
-                                        {/* <Button shape="border" onClick={this.onEdit}><Icon type='uf-pencil-s'/></Button> */}
-                                        <Button shape='border' onClick={this.del.bind(this)}><Icon type='uf-reduce-c-o' /></Button>
-                                    </ButtonGroup>
-                                </div>
-                            }
+                            // extraContent={
+                            //     <div className="addAndDelChildList demoPadding" style={{ display: _props.isEdit ? '' : 'none' }} >
+                            //         <ButtonGroup style={{ margin: 1 }}>
+                            //             {/* <Button shape='border' onClick={this.add}><Icon type='uf-add-c-o' /></Button> */}
+                            //             {/* <Button shape="border" onClick={this.onEdit}><Icon type='uf-pencil-s'/></Button> */}
+                            //             <Button shape='border' onClick={this.del.bind(this)}><Icon type='uf-reduce-c-o' /></Button>
+                            //         </ButtonGroup>
+                            //     </div>
+                            // }
                         >
                             <TabPane tab='子表信息' key="1"> 
                            <div>
