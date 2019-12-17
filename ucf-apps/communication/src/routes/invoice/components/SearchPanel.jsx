@@ -10,13 +10,14 @@ import {deepClone} from "utils";
 const TreeNode = Tree.TreeNode;   //树节点使用组件定义
 const transData = [               //树节点使用假数据定义 后续从后端传入
     {
-        title: "收款批次",
-        key: "capitalBatchNo",
+        title: "开票批次号",
+        key: "invoiceBatchNo",
         _edit:true,
         fixcon:true,
         type:'String',
         between:false,
     }
+
 ];
 
 const dataSource = [];

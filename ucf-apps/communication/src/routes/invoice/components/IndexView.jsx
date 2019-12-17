@@ -11,7 +11,7 @@ import ButtonGroup from './ButtonGroup';
 import ListView from './ListView';
 import FormView from './FormView';
 import AddFormView from './AddFormView';
-// import SearchPanel from './SearchPanel'
+import SearchPanel from './SearchPanel'
 import moment from 'moment';
 import './index.less';
 
@@ -127,6 +127,25 @@ class IndexView extends Component {
             showSearchPanel:true
         })
     }
+
+    oncloseSearch = () =>{
+        this.setState({
+            showSearchPanel:false,
+        })
+    };
+
+    onalterSearch = () =>{
+        const queryData = this.serachRef.alterSerach();
+        let queryParam = {
+            pageIndex: 1,
+            pageSize: this.props.queryParam.pageSize,
+            queryData: '{}'==JSON.stringify(queryData)?null:queryData
+        };
+        actions.communicationInvoice.loadList(queryParam);
+        this.setState({
+            showSearchPanel:false,
+        })
+    };
 
     /**
      * 当前页按钮点击事件  添加数据  所有页面内部函数统一采用Es6箭头函数语法形式 避免this指针获取不到存在错误的问题
@@ -278,9 +297,9 @@ class IndexView extends Component {
                 <div>
                     <AddFormView { ...this.props } />
                 </div>
-                {/*<div>*/}
-                {/*    <SearchPanel {...this.props} IfShow = {this.state.showSearchPanel} onRef = {this.onsearchRef} closeSearch={this.oncloseSearch} alterSerach={this.onalterSearch}/>*/}
-                {/*</div>*/}
+                <div>
+                   <SearchPanel {...this.props} IfShow = {this.state.showSearchPanel} onRef = {this.onsearchRef} closeSearch={this.oncloseSearch} alterSerach={this.onalterSearch}/>
+                </div>
             </div>
 
         );

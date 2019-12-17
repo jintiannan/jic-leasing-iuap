@@ -10,6 +10,7 @@ import 'ref-multiple-table/lib/index.css';
 import Radio from 'bee-radio';
 import 'bee-radio/build/Radio.css';
 import request from "axios";
+import {requestBusiness} from "utils/business";
 import './index.less';
 
 let options = {}
@@ -64,7 +65,8 @@ class TableFormRef extends Component {
       }
     }
     let requestList = [
-      request(this.state.refModelUrl, { method: 'post' , data:data }),//表头数据
+      //request(this.state.refModelUrl, { method: 'post' , data:data }),//表头数据
+      requestBusiness(data, this.state.refModelUrl),
     ];
     Promise.all(requestList).then(([response]) => {
       let data = response.data.data;
@@ -165,7 +167,8 @@ class TableFormRef extends Component {
       pagination : pagination,
     }
     let requestList = [
-      request(this.state.refModelUrl, { method: 'post' , data:data }),//表头数据
+      //request(this.state.refModelUrl, { method: 'post' , data:data }),//表头数据
+      requestBusiness(data, this.state.refModelUrl),
     ];
     Promise.all(requestList).then(([response]) => {
       let data = response.data.data;

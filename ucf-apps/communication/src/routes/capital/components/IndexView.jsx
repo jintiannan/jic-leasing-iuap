@@ -130,13 +130,17 @@ class IndexView extends Component {
     };
 
     onalterSearch = () =>{
-        const dataSource = this.serachRef.alterSerach();
-        console.log(dataSource);
-        localStorage.setItem('testdemosearch',JSON.stringify(dataSource));
+        const queryData = this.serachRef.alterSerach();
+        let queryParam = {
+            pageIndex: 1,
+            pageSize: this.props.queryParam.pageSize,
+            queryData: '{}'==JSON.stringify(queryData)?null:queryData
+        };
+        actions.communicationCapital.loadList(queryParam);
         this.setState({
             showSearchPanel:false,
         })
-    };
+    }
 
     /**
      * 当前页按钮点击事件  添加数据  所有页面内部函数统一采用Es6箭头函数语法形式 避免this指针获取不到存在错误的问题
