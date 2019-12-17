@@ -181,21 +181,21 @@ export default {
          * @param {*} param
          * @param {*} getState
          */
-        async getObject(param) {
-            // 正在加载数据，显示加载 Loading 图标
-            actions.communicationAccrued.updateState({showLoading: true});
-            let data = processData(await api.onAdd(param));  // 调用 onAdd 请求数据
-            let updateData = {showLoading: false};
-            if(data.data.pkAccruedDetail != undefined && data.data.pkAccruedDetail.length > 0){
-                updateData.isEdit = true;
-                updateData.formObject = data.data;
-                updateData.list3 = data.data.pkAccruedDetail;
-            }else{
-                updateData.isEdit = false;
-                Info("没有可以计提的数据!")
-            }
-            actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
-        },
+        // async getObject(param) {
+        //     // 正在加载数据，显示加载 Loading 图标
+        //     actions.communicationAccrued.updateState({showLoading: true});
+        //     let data = processData(await api.onAdd(param));  // 调用 onAdd 请求数据
+        //     let updateData = {showLoading: false};
+        //     if(data.data.pkAccruedDetail != undefined && data.data.pkAccruedDetail.length > 0){
+        //         updateData.isEdit = true;
+        //         updateData.formObject = data.data;
+        //         updateData.list3 = data.data.pkAccruedDetail;
+        //     }else{
+        //         updateData.isEdit = false;
+        //         Info("没有可以计提的数据!")
+        //     }
+        //     actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
+        // },
 
         /**
          * 保存

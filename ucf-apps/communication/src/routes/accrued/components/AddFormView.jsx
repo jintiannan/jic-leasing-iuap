@@ -8,10 +8,9 @@ import React, { Component } from 'react';
 import { Step, Button, Message, Modal, Form, Icon, Label, Col, Row, Select, FormControl, Tabs } from 'tinper-bee';
 import { actions } from 'mirrorx';
 import TableFormRef from 'components/FormRef/TableFormRef';
-import { deepClone } from "utils";
+import { deepClone, Info, processData } from "utils";
 import DatePicker from "tinper-bee/lib/Datepicker";
-import FormInputNumber from 'components/FormRef/FormInputNumber';
-import { enumConstant } from '../../../../../../ucf-common/src/utils/enums';
+import * as api from "../service";
 import './index.less';
 
 const Steps = Step.Steps;         //步骤条组件使用定义 如不定义则只能使用Step.Steps 此处定义全局变量是为了方便使用
@@ -105,14 +104,28 @@ class AddFormView extends Component {
         });
     }
     //点击保存存储对应新增数据 移除缓存 并重置模态框
-    alertDone = () => {
+    async alertDone (){
         //Message.create({ content: '完成', color: 'successlight' });
         //localStorage.removeItem("addKey");
         this.initDiv();
         this.close();
         let objectForm = this.props.form.getFieldsValue();
         objectForm.pkOrg = JSON.parse(objectForm.pkOrg)
-        this.props.Edit(objectForm);
+        // 正在加载数据，显示加载 Loading 图标
+        actions.communicationAccrued.updateState({showLoading: true});
+        let data = processData(await api.onAdd(objectForm));  // 调用 onAdd 请求数据
+        let updateData = {showLoading: false};
+        if(data.data.pkAccruedDetail != undefined && data.data.pkAccruedDetail.length > 0){
+            updateData.isEdit = true;
+            updateData.formObject = data.data;
+            updateData.list3 = data.data.pkAccruedDetail;
+            this.props.Edit();
+        }else{
+            updateData.isEdit = false;
+            Info("没有可以计提的数据!")
+        }
+        actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
+        
     }
     //关闭模态框
     close = () => {
@@ -153,9 +166,9 @@ class AddFormView extends Component {
                                  * 单个步骤条子组件Step key为唯一性索引 title为步骤条标题
                                  */
                             }
-                            <Steps current={current}>
+                            {/* <Steps current={current}>
                                 {steps.map(item => <Step key={item.title} title={item.title} />)}
-                            </Steps>
+                            </Steps> */}
 
                             <div className="steps-content jic-form">
                                 {/**

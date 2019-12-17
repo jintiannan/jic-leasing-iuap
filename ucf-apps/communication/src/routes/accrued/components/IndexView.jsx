@@ -176,7 +176,6 @@ class IndexView extends Component {
      * 修改按钮
      */
     onEdit = (objectForm) =>{
-        actions.communicationAccrued.getObject(objectForm);
         this.switchToCardView();
         this.switchEdit();
     }
