@@ -147,12 +147,12 @@ class ListView extends Component {
         { title: '合同结束日期', key: 'contEndDate', type: '0' },
         { title: '还款频率', key: 'refundFrequency', type: '0' },
         { title: '还款结构', key: 'refundStructure', type: '0' },
-        { title: '租金总计', key: 'leaseCashSum', type: '0' },
-        { title: '本金金额', key: 'corpusAmount', type: '0' },
-        { title: '利息金额', key: 'interestAmount', type: '0' },
+        { title: '租金总计', key: 'leaseCashSum', type: '7', digit: 2  },
+        { title: '本金金额', key: 'corpusAmount', type: '7', digit: 2  },
+        { title: '利息金额', key: 'interestAmount',type: '7', digit: 2  },
         { title: '租赁方式', key: 'leaseType', type: '0' },
-        { title: '市场IRR', key: 'marketIrr', type: '0' },
-        { title: '会计IRR', key: 'financeIrr', type: '0' },
+        { title: '市场IRR', key: 'marketIrr', type: '7', digit: 6  },
+        { title: '会计IRR', key: 'financeIrr', type: '7', digit: 6 },
         { title: '客户所属地区', key: 'customerRegion', type: '0' },
         { title: '收票类型', key: 'ticketType', type: '0' },
         { title: '供应商名称', key: 'supplierName', type: '0' },
@@ -163,8 +163,8 @@ class ListView extends Component {
         { title: '收款银行开户行', key: 'gatherOpenBank', type: '0' },
         { title: '是否有平台方保证金增信', key: 'ifDepositCredit', type: '0' },
         { title: '合作平台方', key: 'cooperationPlatform', type: '0' },
-        { title: '保证金额度/保证金比例', key: 'depositRatio', type: '0' },
-        { title: '运营商套餐金额', key: 'operatorAmount', type: '0' },
+        { title: '保证金额度/保证金比例', key: 'depositRatio', type: '7', digit: 2 },
+        { title: '运营商套餐金额', key: 'operatorAmount', type: '7', digit: 2 },
         { title: '运营商套餐期限', key: 'operatorDeadline', type: '0' },
         { title: '终端名称', key: 'terminalName', type: '0' },
         { title: '终端型号', key: 'terminalType', type: '0' }
@@ -220,7 +220,7 @@ class ListView extends Component {
                         ref="mainlist" //存模版
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组                     
-                        tableHeight={1} //表格高度 1主表 2字表
+                        tableHeight={2} //表格高度 1主表 2单表 3子表
                         exportFileName="测试导出表格"　    //导出表格名称
                         exportData={this.props.list}      //导出表格数据
                         //分页对象
@@ -235,7 +235,7 @@ class ListView extends Component {
 
                     />
                 </div>
-                <div>
+                {/* <div> */}
                     {/**
                      子表多页签组件Tabs
                      defaultActiveKeky:默认展示页签key
@@ -243,7 +243,7 @@ class ListView extends Component {
                      extraContent:额外属性 通常用来添加表头右侧的按钮即 增删改查的小图标
                      TabPane : 单个子表子组件 嵌套在Tabs中使用 key为唯一主键
                      */}
-                    <Tabs
+                    {/* <Tabs
                         defaultActiveKey="1"
                         onChange={this.onChange}
                         className="list-tabs"
@@ -263,8 +263,8 @@ class ListView extends Component {
                                 />
                             </div>
                         </TabPane>
-                    </Tabs>
-                </div>
+                    </Tabs> */}
+                {/* </div> */}
             </div>
 
         );

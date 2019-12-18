@@ -23,7 +23,7 @@ class IndexView extends Component {
         super(props);
         //在路由时带出此节点权限按钮  后续会从后台传入
         /**临时测试数据 */
-        props.powerButton = ['Query','Export','Save','Return','ViewFlow','Check','Submit','Edit','Add','View','Switch'];
+        props.powerButton = ['Query','Export','Return','View'];
         props.ifPowerBtn = true;
 
         //在路由时带出此节点字段权限  后续会从后台传入
@@ -135,9 +135,15 @@ class IndexView extends Component {
     }
 
     onalterSearch = () =>{
-        const dataSource = this.serachRef.alterSerach();
-        console.log(dataSource);
-        localStorage.setItem('testdemosearch',JSON.stringify(dataSource));
+        const queryData = this.serachRef.alterSerach();
+        let queryParam = {
+            pageIndex: 1,
+            pageSize: this.props.queryParam.pageSize,
+            queryData: '{}'==JSON.stringify(queryData)?null:queryData
+        };
+        actions.communicationContract.loadList(queryParam);
+        //console.log(queryData);
+        //localStorage.setItem('testdemosearch',JSON.stringify(queryData));
         this.setState({
             showSearchPanel:false,
         })

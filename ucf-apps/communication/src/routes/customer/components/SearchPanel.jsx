@@ -11,8 +11,8 @@ import {deepClone} from "utils";
 const TreeNode = Tree.TreeNode;   //树节点使用组件定义
 const transData = [               //树节点使用假数据定义 后续从后端传入
     {
-        title: "合同编号",
-        key: "contCode",
+        title: "客户编号",
+        key: "customerCode",
         _edit:true,
         fixcon:true,
         type:'String',

@@ -142,7 +142,7 @@ class ListView extends Component {
         { title: '起租日期', key: 'leaseDate', type: '0' },
         { title: '期次', key: 'periodTime', type: '0' },
         { title: '应收日期', key: 'receivableDate', type: '0' },
-        { title: '应收金额', key: 'receivableAmount', type: '0' },
+        { title: '应收金额', key: 'receivableAmount', type: '7', digit: 2 },
         { title: '逾期状态', key: 'overdueState', type: '0' },
         { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyBody', type: '0' },

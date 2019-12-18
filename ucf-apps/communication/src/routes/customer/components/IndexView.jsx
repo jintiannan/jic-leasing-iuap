@@ -12,6 +12,7 @@ import ListView from './ListView';
 import FormView from './FormView';
 import moment from 'moment';
 import './index.less';
+import SearchPanel from './SearchPanel'
 
 class IndexView extends Component {
     /**
@@ -21,7 +22,7 @@ class IndexView extends Component {
         super(props);
         //在路由时带出此节点权限按钮  后续会从后台传入
         /**临时测试数据 */
-        props.powerButton = ['Query','Export','Save','Return','ViewFlow','Check','Submit','Edit','Add','View','Switch'];
+        props.powerButton = ['Query','Export','Return','View'];
         props.ifPowerBtn = true;
         this.state = {
             showListView : '', //显示列表界面
@@ -29,8 +30,10 @@ class IndexView extends Component {
             ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
             powerButton: props.powerButton,//按钮权限列表
             ifGridColumn:props.ifGridColumn,//是否自定义显示字段
-            gridColumn: props.gridColumn,//显示字段            
+            gridColumn: props.gridColumn,//显示字段  
+            showSearchPanel:false,          
         };
+        
     }
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
@@ -60,6 +63,10 @@ class IndexView extends Component {
 
     onListRef = (ref) =>{
         this.listchild = ref;
+    }
+
+    onsearchRef = (ref) =>{
+        this.serachRef = ref;
     }
 
     /**
@@ -93,11 +100,34 @@ class IndexView extends Component {
     switchEdit = () =>{
         actions.customer.updateState({isEdit : !this.props.isEdit});
     }
-
     /**
      * 查询方法
      */
-    onQuery = () =>{        
+    onQuery = () =>{
+        this.setState({
+            showSearchPanel:true
+        })
+    }
+
+    oncloseSearch = () =>{
+        this.setState({
+            showSearchPanel:false,
+        })
+    }
+
+    onalterSearch = () =>{
+        const queryData = this.serachRef.alterSerach();
+        let queryParam = {
+            pageIndex: 1,
+            pageSize: this.props.queryParam.pageSize,
+            queryData: '{}'==JSON.stringify(queryData)?null:queryData
+        };
+        actions.customer.loadList(queryParam);
+        //console.log(queryData);
+        //localStorage.setItem('testdemosearch',JSON.stringify(queryData));
+        this.setState({
+            showSearchPanel:false,
+        })
     }
 
      /**
@@ -200,6 +230,9 @@ class IndexView extends Component {
                 </div>      
                 <div style={{display:this.state.showFormView}}>
                     <FormView {...this.props} onRef={this.onRef}/>
+                </div>
+                <div>
+                    <SearchPanel {...this.props} IfShow = {this.state.showSearchPanel} onRef = {this.onsearchRef} closeSearch={this.oncloseSearch} alterSerach={this.onalterSearch}/>
                 </div>
             </div>
             

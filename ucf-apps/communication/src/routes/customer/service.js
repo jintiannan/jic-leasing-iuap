@@ -5,7 +5,7 @@ import request from "axios";
 import { requestBusiness } from "utils/business";
 //定义接口地址
 const URL = {
-    "GET_LIST":  `${GROBAL_HTTP_CTX}/communication/customer/ListCustomerDO`,
+    "GET_LIST":  `${GROBAL_HTTP_CTX}/communication/customer/queryForGrid`,
     "UPDATE_DO":  `${GROBAL_HTTP_CTX}/communication/customer/saveCustomerDO`
 }
 
@@ -14,13 +14,7 @@ const URL = {
  * @param {*} params
  */
 export const getList = (params) => {
-    let qdata = {
-        pagination:{
-            curPage : params.pageIndex,
-            pageSize : params.pageSize
-        }
-    }
-    return requestBusiness(qdata,URL.GET_LIST);
+    return requestBusiness(params,URL.GET_LIST);
 }
 
 
@@ -28,10 +22,7 @@ export const getList = (params) => {
  * 修改客户数据
  * @param {*} vo
  */
-export const updateData = (dos) => {
-    return request(URL.UPDATE_DO, {
-        method : "post",
-        data : dos
-    });
+export const updateData = (params) => {
+    return requestBusiness(params,URL.UPDATE_DO);
 };
 

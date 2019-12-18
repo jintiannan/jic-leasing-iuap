@@ -152,9 +152,9 @@ class ListView extends Component {
     grid = [
         { title: '单据状态', key: 'billstatus', type: '0' },
         { title: '开票批次号', key: 'invoiceBatchNo', type: '0' },
-        { title: '发票总额', key: 'invoiceAmount', type: '0' },
-        { title: '发票税额', key: 'leaseCashTax', type: '0' },
-        { title: '不含税金额', key: 'excludingTax', type: '0' },
+        { title: '发票总额', key: 'invoiceAmount', type: '7', digit: 2 },
+        { title: '发票税额', key: 'leaseCashTax', type: '7', digit: 2 },
+        { title: '不含税金额', key: 'excludingTax', type: '7', digit: 2 },
         { title: '开票状态', key: 'billingStatus', type: '0' },
         { title: '开票日期', key: 'billingData', type: '0' },
         { title: '发票代码', key: 'invoiceCode', type: '0' }
@@ -181,9 +181,9 @@ class ListView extends Component {
         { title: '期次', key: 'leaseTime', type: '0' },
         { title: '应收日期', key: 'planDate', type: '0' },
         { title: '租赁方式', key: 'leaseType', type: '0' },
-        { title: '税率', key: 'taxRate', type: '0' },
-        { title: '税额', key: 'leaseCashTax', type: '0' },
-        { title: '不含税金额', key: 'excludingTax', type: '0' },
+        { title: '税率', key: 'taxRate', type: '7', digit: 6 },
+        { title: '税额', key: 'leaseCashTax', type: '7', digit: 2 },
+        { title: '不含税金额', key: 'excludingTax', type: '7', digit: 2 },
         { title: '开票状态', key: 'billingStatus', type: '0' },
         { title: '开票内容', key: 'invoiceContents', type: '0' },
         { title: '公司主体', key: 'companyMainBody', type: '0' }

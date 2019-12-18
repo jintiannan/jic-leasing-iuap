@@ -217,11 +217,11 @@ class ListView extends Component {
                         ref="mainlist"                    //主表模板名称
                         columns={this.gridColumn}         //字段定义
                         data={this.props.list}            //数据数组                     
-                        tableHeight={1}                   //表格高度 1主表 2字表
+                        tableHeight={2} //表格高度 1主表 2单表 3子表
                         //分页对象
                         paginationObj={{
-                            dataNumSelect:['10','20','50','100'],        //每页显示条数动态修改
-                            dataNum:this.props.queryParam.dataNum,            //每页显示条数Index
+                            // dataNumSelect:['10','20','50','100'],        //每页显示条数动态修改
+                            // dataNum:this.props.queryParam.dataNum,            //每页显示条数Index
                             activePage: this.props.queryParam.pageIndex,      //活动页
                             total: this.props.queryObj.total,                 //总条数
                             items: this.props.queryObj.totalPages,            //总页数
@@ -232,8 +232,8 @@ class ListView extends Component {
 
                     />
                 </div>
-                <div>
-                    <Tabs
+                {/* <div> */}
+                    {/* <Tabs
                         defaultActiveKey="1"
                         onChange={this.onChange}
                         className="list-tabs"
@@ -252,8 +252,8 @@ class ListView extends Component {
                                 />
                             </div>
                         </TabPane>
-                    </Tabs>
-                </div>
+                    </Tabs> */}
+                {/* </div> */}
             </div>
 
         );
