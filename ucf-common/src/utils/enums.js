@@ -40,6 +40,12 @@ export function enumConstant(type) {
             return [{ key: '约定日起租', value: 3 }];
         case 'assetsClassify':
             return [{ key: '正常', value: '0' }, { key: '关注', value: '1' }, { key: '次级', value: '2' }];
+        case 'trueOrfalse':
+            return [{value: true, key: '成功'}, {value: false, key: '失败'}];
+        case 'busiType':
+            return [{ key: '合同业务', value: '0' }, { key: '客户业务', value: '1' }, { key: '开票业务', value: '2' },{ key: '收支计划业务', value: '3' },
+            { key: '付款业务', value: '4' },{ key: '保证金收取业务', value: '5' },{ key: '保证金冲抵业务', value: '6' },{ key: '逾期业务', value: '7' },{ key: '不良合同类型', value: '8' },
+            { key: '提前结清', value: '9' },{ key: '收款业务', value: '10' }];
         default:
             break;
     }
