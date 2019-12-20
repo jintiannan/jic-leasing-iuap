@@ -14,6 +14,7 @@ import {CommunicationAccrued} from "./accrued/container"
 import {CommunicationCbOverdueContract} from "./cbOverdueContract/container"
 import {CommunicationCbBadContract} from "./cbBadContract/container"
 import {CommunicationCbEarlySettlement} from "./cbEarlySettlement/container"
+import {CommunicationLoadlog} from "./loadlog/container"
 
 export default () => (
     <div className="route-content">
@@ -26,6 +27,7 @@ export default () => (
         <Route exact path='/cbOverdueContract' component={CommunicationCbOverdueContract} />
         <Route exact path='/cbBadContract' component={CommunicationCbBadContract} />
         <Route exact path='/cbEarlySettlement' component={CommunicationCbEarlySettlement} />
+        <Route exact path='/cbloadlog' component={CommunicationLoadlog} />
     </div>
 
 );
