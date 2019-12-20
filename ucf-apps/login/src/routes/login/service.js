@@ -5,7 +5,8 @@ import request from "axios";
 //定义接口地址
 const URL = {
     "POST_LOGIN":  `${GROBAL_HTTP_CTX}/sys/login`,          //验证登录
-    "GET_SYSTEMTLIST" : `${GROBAL_HTTP_CTX}/sys/listSystem` //获取系统列表
+    "GET_SYSTEMTLIST" : `${GROBAL_HTTP_CTX}/sys/listSystem`, //获取系统列表
+    "POST_GetParamType":  `${GROBAL_HTTP_CTX}/sys/static/getParamType`         //验证登录
 }
 
 /**
@@ -25,6 +26,16 @@ export const loginAjax = (loginData) => {
  */
 export const getSystemList = () => {
     return request(URL.GET_SYSTEMTLIST, {
+        method: "get",
+    });
+}
+
+/**
+ * 获得枚举项数据
+ * @param {null}  
+ */
+export const getParamType = () => {
+    return request(URL.POST_GetParamType, {
         method: "get",
     });
 }

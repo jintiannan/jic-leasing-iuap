@@ -29,7 +29,6 @@ class IndexView extends Component {
         //在路由时带出此节点字段权限  后续会从后台传入
 
         this.state = {
-            showLoading : false, //加载状态
             showListView : '', //显示列表界面
             showFormView : 'none',//显示Form表单
             isEdit : false,//是否可编辑(卡片界面)
@@ -267,7 +266,7 @@ class IndexView extends Component {
 
             <div className='project-info'>
                 {/**Loadging组件 页面内部加载图标 showBackDrop对应是否显示遮罩层 show为是否展示属性 fullScreen对应是否全屏遮罩 */}
-                <Loading showBackDrop={true} show={this.state.showLoading} fullScreen={true}/>
+                <Loading showBackDrop={true} show={this.props.showLoading} fullScreen={true}/>
                 <div>
                     <ButtonGroup
                         BtnPower= {ButtonPower}

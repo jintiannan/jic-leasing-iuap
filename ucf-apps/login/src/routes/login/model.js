@@ -73,6 +73,9 @@ export default {
                     localStorage.removeItem("lastLoginName");
                     localStorage.removeItem("lastLoginPassword");
                 }
+                //登录成功 缓存枚举项数据
+                let paramType = processData(await api.getParamType());
+                localStorage.setItem("paramType", JSON.stringify(paramType));
                 //成功登陆
                 window.localStorage.setItem("canOpen","true");
                 window.open(`/${GROBAL_PORTAL_ID}/home`, "_self");

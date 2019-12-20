@@ -134,7 +134,7 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        { title: '合同状态', key: 'contStatus', type: '0' },
+        { title: '合同状态', key: 'contStatus', type: '0'},
         { title: '业务名称', key: 'businessName', type: '0' },
         { title: '集团名称', key: 'groupName', type: '0' },
         { title: '合同编号', key: 'contCode', type: '0' },
@@ -226,7 +226,7 @@ class ListView extends Component {
                         //分页对象
                         paginationObj={{
                             activePage: this.props.queryParam.pageIndex,//活动页
-                            total: this.props.list.length,//总条数
+                            total: this.props.queryObj.total,//总条数
                             items: this.props.queryObj.totalPages,//总页数
                             freshData: this.freshData, //活动页改变,跳转指定页数据
                             onDataNumSelect: this.onDataNumSelect, //每页行数改变,跳转首页

@@ -87,7 +87,7 @@ export default {
             let queryObj = {
                 pageIndex:param.pageIndex,
                 pageSize:param.pageSize,
-                totalPages:Math.ceil(data.total/param.pageSize)
+                totalPages:Math.ceil(data.data.total/param.pageSize)
             };
             updateData.queryObj = queryObj;
             updateData.queryParam = param;

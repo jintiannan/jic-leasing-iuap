@@ -25,7 +25,6 @@ class IndexView extends Component {
         props.powerButton = ['Query','Export','Return','View'];
         props.ifPowerBtn = true;
         this.state = {
-            showListView : '', //显示列表界面
             showFormView : 'none',//显示Form表单
             ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限
             powerButton: props.powerButton,//按钮权限列表

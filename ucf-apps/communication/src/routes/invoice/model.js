@@ -94,7 +94,7 @@ export default {
             updateData.queryObj = {
                 pageIndex:param.pageIndex,
                 pageSize:param.pageSize,
-                totalPages:Math.ceil(data.total/param.pageSize)
+                totalPages:Math.ceil(data.data.total/param.pageSize)
             };
             updateData.queryParam = param;
             updateData.list = data.data.pageData;
