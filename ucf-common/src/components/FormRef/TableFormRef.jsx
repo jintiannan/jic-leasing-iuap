@@ -60,7 +60,7 @@ class TableFormRef extends Component {
     let data = {
       where : {},
       pagination:{
-        curPage : 1,
+        pageIndex : 1,
         pageSize : 5,
       }
     }
@@ -76,7 +76,7 @@ class TableFormRef extends Component {
       }
       let bodyData = {
         "data" : data.pageData,
-        "page" : {pageCount:data.pageCount,total:data.total,pageSize:5,curPage:1},
+        "page" : {pageCount:data.pageCount,total:data.total,pageSize:5,pageIndex:1},
       }
       this.launchTableHeader(columnsData);
       this.launchTableData(bodyData);
@@ -146,7 +146,7 @@ class TableFormRef extends Component {
       return record;
     });
     this.tableData = data;
-    this.setState({page:{pageCount: page.pageCount || 0,currPageIndex: page.curPage || 1,totalElements: page.total || 0,pageSize:page.pageSize || 5}});
+    this.setState({page:{pageCount: page.pageCount || 0,currPageIndex: page.pageIndex || 1,totalElements: page.total || 0,pageSize:page.pageSize || 5}});
   }
   /**
    * @msg: 简单搜索的回调，与复杂搜索的回调不是同一个
@@ -174,7 +174,7 @@ class TableFormRef extends Component {
       let data = response.data.data;
       let bodyData = {
         "data" : data.pageData,
-        "page" : {pageCount:data.pageCount,total:data.total,pageSize:pagination.pageSize,curPage:pagination.curPage},
+        "page" : {pageCount:data.pageCount,total:data.total,pageSize:pagination.pageSize,pageIndex:pagination.pageIndex},
       }
       this.launchTableData(bodyData);
       this.setState({
@@ -196,7 +196,7 @@ class TableFormRef extends Component {
    */
   handlePagination = (index) => {
     let pagination = {
-      curPage : index,
+      pageIndex : index,
       pageSize : this.state.page.pageSize,
     }
     this.loadDataByCondition(this.state.where,pagination);
@@ -206,7 +206,7 @@ class TableFormRef extends Component {
 	 */
   dataNumSelect = (index, pageSize) => {
     let pagination = {
-      curPage : 1,
+      pageIndex : 1,
       pageSize : pageSize,
     }
     this.loadDataByCondition(this.state.where,pagination);
