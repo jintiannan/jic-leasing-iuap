@@ -62,10 +62,9 @@ export function enumConstant(type) {
     let request=[];
     if(enumArray){
         array = deepClone(JSON.parse(enumArray));
-        array.forEach((item) =>{
+        array.map((item) =>{
             if(item[type]){
                 request = item[type];
-                return request;
             }
         })
     }
@@ -75,10 +74,9 @@ export function enumConstant(type) {
 export function enumConstantValue(type, value) {
     let array = enumConstant(type);
     let request = '未定义';
-    array.forEach((item) =>{
+    array.map((item) =>{
         if(item.value == value){
             request = item.key;
-            return request;
         }
     })
     return request;

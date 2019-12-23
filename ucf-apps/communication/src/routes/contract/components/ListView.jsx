@@ -22,7 +22,7 @@ class ListView extends Component {
         //主表过滤显示字段
         // const gridMain = this.getShowColumn(this.props.gridColumn, this.grid, true);
         this.gridColumn = [...genGridColumn(this.grid)];
-        this.gridColumnOnTheLoan = [...genGridColumn(this.gridOnTheLoan)];
+        //this.gridColumnOnTheLoan = [...genGridColumn(this.gridOnTheLoan)];
     }
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
@@ -153,7 +153,7 @@ class ListView extends Component {
         { title: '租赁方式', key: 'leaseType', type: '0' },
         { title: '市场IRR', key: 'marketIrr', type: '7', digit: 6  },
         { title: '会计IRR', key: 'financeIrr', type: '7', digit: 6 },
-        { title: '客户所属地区', key: 'customerRegion', type: '0' },
+        { title: '客户所属地区', key: 'customerRegion.areacalname', type: '0' },
         { title: '收票类型', key: 'ticketType', type: '0' },
         { title: '供应商名称', key: 'supplierName', type: '0' },
         { title: '供应商银行账号', key: 'supplierBankAccount', type: '0' },
@@ -173,21 +173,21 @@ class ListView extends Component {
     gridColumn = [];
 
     // 投放计划 列属性定义
-    gridOnTheLoan = [
-        { title: '计划投放日期', key: 'plan_date_loan', type: '0' },
-        { title: '投放金额(元)', key: 'plan_cash_loan', type: '0' },
-        { title: '不含税投放金额(元)', key: 'plan_cash_corpus', type: '0' },
-        { title: '税率', key: 'tax_rate', type: '0' },
-        { title: '税额(元)', key: 'tax_cash', type: '0' },
-        { title: '投放付款方式', key: 'pay_method_loan', type: '0' },
-        { title: '银票开票日期', key: 'make_date_draft', type: '0' },
-        { title: '银票到期日期', key: 'end_date_loan', type: '0' },
-        { title: '银票保证金比例', key: 'deposit_ratio4draft', type: '0' },
-        { title: '银票保证金利率', key: 'interrate_ratio4draft', type: '0' },
-        { title: '计息金额计算方式', key: 'calinter_amount_style', type: '0' },
-    ]
-    // 投放计划 列属性定义=>通过前端service工具类自动生成
-    gridColumnOnTheLoan = [];
+    // gridOnTheLoan = [
+    //     { title: '计划投放日期', key: 'plan_date_loan', type: '0' },
+    //     { title: '投放金额(元)', key: 'plan_cash_loan', type: '0' },
+    //     { title: '不含税投放金额(元)', key: 'plan_cash_corpus', type: '0' },
+    //     { title: '税率', key: 'tax_rate', type: '0' },
+    //     { title: '税额(元)', key: 'tax_cash', type: '0' },
+    //     { title: '投放付款方式', key: 'pay_method_loan', type: '0' },
+    //     { title: '银票开票日期', key: 'make_date_draft', type: '0' },
+    //     { title: '银票到期日期', key: 'end_date_loan', type: '0' },
+    //     { title: '银票保证金比例', key: 'deposit_ratio4draft', type: '0' },
+    //     { title: '银票保证金利率', key: 'interrate_ratio4draft', type: '0' },
+    //     { title: '计息金额计算方式', key: 'calinter_amount_style', type: '0' },
+    // ]
+    // // 投放计划 列属性定义=>通过前端service工具类自动生成
+    // gridColumnOnTheLoan = [];
 
 
     //子页签更改活动key方法
@@ -235,36 +235,6 @@ class ListView extends Component {
 
                     />
                 </div>
-                {/* <div> */}
-                    {/**
-                     子表多页签组件Tabs
-                     defaultActiveKeky:默认展示页签key
-                     className:定义在index.less中的样式属性名称
-                     extraContent:额外属性 通常用来添加表头右侧的按钮即 增删改查的小图标
-                     TabPane : 单个子表子组件 嵌套在Tabs中使用 key为唯一主键
-                     */}
-                    {/* <Tabs
-                        defaultActiveKey="1"
-                        onChange={this.onChange}
-                        className="list-tabs"
-                    >
-
-                        <TabPane tab='预留子表' key="1">
-                            <div>
-                                <GridMain
-                                    ref={(el) => this.gridOnTheLoan = el} //存模版
-                                    columns={this.gridColumnOnTheLoan} //字段定义
-                                    multiSelect={false}  //false 单选，默认多选 
-                                    data={this.props.list2} //数据数组
-                                    //分页对象
-                                    paginationObj={{
-                                        verticalPosition: 'none'
-                                    }}
-                                />
-                            </div>
-                        </TabPane>
-                    </Tabs> */}
-                {/* </div> */}
             </div>
 
         );
