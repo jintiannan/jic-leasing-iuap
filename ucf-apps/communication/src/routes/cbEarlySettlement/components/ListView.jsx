@@ -139,7 +139,7 @@ class ListView extends Component {
         { title: '客户名称', key: 'customerName', type: '0' },
         { title: '单位名称', key: 'employerName', type: '0' },
         { title: '起租日期', key: 'rentDate', type: '0' },
-        { title: '租赁方式', key: 'leaseType', type: '0' },
+        { title: '租赁方式', key: 'leaseType', type: '6' , enumType :'1001013' },
         { title: '剩余应还租金', key: 'payableRentBalance', type: '7', digit: 2 },
         { title: '剩余本金', key: 'corpusBalance', type: '7', digit: 2 },
         { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
