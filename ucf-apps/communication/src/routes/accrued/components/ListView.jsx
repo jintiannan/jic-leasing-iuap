@@ -133,7 +133,7 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        { title: '单据状态', key:'billstatus', type: '6', enumType :'billstatus'},
+        { title: '单据状态', key:'billstatus', type: '6', enumType :'1001650'},
         { title: '计提月份', key: 'accrualMonth', type: '0' },
         { title: '租赁利息计提', key: 'interestAmount', type: '7', digit: 2 },
         { title: '手续费收入计提总额', key: 'feeAmount', type: '7' , digit: 2 },

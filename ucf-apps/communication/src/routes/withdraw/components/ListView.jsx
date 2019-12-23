@@ -146,7 +146,7 @@ class ListView extends Component {
         { title: '实付日期', key: 'realPayDate', type: '0' },
         { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyMainBody', type: '0' },
-        { title: '来源系统', key: 'pkSys', type: '0' }
+        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
     ];
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
@@ -176,7 +176,7 @@ class ListView extends Component {
         { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         // { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyMainBody', type: '0' },
-        { title: '来源系统', key: 'pkSys', type: '0' }
+        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
     ];
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];

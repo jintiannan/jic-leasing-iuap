@@ -155,9 +155,10 @@ class ListView extends Component {
         { title: '发票总额', key: 'invoiceAmount', type: '7', digit: 2 },
         { title: '发票税额', key: 'leaseCashTax', type: '7', digit: 2 },
         { title: '不含税金额', key: 'excludingTax', type: '7', digit: 2 },
-        { title: '开票状态', key: 'billingStatus', type: '6', enumType:'1000334' },
+        //{ title: '开票状态', key: 'billingStatus', type: '6', enumType:'1000334' },
         { title: '开票日期', key: 'billingData', type: '0' },
-        { title: '发票代码', key: 'invoiceCode', type: '0' }
+        { title: '发票代码', key: 'invoiceCode', type: '0' },
+        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
     ];
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
@@ -167,7 +168,7 @@ class ListView extends Component {
         { title: '合同编号', key: 'contCode', type: '0' },
         { title: '合同名称', key: 'contName', type: '0' },
         { title: '发票抬头', key: 'invoiceTitle', type: '0' },
-        { title: '起租流程', key: 'leaseFlow', enumType:'1000253' },
+        { title: '起租流程', key: 'leaseFlow', type: '6', enumType:'1000253' },
         { title: '税号', key: 'ein', type: '0' },
         { title: '单位地址', key: 'employerAddress', type: '0' },
         { title: '电话号码', key: 'telephoneNumber', type: '0' },
@@ -177,16 +178,17 @@ class ListView extends Component {
         { title: '客户名称', key: 'customerName', type: '0' },
         { title: '单位名称', key: 'employerName', type: '0' },
         { title: '电话号码', key: 'telephoneNumber', type: '0' },
-        { title: '租赁方式', key: 'leaseType', type: '0' },
+        //{ title: '租赁方式', key: 'leaseType', type: '0' },
         { title: '期次', key: 'leaseTime', type: '0' },
         { title: '应收日期', key: 'planDate', type: '0' },
-        { title: '租赁方式', key: 'leaseType', enumType:'1001013' },
+        { title: '租赁方式', key: 'leaseType', type: '6', enumType:'1001013' },
         { title: '税率', key: 'taxRate', type: '7', digit: 6 },
         { title: '税额', key: 'leaseCashTax', type: '7', digit: 2 },
         { title: '不含税金额', key: 'excludingTax', type: '7', digit: 2 },
         { title: '开票状态', key: 'billingStatus', type: '6', enumType:'1000334' },
         { title: '开票内容', key: 'invoiceContents', type: '6', enumType:'1000125' },
-        { title: '公司主体', key: 'companyMainBody', type: '0' }
+        { title: '公司主体', key: 'companyMainBody', type: '0' },
+        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
     ];
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];

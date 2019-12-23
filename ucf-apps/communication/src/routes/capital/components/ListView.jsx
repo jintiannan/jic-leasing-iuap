@@ -138,12 +138,12 @@ class ListView extends Component {
         { title: '应收金额', key: 'receivableAmount', type: '7', digit: 2 },
         { title: '到账金额', key: 'intoAccountAmount', type: '7', digit: 2 },
         { title: '到账日期', key: 'intoAccountDate', type: '0' },
-        { title: '是否逾期', key: 'ifOverdue', type: '6', enumType: '1000003' },
+        //{ title: '是否逾期', key: 'ifOverdue', type: '6', enumType: '1000003' },
         { title: '抵扣状态', key: 'deductionStatus', type: '0' },
         { title: '抵扣日期', key: 'deductionDate', type: '0' },
         { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyBody', type: '0' },
-        { title: '来源系统', key: 'pkSys', type: '0' },
+        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
     ];
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
@@ -173,10 +173,10 @@ class ListView extends Component {
         { title: '应收余额', key: 'receivableBalance', type: '7', digit: 2 },
         { title: '实收本金', key: 'paidinCorpus', type: '7', digit: 2 },
         { title: '实收利息', key: 'paidinInterest', type: '7', digit: 2 },
-        { title: '是否逾期', key: 'ifOverdue', enumType: '1000003' },
+        { title: '是否逾期', key: 'ifOverdue', type: '6', enumType: '1000003' },
         { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyBody', type: '0' },
-        { title: '来源系统', key: 'pkSys', type: '0' },
+        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
     ];
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];

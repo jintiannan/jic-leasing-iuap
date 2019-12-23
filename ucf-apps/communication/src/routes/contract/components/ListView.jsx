@@ -135,7 +135,7 @@ class ListView extends Component {
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
         { title: '合同状态', key: 'contStatus', type: '6', enumType: '1000212'},
-        { title: '业务名称', key: 'businessName', type: '0' },
+        { title: '业务名称', key: 'businessName', type: '6' , enumType: '1001647'},
         { title: '集团名称', key: 'groupName', type: '0' },
         { title: '合同编号', key: 'contCode', type: '0' },
         { title: '客户名称', key: 'customerName', type: '0' },
@@ -154,11 +154,11 @@ class ListView extends Component {
         { title: '市场IRR', key: 'marketIrr', type: '7', digit: 6  },
         { title: '会计IRR', key: 'financeIrr', type: '7', digit: 6 },
         { title: '客户所属地区', key: 'customerRegion.areacalname', type: '0' },
-        { title: '收票类型', key: 'ticketType', type: '0' },
+        { title: '收票类型', key: 'ticketType', type: '6', enumType: '1001648' },
         { title: '供应商名称', key: 'supplierName', type: '0' },
         { title: '供应商银行账号', key: 'supplierBankAccount', type: '0' },
         { title: '出租人名称', key: 'lessorName', type: '0' },
-        { title: '租金回收方式', key: 'leaseRecycling', type: '0' },
+        { title: '租金回收方式', key: 'leaseRecycling', type: '6', enumType: '1001641' },
         { title: '收款银行账号', key: 'gatherBankAccount', type: '0' },
         { title: '收款银行开户行', key: 'gatherOpenBank', type: '0' },
         { title: '是否有平台方保证金增信', key: 'ifDepositCredit', type: '6', enumType: '1000003' },
@@ -167,7 +167,8 @@ class ListView extends Component {
         { title: '运营商套餐金额', key: 'operatorAmount', type: '7', digit: 2 },
         { title: '运营商套餐期限', key: 'operatorDeadline', type: '0' },
         { title: '终端名称', key: 'terminalName', type: '0' },
-        { title: '终端型号', key: 'terminalType', type: '0' }
+        { title: '终端型号', key: 'terminalType', type: '0' },
+        { title: '来源系统', key: 'pkSystem.systemName', type: '0' },
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
