@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { actions } from 'mirrorx';
-import { Tabs } from 'tinper-bee';
+import { Tabs , Button, Icon, ButtonGroup} from 'tinper-bee';
 import { deepClone, getHeight } from "utils";
 import { genGridColumn } from "utils/service";
 import GridMain from 'components/GridMain';
@@ -174,12 +174,15 @@ class ListView extends Component {
         { title: '付款账号', key: 'paymentAccount', type: '0' },
         { title: '实付日期', key: 'realPayDate', type: '0' },
         { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
-        { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyMainBody', type: '0' },
         { title: '来源系统', key: 'pkSys', type: '0' }
     ];
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];
+
+    subExport = () => {
+        this.refs.sublist.exportExcel();
+    };
 
 
     //子页签更改活动key方法
@@ -217,10 +220,11 @@ class ListView extends Component {
                      */}
                     <GridMain
                         ref="mainlist" //存模版
+                        exportref = {"mainlist"}
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组
                         tableHeight={1} //表格高度 1主表 2字表
-                        exportFileName="测试导出表格"　    //导出表格名称
+                        exportFileName="C端付款信息"　    //导出表格名称
                         exportData={this.props.list}      //导出表格数据
                         //分页对象
                         paginationObj={{
@@ -247,14 +251,25 @@ class ListView extends Component {
                         defaultActiveKey="1"
                         onChange={this.onChange}
                         className="list-tabs"
+                        extraContent={
+                            <div className = "public_sub_but">
+                                <ButtonGroup style={{ margin: 1 }}>
+                                    <Button shape='border' onClick={this.subExport}><Icon type='uf-export' /></Button>
+                                </ButtonGroup>
+                            </div>
+                        }
                     >
 
-                        <TabPane tab='预留子表' key="1">
+                        <TabPane tab='付款明细表' key="1">
                             <div>
                                 <GridMain
-                                    ref={(el) => this.gridOnTheLoan = el} //存模版
+                                    ref="sublist" //存模版
+                                    exportref = {"sublist"}
                                     columns={this.gridColumnOnTheLoan} //字段定义
+                                    tableHeight={3} //表格高度 1主表 2字表
                                     multiSelect={false}  //false 单选，默认多选
+                                    exportFileName="C端付款信息详情"　    //导出表格名称
+                                    exportData={this.props.list2}      //导出表格数据
                                     data={this.props.list2} //数据数组
                                     //分页对象
                                     paginationObj={{

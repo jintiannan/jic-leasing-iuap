@@ -197,10 +197,11 @@ class ListView extends Component {
                  */}
                     <GridMain
                         ref="mainlist" //存模版
+                        exportref = {"mainlist"}
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组                     
                         tableHeight={2} //表格高度 1主表 2单表 3子表
-                        exportFileName="测试导出表格"　    //导出表格名称
+                        exportFileName="C端逾期合同信息"　    //导出表格名称
                         exportData={this.props.list}      //导出表格数据
                         //分页对象
                         paginationObj={{

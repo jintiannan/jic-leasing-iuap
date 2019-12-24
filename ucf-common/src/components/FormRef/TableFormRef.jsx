@@ -22,15 +22,15 @@ class TableFormRef extends Component {
       showModal: false,
       refModelUrl: `${GROBAL_HTTP_CTX}`+this.props.refurl, //参照查询的url
       where :'',    //参照查询条件
-      matchData: [
-        this.props.formObject[this.props.name]?this.props.formObject[this.props.name]:{} //参照中选中的对象
-      ],
+      matchData: this.props.formObject[this.props.name] ? [
+        this.props.formObject[this.props.name] //参照中选中的对象
+      ]:[{}],
       value:this.props.formObject[this.props.name]?JSON.stringify({"refname":this.props.formObject[this.props.name]['name'],
       "refpk":this.props.formObject[this.props.name]['pk'],"name":this.props.formObject[this.props.name]['name'],"code":this.props.formObject[this.props.name]['code']
-      ,"pk":this.props.formObject[this.props.name]['pk']}):"", //表单页显示的值      
+      ,"pk":this.props.formObject[this.props.name]['pk']}):'', //表单页显示的值      
       page : {
         pageCount: 0,  //总页数
-        pageSize: 5,   //每页显示条数
+        pageSize: 10,   //每页显示条数
         currPageIndex: 1,  //当前页数
         totalElements: 0,  //总条数
       }
@@ -57,11 +57,12 @@ class TableFormRef extends Component {
    * @return:
    */
   loadData = async () => {
+    console.log(this.state.page);
     let data = {
       where : {},
       pagination:{
-        pageIndex : 1,
-        pageSize : 5,
+        pageIndex : this.state.page.currPageIndex,
+        pageSize : this.state.page.pageSize,
       }
     }
     let requestList = [
@@ -76,7 +77,7 @@ class TableFormRef extends Component {
       }
       let bodyData = {
         "data" : data.pageData,
-        "page" : {pageCount:data.pageCount,total:data.total,pageSize:5,pageIndex:1},
+        "page" : {pageCount:data.pageCount,total:data.total,pageSize:this.state.page.pageSize,pageIndex:this.state.page.currPageIndex},
       }
       this.launchTableHeader(columnsData);
       this.launchTableData(bodyData);
@@ -116,8 +117,8 @@ class TableFormRef extends Component {
     } else if (!multiple) {
       colunmsList.unshift({
         title: " ",
-        dataIndex: "a",
-        key: "a",
+        dataIndex: "pk",
+        key: "pk",
         width: 45,
         render(text, record, index) {
           return (
@@ -260,16 +261,18 @@ class TableFormRef extends Component {
       showLoading: showLoading,  //请求数据时的过渡
       columnsData: columnsData,  //参照表头
       tableData: tableData,      //参照表体
+      autoCheckedByClickRows : false,
       ...this.state.page,        //分页信息
-      matchData:JSON.stringify(matchData) == "[{}]"?this.props.formObject[this.props.name]?this.props.formObject[this.props.name]:{} : matchData,       //匹配内容
+      matchData:JSON.stringify(matchData) != "[{}]"?this.props.formObject[this.props.name]?this.props.formObject[this.props.name]:{} : matchData,       //匹配内容
+      matchData:matchData,
       miniSearchFunc: this.miniSearchFunc,  //搜索框内容回调
       dataNumSelect: this.dataNumSelect,    //选择显示条数回调函数
       handlePagination: this.handlePagination,  //选择指定页码回调函数
       onSave: this.onSave,       //保存回调函数
       onCancel: this.onCancel,   //取消回调函数
-      value: value==""?this.props.formObject[this.props.name]?JSON.stringify({"refname":this.props.formObject[this.props.name]['name'],
-              "refpk":this.props.formObject[this.props.name]['pk'],"name":this.props.formObject[this.props.name]['name'],"code":this.props.formObject[this.props.name]['code']
-              ,"pk":this.props.formObject[this.props.name]['pk']}):"":value
+      value: value!=""?this.props.formObject[this.props.name]?JSON.stringify({"refname":this.props.formObject[this.props.name]['name'],
+               "refpk":this.props.formObject[this.props.name]['pk'],"name":this.props.formObject[this.props.name]['name'],"code":this.props.formObject[this.props.name]['code']
+               ,"pk":this.props.formObject[this.props.name]['pk']}):"":value,
     });
     return (
 
@@ -278,13 +281,13 @@ class TableFormRef extends Component {
         　className = "ref_table"
           disabled={this.props.disabled}
           title = {this.props.title}
-          backdrop="static"
+          backdrop={false}
           {...childrenProps}
           {
             ...getFieldProps(this.props.name, {  //因为参照的值特殊 此处特殊处理传值后再重写了getFieldProps
-              initialValue: value==""?this.props.formObject[this.props.name]?JSON.stringify({"refname":this.props.formObject[this.props.name]['name'],
-              "refpk":this.props.formObject[this.props.name]['pk'],"name":this.props.formObject[this.props.name]['name'],"code":this.props.formObject[this.props.name]['code']
-              ,"pk":this.props.formObject[this.props.name]['pk']}):"":value,
+              initialValue: value!=""?this.props.formObject[this.props.name]?JSON.stringify({"refname":this.props.formObject[this.props.name]['name'],
+               "refpk":this.props.formObject[this.props.name]['pk'],"name":this.props.formObject[this.props.name]['name'],"code":this.props.formObject[this.props.name]['code']
+               ,"pk":this.props.formObject[this.props.name]['pk']}):"":value,
               rules: [{
                 message: '',
               }]

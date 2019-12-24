@@ -94,9 +94,9 @@ class ButtonGroup extends Component {
         }
     };
 
-    handleSelect = ({ key }) =>{
-        this.props.Export();
-    };
+    // handleSelect = ({ key }) =>{
+    //     this.props.Export();
+    // };
 
     /**
      * 个性化控制是否可用
@@ -111,17 +111,17 @@ class ButtonGroup extends Component {
     render() {
         let _props = this.props;
         let _this = this;
-        const tableMenu = (
-            <Menu className='tab-menu' onSelect={this.handleSelect} itemIcon={<Icon type='uf-setting-c-o'/>}>
-                <Divider />
-                <Item key="1">导出选中数据</Item>
-                <Divider />
-                <Item key="2">导出全部数据</Item>
-                <Divider />
-                <Item key="3">导出当前页 </Item>
-                <Divider />
-            </Menu>
-        );
+        // const tableMenu = (
+        //     <Menu className='tab-menu' onSelect={this.handleSelect} itemIcon={<Icon type='uf-setting-c-o'/>}>
+        //         <Divider />
+        //         <Item key="1">导出选中数据</Item>
+        //         <Divider />
+        //         <Item key="2">导出全部数据</Item>
+        //         <Divider />
+        //         <Item key="3">导出当前页 </Item>
+        //         <Divider />
+        //     </Menu>
+        // );
 
         return (
 
@@ -130,9 +130,7 @@ class ButtonGroup extends Component {
                  Icon图标属性 定义在按钮内部当按钮需要以图标形式展示时使用 其中type属性为对应的图标样式 仅可使用官网样式图标
                  */}
                 <Button visible={_props.isGrid} className="ml8" colors="primary" onClick={_props.Query}><Icon type='uf-search'/>查询</Button>
-                <Dropdown trigger={['click']} overlay={tableMenu} animation="slide-up">
-                    <Button visible={_this.powerView(_props,'Export') && _props.isGrid} className="ml8" colors="primary"><Icon type='uf-symlist'/>导出</Button>
-                </Dropdown>
+                <Button visible={_this.powerView(_props,'Export') && _props.isGrid} onClick={_props.Export} className="ml8" colors="primary"><Icon type='uf-symlist'/>导出</Button>
                 {/*<Button visible={_props.isEdit} disabled={_this.powerDisabledEdit(_props)} className="ml8" colors="primary" onClick={_props.Save}><Icon type='uf-search'/>保存</Button>*/}
                 <Button visible={!_props.isGrid}  className="ml8" colors="primary" onClick={_props.Return}><Icon type='uf-search'/>返回</Button>
                 {/*<Button visible={_this.powerView(_props,'ViewFlow')} disabled={_this.powerDisabledSingle(_props,['204','9'])} className="ml8 yl-r-b" colors="primary" onClick={_props.ViewFlow}><Icon type='uf-setting-c-o'/>查看流程图</Button>*/}

@@ -66,7 +66,7 @@ class GridMain extends Component {
     };
 
     exportExcel = () => {
-        this.ref.exportExcel();
+        this.refs[this.props.exportref].exportExcel();
     };
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
@@ -76,13 +76,13 @@ class GridMain extends Component {
     }
     
     render() {
-        const {paginationObj, columns, tableHeight,ref,exportFileName,exportData, data, ...otherProps} = this.props;
+        const {paginationObj, columns, tableHeight,ref,exportFileName,exportData,exportref, data, ...otherProps} = this.props;
         const _paginationObj = {...defualtPaginationParam, ...paginationObj};
         const { tableHeightMain, tableHeightChild, tableHeightSingle } = this.state;
         return (
             <div className='gridMain'>
                 <BaseGrid
-                    ref={ref}
+                    ref={exportref}
                     columns={columns} //字段定义
                     data={data} //数据数组
                     columnFilterAble={tableHeight==1?true:false} //是否显示列过滤功能 默认主表显示 字表不显示
@@ -99,7 +99,7 @@ class GridMain extends Component {
                     bodyDisplayInRow={true}//表体换行用...来表示
                     headerHeight={tableHeight==1|| tableHeight==2 ?40:30} //表头高度 主表40 字表30
                     showFilterPopover={false}
-                    bodyStyle={{'height':tableHeight==1?tableHeightMain: tableHeight==2?tableHeightSingle:"auto!important"}} //表体样式
+                    bodyStyle={{'height':tableHeight==1?tableHeightMain: tableHeight==2?tableHeightSingle:tableHeightChild}} //表体样式
                     sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
                     hideHeaderScroll={false} //无数据时是否显示表头   
                     //排序属性设置

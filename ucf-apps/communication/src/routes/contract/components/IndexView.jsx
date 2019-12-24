@@ -232,10 +232,10 @@ class IndexView extends Component {
     /**
      * 导出数据按钮 使用GridMain组件中定义的引用ref直接调用即可导出数据
      */
-    onClickExport = () => {
-        console.log(this.refs);
-        console.log(this.listchild);
-        this.listchild.refs.mainlist.exportExcel();
+    onClickExport = (key) => {
+        //先判断选定是导出当前选中数据还是当前页数据 
+        this.listchild.setExportList(key);
+        // this.listchild.refs.mainlist.exportExcel();
     }
 
     /**

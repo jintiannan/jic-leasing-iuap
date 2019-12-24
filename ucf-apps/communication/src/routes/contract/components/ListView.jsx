@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { actions } from 'mirrorx';
 import { Tabs } from 'tinper-bee';
-import { deepClone, getHeight } from "utils";
-import { genGridColumn } from "utils/service";
+import { deepClone } from "utils";
+import { genGridColumn, multiRecordOper } from "utils/service";
 import GridMain from 'components/GridMain';
 
-const { TabPane } = Tabs;
 import './index.less';
 
 class ListView extends Component {
@@ -13,6 +12,7 @@ class ListView extends Component {
         super(props);
         this.state = {
             listView: '',
+            //exportList: [],
         }
     }
 
@@ -58,6 +58,21 @@ class ListView extends Component {
             pageSize = 1;
         }
         actions.communicationContract.loadList(queryParam);
+    }
+
+
+    setExportList = (key) =>{
+        if(key == '1'){   //key为1 默认为导出选中数据 先进行校验
+            multiRecordOper(this.props.selectedList,(param) => {  //选中数据校验  未选中无法导出
+                //this.setState({exportList:this.props.selectedList});
+                actions.communicationContract.updateState({ exportData: this.props.selectedList });
+                this.refs.mainlist.exportExcel();
+            });
+        }else if(key == '2'){  //key为2 默认为导出当前页数据
+            //this.setState({exportList:this.props.list});
+            actions.communicationContract.updateState({ exportData: this.props.list });
+            this.refs.mainlist.exportExcel();
+        }
     }
 
 
@@ -172,31 +187,6 @@ class ListView extends Component {
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
 
-    // 投放计划 列属性定义
-    // gridOnTheLoan = [
-    //     { title: '计划投放日期', key: 'plan_date_loan', type: '0' },
-    //     { title: '投放金额(元)', key: 'plan_cash_loan', type: '0' },
-    //     { title: '不含税投放金额(元)', key: 'plan_cash_corpus', type: '0' },
-    //     { title: '税率', key: 'tax_rate', type: '0' },
-    //     { title: '税额(元)', key: 'tax_cash', type: '0' },
-    //     { title: '投放付款方式', key: 'pay_method_loan', type: '0' },
-    //     { title: '银票开票日期', key: 'make_date_draft', type: '0' },
-    //     { title: '银票到期日期', key: 'end_date_loan', type: '0' },
-    //     { title: '银票保证金比例', key: 'deposit_ratio4draft', type: '0' },
-    //     { title: '银票保证金利率', key: 'interrate_ratio4draft', type: '0' },
-    //     { title: '计息金额计算方式', key: 'calinter_amount_style', type: '0' },
-    // ]
-    // // 投放计划 列属性定义=>通过前端service工具类自动生成
-    // gridColumnOnTheLoan = [];
-
-
-    //子页签更改活动key方法
-    onChange = (activeKey) => {
-        this.setState({
-            activeKey,
-        });
-    }
-
 
     render() {
         return (
@@ -217,12 +207,13 @@ class ListView extends Component {
                      getSelectedDataFunc:选中数据触发事件
                      */}
                     <GridMain
-                        ref="mainlist" //存模版
+                        ref={"mainlist"} //存模版
+                        exportref = {"mainlist"}
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组                     
                         tableHeight={2} //表格高度 1主表 2单表 3子表
-                        exportFileName="测试导出表格"　    //导出表格名称
-                        exportData={this.props.list}      //导出表格数据
+                        exportFileName="C端合同信息"　    //导出表格名称
+                        exportData={this.props.exportList}      //导出表格数据
                         //分页对象
                         paginationObj={{
                             activePage: this.props.queryParam.pageIndex,//活动页

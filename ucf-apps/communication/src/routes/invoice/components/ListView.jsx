@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {actions} from 'mirrorx';
-import {Tabs} from 'tinper-bee';
+import {Tabs, ButtonGroup, Button, Icon} from 'tinper-bee';
 import {deepClone, getHeight} from "utils";
 import {genGridColumn} from "utils/service";
 
@@ -192,6 +192,10 @@ class ListView extends Component {
     gridColumnOnTheLoan = [];
 
 
+    subExport = () => {
+        this.refs.sublist.exportExcel();
+    };
+
     //子页签更改活动key方法
     onChange = (activeKey) => {
         this.setState({
@@ -222,10 +226,11 @@ class ListView extends Component {
                      */}
                     <GridMain
                         ref="mainlist" //存模版
+                        exportref = {"mainlist"}
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组
                         tableHeight={1} //表格高度 1主表 2字表
-                        exportFileName="测试导出表格"　    //导出表格名称
+                        exportFileName="C端票据信息"　    //导出表格名称
                         exportData={this.props.list}      //导出表格数据
                         //分页对象
                         paginationObj={{
@@ -252,15 +257,25 @@ class ListView extends Component {
                         defaultActiveKey="1"
                         onChange={this.onChange}
                         className="list-tabs"
+                        extraContent={
+                            <div className = "public_sub_but">
+                                <ButtonGroup style={{ margin: 1 }}>
+                                    <Button shape='border' onClick={this.subExport}><Icon type='uf-export' /></Button>
+                                </ButtonGroup>
+                            </div>
+                        }
                     >
 
                         <TabPane tab="开票明细" key="1">
                             <div>
                                 <GridMain
-                                    ref={(el) => this.gridOnTheLoan = el} //存模版
+                                    ref="sublist" //存模版
+                                    exportref = {"sublist"}
                                     columns={this.gridColumnOnTheLoan} //字段定义
                                     multiSelect={false}  //false 单选，默认多选
                                     data={this.props.list2} //数据数组
+                                    exportFileName="C端票据信息"　    //导出表格名称
+                                    exportData={this.props.list2} 
                                     //分页对象
                                     paginationObj={{
                                         verticalPosition: 'none'

@@ -189,7 +189,7 @@ class ListView extends Component {
         });
     };
     onExportSub = () => {
-
+        this.refs.sublist.exportExcel();
     };
 
 
@@ -213,10 +213,11 @@ class ListView extends Component {
                      */}
                     <GridMain
                         ref="mainlist" //存模版
+                        exportref = {"mainlist"}
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组
                         tableHeight={1} //表格高度 1主表 2字表
-                        exportFileName="测试导出表格"　    //导出表格名称
+                        exportFileName="C端收款信息"　    //导出表格名称
                         exportData={this.props.list}      //导出表格数据
                         //分页对象
                         paginationObj={{
@@ -243,9 +244,9 @@ class ListView extends Component {
                         onChange={this.onChange}
                         className="list-tabs"
                         extraContent={
-                            <div className="addAndDelChildList demoPadding" >
+                            <div className="public_sub_but" >
                                 <ButtonGroup style={{ margin: 1 }}>
-                                    <Button shape='border' onClick={this.onExportSub}><Icon type='uf-add-c-o' />导出</Button>
+                                    <Button shape='border' onClick={this.onExportSub}><Icon type='uf-export' /></Button>
                                 </ButtonGroup>
                             </div>
                         }
@@ -254,10 +255,14 @@ class ListView extends Component {
                         <TabPane tab='收款明细表' key="1">
                             <div>
                                 <GridMain
-                                    ref={(el) => this.gridOnTheLoan = el} //存模版
+                                    ref={"sublist"} //存模版
+                                    exportref = {"sublist"}
                                     columns={this.gridColumnOnTheLoan} //字段定义
                                     multiSelect={false}  //false 单选，默认多选
                                     data={this.props.list2} //数据数组
+                                    tableHeight={3} //表格高度 1主表 2字表
+                                    exportFileName="C端收款信息详情"　    //导出表格名称
+                                    exportData={this.props.list2}      //导出表格数据
                                     //分页对象
                                     paginationObj={{
                                         verticalPosition: 'none'

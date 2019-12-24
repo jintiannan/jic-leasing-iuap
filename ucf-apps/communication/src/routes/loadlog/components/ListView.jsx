@@ -57,9 +57,9 @@ class ListView extends Component {
     grid = [
         { title: '导入日期', key: 'loadDate', type: '3' },
         { title: '业务类型', key: 'busiType', type: '0' },
-        { title: '文件名称', key: 'fileName', type: '0' },
+        { title: '文件名称', key: 'fileName', type: '0', width: 280 },
         { title: '成功标志', key: 'flag', type: '6', enumType:'trueOrfalse'},
-        { title: '总数据条数', key: 'dataNum', type: '0'},
+        { title: '总数据条数', key: 'dataNum', type: '1'},
         { title: '来源系统', key: 'sourceSystemDTO.systemName', type: '0' },
     ];
     //主表 列属性定义=>通过前端service工具类自动生成

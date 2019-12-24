@@ -214,10 +214,13 @@ class ListView extends Component {
             <div className="grid-parent" style={{ display: this.state.listView }}>
                 <div>
                     <GridMain
-                        ref="mainlist"                    //主表模板名称
+                        ref={"mainlist"}                   //主表模板名称
+                        exportref = {"mainlist"}           //导出表格引用  必须与ref相同
                         columns={this.gridColumn}         //字段定义
                         data={this.props.list}            //数据数组                     
                         tableHeight={2} //表格高度 1主表 2单表 3子表
+                        exportFileName="C端客户信息"　    //导出表格名称
+                        exportData={this.props.list}      //导出表格数据
                         //分页对象
                         paginationObj={{
                             // dataNumSelect:['10','20','50','100'],        //每页显示条数动态修改
