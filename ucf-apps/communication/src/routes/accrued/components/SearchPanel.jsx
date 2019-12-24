@@ -182,7 +182,7 @@ class SearchPanel extends React.Component {
                         查询信息
                     </Modal.Title>
                 </Modal.Header>
-                </div>
+            </div>
 
                 <Modal.Body>
                     <div className="search_form_left">
@@ -226,14 +226,17 @@ class SearchPanel extends React.Component {
                         <Table data={this.state.dataSource} columns={this.state.columns} height={30}/>
                     </div>
                 </Modal.Body>
-                <Modal.Footer>
-                <div>
-                    <Button colors="primary" style={{ marginRight: 8 }} onClick={this.props.alterSerach}>
-                        确认
-                    </Button>
-                    <Button colors="primary" onClick={this.props.closeSearch}>取消</Button>
+                <div className="search_from_right_footer">
+                  <Modal.Footer>
+                  <div>
+                      <Button colors="primary" style={{ marginRight: 8, marginTop: -25, border: 0 }} onClick={this.props.alterSerach}>
+                          确认
+                      </Button>
+                      <Button colors="primary" style={{ marginTop: -25, border: 0 }} onClick={this.props.closeSearch}>取消</Button>
+                  </div>
+                  </Modal.Footer>
                 </div>
-                </Modal.Footer>
+                
                 </Modal>
             
         </div>
