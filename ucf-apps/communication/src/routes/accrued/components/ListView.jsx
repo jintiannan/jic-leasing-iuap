@@ -133,7 +133,7 @@ class ListView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        { title: '单据状态', key:'billstatus', type: '6', enumType :'billstatus'},
+        { title: '单据状态', key:'billstatus', type: '6', enumType :'1001650'},
         { title: '计提月份', key: 'accrualMonth', type: '0' },
         { title: '租赁利息计提', key: 'interestAmount', type: '7', digit: 2 },
         { title: '手续费收入计提总额', key: 'feeAmount', type: '7' , digit: 2 },
@@ -156,9 +156,9 @@ class ListView extends Component {
         { title: '客户名称', key: 'customerName', type: '0' },
         // { title: '合同名称', key: 'pkContract.contName', type: '0' },
         { title: '合同编号', key: 'pkContract.contCode', type: '0' },
-        { title: '起租流程', key: 'leaseFlow', type: '6' , enumType :'leaseFlow'},
+        { title: '起租流程', key: 'leaseFlow', type: '6' , enumType :'1000253'},
         // { title: '资产状态', key: 'assetStatus', type: '0' },
-        { title: '资产五级分类', key: 'assetsClassify', type: '6' , enumType :'assetsClassify'},
+        { title: '资产五级分类', key: 'assetsClassify', type: '6' , enumType :'1000340'},
         // { title: '计税方式', key: 'assetStatus', type: '0' },
         // { title: '部门名称', key: 'aaa', type: '0' },
         { title: '计提月份', key: 'accruedMonth', type: '0' },

@@ -140,13 +140,13 @@ class ListView extends Component {
         { title: '银行开户行', key: 'openingBank', type: '0' },
         { title: '行号', key: 'accountNumber', type: '0' },
         { title: '合同金额', key: 'contAmount', type: '7', digit: 2},
-        { title: '租赁方式', key: 'leaseType', type: '0' },
+        { title: '租赁方式', key: 'leaseType', type: '6', enumType: '1001013' },
         { title: '实际放款金额（汇总）', key: 'actualLoanAmount', type: '7', digit: 2 },
         { title: '付款帐号', key: 'paymentAccount', type: '0' },
         { title: '实付日期', key: 'realPayDate', type: '0' },
         { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyMainBody', type: '0' },
-        { title: '来源系统', key: 'pkSys', type: '0' }
+        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
     ];
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
@@ -169,13 +169,13 @@ class ListView extends Component {
         { title: '运营商套餐期限（月）', key: 'operatorDeadline', type: '0' },
         { title: '终端名称', key: 'terminalName', type: '0' },
         { title: '终端型号', key: 'terminalType', type: '0' },
-        { title: '租赁方式', key: 'leaseType', type: '0' },
+        { title: '租赁方式', key: 'leaseType', type: '6', enumType: '1001013' },
         { title: '实际放款金额（明细）', key: 'actualLoanAmount', type: '0' },
         { title: '付款账号', key: 'paymentAccount', type: '0' },
         { title: '实付日期', key: 'realPayDate', type: '0' },
         { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyMainBody', type: '0' },
-        { title: '来源系统', key: 'pkSys', type: '0' }
+        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
     ];
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];
