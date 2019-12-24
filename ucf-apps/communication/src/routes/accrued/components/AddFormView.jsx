@@ -27,11 +27,6 @@ class AddFormView extends Component {
         this.state = {
             current: 0,        //初始模态框进入页签参数
             showDiv1: '',      //控制模态框内部每个页签的显示隐藏 为''时显示 为none时隐藏
-            // showDiv2: 'none',
-            // showDiv3: 'none',
-            // showDiv4: 'none',
-            // showDiv5: 'none',
-            // showDiv6: 'none',
         };
     }
 
@@ -46,61 +41,10 @@ class AddFormView extends Component {
     componentWillReceiveProps(nextProps) {
     }
 
-    //将新增数据存入缓存 避免因为异常情况关闭页面重新输入数据
-    saveCache = () => {
-        let objectForm = this.props.form.getFieldsValue();
-        localStorage.setItem("addKey", JSON.stringify(objectForm));  //以JSON ：key-value形式置入缓存
-    }
-
-    //模态框下一步操作
-    next = () => {
-        const current = this.state.current + 1;
-        this.setState({ current });
-        this.nextController();
-        this.saveCache();
-    }
-
-    //模态框上一步操作
-    prev = () => {
-        const current = this.state.current - 1;
-        this.setState({ current });
-        this.prevController();
-    }
-
-    //控制下一步 显示那个div
-    nextController = () => {
-        let key = 'showDiv';
-        let num = this.state.current + 2;
-        let showDiv = key + num;
-        let noneDiv = key + (num - 1);
-        let map = {};
-        map[showDiv] = '';
-        map[noneDiv] = 'none';
-        this.setState(map)
-    }
-
-    //控制上一步 显示那个div
-    prevController = () => {
-        let key = 'showDiv';
-        let num = this.state.current;
-        let showDiv = key + num;
-        let noneDiv = key + (num + 1);
-        let map = {};
-        map[showDiv] = '';
-        map[noneDiv] = 'none';
-        this.setState(map)
-    }
-
     //关闭模态框后重置初始化数据
     initDiv = () => {
         this.setState({
-            current: 0,
             showDiv1: '',
-            // showDiv2: 'none',
-            // showDiv3: 'none',
-            // showDiv4: 'none',
-            // showDiv5: 'none',
-            // showDiv6: 'none',
         });
     }
     //点击保存存储对应新增数据 移除缓存 并重置模态框
@@ -134,7 +78,6 @@ class AddFormView extends Component {
     }
 
     render() {
-        const { current } = this.state;
         const { getFieldProps } = this.props.form;
         let _formObject = this.props.formObject;
         let formObject = deepClone(_formObject);
@@ -170,7 +113,7 @@ class AddFormView extends Component {
                                 {steps.map(item => <Step key={item.title} title={item.title} />)}
                             </Steps> */}
 
-                            <div className="steps-content jic-form">
+                            <div className="steps-content-accrued jic-form">
                                 {/**
                                  表单内容组件Form 包含表单的内容放置在组件内部
                                  其中 Row Col 为处理格式的栅格布局 Row控制单行 Col 控制 md xs sm 即 中 大 小三种分辨率的列排序占比 单行12列
@@ -243,18 +186,6 @@ class AddFormView extends Component {
                                  react的条件渲染支持以下形式处理 但必须使用{}包含
                                  */}
                                 {
-                                    this.state.current > 0
-                                    &&
-                                    <Button bordered style={{ marginRight: 8 }} onClick={() => this.prev()}>上一步</Button>
-                                }
-                                {
-                                    this.state.current < steps.length - 1
-                                    &&
-                                    <Button colors="primary" style={{ marginRight: 8 }} onClick={() => this.next()}>下一步</Button>
-                                }
-                                {
-                                    this.state.current === steps.length - 1
-                                    &&
                                     <Button colors="primary" style={{ marginRight: 8 }} onClick={() => this.alertDone()}>完成</Button>
                                 }
                                 {

@@ -174,7 +174,12 @@ class SearchPanel extends React.Component {
         _dataSource.splice(index,1);
         this.setState({ dataSource:_dataSource});
     }
-
+    //搜索重置按钮
+    resetSearch = () =>{
+      this.setState({
+          dataSource:[]
+      })
+  }
     alterSerach = ()=>{
       let queryData={};
       this.state.dataSource.map((item,key)=>{
@@ -255,7 +260,8 @@ class SearchPanel extends React.Component {
                             <Button colors="primary" style={{ marginRight: 8, marginTop: -25, border: 0 }} onClick={this.props.alterSerach}>
                                 确认
                             </Button>
-                            <Button colors="primary" style={{ marginTop: -25, border: 0 }} onClick={this.props.closeSearch}>取消</Button>
+                            <Button colors="primary" style={{  marginRight: 8,marginTop: -25, border: 0 }} onClick={this.props.closeSearch}>取消</Button>
+                            <Button style={{ marginTop: -25, border: 0 }} onClick={this.resetSearch} >重置</Button>
                         </div>
                         </Modal.Footer>
                     </div>

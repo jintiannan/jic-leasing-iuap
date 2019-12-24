@@ -5,6 +5,7 @@ import DateModel from 'components/GridCompnent/DateModel';
 import RefModel from 'components/GridCompnent/RefModel'
 import {deepClone} from "utils";
 
+
 const Option = Select.Option;
 const TreeNode = Tree.TreeNode;   //树节点使用组件定义
 const transData = [               //树节点使用假数据定义 后续从后端传入
@@ -166,6 +167,12 @@ class SearchPanel extends React.Component {
       return queryData;
     }
 
+    //搜索重置按钮
+    resetSearch = () =>{
+        this.setState({
+            dataSource:[]
+        })
+    }
 
     render() {
         const IfShow = this.props.IfShow;
@@ -236,7 +243,8 @@ class SearchPanel extends React.Component {
                             <Button colors="primary" style={{ marginRight: 8, marginTop: -25, border: 0 }} onClick={this.props.alterSerach}>
                                 确认
                             </Button>
-                            <Button colors="primary" style={{ marginTop: -25, border: 0 }} onClick={this.props.closeSearch}>取消</Button>
+                            <Button colors="primary" style={{ marginRight: 8,marginTop: -25, border: 0 }} onClick={this.props.closeSearch}>取消</Button>
+                            <Button style={{ marginTop: -25, border: 0 }} onClick={this.resetSearch} >重置</Button>
                         </div>
                         </Modal.Footer>
                     </div>

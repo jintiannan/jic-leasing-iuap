@@ -35,18 +35,21 @@ class SearchPanel extends React.Component {
          */
         this.columns = [
           {
-          title: "",dataIndex: "fixcon",key: "fixcon",width: 30, 
-              render: (text, record, index) => {
-                /**
-                 * render箭头函数中 可由以下形式自定义条件渲染的结果
-                 */
-                  return (
-                    <div>
-                        {record.fixcon ?<div><a><Icon type="uf-correct"></Icon></a></div>
-                        :<div><a href="javascript:void(0)" onClick={()=> this.oncancelTable(index)}><Icon type="uf-close"></Icon></a></div>} 
-                    </div>
-                  )
-              }
+          title: "",
+          dataIndex: "fixcon",
+          key: "fixcon",
+          width: 30, 
+          render: (text, record, index) => {
+            /**
+             * render箭头函数中 可由以下形式自定义条件渲染的结果
+             */
+              return (
+                <div>
+                    {record.fixcon ?<div><a><Icon type="uf-correct"></Icon></a></div>
+                    :<div><a href="javascript:void(0)" onClick={()=> this.oncancelTable(index)}><Icon type="uf-close"></Icon></a></div>} 
+                </div>
+              )
+          }
           },
           {
             title: "条件名称",
@@ -152,6 +155,13 @@ class SearchPanel extends React.Component {
         this.setState({ dataSource:_dataSource});
     }
 
+    //搜索重置按钮
+    resetSearch = () =>{
+      this.setState({
+          dataSource:[]
+      })
+  }
+
     alterSerach = ()=>{
       let queryData={};
       this.state.dataSource.map((item,key)=>{
@@ -232,7 +242,8 @@ class SearchPanel extends React.Component {
                       <Button colors="primary" style={{ marginRight: 8, marginTop: -25, border: 0 }} onClick={this.props.alterSerach}>
                           确认
                       </Button>
-                      <Button colors="primary" style={{ marginTop: -25, border: 0 }} onClick={this.props.closeSearch}>取消</Button>
+                      <Button colors="primary" style={{ marginRight: 8, marginTop: -25, border: 0 }} onClick={this.props.closeSearch}>取消</Button>
+                      <Button style={{ marginTop: -25, border: 0 }} onClick={this.resetSearch} >重置</Button>
                   </div>
                   </Modal.Footer>
                 </div>

@@ -138,13 +138,14 @@ class IndexView extends Component {
             showSearchPanel:true
         })
     }
-
+    //搜索关闭按钮
     oncloseSearch = () =>{
         this.setState({
             showSearchPanel:false,
         })
     }
 
+    //搜索确定按钮
     onalterSearch = () =>{
         const queryData = this.serachRef.alterSerach();
         let queryParam = {
@@ -260,7 +261,7 @@ class IndexView extends Component {
                     <AddFormView { ...this.props }  Edit= {this.onEdit}/>
                 </div>
                 <div>
-                    <SearchPanel {...this.props} IfShow = {this.state.showSearchPanel} onRef = {this.onsearchRef} closeSearch={this.oncloseSearch} alterSerach={this.onalterSearch}/>
+                    <SearchPanel {...this.props} IfShow = {this.state.showSearchPanel} onRef = {this.onsearchRef} closeSearch={this.oncloseSearch} alterSerach={this.onalterSearch} />
                 </div>
             </div>
 

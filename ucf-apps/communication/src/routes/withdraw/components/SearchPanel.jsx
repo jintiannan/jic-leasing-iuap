@@ -178,6 +178,12 @@ class SearchPanel extends React.Component {
       return queryData;
     }
 
+    //搜索重置按钮
+    resetSearch = () =>{
+        this.setState({
+            dataSource:[]
+        })
+    }
 
     render() {
         const IfShow = this.props.IfShow;
@@ -248,7 +254,8 @@ class SearchPanel extends React.Component {
                             <Button colors="primary" style={{ marginRight: 8, marginTop: -25, border: 0 }} onClick={this.props.alterSerach}>
                                 确认
                             </Button>
-                            <Button colors="primary" style={{ marginTop: -25, border: 0 }} onClick={this.props.closeSearch}>取消</Button>
+                            <Button colors="primary" style={{ marginRight: 8,marginTop: -25, border: 0 }} onClick={this.props.closeSearch}>取消</Button>
+                            <Button style={{ marginTop: -25, border: 0 }} onClick={this.resetSearch} >重置</Button>
                         </div>
                         </Modal.Footer>
                     </div>
