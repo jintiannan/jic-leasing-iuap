@@ -66,10 +66,10 @@ class SearchPanel extends React.Component {
               if(record.type=='String'){
                 return <StringModel text={text} record={record} index={index} dataIndex={'content'}/>
               }else if(record.type=='Date'&&!record.between){
-                return <DateModel  record={record} index={index} dateFormat={"YYYY-MM"} dataIndex={'content'}  />
+                return <DateModel  text={text} record={record} index={index} dateFormat={"YYYY-MM"} dataIndex={'content'}  />
               }else if(record.type=='Date'&&record.between){
                 return <div className = "between_model"><DateModel  record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content'}  /><span>-</span>
-                  <DateModel  record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content1'}  /></div>
+                  <DateModel  text={text} record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content1'}  /></div>
               }else if(record.type=='Ref'){
                 return <div className = "ref_model"><RefModel  record={record} index={index} dataIndex={'content'}/></div>
               }
@@ -165,7 +165,7 @@ class SearchPanel extends React.Component {
     alterSerach = ()=>{
       let queryData={};
       this.state.dataSource.map((item,key)=>{
-        if(item != undefined && item.key != undefined && item.content != undefined && item.content != ''){
+        if(item != undefined && item.key != undefined && item.content != undefined && item.content != '' && item.content != 'Invalid date'){
           queryData[item.key] = item.content;
         }
       });

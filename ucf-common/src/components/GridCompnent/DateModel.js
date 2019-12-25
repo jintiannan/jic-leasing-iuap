@@ -20,6 +20,8 @@ class DateModel extends Component {
                 {record._edit ?<div className = "date_model">
                 <DatePicker
                     format={dateFormat}
+                    value={text == 'Invalid date'?"":text}
+                    showClose={false}
                     placeholder="选择日期..."
                     onSelect={this.handleChange.bind(this,dataIndex,dateFormat)}
                     /></div> : <div>{text ? moment(text).format(dateFormat) : ""}</div>}
