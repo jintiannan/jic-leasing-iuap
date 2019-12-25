@@ -56,14 +56,20 @@ class TableFormRef extends Component {
    * @param {type}
    * @return:
    */
-  loadData = async () => {
-    console.log(this.state.page);
+  loadData = async (value) => {
+    //console.log(this.state.page);
     let data = {
       where : {},
       pagination:{
         pageIndex : this.state.page.currPageIndex,
         pageSize : this.state.page.pageSize,
       }
+    }
+    //根据值搜索
+    if(value != undefined && value != null){
+      data.where = {"retrieveName":value};
+    }else{
+      data.where = {};
     }
     let requestList = [
       //request(this.state.refModelUrl, { method: 'post' , data:data }),//表头数据
@@ -155,7 +161,7 @@ class TableFormRef extends Component {
    * @return:
    */
   miniSearchFunc = (value) => {
-    alert('搜索' + value)
+    this.loadData(value);
   }
 
   /**
