@@ -207,7 +207,7 @@ class ListView extends Component {
                         ref="mainlist" //存模版
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组                     
-                        tableHeight={1} //表格高度 1主表 2字表
+                        tableHeight={1} //表格高度 1主表 2单表 3子表
                         exportFileName="测试导出表格"　    //导出表格名称
                         exportData={this.props.list}      //导出表格数据
                         //分页对象
@@ -241,7 +241,8 @@ class ListView extends Component {
                                 <GridMain
                                     ref={(el) => this.gridOnTheLoan = el} //存模版
                                     columns={this.gridColumnOnTheLoan} //字段定义
-                                    multiSelect={false}  //false 单选，默认多选 
+                                    multiSelect={false}  //false 单选，默认多选
+                                    tableHeight={3} //表格高度 1主表 2单表 3子表 
                                     data={this.props.list2} //数据数组
                                     //分页对象
                                     paginationObj={{
