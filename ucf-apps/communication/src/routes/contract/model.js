@@ -8,6 +8,7 @@ import * as api from "./service";
  * deepClone : 克隆当前指定对象的数据 通常用于数据更新
  */
 import {processData,deepClone} from "utils";
+import {consoleData} from "utils/service";
 
 
 export default {
@@ -83,16 +84,8 @@ export default {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationContract.updateState({showLoading: true});
             let data = processData(await api.getList(param));  // 调用 getList 请求数据
-            let updateData = {showLoading: false};
-            let queryObj = {
-                pageIndex:param.pageIndex,
-                pageSize:param.pageSize,
-                total:data.data.total,
-                totalPages:Math.ceil(data.data.total/param.pageSize)
-            };
-            updateData.queryObj = queryObj;
-            updateData.queryParam = param;
-            updateData.list = data.data.pageData;
+            //处理data返回数据 避免出现数据异常错误
+            let updateData = consoleData(data, param, "main", null);
             actions.communicationContract.updateState(updateData); // 更新数据和查询条件
         },
 
