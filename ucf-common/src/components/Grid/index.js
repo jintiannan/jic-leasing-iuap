@@ -63,7 +63,6 @@ class BaseGrid extends Component {
                 <Grid
                     className="ucf-example-grid"
                     data={data}
-                    loadLazy={false}
                     {...otherProps}
                     exportData={_exportData}
                     paginationObj={_paginationObj}

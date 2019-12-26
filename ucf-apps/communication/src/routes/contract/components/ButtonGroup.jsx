@@ -129,7 +129,7 @@ class ButtonGroup extends Component {
                  */}
                 <Button visible={_props.isGrid} className="ml8" colors="primary" onClick={_props.Query}><Icon type='uf-search'/>查询</Button>
                 <Dropdown trigger={['click']} overlay={tableMenu} animation="slide-up">
-                    <Button visible={_this.powerView(_props,'Export') && _props.isGrid} className="ml8" onClick={_props.Export} colors="primary"><Icon type='uf-symlist'/>导出</Button>
+                    <Button visible={_this.powerView(_props,'Export') && _props.isGrid} className="ml8" colors="primary"><Icon type='uf-symlist'/>导出</Button>
                 </Dropdown>
                 <Button visible={_props.isEdit} disabled={_this.powerDisabledEdit(_props)} className="ml8" colors="primary" onClick={_props.Save}><Icon type='uf-search'/>保存</Button>
                 <Button visible={!_props.isGrid}  className="ml8" colors="primary" onClick={_props.Return}><Icon type='uf-search'/>返回</Button>

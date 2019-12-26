@@ -66,12 +66,12 @@ class ListView extends Component {
             multiRecordOper(this.props.selectedList,(param) => {  //选中数据校验  未选中无法导出
                 //this.setState({exportList:this.props.selectedList});
                 actions.communicationContract.updateState({ exportData: this.props.selectedList });
-                this.refs.mainlist.exportExcel();
+                this.gridref.exportExcel();
             });
         }else if(key == '2'){  //key为2 默认为导出当前页数据
             //this.setState({exportList:this.props.list});
             actions.communicationContract.updateState({ exportData: this.props.list });
-            this.refs.mainlist.exportExcel();
+            this.gridref.exportExcel();
         }
     }
 
@@ -208,7 +208,7 @@ class ListView extends Component {
                      getSelectedDataFunc:选中数据触发事件
                      */}
                     <GridMain
-                        ref={"mainlist"} //存模版
+                        ref={(el) => this.gridref = el} //存模版
                         exportref = {"mainlist"}
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组                     

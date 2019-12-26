@@ -66,7 +66,7 @@ class GridMain extends Component {
     };
 
     exportExcel = () => {
-        this.refs[this.props.exportref].exportExcel();
+        this.gridref.exportExcel();
     };
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
@@ -82,7 +82,7 @@ class GridMain extends Component {
         return (
             <div className='gridMain'>
                 <BaseGrid
-                    ref={exportref}
+                    ref={(el) => this.gridref = el}
                     columns={columns} //字段定义
                     data={data} //数据数组
                     columnFilterAble={tableHeight==1?true:false} //是否显示列过滤功能 默认主表显示 字表不显示

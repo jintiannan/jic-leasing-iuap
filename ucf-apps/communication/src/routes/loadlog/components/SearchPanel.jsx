@@ -158,11 +158,14 @@ class SearchPanel extends React.Component {
 
     alterSerach = () => {
        let queryData={};
-       this.state.dataSource.map((item,key)=>{
+       let _dataSource = deepClone(this.state.dataSource);
+       _dataSource.map((item,key)=>{
         if(item != undefined && item.key != undefined && item.content != undefined && item.content != ''){
           queryData[item.key] = item.content;
+          item.content = "";
         }
       });
+      this.setState({dataSource:_dataSource});
       return queryData;
     }
 
