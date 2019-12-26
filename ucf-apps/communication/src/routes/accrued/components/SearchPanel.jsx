@@ -35,18 +35,21 @@ class SearchPanel extends React.Component {
          */
         this.columns = [
           {
-          title: "",dataIndex: "fixcon",key: "fixcon",width: 30, 
-              render: (text, record, index) => {
-                /**
-                 * render箭头函数中 可由以下形式自定义条件渲染的结果
-                 */
-                  return (
-                    <div>
-                        {record.fixcon ?<div><a><Icon type="uf-correct"></Icon></a></div>
-                        :<div><a href="javascript:void(0)" onClick={()=> this.oncancelTable(index)}><Icon type="uf-close"></Icon></a></div>} 
-                    </div>
-                  )
-              }
+          title: "",
+          dataIndex: "fixcon",
+          key: "fixcon",
+          width: 30, 
+          render: (text, record, index) => {
+            /**
+             * render箭头函数中 可由以下形式自定义条件渲染的结果
+             */
+              return (
+                <div>
+                    {record.fixcon ?<div><a><Icon type="uf-correct"></Icon></a></div>
+                    :<div><a href="javascript:void(0)" onClick={()=> this.oncancelTable(index)}><Icon type="uf-close"></Icon></a></div>} 
+                </div>
+              )
+          }
           },
           {
             title: "条件名称",
@@ -63,10 +66,10 @@ class SearchPanel extends React.Component {
               if(record.type=='String'){
                 return <StringModel text={text} record={record} index={index} dataIndex={'content'}/>
               }else if(record.type=='Date'&&!record.between){
-                return <DateModel  record={record} index={index} dateFormat={"YYYY-MM"} dataIndex={'content'}  />
+                return <DateModel  text={text} record={record} index={index} dateFormat={"YYYY-MM"} dataIndex={'content'}  />
               }else if(record.type=='Date'&&record.between){
                 return <div className = "between_model"><DateModel  record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content'}  /><span>-</span>
-                  <DateModel  record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content1'}  /></div>
+                  <DateModel  text={text} record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content1'}  /></div>
               }else if(record.type=='Ref'){
                 return <div className = "ref_model"><RefModel  record={record} index={index} dataIndex={'content'}/></div>
               }
@@ -152,10 +155,17 @@ class SearchPanel extends React.Component {
         this.setState({ dataSource:_dataSource});
     }
 
+    //搜索重置按钮
+    resetSearch = () =>{
+      this.setState({
+          dataSource:[]
+      })
+  }
+
     alterSerach = ()=>{
       let queryData={};
       this.state.dataSource.map((item,key)=>{
-        if(item != undefined && item.key != undefined && item.content != undefined && item.content != ''){
+        if(item != undefined && item.key != undefined && item.content != undefined && item.content != '' && item.content != 'Invalid date'){
           queryData[item.key] = item.content;
         }
       });
@@ -182,7 +192,7 @@ class SearchPanel extends React.Component {
                         查询信息
                     </Modal.Title>
                 </Modal.Header>
-                </div>
+            </div>
 
                 <Modal.Body>
                     <div className="search_form_left">
@@ -226,14 +236,18 @@ class SearchPanel extends React.Component {
                         <Table data={this.state.dataSource} columns={this.state.columns} height={30}/>
                     </div>
                 </Modal.Body>
-                <Modal.Footer>
-                <div>
-                    <Button colors="primary" style={{ marginRight: 8 }} onClick={this.props.alterSerach}>
-                        确认
-                    </Button>
-                    <Button colors="primary" onClick={this.props.closeSearch}>取消</Button>
+                <div className="search_from_right_footer">
+                  <Modal.Footer>
+                  <div>
+                      <Button colors="primary" style={{ marginRight: 8, marginTop: -25, border: 0 }} onClick={this.props.alterSerach}>
+                          确认
+                      </Button>
+                      <Button colors="primary" style={{ marginRight: 8, marginTop: -25, border: 0 }} onClick={this.props.closeSearch}>取消</Button>
+                      <Button style={{ marginTop: -25, border: 0 }} onClick={this.resetSearch} >重置</Button>
+                  </div>
+                  </Modal.Footer>
                 </div>
-                </Modal.Footer>
+                
                 </Modal>
             
         </div>

@@ -61,7 +61,6 @@ class AddFormView extends Component {
     }
 
     render() {
-        const { current } = this.state;
         const { getFieldProps } = this.props.form;
         let _formObject = this.props.formObject;
         let formObject = deepClone(_formObject);
@@ -91,7 +90,7 @@ class AddFormView extends Component {
                         </Modal.Header>
                         <Modal.Body >
 
-                            <div className="steps-content jic-form">
+                            <div className="steps-content-accrued jic-form">
                                 {/**
                                  表单内容组件Form 包含表单的内容放置在组件内部
                                  其中 Row Col 为处理格式的栅格布局 Row控制单行 Col 控制 md xs sm 即 中 大 小三种分辨率的列排序占比 单行12列

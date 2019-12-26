@@ -61,6 +61,12 @@ class TableFormRef extends Component {
         pageSize : this.state.page.pageSize,
       }
     }
+    //根据值搜索
+    if(value != undefined && value != null){
+      data.where = {"retrieveName":value};
+    }else{
+      data.where = {};
+    }
     let requestList = [
       //request(this.state.refModelUrl, { method: 'post' , data:data }),//表头数据
       requestBusiness(data, this.state.refModelUrl),
@@ -155,7 +161,7 @@ class TableFormRef extends Component {
    * @return:
    */
   miniSearchFunc = (value) => {
-    alert('搜索' + value)
+    this.loadData(value);
   }
 
   /**
