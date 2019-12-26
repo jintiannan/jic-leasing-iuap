@@ -7,9 +7,6 @@
 import React, { Component } from 'react';
 import { RefMultipleTableWithInput } from 'ref-multiple-table';
 import 'ref-multiple-table/lib/index.css';
-import Radio from 'bee-radio';
-import 'bee-radio/build/Radio.css';
-import request from "axios";
 import {requestBusiness} from "utils/business";
 import './index.less';
 
@@ -56,8 +53,7 @@ class TableFormRef extends Component {
    * @param {type}
    * @return:
    */
-  loadData = async (value) => {
-    //console.log(this.state.page);
+  loadData = async () => {
     let data = {
       where : {},
       pagination:{
@@ -121,22 +117,26 @@ class TableFormRef extends Component {
     if (colunmsList.length === 0) {
       colunmsList = [{ title: "未传递表头数据", dataIndex: "nodata", key: "nodata" }];
     } else if (!multiple) {
-      colunmsList.unshift({
-        title: " ",
-        dataIndex: "pk",
-        key: "pk",
-        width: 45,
-        render(text, record, index) {
-          return (
-            <Radio.RadioGroup
-              name={record[valueField]}
-              selectedValue={record._checked ? record[valueField] : null}
-            >
-              <Radio value={record[valueField]}></Radio>
-            </Radio.RadioGroup>
-          )
-        }
-      })
+      // colunmsList.unshift({
+      //   title: " ",
+      //   dataIndex: "pk",
+      //   key: "pk",
+      //   width: 45,
+      //   render(text, record, index) {
+      //     return (
+      //       <Radio.RadioGroup
+      //         name={record[valueField]}
+      //         selectedValue={record._checked ? record[valueField] : null}
+      //          onChange = { function onChange(value) {
+      //            console.log(this);
+      //           return this.getSelectedDataFunc(value,record,index);
+      //         }}
+      //       >
+      //         <Radio value={record[valueField]}></Radio>
+      //       </Radio.RadioGroup>
+      //     )
+      //   }
+      // })
     }
     this.columnsData = colunmsList
 
