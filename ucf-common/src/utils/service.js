@@ -70,6 +70,7 @@ export function genGridColumn(param){
                     return {
                         title:title,
                         dataIndex:key,
+                        ifshow:ifshow,
                         key:key,
                         width: width,
                         render: (text, record, index) => {
@@ -80,6 +81,7 @@ export function genGridColumn(param){
                     return {
                         title:title,
                         dataIndex:key,
+                        ifshow:ifshow,
                         key:key,
                         width: width,
                         sorter: (pre, after) => {return pre[key] - after[key]},
@@ -93,6 +95,7 @@ export function genGridColumn(param){
                     title:title,
                     dataIndex:key,
                     key:key,
+                    ifshow:ifshow,
                     width: width,
                     sorter: (pre, after) => {return pre[key] - after[key]},
                     className:'column-number-right',
@@ -105,6 +108,7 @@ export function genGridColumn(param){
                     title: title,
                     dataIndex: key,
                     key: key,
+                    ifshow:ifshow,
                     width: width,
                     sorter: (pre, after) => {return new Date(pre[key]).getTime() - new Date(after[key]).getTime()},
                     render: (text, record, index) => {
@@ -117,6 +121,7 @@ export function genGridColumn(param){
                     title: title,
                     dataIndex: key,
                     key: key,
+                    ifshow:ifshow,
                     width: width,
                     sorter: (pre, after) => {return new Date(pre[key]).getTime() - new Date(after[key]).getTime()},
                     render: (text, record, index) => {
@@ -129,6 +134,7 @@ export function genGridColumn(param){
                     title: title,
                     dataIndex: key,
                     key: key,
+                    ifshow:ifshow,
                     width: width,
                     render: (text, record, index) => {
                         return <div>{text ? moment(text).format(dateTimeFormat) : ""}</div>
@@ -141,6 +147,7 @@ export function genGridColumn(param){
                     dataIndex: key,
                     key: key,
                     width: width,
+                    ifshow:ifshow,
                     sorter: (pre, after) => {
                         if(pre[key].length > after[key].length){
                             return 1;
@@ -157,6 +164,7 @@ export function genGridColumn(param){
                     title: title,
                     dataIndex: key,
                     key: key,
+                    ifshow:ifshow,
                     width: width,
                     render: (text, record, index) => {
                         return (<span style={{'float':'right'}}>{(typeof text)==='number'? text.toFixed(digit).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'):""}</span>)
@@ -213,4 +221,27 @@ export function checkBillStatus(param={},status=[]){
     } else {
         return true;
     }
+}
+
+    /**
+     * 过滤需要处理的字段
+     * @param gridColumn 需要处理的字段 
+     * @param grid 全部的字段 
+     * @param show show==true gridColumn为需要显示的字段  show==false  gridColumn为隐藏的字段
+     */
+export function getShowColumn(gridColumn,grid,show){
+    if(show){
+        grid.map((item,index)=>{
+            grid[index] = Object.assign(item, {ifshow:false});
+        })
+    }
+    gridColumn.map((item,index)=>{
+        grid.map((itemGrid,indexGrid)=>{
+            if(item == itemGrid.key){
+                const obj = Object.assign(itemGrid, {ifshow:show?true:false})
+                grid[indexGrid] = obj;
+            }
+        })
+    });
+    return grid;
 }

@@ -85,7 +85,7 @@ class GridMain extends Component {
                     ref={exportref}
                     columns={columns} //字段定义
                     data={data} //数据数组
-                    columnFilterAble={tableHeight==1?true:false} //是否显示列过滤功能 默认主表显示 字表不显示
+                    columnFilterAble={tableHeight==3?false:true} //是否显示列过滤功能 默认子表不显示 
                     rowKey={(r, i) => {r._index = i; return i}} //生成行的key
                     multiSelect= {{ type:"checkbox" }}  //false 单选，默认多选   
                     dragborder={true}               //表头可拖拽

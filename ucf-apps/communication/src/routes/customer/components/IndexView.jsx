@@ -24,6 +24,12 @@ class IndexView extends Component {
         /**临时测试数据 */
         props.powerButton = ['Query','Export','Return','View'];
         props.ifPowerBtn = true;
+        /**临时测试数据 */
+        props.gridColumn = ['customerCode','customerName','identityType','identityNo','birthday','issuingAuthority','validTerm'
+                            ,'age','sex','levelOfEducation;contact','marryStatus','childrenStatus','childrenSchoolStatus'
+                            ,'industryType','private','Integer officalTitle','job','permanentAddress','homeAddr'];
+        props.ifGridColumn = true;
+        
         this.state = {
             showFormView : 'none',//显示Form表单
             ifPowerBtn:props.ifPowerBtn,//是否控制按钮权限

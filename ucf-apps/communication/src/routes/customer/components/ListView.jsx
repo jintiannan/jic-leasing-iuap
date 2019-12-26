@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { actions } from 'mirrorx';
 import { Tabs } from 'tinper-bee';
 import { deepClone } from "utils";
-import { genGridColumn } from "utils/service";
+import { genGridColumn, getShowColumn } from "utils/service";
 import GridMain from 'components/GridMain';
 const { TabPane } = Tabs;
 import './index.less';
@@ -18,8 +18,10 @@ class ListView extends Component {
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
-        this.gridColumn = [...genGridColumn(this.grid)];
-        this.gridColumnOnSon = [...genGridColumn(this.gridOnSon)];
+        //主表过滤显示字段
+        const gridMain = getShowColumn(this.props.gridColumn,this.grid,true);
+        this.gridColumn = [...genGridColumn(gridMain)];
+        //this.gridColumnOnSon = [...genGridColumn(this.gridOnSon)];
     }
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
@@ -113,7 +115,7 @@ class ListView extends Component {
         { title: '签发机关', key: 'issuingAuthority', type: '0' },
         { title: '有效期限', key: 'validTerm', type: '1' },
         { title: '年龄', key: 'age', type: '1' },
-        { title: '性别', key: 'sex', type: '6' ,enumType:'1000154'},
+        { title: '性别', key: 'sex', type: '6' ,enumType:'1000151'},
         { title: '文化程度', key: 'levelOfEducation', type: '6',enumType:'1000155' },
         { title: '联系方式', key: 'contact', type: '0' },
         { title: '婚姻状况', key: 'marryStatus', type: '6', enumType:'1000154' },
@@ -184,21 +186,21 @@ class ListView extends Component {
     gridColumn = [];
 
     // 子表列属性定义
-    gridOnSon = [
-        {title:'计划投放日期',key:'plan_date_loan',type:'0'},
-        {title:'投放金额(元)',key:'plan_cash_loan',type:'0'},
-        {title:'不含税投放金额(元)',key:'plan_cash_corpus',type:'0'},
-        {title:'税率',key:'tax_rate',type:'0'},
-        {title:'税额(元)',key:'tax_cash',type:'0'},
-        {title:'投放付款方式',key:'pay_method_loan',type:'0'},
-        {title:'银票开票日期',key:'make_date_draft',type:'0'},
-        {title:'银票到期日期',key:'end_date_loan',type:'0'},
-        {title:'银票保证金比例',key:'deposit_ratio4draft',type:'0'},
-        {title:'银票保证金利率',key:'interrate_ratio4draft',type:'0'},
-        {title:'计息金额计算方式',key:'calinter_amount_style',type:'0'},
-    ]
-    // 子表 列属性定义=>通过前端service工具类自动生成
-    gridColumnOnSon = [];
+    // gridOnSon = [
+    //     {title:'计划投放日期',key:'plan_date_loan',type:'0'},
+    //     {title:'投放金额(元)',key:'plan_cash_loan',type:'0'},
+    //     {title:'不含税投放金额(元)',key:'plan_cash_corpus',type:'0'},
+    //     {title:'税率',key:'tax_rate',type:'0'},
+    //     {title:'税额(元)',key:'tax_cash',type:'0'},
+    //     {title:'投放付款方式',key:'pay_method_loan',type:'0'},
+    //     {title:'银票开票日期',key:'make_date_draft',type:'0'},
+    //     {title:'银票到期日期',key:'end_date_loan',type:'0'},
+    //     {title:'银票保证金比例',key:'deposit_ratio4draft',type:'0'},
+    //     {title:'银票保证金利率',key:'interrate_ratio4draft',type:'0'},
+    //     {title:'计息金额计算方式',key:'calinter_amount_style',type:'0'},
+    // ]
+    // // 子表 列属性定义=>通过前端service工具类自动生成
+    // gridColumnOnSon = [];
 
 
     //子页签更改活动key方法
