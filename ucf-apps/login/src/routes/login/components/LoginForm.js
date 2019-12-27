@@ -135,7 +135,7 @@ class LoginForm extends Component {
         let password = this.refs.password.value;
         let currentSystem = this.props.currentSystem;
         //默认为C端通信系统 选定则转化为pk
-        if(currentSystem = '中建投C端通信系统'){
+        if(currentSystem == '中建投C端通信系统'){
             currentSystem = '22222222222222222222';
         }
         let data = {
