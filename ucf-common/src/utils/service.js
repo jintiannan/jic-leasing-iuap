@@ -265,7 +265,11 @@ export function consoleData(result = [], param = {}, method, subname){
                 updateData.queryParam = param;
                 updateData.list = data.pageData;
             }else{
-                updateData.list2 = data[subname];
+                if(subname != null && subname != undefined){
+                    updateData.list2 = data[subname];
+                }else{
+                    updateData.list2 = data;
+                }  
             }
         }
     }

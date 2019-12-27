@@ -25,7 +25,8 @@ export default {
         showLoading: false,  //主表加载Loading图标
         queryParam: {        //初始化分页查询的参数
             pageIndex: 0,
-            pageSize: 50,
+            pageSize: 25,
+            dataNum:1,       //每页显示条数索引
         },
         addQueryParam: {
             pageIndex: 0,

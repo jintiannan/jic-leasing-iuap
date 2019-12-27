@@ -226,8 +226,8 @@ class ListView extends Component {
                         exportData={this.props.list}      //导出表格数据
                         //分页对象
                         paginationObj={{
-                            // dataNumSelect:['10','20','50','100'],        //每页显示条数动态修改
-                            // dataNum:this.props.queryParam.dataNum,            //每页显示条数Index
+                            dataNumSelect:['10','25','50','100'],        //每页显示条数动态修改
+                            dataNum:this.props.queryParam.dataNum,            //每页显示条数Index
                             activePage: this.props.queryParam.pageIndex,      //活动页
                             total: this.props.queryObj.total,                 //总条数
                             items: this.props.queryObj.totalPages,            //总页数
