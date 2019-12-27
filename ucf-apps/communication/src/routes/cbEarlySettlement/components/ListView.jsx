@@ -136,6 +136,7 @@ class ListView extends Component {
     grid = [
         { title: '合同编号', key: 'contCode', type: '0' },
         { title: '合同名称', key: 'contName', type: '0' },
+        { title: '客户编码', key: 'customerCode', type: '0' },
         { title: '客户名称', key: 'customerName', type: '0' },
         { title: '单位名称', key: 'employerName', type: '0' },
         { title: '起租日期', key: 'rentDate', type: '0' },

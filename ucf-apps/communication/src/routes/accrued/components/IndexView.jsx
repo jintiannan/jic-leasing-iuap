@@ -23,7 +23,7 @@ class IndexView extends Component {
         super(props);
         //在路由时带出此节点权限按钮  后续会从后台传入
         /**临时测试数据 */
-        props.powerButton = ['Query','Save','Return','Add','View'];
+        props.powerButton = ['Query','Export','Save','Return','Add'];
         props.ifPowerBtn = true;
 
         //在路由时带出此节点字段权限  后续会从后台传入
@@ -193,16 +193,6 @@ class IndexView extends Component {
     }
 
     /**
-     * 导出数据按钮 使用GridMain组件中定义的引用ref直接调用即可导出数据
-     */
-    onClickExport = () => {
-        console.log(this.refs);
-        console.log(this.listchild);
-        debugger
-        this.listchild.refs.mainlist.exportExcel();
-    }
-
-    /**
      * 返回按钮
      */
     onReturn = () =>{
@@ -218,6 +208,15 @@ class IndexView extends Component {
         obj['pkAccruedDetail'] = this.props.list3;
         actions.communicationAccrued.onSave(obj);
         this.switchEdit();
+    }
+
+    /**
+     * 导出数据按钮 使用GridMain组件中定义的引用ref直接调用即可导出数据
+     */
+    onClickExport = (key) => {
+        //先判断选定是导出当前选中数据还是当前页数据 
+        this.listchild.setExportList(key);
+        // this.listchild.refs.mainlist.exportExcel();
     }
 
     render() {
@@ -244,7 +243,7 @@ class IndexView extends Component {
                         Export={this.onClickExport}
                         // Edit= {this.onEdit}
                         Add= {this.onAdd}
-                        View={this.onView}
+                        //View={this.onView}
                         Return={this.onReturn}
                         Save={this.onSave}
                         {...this.props}

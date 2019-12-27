@@ -91,7 +91,7 @@ class ListView extends Component {
         }
         if (_selectedList && _selectedList.length == 1) {
             _formObj = deepClone(_selectedList[0]);
-            this.childList(_formObj.pkCapitalDetail);
+            this.childList(_formObj.pkCapital);
         } else {
             actions.communicationCapital.updateState({ list2: [] });
         }
@@ -101,7 +101,7 @@ class ListView extends Component {
 
     childList = (obj) => {
         //加载子组件列表
-        actions.communicationCapital.loadChildList(obj);
+        actions.communicationCapital.loadChildList({pkCapital:obj});
     };
 
     /**
@@ -138,8 +138,8 @@ class ListView extends Component {
         { title: '应收金额', key: 'receivableAmount', type: '7', digit: 2 },
         { title: '到账金额', key: 'intoAccountAmount', type: '7', digit: 2 },
         { title: '到账日期', key: 'intoAccountDate', type: '0' },
-        //{ title: '是否逾期', key: 'ifOverdue', type: '6', enumType: '1000003' },
-        { title: '抵扣状态', key: 'deductionStatus', type: '0' },
+        { title: '是否逾期', key: 'ifOverdue', type: '6', enumType: '1000003' },
+        { title: '抵扣状态', key: 'deductionStatus', type: '6', enumType: '1001649' },
         { title: '抵扣日期', key: 'deductionDate', type: '0' },
         { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyBody', type: '0' },
@@ -167,13 +167,15 @@ class ListView extends Component {
         { title: '到账日期', key: 'intoAccountDate', type: '0' },
         { title: '核销状态', key: 'verificationState', type: '6', enumType: '1000316' },
         { title: '核销日期', key: 'verificationDate', type: '0' },
-        { title: '收款银行', key: 'gatherBank', type: '0' },
-        { title: '收款帐号', key: 'gatherAccount', type: '0' },
         { title: '核销金额', key: 'gatherBalance', type: '7', digit: 2 },
-        { title: '应收余额', key: 'receivableBalance', type: '7', digit: 2 },
         { title: '实收本金', key: 'paidinCorpus', type: '7', digit: 2 },
         { title: '实收利息', key: 'paidinInterest', type: '7', digit: 2 },
         { title: '是否逾期', key: 'ifOverdue', type: '6', enumType: '1000003' },
+        { title: '保证金抵扣状态', key: 'deductionStatus', type: '6', enumType: '1001649' },
+        { title: '保证金抵扣日期', key: 'deductionDate', type: '0' },
+        //{ title: '收款银行', key: 'gatherBank', type: '0' },
+        { title: '收款帐号', key: 'gatherAccount', type: '0' },
+        //{ title: '应收余额', key: 'receivableBalance', type: '7', digit: 2 },
         { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
         { title: '公司主体', key: 'companyBody', type: '0' },
         { title: '来源系统', key: 'pkSys.systemName', type: '0' },

@@ -34,6 +34,14 @@ const transData = [               //树节点使用假数据定义 后续从后�
     type:'String',
     between:false,
   },
+      {
+        title: "客户编号",
+        key: "customerCode",
+        _edit:true,
+        fixcon:true,
+        type:'String',
+        between:false,
+      },
   {
     title: "交易批次号",
     key: "paymentTransactionBatch",

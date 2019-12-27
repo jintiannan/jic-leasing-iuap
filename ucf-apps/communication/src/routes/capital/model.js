@@ -98,11 +98,11 @@ export default {
          * 加载子列表数据
          * @param data
          */
-        async loadChildList(data) {
+        async loadChildList(param) {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationCapital.updateState({showLoading: true});
-            // let data = processData(await api.getList(param));  // 调用 getList 请求数据
-            // let updateData = {showLoading: false};
+            let data = processData(await api.getChildList(param));  // 调用 getList 请求数据
+            let updateData = {showLoading: false};
             // let queryObj = {
             //     pageIndex:param.pageIndex,
             //     pageSize:param.pageSize,
@@ -110,8 +110,8 @@ export default {
             // };
             // updateData.queryObj = queryObj;
             // updateData.queryParam = param;
-            // updateData.list2 = data;
-            actions.communicationCapital.updateState({list2: data}); // 更新数据和查询条件
+            updateData.list2 = data.data.pkCapitalDetail;
+            actions.communicationCapital.updateState(updateData); // 更新数据和查询条件
         },
 
 

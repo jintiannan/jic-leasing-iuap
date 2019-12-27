@@ -19,8 +19,8 @@ class ListView extends Component {
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
         //主表过滤显示字段
-        const gridMain = getShowColumn(this.props.gridColumn,this.grid,true);
-        this.gridColumn = [...genGridColumn(gridMain)];
+        //const gridMain = getShowColumn(this.props.gridColumn,this.grid,true);
+        this.gridColumn = [...genGridColumn(this.grid)];
         //this.gridColumnOnSon = [...genGridColumn(this.gridOnSon)];
     }
 

@@ -19,13 +19,29 @@ const transData = [               //树节点使用假数据定义 后续从后�
         between:false,
     },
     {
+        title: "合同名称",
+        key: "contName",
+        _edit:true,
+        fixcon:true,
+        type:'String',
+        between:false,
+      },
+      {
         title: "客户名称",
         key: "customerName",
         _edit:true,
         fixcon:true,
         type:'String',
         between:false,
-    },
+      },
+      {
+        title: "客户编号",
+        key: "customerCode",
+        _edit:true,
+        fixcon:true,
+        type:'String',
+        between:false,
+      },
     
 ];
 

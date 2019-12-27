@@ -25,7 +25,7 @@ class ListView extends Component {
         // const gridMain = this.getShowColumn(this.props.gridColumn, this.grid, true);
         this.resetTableHeight(true);
 
-        this.gridColumn = [...genGridColumn(this.grid)];
+        //this.gridColumn = [...genGridColumn(this.grid)];
         this.gridColumnOnTheLoan = [...genGridColumn(this.gridOnTheLoan)];
     }
 
@@ -106,8 +106,8 @@ class ListView extends Component {
             }
         }
         if (_selectedList && _selectedList.length == 1) {
-            _formObj = deepClone(_selectedList[0]);
-            this.childList(_formObj);
+            // _formObj = deepClone(_selectedList[0]);
+            // this.childList(_formObj);
         } else {
             actions.communicationInvoice.updateState({ list2: [] });
         }
@@ -149,21 +149,21 @@ class ListView extends Component {
     };
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
-    grid = [
-        { title: '单据状态', key: 'billstatus', type: '0' },
-        { title: '开票批次号', key: 'invoiceBatchNo', type: '0' },
-        { title: '发票总额', key: 'invoiceAmount', type: '7', digit: 2 },
-        { title: '发票税额', key: 'leaseCashTax', type: '7', digit: 2 },
-        { title: '不含税金额', key: 'excludingTax', type: '7', digit: 2 },
-        //{ title: '开票状态', key: 'billingStatus', type: '6', enumType:'1000334' },
-        { title: '开票日期', key: 'billingData', type: '0' },
-        { title: '发票代码', key: 'invoiceCode', type: '0' },
-        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
-    ];
-    //主表 列属性定义=>通过前端service工具类自动生成
-    gridColumn = [];
+    // grid = [
+    //     { title: '单据状态', key: 'billstatus', type: '0' },
+    //     { title: '开票批次号', key: 'invoiceBatchNo', type: '0' },
+    //     { title: '发票总额', key: 'invoiceAmount', type: '7', digit: 2 },
+    //     { title: '发票税额', key: 'leaseCashTax', type: '7', digit: 2 },
+    //     { title: '不含税金额', key: 'excludingTax', type: '7', digit: 2 },
+    //     //{ title: '开票状态', key: 'billingStatus', type: '6', enumType:'1000334' },
+    //     { title: '开票日期', key: 'billingData', type: '0' },
+    //     { title: '发票代码', key: 'invoiceCode', type: '0' },
+    //     { title: '来源系统', key: 'pkSys.systemName', type: '0' },
+    // ];
+    // //主表 列属性定义=>通过前端service工具类自动生成
+    // gridColumn = [];
 
-    // 投放计划 列属性定义
+    // 主表
     gridOnTheLoan = [
         { title: '合同编号', key: 'contCode', type: '0' },
         { title: '合同名称', key: 'contName', type: '0' },
@@ -175,18 +175,23 @@ class ListView extends Component {
         { title: '开户银行', key: 'openingBank', type: '0' },
         { title: '银行账号', key: 'bankAccount', type: '0' },
         { title: '邮寄地址', key: 'mailingAddress', type: '0' },
+        { title: '客户编码', key: 'customerCode', type: '0' },
         { title: '客户名称', key: 'customerName', type: '0' },
         { title: '单位名称', key: 'employerName', type: '0' },
-        { title: '电话号码', key: 'telephoneNumber', type: '0' },
-        //{ title: '租赁方式', key: 'leaseType', type: '0' },
+        //{ title: '电话号码', key: 'telephoneNumber', type: '0' },
+        { title: '租赁方式', key: 'leaseType', type: '6', enumType:'1001013' },
         { title: '期次', key: 'leaseTime', type: '0' },
         { title: '应收日期', key: 'planDate', type: '0' },
-        { title: '租赁方式', key: 'leaseType', type: '6', enumType:'1001013' },
+        { title: '开票金额', key: 'invoiceAmount', type: '7', digit: 2 },
         { title: '税率', key: 'taxRate', type: '7', digit: 6 },
         { title: '税额', key: 'leaseCashTax', type: '7', digit: 2 },
         { title: '不含税金额', key: 'excludingTax', type: '7', digit: 2 },
         { title: '开票状态', key: 'billingStatus', type: '6', enumType:'1000334' },
         { title: '开票内容', key: 'invoiceContents', type: '6', enumType:'1000125' },
+        { title: '开票日期', key: 'billingData', type: '0'},
+        { title: '核销状态', key: 'verificationStatus', type: '6', enumType:'1000316' },
+        { title: '发票代码', key: 'companyMainBody', type: '0' },
+        { title: '发票号码', key: 'companyMainBody', type: '0' },
         { title: '公司主体', key: 'companyMainBody', type: '0' },
         { title: '来源系统', key: 'pkSys.systemName', type: '0' },
     ];
@@ -229,9 +234,9 @@ class ListView extends Component {
                     <GridMain
                         ref="mainlist" //存模版
                         exportref = {"mainlist"}
-                        columns={this.gridColumn} //字段定义
+                        columns={this.gridColumnOnTheLoan} //字段定义
                         data={this.props.list} //数据数组
-                        tableHeight={1} //表格高度 1主表 2字表
+                        tableHeight={2} //表格高度 1主表 2单表 3子表
                         exportFileName="C端票据信息"　    //导出表格名称
                         exportData={this.props.list}      //导出表格数据
                         //分页对象
@@ -247,7 +252,7 @@ class ListView extends Component {
 
                     />
                 </div>
-                <div>
+                {/* <div> */}
                     {/**
                      子表多页签组件Tabs
                      defaultActiveKeky:默认展示页签key
@@ -255,7 +260,7 @@ class ListView extends Component {
                      extraContent:额外属性 通常用来添加表头右侧的按钮即 增删改查的小图标
                      TabPane : 单个子表子组件 嵌套在Tabs中使用 key为唯一主键
                      */}
-                    <Tabs
+                    {/* <Tabs
                         defaultActiveKey="1"
                         onChange={this.onChange}
                         className="list-tabs"
@@ -285,8 +290,8 @@ class ListView extends Component {
                                 />
                             </div>
                         </TabPane>
-                    </Tabs>
-                </div>
+                    </Tabs> */}
+                {/* </div> */}
             </div>
 
         );

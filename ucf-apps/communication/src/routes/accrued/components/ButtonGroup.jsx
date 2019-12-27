@@ -103,7 +103,7 @@ class ButtonGroup extends Component {
 
     handleSelect = ({ key }) =>{
         console.log(`${key} selected`);
-        this.props.Export();
+        this.props.Export(key);
     }
 
     /**
@@ -124,9 +124,7 @@ class ButtonGroup extends Component {
                 <Divider />
                 <Item key="1">导出选中数据</Item>
                 <Divider />
-                <Item key="2">导出全部数据</Item>
-                <Divider />
-                <Item key="3">导出当前页 </Item>
+                <Item key="2">导出当前页 </Item>
                 <Divider />
             </Menu>
         );
@@ -148,7 +146,7 @@ class ButtonGroup extends Component {
                 <Button visible={_this.powerView(_props,'Submit')} disabled={_this.powerDisabledSingle(_props,['20','99'])} className="ml8 yl-r-b" colors="primary" onClick={_props.Submit}><Icon type='uf-flow-o'/>提交</Button>
                 <Button visible={_this.powerView(_props,'Edit')} disabled={_this.powerDisabledUnEdit(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Edit}><Icon type='uf-pencil-s'/>修改</Button>
                 <Button visible={_this.powerView(_props,'Add')} disabled={_this.powerDisabledUnAdd(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Add}><Icon type='uf-add-c-o'/>计提</Button>
-                <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.View}><Icon type='uf-files-o'/>查看</Button>
+                {/* <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.View}><Icon type='uf-files-o'/>查看</Button> */}
             </div>
 
         );

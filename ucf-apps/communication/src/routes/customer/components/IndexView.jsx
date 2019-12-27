@@ -22,7 +22,7 @@ class IndexView extends Component {
         super(props);
         //在路由时带出此节点权限按钮  后续会从后台传入
         /**临时测试数据 */
-        props.powerButton = ['Query','Export','Return','View'];
+        props.powerButton = ['Query','Export','Return'];
         props.ifPowerBtn = true;
         /**临时测试数据 */
         props.gridColumn = ['customerCode','customerName','identityType','identityNo','birthday','issuingAuthority','validTerm'

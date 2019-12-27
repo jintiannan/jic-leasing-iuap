@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { actions } from 'mirrorx';
-import { Tabs } from 'tinper-bee';
 import { deepClone, getHeight } from "utils";
-import { genGridColumn } from "utils/service";
+import { genGridColumn, multiRecordOper } from "utils/service";
 import GridMain from 'components/GridMain';
+import { Tabs , Button, Icon, ButtonGroup} from 'tinper-bee';
 
 const { TabPane } = Tabs;
 import './index.less';
@@ -176,6 +176,23 @@ class ListView extends Component {
     // 子表 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];
 
+    subExport = () => {
+        this.refs.sublist.exportExcel();
+    };
+
+    setExportList = (key) =>{
+        if(key == '1'){   //key为1 默认为导出选中数据 先进行校验
+            multiRecordOper(this.props.selectedList,(param) => {  //选中数据校验  未选中无法导出
+                //this.setState({exportList:this.props.selectedList});
+                actions.communicationAccrued.updateState({ exportData: this.props.selectedList });
+                this.gridref.exportExcel();
+            });
+        }else if(key == '2'){  //key为2 默认为导出当前页数据
+            //this.setState({exportList:this.props.list});
+            actions.communicationAccrued.updateState({ exportData: this.props.list });
+            this.gridref.exportExcel();
+        }
+    }
 
     //子页签更改活动key方法
     onChange = (activeKey) => {
@@ -204,12 +221,12 @@ class ListView extends Component {
                      getSelectedDataFunc:选中数据触发事件
                      */}
                     <GridMain
-                        ref="mainlist" //存模版
+                        ref={(el) => this.gridref = el} //存模版
                         columns={this.gridColumn} //字段定义
                         data={this.props.list} //数据数组                     
                         tableHeight={1} //表格高度 1主表 2单表 3子表
-                        exportFileName="测试导出表格"　    //导出表格名称
-                        exportData={this.props.list}      //导出表格数据
+                        exportFileName="C端计提信息"　    //导出表格名称
+                        exportData={this.props.exportList}      //导出表格数据
                         //分页对象
                         paginationObj={{
                             activePage: this.props.queryParam.pageIndex,//活动页
@@ -234,15 +251,25 @@ class ListView extends Component {
                         defaultActiveKey="1"
                         onChange={this.onChange}
                         className="list-tabs"
+                        extraContent={
+                            <div className = "public_sub_but">
+                                <ButtonGroup style={{ margin: 1 }}>
+                                    <Button shape='border' onClick={this.subExport}><Icon type='uf-export' /></Button>
+                                </ButtonGroup>
+                            </div>
+                        }
                     >
 
                         <TabPane tab='子表信息' key="1">
                             <div>
                                 <GridMain
-                                    ref={(el) => this.gridOnTheLoan = el} //存模版
+                                    ref="sublist" //存模版
+                                    exportref = {"sublist"}
                                     columns={this.gridColumnOnTheLoan} //字段定义
                                     multiSelect={false}  //false 单选，默认多选
                                     tableHeight={3} //表格高度 1主表 2单表 3子表 
+                                    exportFileName="C端计提信息详情"　    //导出表格名称
+                                    exportData={this.props.list2}      //导出表格数据
                                     data={this.props.list2} //数据数组
                                     //分页对象
                                     paginationObj={{
