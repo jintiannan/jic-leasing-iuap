@@ -223,6 +223,7 @@ class ListView extends Component {
                         //分页对象
                         paginationObj={{
                             dataNumSelect:['15','25','50','100'],        //每页显示条数动态修改
+                            dataNum:this.props.queryParam.dataNum,            //每页显示条数Index
                             activePage: this.props.queryParam.pageIndex,//活动页
                             total: this.props.list.length,//总条数
                             items: this.props.queryObj.totalPages,//总页数
