@@ -13,7 +13,7 @@ export default {
         errMsg: '',                  // 错误信息
         checked: false,              // 是否勾选记住用户名
         lastLoginIsRemember: false,  // 上次是否记住用户,
-        currentSystem :'22222222222222222222',           // 当前选中的系统pk
+        currentSystem :'中建投C端通信系统',           // 当前选中的系统pk
         systemList:[],               // 系统列表
     },
     reducers: {

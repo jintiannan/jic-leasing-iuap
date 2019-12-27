@@ -9,6 +9,7 @@ import Message from 'bee-message';
  * deepClone : 克隆当前指定对象的数据 通常用于数据更新
  */
 import {processData,deepClone} from "utils";
+import {consoleData} from "utils/service";
 
 
 export default {
@@ -17,8 +18,8 @@ export default {
         showLoading: false,  //主表加载Loading图标
         queryParam: {        //初始化分页查询的参数
             pageIndex: 1,    //初始化列表页数
-            pageSize: 20,    //初始每页显示条数
-            dataNum:0,       //每页显示条数索引
+            pageSize: 25,    //初始每页显示条数
+            dataNum:1,       //每页显示条数索引
         },
         queryObj: {},        //查询结果参数 用以完成列表内部的分页 参见loadList中使用的形式
         //页面数据集
@@ -78,18 +79,9 @@ export default {
         async loadList(param = {}, getState) {
             // 正在加载数据，显示加载 Loading 图标
             actions.customer.updateState({showLoading: true});
-            let response = processData(await api.getList(param));  // 调用 getList 请求数据
-            let updateData = {showLoading: false};
-            let data = response.data;
-            let queryObj = {
-                pageIndex:param.pageIndex,
-                pageSize:param.pageSize,
-                total:data.total,
-                totalPages:Math.ceil(data.total/param.pageSize)
-            };
-            updateData.queryObj = queryObj;
-            updateData.queryParam = param;
-            updateData.list = data.pageData;
+            let data = processData(await api.getList(param));  // 调用 getList 请求数据
+            //处理data返回数据 避免出现数据异常错误
+            let updateData = consoleData(data, param, "main", null);
             actions.customer.updateState(updateData); // 更新数据和查询条件
         },
 

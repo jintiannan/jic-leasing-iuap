@@ -18,6 +18,9 @@ class LeftSideBar extends Component {
     this.props.sideBarOper.changeAhref(item);
   }
   openTab(e,reload,item) {
+    this.setState({
+      leftSubShow:false
+    })
     this.props.sideBarOper.openTab(e,reload,item);
   }
   formmaterUrl(item) {

@@ -5,7 +5,7 @@ import './index.less'
 
 
 const defualtPaginationParam = {
-    dataNumSelect:['10','20','50','100'],
+    dataNumSelect:['10','25','50','100'],
     dataNum:2,
     verticalPosition:'bottom'
 }

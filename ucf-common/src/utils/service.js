@@ -245,3 +245,59 @@ export function getShowColumn(gridColumn,grid,show){
     });
     return grid;
 }
+
+/**
+ * 处理data返回数据 避免出现数据异常错误
+ */
+export function consoleData(result = [], param = {}, method, subname){
+    let updateData = {showLoading: false};
+    if(result != null && result != undefined){
+        if(result.data != null && result.data != undefined){
+            let data = result.data;
+            if(method == "main"){     //main 处理主表加分页
+                let queryObj = {
+                    pageIndex:param.pageIndex,
+                    pageSize:param.pageSize,
+                    total:data.total,
+                    totalPages:Math.ceil(data.total/param.pageSize)
+                };
+                updateData.queryObj = queryObj;
+                updateData.queryParam = param;
+                updateData.list = data.pageData;
+            }else{
+                if(subname != null && subname != undefined){
+                    updateData.list2 = data[subname];
+                }else{
+                    updateData.list2 = data;
+                }  
+            }
+        }
+    }
+    return updateData;
+}
+
+/**
+ * 处理data返回数据 避免出现数据异常错误  因为传入分页方式不统一 此处写入第二个备用
+ */
+export function consoleDataByPagi(result = [], param = {}, method, subname){
+    let updateData = {showLoading: false};
+    if(result != null && result != undefined){
+        if(result.data != null && result.data != undefined){
+            let data = result.data;
+            if(method == "main"){     //main 处理主表加分页
+                let queryObj = {
+                    pageIndex:param.pagination.pageIndex,
+                    pageSize:param.pagination.pageSize,
+                    total:data.total,
+                    totalPages:Math.ceil(data.total/param.pagination.pageSize)
+                };
+                updateData.queryObj = queryObj;
+                updateData.queryParam = param;
+                updateData.list = data.pageData;
+            }else{
+                updateData.list2 = data[subname];
+            }
+        }
+    }
+    return updateData;
+}

@@ -70,6 +70,7 @@ class ListView extends Component {
         let queryParam = deepClone(this.props.queryParam); // 深拷贝查询条件从 action 里
         queryParam['pageSize'] = value;
         queryParam['pageIndex'] = 0;
+        queryParam['dataNum'] = index;
         if (value && value.toString().toLowerCase() === "all") { // 对分页 pageSize 为 all 进行处理，前后端约定
             pageSize = 1;
         }
@@ -241,6 +242,8 @@ class ListView extends Component {
                         exportData={this.props.list}      //导出表格数据
                         //分页对象
                         paginationObj={{
+                            dataNumSelect:['10','25','50','100'],        //每页显示条数动态修改
+                            dataNum:this.props.queryParam.dataNum,            //每页显示条数Index
                             activePage: this.props.queryParam.pageIndex,//活动页
                             total: this.props.list.length,//总条数
                             items: this.props.queryObj.totalPages,//总页数
