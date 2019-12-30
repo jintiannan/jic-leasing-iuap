@@ -47,9 +47,6 @@ class BaseGrid extends Component {
         this.grid.resetColumns(newColumns);
     };
 
-    exportExcel = () => {
-        this.grid.exportExcel();
-    };
 
     render() {
         const { paginationObj, data, exportData,  ...otherProps } = this.props;
@@ -57,14 +54,12 @@ class BaseGrid extends Component {
         _paginationObj.disabled = paginationObj.disabled !== undefined
             ? paginationObj.disabled
             : data.length === 0;
-        let _exportData = exportData || data;
         return (
             <div className='demo-grid-wrapper'>
                 <Grid
                     className="ucf-example-grid"
                     data={data}
                     {...otherProps}
-                    exportData={_exportData}
                     paginationObj={_paginationObj}
                     ref={el => this.grid = el}
                 />

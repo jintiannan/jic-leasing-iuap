@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { actions } from 'mirrorx';
 import { Tabs } from 'tinper-bee';
 import { deepClone } from "utils";
-import { genGridColumn, getShowColumn } from "utils/service";
+import { genGridColumn, getShowColumn, multiRecordOper } from "utils/service";
 import GridMain from 'components/GridMain';
 const { TabPane } = Tabs;
 import './index.less';
@@ -12,6 +12,7 @@ class ListView extends Component {
         super(props);
         this.state = {
             listView: '',
+            gridColumn: [],
         }
     }
 
@@ -20,7 +21,8 @@ class ListView extends Component {
     componentWillMount() {
         //主表过滤显示字段
         //const gridMain = getShowColumn(this.props.gridColumn,this.grid,true);
-        this.gridColumn = [...genGridColumn(this.grid)];
+        const gridColumn = [...genGridColumn(this.grid)];
+        this.setState({gridColumn:gridColumn});
         //this.gridColumnOnSon = [...genGridColumn(this.gridOnSon)];
     }
 
@@ -33,6 +35,26 @@ class ListView extends Component {
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
     componentWillReceiveProps(nextProps) {
     }
+
+    setExportList = (key) =>{
+        if(key == '1'){   //key为1 默认为导出选中数据 先进行校验
+            multiRecordOper(this.props.selectedList,(param) => {  //选中数据校验  未选中无法导出
+                this.gridref.exportExcel(key);
+            });
+        }else if(key == '2'){  //key为2 默认为导出当前页数据
+            this.gridref.exportExcel(key);
+        }
+    }
+
+    afterFilter = (optData,columns)=>{
+        const column = deepClone(this.state.gridColumn);
+        column.map((item)=>{
+            if(item.key == optData.key){
+                item.exportHidden = true;
+            }
+        });
+        this.setState({gridColumn:column,showFilterPopover:true});
+      }
 
     /**
      * 跳转到指定页数据
@@ -97,7 +119,7 @@ class ListView extends Component {
         } else {
             actions.customer.updateState({ list2: [] });
         }
-        actions.customer.updateState({ list: _list, selectedList: _selectedList, formObject: _formObj });
+        actions.customer.updateState({ list: _list, selectedList: _selectedList, formObject: _formObj, exportData:_selectedList });
     }
 
     // childList = (obj) => {
@@ -113,7 +135,7 @@ class ListView extends Component {
         { title: '证件号码', key: 'identityNo', type: '0' },
         { title: '出生日期', key: 'birthday', type: '0' },
         { title: '签发机关', key: 'issuingAuthority', type: '0' },
-        { title: '有效期限', key: 'validTerm', type: '1' },
+        { title: '有效期限', key: 'validTerm', type: '0' },
         { title: '年龄', key: 'age', type: '1' },
         { title: '性别', key: 'sex', type: '6' ,enumType:'1000151'},
         { title: '文化程度', key: 'levelOfEducation', type: '6',enumType:'1000155' },
@@ -180,7 +202,7 @@ class ListView extends Component {
         { title: '开户银行', key: 'bank', type: '0' },
         { title: '开户行号', key: 'bankNo', type: '0' },
         { title: '手机号', key: 'iphoneNo', type: '0' },
-        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
+        { title: '来源系统', key: 'pkSys.systemName', type: '5' },
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
@@ -217,13 +239,14 @@ class ListView extends Component {
             <div className="grid-parent" style={{ display: this.state.listView }}>
                 <div>
                     <GridMain
-                        ref={"mainlist"}                   //主表模板名称
-                        exportref = {"mainlist"}           //导出表格引用  必须与ref相同
-                        columns={this.gridColumn}         //字段定义
+                        ref={(el) => this.gridref = el} //存模版
+                        columns={this.state.gridColumn}         //字段定义
                         data={this.props.list}            //数据数组                     
                         tableHeight={2} //表格高度 1主表 2单表 3子表
                         exportFileName="C端客户信息"　    //导出表格名称
-                        exportData={this.props.list}      //导出表格数据
+                        exportData={this.props.exportData}      //导出表格数据
+                        afterFilter={this.afterFilter}          //过滤列的函数
+                        showFilterPopover={this.state.showFilterPopover}  //过滤面板是否显示
                         //分页对象
                         paginationObj={{
                             dataNumSelect:['10','25','50','100'],        //每页显示条数动态修改

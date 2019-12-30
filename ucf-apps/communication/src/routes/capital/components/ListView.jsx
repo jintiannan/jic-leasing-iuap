@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { actions } from 'mirrorx';
 import { Tabs } from 'tinper-bee';
 import { deepClone, getHeight } from "utils";
-import { genGridColumn } from "utils/service";
+import { genGridColumn, multiRecordOper } from "utils/service";
 import GridMain from 'components/GridMain';
 
 const { TabPane } = Tabs;
@@ -13,6 +13,7 @@ class ListView extends Component {
         super(props);
         this.state = {
             listView: '',
+            gridColumn: [],
         }
     }
 
@@ -21,7 +22,8 @@ class ListView extends Component {
     componentWillMount() {
         //主表过滤显示字段
         // const gridMain = this.getShowColumn(this.props.gridColumn, this.grid, true);
-        this.gridColumn = [...genGridColumn(this.grid)];
+        const gridColumn = [...genGridColumn(this.grid)];
+        this.setState({gridColumn:gridColumn});
         this.gridColumnOnTheLoan = [...genGridColumn(this.gridOnTheLoan)];
     }
 
@@ -34,6 +36,26 @@ class ListView extends Component {
     //组件生命周期方法-在组件接收到一个新的 prop (更新后)时被调用
     componentWillReceiveProps(nextProps) {
     }
+
+    setExportList = (key) =>{
+        if(key == '1'){   //key为1 默认为导出选中数据 先进行校验
+            multiRecordOper(this.props.selectedList,(param) => {  //选中数据校验  未选中无法导出
+                this.gridref.exportExcel(key);
+            });
+        }else if(key == '2'){  //key为2 默认为导出当前页数据
+            this.gridref.exportExcel(key);
+        }
+    }
+
+    afterFilter = (optData,columns)=>{
+        const column = deepClone(this.state.gridColumn);
+        column.map((item)=>{
+            if(item.key == optData.key){
+                item.exportHidden = true;
+            }
+        });
+        this.setState({gridColumn:column,showFilterPopover:true});
+      }
 
     /**
      * 跳转到指定页数据
@@ -96,7 +118,7 @@ class ListView extends Component {
         } else {
             actions.communicationCapital.updateState({ list2: [] });
         }
-        actions.communicationCapital.updateState({ list: _list, selectedList: _selectedList, formObject: _formObj });
+        actions.communicationCapital.updateState({ list: _list, selectedList: _selectedList, formObject: _formObj, exportData:_selectedList });
 
     };
 
@@ -142,9 +164,9 @@ class ListView extends Component {
         { title: '是否逾期', key: 'ifOverdue', type: '6', enumType: '1000003' },
         { title: '抵扣状态', key: 'deductionStatus', type: '6', enumType: '1001649' },
         { title: '抵扣日期', key: 'deductionDate', type: '0' },
-        { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
+        { title: '币种', key: 'pkCurrency.currtypename', type: '5' },
         { title: '公司主体', key: 'companyBody', type: '0' },
-        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
+        { title: '来源系统', key: 'pkSys.systemName', type: '5' },
     ];
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
@@ -177,9 +199,9 @@ class ListView extends Component {
         //{ title: '收款银行', key: 'gatherBank', type: '0' },
         { title: '收款帐号', key: 'gatherAccount', type: '0' },
         //{ title: '应收余额', key: 'receivableBalance', type: '7', digit: 2 },
-        { title: '币种', key: 'pkCurrency.currtypename', type: '0' },
+        { title: '币种', key: 'pkCurrency.currtypename', type: '5' },
         { title: '公司主体', key: 'companyBody', type: '0' },
-        { title: '来源系统', key: 'pkSys.systemName', type: '0' },
+        { title: '来源系统', key: 'pkSys.systemName', type: '5' },
     ];
     // 投放计划 列属性定义=>通过前端service工具类自动生成
     gridColumnOnTheLoan = [];
@@ -192,7 +214,7 @@ class ListView extends Component {
         });
     };
     onExportSub = () => {
-        this.refs.sublist.exportExcel();
+        this.gridsub.exportExcel();
     };
 
 
@@ -215,13 +237,14 @@ class ListView extends Component {
                      getSelectedDataFunc:选中数据触发事件
                      */}
                     <GridMain
-                        ref="mainlist" //存模版
-                        exportref = {"mainlist"}
-                        columns={this.gridColumn} //字段定义
+                        ref={(el) => this.gridref = el} //存模版
+                        columns={this.state.gridColumn} //字段定义
                         data={this.props.list} //数据数组
                         tableHeight={1} //表格高度 1主表 2字表
                         exportFileName="C端收款信息"　    //导出表格名称
-                        exportData={this.props.list}      //导出表格数据
+                        exportData={this.props.exportData}      //导出表格数据
+                        afterFilter={this.afterFilter}          //过滤列的函数
+                        showFilterPopover={this.state.showFilterPopover}  //过滤面板是否显示
                         //分页对象
                         paginationObj={{
                             dataNumSelect:['15','25','50','100'],        //每页显示条数动态修改
@@ -260,8 +283,7 @@ class ListView extends Component {
                         <TabPane tab='收款明细表' key="1">
                             <div>
                                 <GridMain
-                                    ref={"sublist"} //存模版
-                                    exportref = {"sublist"}
+                                    ref={(el) => this.gridsub = el} //存模版
                                     columns={this.gridColumnOnTheLoan} //字段定义
                                     multiSelect={false}  //false 单选，默认多选
                                     data={this.props.list2} //数据数组

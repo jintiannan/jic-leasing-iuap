@@ -55,6 +55,7 @@ export default {
         isGrid:true,
         //是否加载 详情修改页
         showForm:false,
+        exportData:[],
     },
     reducers: {
         /**

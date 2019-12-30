@@ -13,6 +13,7 @@ class ListView extends Component {
         super(props);
         this.state = {
             listView: '',
+            gridColumn: [],
         }
     }
 
@@ -21,7 +22,8 @@ class ListView extends Component {
     componentWillMount() {
         //主表过滤显示字段
         // const gridMain = this.getShowColumn(this.props.gridColumn, this.grid, true);
-        this.gridColumn = [...genGridColumn(this.grid)];
+        const gridColumn = [...genGridColumn(this.grid)];
+        this.setState({gridColumn:gridColumn});
         this.gridColumnOnTheLoan = [...genGridColumn(this.gridOnTheLoan)];
     }
 
@@ -140,14 +142,14 @@ class ListView extends Component {
         { title: '手续费收入计提总额', key: 'feeAmount', type: '7' , digit: 2 },
         { title: '其他收入计提总额', key: 'otherIncomeAmount', type: '7', digit: 2 },
         { title: '其他支出计提总额', key: 'otherExpensesAmount', type: '7' , digit: 2 },
-        { title: '操作人', key: 'pkChecker.userName', type: '0' },
+        { title: '操作人', key: 'pkChecker.userName', type: '5' },
         // { title: '操作日期', key: 'operateDate', type: '0' },
         { title: '操作时间', key: 'operateTime', type: '0' },
         // { title: '审核人', key: 'pkChecker.userName', type: '0' },
         // { title: '审核日期', key: 'checkDate', type: '0' },
         // { title: '审核时间', key: 'checkTime', type: '0' },
-        { title: '签约主体', key: 'pkOrg.orgName', type: '0' },
-        { title: '机构', key: 'pkOrg.orgName', type: '0' }
+        { title: '签约主体', key: 'pkOrg.orgName', type: '5' },
+        { title: '机构', key: 'pkOrg.orgName', type: '5' }
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
@@ -156,7 +158,7 @@ class ListView extends Component {
     gridOnTheLoan = [
         { title: '客户名称', key: 'customerName', type: '0' },
         // { title: '合同名称', key: 'pkContract.contName', type: '0' },
-        { title: '合同编号', key: 'pkContract.contCode', type: '0' },
+        { title: '合同编号', key: 'pkContract.contCode', type: '5' },
         { title: '起租流程', key: 'leaseFlow', type: '6' , enumType :'1000253'},
         // { title: '资产状态', key: 'assetStatus', type: '0' },
         { title: '资产五级分类', key: 'assetsClassify', type: '6' , enumType :'1000340'},
@@ -167,7 +169,7 @@ class ListView extends Component {
         { title: '手续费收入计提金额', key: 'feeAmount', type: '7', digit: 2  },
         { title: '其他收入计提金额', key: 'otherIncomeAmount', type: '7', digit: 2  },
         { title: '其他支出计提金额', key: 'otherExpensesAmount', type: '7', digit: 2  },
-        { title: '币种', key: 'pkCurrtype.currtypename', type: '0' },
+        { title: '币种', key: 'pkCurrtype.currtypename', type: '5' },
         { title: '汇率', key: 'exchgRate', type: '7', digit: 6  },
         // { title: '核算主体', key: 'pkGlorgbook', type: '0' },
         // { title: '租赁方式', key: 'bbb', type: '0' },
@@ -178,22 +180,28 @@ class ListView extends Component {
     gridColumnOnTheLoan = [];
 
     subExport = () => {
-        this.refs.sublist.exportExcel();
+        this.gridsub.exportExcel();
     };
 
     setExportList = (key) =>{
         if(key == '1'){   //key为1 默认为导出选中数据 先进行校验
             multiRecordOper(this.props.selectedList,(param) => {  //选中数据校验  未选中无法导出
-                //this.setState({exportList:this.props.selectedList});
-                actions.communicationAccrued.updateState({ exportData: this.props.selectedList });
                 this.gridref.exportExcel();
             });
         }else if(key == '2'){  //key为2 默认为导出当前页数据
-            //this.setState({exportList:this.props.list});
-            actions.communicationAccrued.updateState({ exportData: this.props.list });
             this.gridref.exportExcel();
         }
     }
+
+    afterFilter = (optData,columns)=>{
+        const column = deepClone(this.state.gridColumn);
+        column.map((item)=>{
+            if(item.key == optData.key){
+                item.exportHidden = true;
+            }
+        });
+        this.setState({gridColumn:column,showFilterPopover:true});
+      }
 
     //子页签更改活动key方法
     onChange = (activeKey) => {
@@ -223,11 +231,13 @@ class ListView extends Component {
                      */}
                     <GridMain
                         ref={(el) => this.gridref = el} //存模版
-                        columns={this.gridColumn} //字段定义
+                        columns={this.state.gridColumn} //字段定义
                         data={this.props.list} //数据数组                     
                         tableHeight={1} //表格高度 1主表 2单表 3子表
                         exportFileName="C端计提信息"　    //导出表格名称
-                        exportData={this.props.exportList}      //导出表格数据
+                        exportData={this.props.exportData}      //导出表格数据
+                        afterFilter={this.afterFilter}          //过滤列的函数
+                        showFilterPopover={this.state.showFilterPopover}  //过滤面板是否显示
                         //分页对象
                         paginationObj={{
                             dataNumSelect:['15','25','50','100'],        //每页显示条数动态修改
@@ -266,8 +276,7 @@ class ListView extends Component {
                         <TabPane tab='子表信息' key="1">
                             <div>
                                 <GridMain
-                                    ref="sublist" //存模版
-                                    exportref = {"sublist"}
+                                    ref={(el) => this.gridsub = el} //存模版
                                     columns={this.gridColumnOnTheLoan} //字段定义
                                     multiSelect={false}  //false 单选，默认多选
                                     tableHeight={3} //表格高度 1主表 2单表 3子表 

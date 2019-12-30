@@ -12,7 +12,7 @@ class ListView extends Component {
         super(props);
         this.state = {
             listView: '',
-            //exportList: [],
+            gridColumn: [],
         }
     }
 
@@ -21,7 +21,8 @@ class ListView extends Component {
     componentWillMount() {
         //主表过滤显示字段
         // const gridMain = this.getShowColumn(this.props.gridColumn, this.grid, true);
-        this.gridColumn = [...genGridColumn(this.grid)];
+        const gridColumn = [...genGridColumn(this.grid)];
+        this.setState({gridColumn:gridColumn});
         //this.gridColumnOnTheLoan = [...genGridColumn(this.gridOnTheLoan)];
     }
 
@@ -65,17 +66,22 @@ class ListView extends Component {
     setExportList = (key) =>{
         if(key == '1'){   //key为1 默认为导出选中数据 先进行校验
             multiRecordOper(this.props.selectedList,(param) => {  //选中数据校验  未选中无法导出
-                //this.setState({exportList:this.props.selectedList});
-                actions.communicationContract.updateState({ exportData: this.props.selectedList });
-                this.gridref.exportExcel();
+                this.gridref.exportExcel(key);
             });
         }else if(key == '2'){  //key为2 默认为导出当前页数据
-            //this.setState({exportList:this.props.list});
-            actions.communicationContract.updateState({ exportData: this.props.list });
-            this.gridref.exportExcel();
+            this.gridref.exportExcel(key);
         }
     }
 
+    afterFilter = (optData,columns)=>{
+        const column = deepClone(this.state.gridColumn);
+        column.map((item)=>{
+            if(item.key == optData.key){
+                item.exportHidden = true;
+            }
+        });
+        this.setState({gridColumn:column,showFilterPopover:true});
+      }
 
     // }
 
@@ -111,7 +117,7 @@ class ListView extends Component {
         } else {
             actions.communicationContract.updateState({ list2: [] });
         }
-        actions.communicationContract.updateState({ list: _list, selectedList: _selectedList, formObject: _formObj });
+        actions.communicationContract.updateState({ list: _list, selectedList: _selectedList, formObject: _formObj, exportData:_selectedList });
 
     }
 
@@ -171,9 +177,9 @@ class ListView extends Component {
         { title: '租赁方式', key: 'leaseType', type: '6', enumType: '1001013' },
         { title: 'IRR', key: 'marketIrr', type: '7', digit: 6  },
         //{ title: '会计IRR', key: 'financeIrr', type: '7', digit: 6 },
-        { title: '客户所属地区(省)', key: 'customerProvince.areacalname', type: '0' },
-        { title: '客户所属地区(市)', key: 'customerCity.areacalname', type: '0' },
-        { title: '客户所属地区(区)', key: 'customerRegion.areacalname', type: '0' },
+        { title: '客户所属地区(省)', key: 'customerProvince.areacalname', type: '5' },
+        { title: '客户所属地区(市)', key: 'customerCity.areacalname', type: '5' },
+        { title: '客户所属地区(区)', key: 'customerRegion.areacalname', type: '5' },
         { title: '收票类型', key: 'ticketType', type: '6', enumType: '1001648' },
         { title: '供应商名称', key: 'supplierName', type: '0' },
         { title: '供应商银行账号', key: 'supplierBankAccount', type: '0' },
@@ -189,7 +195,7 @@ class ListView extends Component {
         { title: '终端名称', key: 'terminalName', type: '0' },
         { title: '终端型号', key: 'terminalType', type: '0' },
         { title: '资产五级分类', key: 'assetsClassify', type: '6', enumType: '1000340' },
-        { title: '来源系统', key: 'pkSystem.systemName', type: '0' },
+        { title: '来源系统', key: 'pkSystem.systemName', type: '5' },
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
@@ -215,12 +221,13 @@ class ListView extends Component {
                      */}
                     <GridMain
                         ref={(el) => this.gridref = el} //存模版
-                        exportref = {"mainlist"}
-                        columns={this.gridColumn} //字段定义
+                        columns={this.state.gridColumn} //字段定义
                         data={this.props.list} //数据数组                     
                         tableHeight={2} //表格高度 1主表 2单表 3子表
                         exportFileName="C端合同信息"　    //导出表格名称
-                        exportData={this.props.exportList}      //导出表格数据
+                        exportData={this.props.exportData}      //导出表格数据
+                        afterFilter={this.afterFilter}          //过滤列的函数
+                        showFilterPopover={this.state.showFilterPopover}  //过滤面板是否显示
                         //分页对象
                         paginationObj={{
                             dataNumSelect:['10','25','50','100'],        //每页显示条数动态修改

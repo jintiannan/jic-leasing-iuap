@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import BaseGrid from 'components/Grid';
 import {deepClone, getHeight} from "utils";
+import {ExportExcel} from "utils/service";
 import './index.less'
 
 
@@ -55,7 +56,24 @@ class GridMain extends Component {
      *
      */
     getColumnsAndTablePros = () => {
-        return this.grid.getColumnsAndTablePros();
+        var columns = this.props.columns.slice();
+
+        if (this.props.dragColsData) {
+        var dragColsKeyArr = Object.keys(this.props.dragColsData);
+        dragColsKeyArr.some(function (itemKey) {
+            columns.forEach(function (col) {
+            if (col.dataIndex == itemKey) {
+                col.width = this.props.dragColsData[itemKey].width;
+                return true;
+            }
+            });
+        });
+        }
+        var rs = {
+        columns: columns,
+        tablePros: this.props
+        };
+        return rs;
     };
     /**
      *
@@ -65,9 +83,77 @@ class GridMain extends Component {
         this.grid.resetColumns(newColumns);
     };
 
-    exportExcel = () => {
-        this.gridref.exportExcel();
+    exportExcel = (key) => {
+        let sheetIsRowFilter = this.props.sheetIsRowFilter != undefined ? this.props.sheetIsRowFileter : false,   //行样式不加为false
+        sheetName = this.props.sheetName != undefined ? this.props.sheetName : "sheet",   //页签名称默认为sheet
+        _sheetHeader = this.props.sheetHeader,
+        exportData = this.props.exportData.length>0 ? this.props.exportData:this.props.data,
+        exportFileName = this.props.exportFileName;
+
+        if(key == '2'){   //key为2则导出当前页列表数据
+            exportData = this.props.data;
+        }
+        var colsAndTablePros = this.getColumnsAndTablePros();
+        var sheetHeader = [],
+        columnAttr = [],
+        rowAttr = [],
+        sheetFilter = [];
+
+        colsAndTablePros.columns.forEach(function (column) {
+
+        var _show = false,
+            _hidden = false;
+        if (column.ifshow != undefined && column.ifshow === false) {
+            _show = true;
+        }
+        _hidden = column.exportHidden ? true : _show;
+        if (!_hidden) {
+            var _width = String(column.width).indexOf("%") != -1 ? 100 : column.width;
+            var _type = column.type;
+            var _enumtype = column.enumType;
+            var _digit = column.digit;
+            columnAttr.push({
+            wpx: _width,
+            type: _type,
+            enumtype: _enumtype,
+            digit: _digit,
+            });
+            var _cloum = column.exportKey ? column.exportKey : column.dataIndex;
+            sheetFilter.push(_cloum);
+            sheetHeader.push(column.title);
+      }
+    });
+    if (_sheetHeader) {
+      rowAttr.push(this.getItem(_sheetHeader));
+    }
+    if (sheetIsRowFilter) {
+      this.getRowList(colsAndTablePros.tablePros.data);
+    }
+    var option = {
+      datas: [{
+        fileName: exportFileName,
+        sheetData: exportData,
+        sheetName: sheetName,
+        sheetFilter: sheetFilter,
+        sheetHeader: sheetHeader,
+        columnAttr: columnAttr,
+        rowAttr: rowAttr
+      }]
     };
+    var toExcel = ExportExcel(option, exportFileName);
+    toExcel.saveExcel();
+    };
+
+    getRowList = () => {
+        var rowAttr = [];
+        data.forEach(function (da) {
+          var item = this.getItem(da);
+          if (item) {
+            rowAttr.push(item);
+          }
+        });
+        return rowAttr;
+      };
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
@@ -76,7 +162,7 @@ class GridMain extends Component {
     }
     
     render() {
-        const {paginationObj, columns, tableHeight,ref,exportFileName,exportData,exportref, data, ...otherProps} = this.props;
+        const {paginationObj, columns, tableHeight,ref,exportFileName,exportData, data, ...otherProps} = this.props;
         const _paginationObj = {...defualtPaginationParam, ...paginationObj};
         const { tableHeightMain, tableHeightChild, tableHeightSingle } = this.state;
         return (
