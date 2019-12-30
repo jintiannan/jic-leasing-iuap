@@ -106,7 +106,7 @@ export default {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationCapital.updateState({showLoading: true});
             let data = processData(await api.getChildList(param));  // 调用 getList 请求数据
-            let updateData = {showLoading: false};
+            let updateData = consoleData(data, param, "sub", null);
             // let queryObj = {
             //     pageIndex:param.pageIndex,
             //     pageSize:param.pageSize,
@@ -114,7 +114,7 @@ export default {
             // };
             // updateData.queryObj = queryObj;
             // updateData.queryParam = param;
-            updateData.list2 = data.data.pkCapitalDetail;
+            // updateData.list2 = data.data.pkCapitalDetail;
             actions.communicationCapital.updateState(updateData); // 更新数据和查询条件
         },
 
