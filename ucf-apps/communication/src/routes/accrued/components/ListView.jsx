@@ -148,7 +148,7 @@ class ListView extends Component {
         // { title: '审核人', key: 'pkChecker.userName', type: '0' },
         // { title: '审核日期', key: 'checkDate', type: '0' },
         // { title: '审核时间', key: 'checkTime', type: '0' },
-        { title: '签约主体', key: 'pkOrg.orgName', type: '5' },
+        { title: '签约主体', key: 'pkGlorgbook.glorgbookname', type: '5' },
         { title: '机构', key: 'pkOrg.orgName', type: '5' }
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
@@ -171,7 +171,7 @@ class ListView extends Component {
         { title: '其他支出计提金额', key: 'otherExpensesAmount', type: '7', digit: 2  },
         { title: '币种', key: 'pkCurrtype.currtypename', type: '5' },
         { title: '汇率', key: 'exchgRate', type: '7', digit: 6  },
-        // { title: '核算主体', key: 'pkGlorgbook', type: '0' },
+        { title: '核算主体', key: 'pkGlorgbook.glorgbookname', type: '0' },
         // { title: '租赁方式', key: 'bbb', type: '0' },
         // { title: '税目类别', key: 'ccc', type: '0' },
         // { title: '资产类型', key: 'ddd', type: '0' }

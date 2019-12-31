@@ -187,7 +187,8 @@ class FormView extends Component {
         { label: '手续费收入计提总额', field: 'feeAmount', com: FormInputNumber, required: true, toThousands: true, precision: 2 },
         { label: '其他收入计提总额', field: 'otherIncomeAmount', com: FormInputNumber, required: true, toThousands: true, precision: 2},
         { label: '其他支出计提总额', field: 'otherExpensesAmount', com: FormInputNumber, required: true, toThousands: true, precision: 2},
-        { label: '签约主体', field: 'pkOrg', com: TableFormRef, required: true ,refurl:'/sys/queryOrg'},
+        // { label: '签约主体', field: 'pkOrg', com: TableFormRef, required: true ,refurl:'/sys/queryOrg'},
+        { label: '签约主体', field: 'pkGlorgbook.glorgbookname', com: FormControl, required: true },
     ]
 
 
@@ -210,7 +211,7 @@ class FormView extends Component {
         { title: '其他支出计提金额', key: 'otherExpensesAmount', type: '7', digit: 2},
         { title: '币种', key: 'pkCurrtype.currtypename', type: '0' },
         { title: '汇率', key: 'exchgRate', type: '7', digit: 6 },
-        // { title: '核算主体', key: 'pkGlorgbook', type: '0' },
+        { title: '核算主体', key: 'pkGlorgbook.glorgbookname', type: '0' },
         // { title: '租赁方式', key: 'bbb', type: '0' },
         // { title: '税目类别', key: 'ccc', type: '0' },
         // { title: '资产类型', key: 'ddd', type: '0' }

@@ -53,7 +53,7 @@ class TableFormRef extends Component {
    * @param {type}
    * @return:
    */
-  loadData = async () => {
+  loadData = async (value) => {
     let data = {
       where : {},
       pagination:{
