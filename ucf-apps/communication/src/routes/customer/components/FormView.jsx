@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import {actions} from "mirrorx";
-import { Form, Icon, Button, Label, Select, Col, FormControl, Collapse, Tabs, ButtonGroup,Panel } from 'tinper-bee';
+import { Form, Icon, Button, Label, Select, Col, FormControl, Collapse, Tabs, ButtonGroup,Panel, Timeline, Anchor } from 'tinper-bee';
 import { deepClone } from "utils";
 import DatePicker from "tinper-bee/lib/Datepicker";
 import FormInputNumber from 'components/FormRef/FormInputNumber';
-import TableFormRef from 'components/FormRef/TableFormRef';
-import TableTreeRef from 'components/FormRef/TableTreeRef';
 import {genGridColumn} from "utils/service";
 import GridMain from 'components/GridMain';
+import PositionScroll from 'components/PositionScroll';
 import '../../../../../../ucf-common/src/styles/public.less'
 import './index.less';
 import {singleRecordOper} from "utils/service";
@@ -27,7 +26,25 @@ class FormView extends Component {
             open4: true,
             open5: true,
             open6: true,
-        };
+            // 页面滚动每部分信息; 
+            scrollData:[{
+                id: "#open", text: "客户基本信息", flag: true
+            }, {
+                id: "#open2", text: "征信信息", flag: true
+            },
+            {
+                id: "#open3", text: "紧急联系人", flag: true
+            },
+            {
+                id: "#open4", text: "配偶信息", flag: true
+            },
+            {
+                id: "#open5", text: "担保信息", flag: true
+            },
+            {
+                id: "#open6", text: "银行卡信息", flag: true
+            }],
+            };
     }
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
@@ -73,6 +90,11 @@ class FormView extends Component {
         }else if(key =='6'){
             this.setState({open6:!this.state.open6});
         }
+    }
+
+    //子表点击悬浮的回调
+    childPosition = (item, title, index) => {
+        this.childTabInfo(title, index)
     }
 
     //子表添加数据
@@ -245,8 +267,13 @@ class FormView extends Component {
     // 子表列属性定义=>通过前端service工具类自动生成
     gridColumnOnSon = [];
 
+    setHover = (flag) =>{
+        this.setState({isHover: flag});
+    }
+
     render() {
         const { getFieldProps, getFieldError } = this.props.form;
+        const {positionIndex, scrollFlag} = this.props;
         let _formObject = this.props.formObject;
         let formObject = deepClone(_formObject);
         let _props = this.props;
@@ -294,40 +321,41 @@ class FormView extends Component {
                 <div>
                     <div className='jic-form'>
                         <div className = 'jic-form-content'>
-                        <Panel header={this.state.open ? <Icon type="uf-reduce-c-o">客户基本信息</Icon>:<Icon type="uf-add-c-o">客户基本信息</Icon>} eventKey="1" collapsible defaultExpanded="true" expanded={this.state.open} onSelect={this.handleSelect.bind(this,'1')} >
+                        <PositionScroll scrollFlag={scrollFlag} positionIndex={positionIndex} scrollData={this.state.scrollData} open={true} callBack={this.childPosition} modelName="customer" />
+                        <Panel header={this.state.open ? <div id="open"><Icon type="uf-reduce-c-o">客户基本信息</Icon></div>:<div id="open"><Icon type="uf-add-c-o">客户基本信息</Icon></div>} eventKey="1" collapsible defaultExpanded="true" expanded={this.state.open} onSelect={this.handleSelect.bind(this,'1')} >
                             <Form>
                                 {loop(this.mainForm1)}
                             </Form>
                         </Panel>
 
 
-                        <Panel header={this.state.open2 ? <Icon type="uf-reduce-c-o">征信信息</Icon>:<Icon type="uf-add-c-o">征信信息</Icon>} eventKey="2" collapsible defaultExpanded="true" expanded={this.state.open2} onSelect={this.handleSelect.bind(this,'2')} >
+                        <Panel header={this.state.open2 ? <div id="open2"><Icon type="uf-reduce-c-o">征信信息</Icon></div>:<div id="open2"><Icon type="uf-add-c-o">征信信息</Icon></div>} eventKey="2" collapsible defaultExpanded="true" expanded={this.state.open2} onSelect={this.handleSelect.bind(this,'2')} >
                             <Form>
                                     {loop(this.mainForm2)}
                             </Form>
                             </Panel>
 
-                        <Panel header={this.state.open3 ? <Icon type="uf-reduce-c-o">紧急联系人</Icon>:<Icon type="uf-add-c-o">紧急联系人</Icon>} eventKey="3" collapsible defaultExpanded="true" expanded={this.state.open3} onSelect={this.handleSelect.bind(this,'3')} >
+                        <Panel header={this.state.open3 ? <div id="open3"><Icon type="uf-reduce-c-o">紧急联系人</Icon></div>:<div id="open3"><Icon type="uf-add-c-o">紧急联系人</Icon></div>} eventKey="3" collapsible defaultExpanded="true" expanded={this.state.open3} onSelect={this.handleSelect.bind(this,'3')} >
 
                             <Form>
                                 {loop(this.mainForm3)}
                             </Form>
                             </Panel>
 
-                        <Panel header={this.state.open4 ? <Icon type="uf-reduce-c-o">配偶信息</Icon>:<Icon type="uf-add-c-o">配偶信息</Icon>} eventKey="4" collapsible defaultExpanded="true" expanded={this.state.open4} onSelect={this.handleSelect.bind(this,'4')} >
+                        <Panel header={this.state.open4 ? <div id="open4"><Icon type="uf-reduce-c-o">配偶信息</Icon></div>:<div id="open4"><Icon type="uf-add-c-o">配偶信息</Icon></div>} eventKey="4" collapsible defaultExpanded="true" expanded={this.state.open4} onSelect={this.handleSelect.bind(this,'4')} >
 
                             <Form>
                                 {loop(this.mainForm4)}
                             </Form>
                             </Panel>
 
-                        <Panel header={this.state.open5 ? <Icon type="uf-reduce-c-o">担保人信息</Icon>:<Icon type="uf-add-c-o">担保人信息</Icon>} eventKey="5" collapsible defaultExpanded="true" expanded={this.state.open5} onSelect={this.handleSelect.bind(this,'5')} >
+                        <Panel header={this.state.open5 ? <div id="open5"><Icon type="uf-reduce-c-o">担保人信息</Icon></div>:<div id="open5"><Icon type="uf-add-c-o">担保人信息</Icon></div>} eventKey="5" collapsible defaultExpanded="true" expanded={this.state.open5} onSelect={this.handleSelect.bind(this,'5')} >
                             <Form>
                                 {loop(this.mainForm5)}
                             </Form>
                             </Panel>
 
-                        <Panel header={this.state.open6 ? <Icon type="uf-reduce-c-o">银行卡信息</Icon>:<Icon type="uf-add-c-o">银行卡信息</Icon>} eventKey="6" collapsible defaultExpanded="true" expanded={this.state.open6} onSelect={this.handleSelect.bind(this,'6')} >
+                        <Panel header={this.state.open6 ? <div id="open6"><Icon type="uf-reduce-c-o">银行卡信息</Icon></div>:<div id="open6"><Icon type="uf-add-c-o">银行卡信息</Icon></div>} eventKey="6" collapsible defaultExpanded="true" expanded={this.state.open6} onSelect={this.handleSelect.bind(this,'6')} >
 
                             <Form>
                                 {loop(this.mainForm6)}

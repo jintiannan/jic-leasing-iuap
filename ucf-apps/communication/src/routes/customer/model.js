@@ -56,6 +56,8 @@ export default {
         //是否加载 详情修改页
         showForm:false,
         exportData:[],
+        positionIndex:-1,  //初始界面指定右侧索引 默认为不指向
+        scrollFlag:true,   
     },
     reducers: {
         /**

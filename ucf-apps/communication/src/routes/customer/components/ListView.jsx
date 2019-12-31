@@ -21,7 +21,8 @@ class ListView extends Component {
     componentWillMount() {
         //主表过滤显示字段
         //const gridMain = getShowColumn(this.props.gridColumn,this.grid,true);
-        const gridColumn = [...genGridColumn(this.grid)];
+        const gridMain = getShowColumn(this.props.gridColumn,this.grid,true);
+        const gridColumn = [...genGridColumn(gridMain)];
         this.setState({gridColumn:gridColumn});
         //this.gridColumnOnSon = [...genGridColumn(this.gridOnSon)];
     }
