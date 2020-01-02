@@ -15,13 +15,15 @@ class TableComboxRef extends Component {
         this.state = {
           loading:false,     //加载渲染
           refModelUrl: `${GROBAL_HTTP_CTX}`+this.props.refurl,    //参照查询的url 
-          dataList:[],  //结果集数组
+          dataList:[],      //结果集数组,
+          selectedValue:{}, //选中对象
         }; 
       }
 
 
     //组件生命周期方法-在第一次渲染后调用，只在客户端
     componentDidMount(){
+        this.props.onRef(this); //绑定子组件
         this.loadData();
     }
 
@@ -64,6 +66,7 @@ class TableComboxRef extends Component {
     onSelect = (value,{props:{item}}) => {
         console.log(`selected ${value}`);
         console.log(`selected item `,item);
+        this.setState({selectedValue:item})
     };
     /**
      * @msg: 搜索
