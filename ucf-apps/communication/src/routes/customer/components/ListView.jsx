@@ -120,6 +120,7 @@ class ListView extends Component {
         } else {
             actions.customer.updateState({ list2: [] });
         }
+        this.setState({showFilterPopover:false});
         actions.customer.updateState({ list: _list, selectedList: _selectedList, formObject: _formObj, exportData:_selectedList });
     }
 

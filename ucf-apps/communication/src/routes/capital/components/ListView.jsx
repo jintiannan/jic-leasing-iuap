@@ -118,6 +118,7 @@ class ListView extends Component {
         } else {
             actions.communicationCapital.updateState({ list2: [] });
         }
+        this.setState({showFilterPopover:false});
         actions.communicationCapital.updateState({ list: _list, selectedList: _selectedList, formObject: _formObj, exportData:_selectedList });
 
     };

@@ -118,6 +118,7 @@ class ListView extends Component {
         // } else {
         //     actions.communicationCbBadContract.updateState({ list2: [] });
         // }
+        this.setState({showFilterPopover:false});
         actions.communicationCbBadContract.updateState({ list: _list, selectedList: _selectedList, formObject: _formObj, exportData:_selectedList });
 
     }
