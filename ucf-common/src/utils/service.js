@@ -47,7 +47,7 @@ export function genGridColumn(param){
                             }
                         },
                         render: (text, record, index) => {
-                            return(<Tooltip inverse overlay={text}>
+                            return(<Tooltip inverse placement="top" overlay={text}>
                                     <span tootip={text}>{text}</span>
                                 </Tooltip>)
                         }
@@ -61,7 +61,7 @@ export function genGridColumn(param){
                         width: width,
                         type: 'string',
                         render: (text, record, index) => {
-                            return(<Tooltip inverse overlay={text}>
+                            return(<Tooltip inverse placement="top" overlay={text}>
                                     <span tootip={text}>{text}</span>
                                 </Tooltip>)
                         }
