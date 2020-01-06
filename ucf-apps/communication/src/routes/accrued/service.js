@@ -10,7 +10,7 @@ const URL = {
     "LIST":  `${GROBAL_HTTP_CTX}/communication/accrued/queryForGrid`,
     "ON_ADD": `${GROBAL_HTTP_CTX}/communication/accrued/onAdd`,
     "ON_SAVE": `${GROBAL_HTTP_CTX}/communication/accrued/save`,
-    "FIND_ONE": `${GROBAL_HTTP_CTX}/communication/accrued/findOne`,
+    "FIND_CHILD_BY_PK": `${GROBAL_HTTP_CTX}/communication/accrued/findChildByPk`,
 }
 
 /**
@@ -25,8 +25,8 @@ export const getList = (params) => {
  * 获取子表数据
  * @param {*} params
  */
-export const findOne = (params) => {
-    return requestBusiness(params, URL.FIND_ONE);
+export const findChildByPk = (params) => {
+    return requestBusiness(params, URL.FIND_CHILD_BY_PK);
 }
 
 /**

@@ -212,8 +212,8 @@ class ListView extends Component {
         { title: '开票内容', key: 'invoiceContents', type: '6', enumType:'1000125' },
         { title: '开票日期', key: 'billingData', type: '0'},
         { title: '核销状态', key: 'verificationStatus', type: '6', enumType:'1000316' },
-        { title: '发票代码', key: 'companyMainBody', type: '0' },
-        { title: '发票号码', key: 'companyMainBody', type: '0' },
+        { title: '发票代码', key: 'invoiceCode', type: '0' },
+        { title: '发票号码', key: 'invoiceNo', type: '0' },
         { title: '公司主体', key: 'companyMainBody', type: '0' },
         { title: '来源系统', key: 'pkSys.systemName', type: '5' },
     ];

@@ -329,7 +329,7 @@ export function consoleData(result = [], param = {}, method, subname){
                 updateData.list = data.pageData;
             }else{
                 if(subname != null && subname != undefined){
-                    updateData.list2 = data[subname];
+                    updateData.list2 = data[subname] == null? []: data[subname];
                 }else{
                     updateData.list2 = data;
                 }  

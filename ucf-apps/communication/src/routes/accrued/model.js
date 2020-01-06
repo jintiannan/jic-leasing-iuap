@@ -99,7 +99,7 @@ export default {
         async loadChildList(param) {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationAccrued.updateState({showLoading: true});
-            let data = processData(await api.findOne(param));
+            let data = processData(await api.findChildByPk(param));
             let updateData = consoleData(data, param, "sub", "pkAccruedDetail");
             // let queryObj = {
             //     pageIndex:0,
@@ -125,7 +125,7 @@ export default {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationAccrued.updateState({showLoading: true});
             let updateData = {showLoading: false};
-            let data = processData(await api.findOne(param));
+            let data = processData(await api.findChildByPk(param));
             // let queryObj = {
             //     pageIndex:0,
             //     pageSize:1000,
