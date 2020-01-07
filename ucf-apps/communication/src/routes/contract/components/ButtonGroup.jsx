@@ -112,7 +112,7 @@ class ButtonGroup extends Component {
         let _props = this.props;
         let _this = this;
         const tableMenu = (
-            <Menu className='tab-menu' onSelect={this.handleSelect} itemIcon={<Icon type='uf-setting-c-o'/>}>
+            <Menu className='tab-menu' onClick={this.handleSelect} itemIcon={<Icon type='uf-setting-c-o'/>}>
                 <Divider />
                 <Item key="1">导出选中数据</Item>
                 <Divider />
