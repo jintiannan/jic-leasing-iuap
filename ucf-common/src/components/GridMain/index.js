@@ -29,6 +29,7 @@ class GridMain extends Component {
             tableHeightMain: 0, //主表高度
             tableHeightChild: 0, //字表高度
             tableHeightSingle: 0, //单表高度
+            tableHeightReport: 0, //报表高度
         }
     }
 
@@ -49,6 +50,10 @@ class GridMain extends Component {
         let tableHeightSingle = 0;
         tableHeightSingle = getHeight() - 155;
         this.setState({ tableHeightSingle });
+
+        let tableHeightReport = 0;
+        tableHeightReport = getHeight() * 0.55;
+        this.setState({ tableHeightReport });
     }
 
     /**
@@ -164,7 +169,7 @@ class GridMain extends Component {
     render() {
         const {paginationObj, columns, tableHeight,ref,exportFileName,exportData, data, ...otherProps} = this.props;
         const _paginationObj = {...defualtPaginationParam, ...paginationObj};
-        const { tableHeightMain, tableHeightChild, tableHeightSingle } = this.state;
+        const { tableHeightMain, tableHeightChild, tableHeightSingle, tableHeightReport } = this.state;
         return (
             <div className='gridMain'>
                 <BaseGrid
@@ -178,14 +183,14 @@ class GridMain extends Component {
                     autoCheckedByClickRows={false} 
                     exportFileName={exportFileName}  
                     exportData={exportData}                 
-                    scroll={{y: tableHeight==1?tableHeightMain:tableHeight==2?tableHeightSingle:tableHeightChild}} //滚动轴高度
+                    scroll={{y: tableHeight==1?tableHeightMain:tableHeight==2?tableHeightSingle:tableHeight==3?tableHeightChild:tableHeightReport}} //滚动轴高度
                     height={28} //行高度
                     bordered //表格有边界
                     headerDisplayInRow={true}//表头换行用...来表示
                     bodyDisplayInRow={true}//表体换行用...来表示
                     headerHeight={tableHeight==1|| tableHeight==2 ?40:30} //表头高度 主表40 字表30
                     showFilterPopover={false}
-                    bodyStyle={{'height':tableHeight==1?tableHeightMain: tableHeight==2?tableHeightSingle:tableHeightChild}} //表体样式
+                    bodyStyle={{'height':tableHeight==1?tableHeightMain: tableHeight==2?tableHeightSingle:tableHeight==3?tableHeightChild:tableHeightReport}} //表体样式
                     sheetHeader={{height: 30, ifshow: false}} //设置excel导出的表头的样式、支持height、ifshow
                     hideHeaderScroll={false} //无数据时是否显示表头   
                     //排序属性设置

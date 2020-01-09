@@ -4,6 +4,7 @@ import Button from 'components/Button';         //引入本地使用的组件形
 import './index.less';                          //引入界面使用样式
 import 'styles/yl-public.less';                 //引入公共样式
 import {checkBillStatus} from "utils/service";  //引入工具类函数
+import { instanceOf } from 'prop-types';
 
 
 const { Item,Divider } = Menu;
@@ -98,6 +99,10 @@ class ButtonGroup extends Component {
         this.props.Export(key);
     }
 
+    handleSelectReport = ({ key }) =>{
+        this.props.Report(key);
+    }
+
     /**
      * 个性化控制是否可用
      * 例如控制审批流中的权限等
@@ -121,6 +126,18 @@ class ButtonGroup extends Component {
             </Menu>
         );
 
+        const reportMenu = (
+            <Menu className='tab-menu' onClick={this.handleSelectReport} >
+                <Divider />
+                <Item key="1"><Icon type='uf-listset'/> 现金流量表</Item>
+                <Divider />
+                <Item key="2"><Icon type='uf-listset'/> 会计分摊表 </Item>
+                <Divider />
+                <Item key="3"><Icon type='uf-listset'/> 计提表 </Item>
+                <Divider />
+            </Menu>
+        );
+
         return (
 
             <div className='table-header'>
@@ -130,6 +147,9 @@ class ButtonGroup extends Component {
                 <Button visible={_props.isGrid} className="ml8" colors="primary" onClick={_props.Query}><Icon type='uf-search'/>查询</Button>
                 <Dropdown trigger={['click']} overlay={tableMenu} animation="slide-up">
                     <Button visible={_this.powerView(_props,'Export') && _props.isGrid} className="ml8" colors="primary"><Icon type='uf-symlist'/>导出</Button>
+                </Dropdown>
+                <Dropdown trigger={['click']} overlay={reportMenu} animation="slide-up">
+                    <Button visible={_this.powerView(_props,'Report') && _props.isGrid} className="ml8" colors="primary"><Icon type="uf-histogram-arrow-up" />报表</Button>
                 </Dropdown>
                 <Button visible={_props.isEdit} disabled={_this.powerDisabledEdit(_props)} className="ml8" colors="primary" onClick={_props.Save}><Icon type='uf-search'/>保存</Button>
                 <Button visible={!_props.isGrid}  className="ml8" colors="primary" onClick={_props.Return}><Icon type='uf-search'/>返回</Button>

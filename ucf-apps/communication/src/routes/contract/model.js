@@ -7,7 +7,7 @@ import * as api from "./service";
  * processData : 调用service.js中的请求数据的承接
  * deepClone : 克隆当前指定对象的数据 通常用于数据更新
  */
-import {processData,deepClone} from "utils";
+import {processData,deepClone,Info} from "utils";
 import {consoleData} from "utils/service";
 
 
@@ -60,6 +60,12 @@ export default {
         //是否加载 详情修改页
         showForm:false,
         exportData:[], //导出数据数组
+        showCashModal:false, //是否显示现金流量表
+        showAccountingShareModal:false, //是否分摊计提表
+        showAccruedModal:false, //是否显示计提表,
+        cashList:[],
+        accountingShareList:[],
+        accruedList:[],
     },
     reducers: {
         /**
@@ -140,6 +146,48 @@ export default {
                 }
             }
             actions.communicationContract.updateState({list:_list});
+        },
+
+         /**
+         * 加载现金流量列表
+         * @param {*} param
+         * @param {*} getState
+         */
+        async getListCash(param) {
+            // 正在加载数据，显示加载 Loading 图标
+            actions.communicationContract.updateState({showLoading: true});
+            let data = processData(await api.getListCash(param));  // 调用 getList 请求数据
+            let updateData = {showLoading: false};
+            updateData.cashList = data.data;
+            actions.communicationContract.updateState(updateData); // 更新数据和查询条件
+        },
+
+                 /**
+         * 加载现金流量列表
+         * @param {*} param
+         * @param {*} getState
+         */
+        async getListAccountingShare(param) {
+            // 正在加载数据，显示加载 Loading 图标
+            actions.communicationContract.updateState({showLoading: true});
+            let data = processData(await api.getListCash(param));  // 调用 getList 请求数据
+            let updateData = {showLoading: false};
+            updateData.accountingShareList = data.data;
+            actions.communicationContract.updateState(updateData); // 更新数据和查询条件
+        },
+
+                 /**
+         * 加载现金流量列表
+         * @param {*} param
+         * @param {*} getState
+         */
+        async getListAccrued(param) {
+            // 正在加载数据，显示加载 Loading 图标
+            actions.communicationContract.updateState({showLoading: true});
+            let data = processData(await api.getListAccrued(param));  // 调用 getList 请求数据
+            let updateData = {showLoading: false};
+            updateData.accruedList = data.data;
+            actions.communicationContract.updateState(updateData); // 更新数据和查询条件
         },
     }
 };

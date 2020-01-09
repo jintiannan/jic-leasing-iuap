@@ -8,7 +8,9 @@ import * as mock from "./mock";
 const URL = {
     "GET_LIST":  `${GROBAL_HTTP_CTX}/sales/list`,
     "LIST":  `${GROBAL_HTTP_CTX}/communication/contract/queryForGrid`,
-
+    "LIST_CASH":  `${GROBAL_HTTP_CTX}/communication/contract/getListCash`,
+    "LIST_ACCRUED":  `${GROBAL_HTTP_CTX}/communication/accrued/getListAccrued`,
+    "LIST_ACCOUNTING_SHARE":  `${GROBAL_HTTP_CTX}/communication/contract/getListAccountingShare`,
 }
 
 /**
@@ -27,5 +29,21 @@ export const getList = (params) => {
      * 不对接后台时直接使用mock.js中的假数据 并将结果集封装成为请求返回的形式 data+status的形式
      */
     return requestBusiness(params, URL.LIST);
+}
+
+/**
+ * 获取租金计划表
+ * @param {*} params
+ */
+export const getListCash = (params) => {
+    return requestBusiness(params, URL.LIST_CASH);
+}
+
+/**
+ * 获取计提表
+ * @param {*} params
+ */
+export const getListAccrued = (params) => {
+    return requestBusiness(params, URL.LIST_ACCRUED);
 }
 
