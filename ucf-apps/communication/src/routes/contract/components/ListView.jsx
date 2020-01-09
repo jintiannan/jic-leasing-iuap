@@ -73,25 +73,6 @@ class ListView extends Component {
         }
     }
 
-    getReportList = (key, obj) =>{
-        console.log(obj);
-        if(key == 1) {
-            //现金流量
-            actions.communicationContract.updateState({showCashModal : true});
-            this.props.listchildCash.getList(obj);
-        }else if(key == 2) {
-            //会计分摊表
-            actions.communicationContract.updateState({showAccountingShareModal : true});
-            this.props.listchildAccountingShare.getList(obj);
-        }else if(key == 3) {
-            //计提表
-            actions.communicationContract.updateState({showAccruedModal : true});
-            this.props.listchildAccrued.getList(obj);
-        }else{
-            Info("系统不能识别您要查看什么报表数据，请联系管理员");
-        }
-    }
-
     afterFilter = (optData,columns)=>{
         const column = deepClone(this.state.gridColumn);
         column.map((item)=>{
