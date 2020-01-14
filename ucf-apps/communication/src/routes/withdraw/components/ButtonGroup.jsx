@@ -138,7 +138,7 @@ class ButtonGroup extends Component {
                 {/*<Button visible={_this.powerView(_props,'Edit')} disabled={_this.powerDisabledUnEdit(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Edit}><Icon type='uf-pencil-s'/>修改</Button>*/}
                 {/*<Button visible={_this.powerView(_props,'Add')} disabled={_this.powerDisabledUnEdit(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Add}><Icon type='uf-add-c-o'/>新增</Button>*/}
                 {/* <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.View}><Icon type='uf-files-o'/>查看</Button> */}
-                <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.GatherWithdraw}><Icon type='uf-files-o'/>汇总</Button>
+                {/*<Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.GatherWithdraw}><Icon type='uf-files-o'/>汇总</Button>*/}
             </div>
 
         );

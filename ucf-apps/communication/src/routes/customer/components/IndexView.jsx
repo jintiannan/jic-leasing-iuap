@@ -222,7 +222,7 @@ class IndexView extends Component {
                         Export={this.onClickExport}
                         Edit= {this.onEdit}
                         Add= {this.onAdd}
-                        View={this.onView}
+                        //View={this.onView}
                         Return={this.onReturn}
                         Save={this.onSave}
                         {...this.props}

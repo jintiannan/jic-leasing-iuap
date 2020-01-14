@@ -365,7 +365,7 @@ class FormView extends Component {
                     </div>
 
 
-
+                    {/* 
                     <div className="childListView">
                         <Tabs
                             defaultActiveKey="1"
@@ -398,12 +398,12 @@ class FormView extends Component {
                             </TabPane>
                         </Tabs>
                     </div>
-                    {/**所有页面内部添加组件必须由html内部标签如div标签等包裹 便于维护样式 且避免报错 */}
                     <div>
                         <LoanModalView {...this.props} />         
                     </div>
-
+                */}
                 </div>
+                
             );
 
         } else {
