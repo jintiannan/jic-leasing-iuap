@@ -181,7 +181,7 @@ export default {
       }
       // 根据语种设置背景图
       if (getLocal === 'zh_CN') {
-        themeObj.headerCenterImg = themeObj.headerCenterImg0
+        themeObj.headerCenterImg = themeObj.headerCenterImg1
       } else if (getLocal === 'en_US') {
         themeObj.headerCenterImg = themeObj.headerCenterImg1
       } else {
