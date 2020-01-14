@@ -7,7 +7,7 @@ import * as api from "./service";
  * processData : 调用service.js中的请求数据的承接
  * deepClone : 克隆当前指定对象的数据 通常用于数据更新
  */
-import {processData, deepClone, Info} from "utils";
+import {processData, deepClone, success} from "utils";
 import {consoleData} from "utils/service";
 
 
@@ -203,7 +203,7 @@ export default {
             actions.communicationAccrued.updateState({showLoading: true});
             let data = processData(await api.onSave(param));  // 调用 onSave 请求数据
             if(data.success == true){
-                Info("操作成功!");
+                success("操作成功!");
             }
             let updateData = {showLoading: false};
             actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件

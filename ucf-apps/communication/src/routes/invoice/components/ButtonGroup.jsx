@@ -1,18 +1,62 @@
 import React, { Component } from 'react';
-import {Icon,Dropdown, Menu} from 'tinper-bee'; //引入官网文档内部组件
+import {Icon,Dropdown, Menu, Upload } from 'tinper-bee'; //引入官网文档内部组件
 import Button from 'components/Button';         //引入本地使用的组件形式
 import './index.less';                          //引入界面使用样式
 import 'styles/yl-public.less';                 //引入公共样式
 import {checkBillStatus} from "utils/service";  //引入工具类函数
-
-
+import {processData,deepClone,Info,Error,success} from "utils";
 const { Item,Divider } = Menu;
+
+// const UploadProps = {
+//     name: 'file',
+//     action: `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/upload`,
+//     headers: {
+//       authorization: 'authorization-text',
+//     },
+//     multiple: false, //是否支持 多文件上传
+//     showUploadList: false, //不显示 上传列表
+//     onChange(info) {
+//       if (info.file.status !== 'uploading') {
+//         //console.log(info.file, info.fileList);
+//         Info("上传中...");
+//       }
+//       if (info.file.status === 'done') {
+//         success(`${info.file.name} 上传成功`);
+//         this.props.listchild.componentDidMount();
+//       } else if (info.file.status === 'error') {
+//           let msg = info.file.response.message;
+//           Error(msg);
+//       }
+//     }
+//   };
 
 class ButtonGroup extends Component {
     constructor(props) {
         super(props);
+        const _this = props;
         this.state = {
             power:props.BtnPower,
+            UploadProps : {
+                name: 'file',
+                action: `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/upload`,
+                headers: {
+                  authorization: 'authorization-text',
+                },
+                multiple: false, //是否支持 多文件上传
+                showUploadList: false, //不显示 上传列表
+                onChange(info) {
+                  if (info.file.status !== 'uploading') {
+                    Info("上传中...");
+                  }
+                  if (info.file.status === 'done') {
+                    success(`${info.file.name} 上传成功`);
+                    _this.listchild.componentDidMount();
+                  } else if (info.file.status === 'error') {
+                      let msg = info.file.response.message;
+                      Error(msg);
+                  }
+                }
+              }
         };
     }
 
@@ -121,8 +165,8 @@ class ButtonGroup extends Component {
         );
 
         return (
-
             <div className='table-header'>
+                
                 {/**Button按钮组件 visible是否显示控制 disabled是否可编辑 className样式 colors按钮颜色 onClick触发事件
                  Icon图标属性 定义在按钮内部当按钮需要以图标形式展示时使用 其中type属性为对应的图标样式 仅可使用官网样式图标
                  */}
@@ -138,6 +182,15 @@ class ButtonGroup extends Component {
                 {/*<Button visible={_this.powerView(_props,'Edit')} disabled={_this.powerDisabledUnEdit(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Edit}><Icon type='uf-pencil-s'/>修改</Button>*/}
                 {/* <Button visible={_this.powerView(_props,'Add')} disabled={_this.powerDisabledUnEdit(_props)} className="ml8 yl-r-b" colors="primary" onClick={_props.Add}><Icon type='uf-add-c-o'/>新增</Button> */}
                 {/* <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.View}><Icon type='uf-files-o'/>查看</Button> */}
+                <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.InvoiceApply}><Icon type='uf-files-o'/>开票申请</Button>
+                <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.AuditExport}> <Icon type="uf-cloud-o-updown"/>导出维护</Button>
+                <div className = "button-upload">
+                    <Upload {..._props.UploadProps}>
+                        <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary"> 
+                            <Icon type="uf-upload"/> 导入维护
+                        </Button>
+                    </Upload>
+                </div>
             </div>
 
         );

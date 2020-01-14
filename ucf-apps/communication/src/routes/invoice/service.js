@@ -7,7 +7,8 @@ const URL = {
     "LIST":  `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/queryForGrid`,
     "SUB_LIST": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/subList`,
     "SUB_NOT_INVOICE_LIST": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/subNotInvoice`,
-    "SAVE": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/save`
+    "SAVE": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/save`,
+    "UPDATE_STATUS": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/updateBillstatus`,
 
 }
 
@@ -30,5 +31,9 @@ export const getSubNotInvoice = (params) => {
 };
 export const save = (selected) => {
     return requestBusiness(selected, URL.SAVE);
+};
+
+export const updateBillstatus = (selected) => {
+    return requestBusiness(selected, URL.UPDATE_STATUS);
 };
 

@@ -5,13 +5,14 @@
 import React, { Component } from 'react';
 import { Loading,Form } from 'tinper-bee';
 import {actions} from 'mirrorx';
-import {singleRecordOper} from "utils/service";
-import { deepClone,Info } from "utils";
+import {singleRecordOper, multiRecordOper} from "utils/service";
+import { deepClone,Info,processData, Warning, success, Error} from "utils";
 import ButtonGroup from './ButtonGroup';
 import ListView from './ListView';
 import FormView from './FormView';
 import AddFormView from './AddFormView';
 import SearchPanel from './SearchPanel'
+import * as api from "../service";
 import moment from 'moment';
 import './index.less';
 
@@ -46,8 +47,32 @@ class IndexView extends Component {
             powerButton: props.powerButton,//按钮权限列表
             ifGridColumn:props.ifGridColumn,//是否自定义显示字段
             gridColumn: props.gridColumn,//显示字段
+            //上传参数
+            UploadProps : {
+                name: 'file',
+                action: `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/upload`,
+                headers: {
+                  authorization: 'authorization-text',
+                },
+                multiple: false, //是否支持 多文件上传
+                showUploadList: false, //不显示 上传列表
+                onChange: this.onChange
+              }
         };
     }
+
+    onChange= (info) =>  {
+        if (info.file.status !== 'uploading') {
+          Info("上传中...");
+        }
+        if (info.file.status === 'done') {
+          success(`${info.file.name} 上传成功`);
+          this.listchild.componentDidMount();
+        } else if (info.file.status === 'error') {
+            let msg = info.file.response.message;
+            Error(msg);
+        }
+      }
 
     //组件生命周期方法-在渲染前调用,在客户端也在服务端
     componentWillMount() {
@@ -150,58 +175,6 @@ class IndexView extends Component {
      * 当前页按钮点击事件  添加数据  所有页面内部函数统一采用Es6箭头函数语法形式 避免this指针获取不到存在错误的问题
      */
     onAdd = () =>{
-        // let objectForm = localStorage.getItem("addKey");
-        // if(objectForm){
-        //     let _formObject = deepClone(JSON.parse(objectForm));
-        //     actions.communicationInvoice.updateState({formObject:_formObject});
-        // }else{
-        //
-        //     //新增完成初始化form表单
-        //     actions.communicationInvoice.updateState({formObject:{
-        //             //租赁方式
-        //             lease_method:'0',
-        //             //本金是否开票
-        //             if_corpus_tickets:'0',
-        //             //投放日期
-        //             plan_date_loan: moment(), //系统当前时间
-        //             //基准利率
-        //             interrate:'0.0435',
-        //             //报价利率
-        //             final_rate:'0.0435',
-        //             //手续费收取方式
-        //             srvfee_method_in:'0',
-        //             //租赁期限(月)
-        //             lease_times:'12',
-        //             //先付后付标志
-        //             prepay_or_not:'1',
-        //             //支付频率
-        //             lease_freq:'0',
-        //             //计算方式
-        //             lease_cal_method:'0',
-        //             //总投放金额的计息方式
-        //             interest_method_total_loan:'0',
-        //             //现金流日期计算方式
-        //             year_days_flow:'0',
-        //             //计算精度
-        //             cal_digit:'1',
-        //             //年化天数
-        //             year_days:'0',
-        //             //利率类型
-        //             interrate_type:'0',
-        //             //币种
-        //             pk_currtype:'0',
-        //             //利率浮动方式
-        //             float_method:'0',
-        //             //利率档次
-        //             interrate_level:'0',
-        //             //会计IRR按最新算法
-        //             finace_irr_method:'0',
-        //             //会计IRR算法启用年份
-        //             finace_irr_year:'1',
-        //
-        //
-        //         }});
-        // }
         actions.communicationInvoice.loadAddList(this.props.addQueryParam);
         //填出新增窗口
         actions.communicationInvoice.updateState({showModal : true});
@@ -237,6 +210,56 @@ class IndexView extends Component {
     }
 
     /**
+     * 导出数据按钮 使用GridMain组件中定义的引用ref直接调用即可导出数据
+     */
+    onAuditExport = () => {
+        let _list = deepClone(this.props.selectedList);
+        let flage = true;
+        _list.map((item)=>{
+            if(item.billstatus != 204 ){
+                Warning("合同编码为【"+ item.contCode +"】的数据，单据状态为【审核中】,不可以导出维护!");
+                flage = false;
+                return flage;
+            }
+        });
+        if(flage){
+            this.listchild.setAuditExportList(this.props.selectedList);
+        }
+    }
+
+    /**
+     * 开票申请
+     */
+    async onInvoiceApply() {
+        let _list = deepClone(this.props.selectedList);
+        if(_list == undefined || _list.length < 1){
+            Warning("请选择开票数据!");
+            return false;
+        }else {
+            let flage = true;
+            _list.map((item)=>{
+                if(item.billstatus == 204 ){
+                    Warning("合同编码为【"+ item.contCode +"】的数据，单据状态为【已为审核中】,不可以重复申请!");
+                    flage = false;
+                    return flage;
+                }
+            });
+            if(flage){
+                 /**
+                 * 修改单据状态为 复核中
+                 * @param {需要更新的记录} selectedList
+                 */
+                actions.communicationInvoice.updateState({showLoading: true});
+                let data = processData(await api.updateBillstatus(this.props.selectedList));  // 调用 getList 请求数据
+                if (data.success === true) {
+                    success("操作成功!")
+                }
+                this.listchild.componentDidMount();
+            }
+        }
+    }
+
+    /**
      * 返回按钮
      */
     onReturn = () =>{
@@ -254,6 +277,8 @@ class IndexView extends Component {
         actions.communicationInvoice.updateRowData({'record':_formObj});
         this.switchEdit();
     }
+
+    
 
     render() {
         const { getFieldProps, getFieldError } = this.props.form;
@@ -275,13 +300,11 @@ class IndexView extends Component {
                 <div>
                     <ButtonGroup
                         BtnPower= {ButtonPower}
+                        UploadProps = {this.state.UploadProps}
                         Query= {this.onQuery}
                         Export={this.onClickExport}
-                        Edit= {this.onEdit}
-                        Add= {this.onAdd}
-                        View={this.onView}
-                        Return={this.onReturn}
-                        Save={this.onSave}
+                        InvoiceApply = {this.onInvoiceApply.bind(this)}
+                        AuditExport = {this.onAuditExport}
                         {...this.props}
                     />
                 </div>

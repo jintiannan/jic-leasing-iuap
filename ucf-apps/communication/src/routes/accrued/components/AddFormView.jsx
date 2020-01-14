@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import { Button, Modal, Form, Icon, Label, Col, Row, Select, FormControl, Tabs } from 'tinper-bee';
 import { actions } from 'mirrorx';
 import TableFormRef from 'components/FormRef/TableFormRef';
-import { deepClone, Info, processData } from "utils";
+import { deepClone, Info, processData, Warning } from "utils";
 import DatePicker from "tinper-bee/lib/Datepicker";
 import * as api from "../service";
 import './index.less';
@@ -50,7 +50,7 @@ class AddFormView extends Component {
             this.props.Edit();
         }else{
             updateData.isEdit = false;
-            Info("没有可以计提的数据!")
+            Warning("没有可以计提的数据!")
         }
         actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
         

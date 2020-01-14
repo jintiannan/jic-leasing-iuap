@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import {Tooltip} from "tinper-bee";
 import EnumModel from 'components/GridCompnent/EnumModel';
-import {deepClone, Info} from "utils";
+import {deepClone, Info, Warning} from "utils";
 import {enumConstantValue} from "utils/enums";
 const TYPE_STRING = '0';
 const TYPE_NUMBER = '1';
@@ -198,14 +198,14 @@ export function singleRecordOper(param = [],fn =(obj) => {}){
     if(param && param.length > 0){
         if(param.length > 1){
             let msg = `您当前选中 ${param.length} 条数据,只能选择 1 条数据!`;
-            Info(msg);
+            Warning(msg);
         } else {
             console.log(param[0]);
             fn(param[0])
         }
 
     } else {
-        Info("您当前选中 0 条数据,请选择 1 条数据后再进行操作!");
+        Warning("您当前选中 0 条数据,请选择 1 条数据后再进行操作!");
     }
 }
 
@@ -216,7 +216,7 @@ export function singleRecordOper(param = [],fn =(obj) => {}){
  */
 export function multiRecordOper(param = [],fn =(obj) => {}){
     if(param && param.length == 0){
-        Info("您当前选中 0 条数据,请选择 1 条数据后再进行操作!");
+        Warning("您当前选中 0 条数据,请选择 1 条数据后再进行操作!");
     } else {
         fn(param)
     }

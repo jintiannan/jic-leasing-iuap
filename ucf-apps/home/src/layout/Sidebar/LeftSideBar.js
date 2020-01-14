@@ -57,6 +57,7 @@ class LeftSideBar extends Component {
     if(locale_serial == 1) {
         locale_serial = "";
     }
+    locale_serial = "";
     return (
       <div>
       <div className="left-side-bar sidebar-left">

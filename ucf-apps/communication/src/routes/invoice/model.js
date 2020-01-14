@@ -7,7 +7,7 @@ import * as api from "./service";
  * processData : 调用service.js中的请求数据的承接
  * deepClone : 克隆当前指定对象的数据 通常用于数据更新
  */
-import {processData,deepClone} from "utils";
+import {processData,deepClone,Info} from "utils";
 import {consoleData} from "utils/service";
 import {Message} from "tinper-bee";
 

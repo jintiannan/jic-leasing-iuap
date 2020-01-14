@@ -49,6 +49,15 @@ class ListView extends Component {
         }
     }
 
+    /**
+     * 导出审核
+     */
+    setAuditExportList = (selectedList) =>{
+        multiRecordOper(selectedList,(param) => {  //选中数据校验  未选中无法导出
+            this.gridref.exportExcel();
+        });
+    }
+
     afterFilter = (optData,columns)=>{
         const column = deepClone(this.state.gridColumn);
         column.map((item)=>{
@@ -187,6 +196,11 @@ class ListView extends Component {
 
     // 主表
     gridOnTheLoan = [
+        { title: '单据状态', key: 'billstatus', type: '6', enumType:'1001650'},
+        { title: '开票状态', key: 'billingStatus', type: '6', enumType:'1000334' },
+        { title: '发票代码', key: 'invoiceCode', type: '0' },
+        { title: '发票号码', key: 'invoiceNo', type: '0' },
+        { title: '开票日期', key: 'billingData', type: '0'},
         { title: '合同编号', key: 'contCode', type: '0' },
         { title: '合同名称', key: 'contName', type: '0' },
         { title: '发票抬头', key: 'invoiceTitle', type: '0' },
@@ -208,12 +222,13 @@ class ListView extends Component {
         { title: '税率', key: 'taxRate', type: '7', digit: 6 },
         { title: '税额', key: 'leaseCashTax', type: '7', digit: 2 },
         { title: '不含税金额', key: 'excludingTax', type: '7', digit: 2 },
-        { title: '开票状态', key: 'billingStatus', type: '6', enumType:'1000334' },
         { title: '开票内容', key: 'invoiceContents', type: '6', enumType:'1000125' },
-        { title: '开票日期', key: 'billingData', type: '0'},
         { title: '核销状态', key: 'verificationStatus', type: '6', enumType:'1000316' },
-        { title: '发票代码', key: 'invoiceCode', type: '0' },
-        { title: '发票号码', key: 'invoiceNo', type: '0' },
+        { title: '销方税号', key: 'salesNo', type: '0' },
+        { title: '商品名称', key: 'goodsName', type: '0' },
+        { title: '发票行性质', key: 'invoiceIndustryNatue', type: '0' },
+        { title: '税收分类编码', key: 'taxClassificationCode', type: '0' },
+        { title: '税收优化政策标志', key: 'taxPreferentialMark', type: '0' },
         { title: '公司主体', key: 'companyMainBody', type: '0' },
         { title: '来源系统', key: 'pkSys.systemName', type: '5' },
     ];
