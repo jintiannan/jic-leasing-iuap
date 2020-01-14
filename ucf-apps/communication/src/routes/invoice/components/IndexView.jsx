@@ -10,7 +10,8 @@ import { deepClone,Info,processData, Warning, success, Error} from "utils";
 import ButtonGroup from './ButtonGroup';
 import ListView from './ListView';
 import FormView from './FormView';
-import AddFormView from './AddFormView';
+import RejectInfoTableView from './RejectInfoTableView';
+import RejectInfoView from './RejectInfoView';
 import SearchPanel from './SearchPanel'
 import * as api from "../service";
 import moment from 'moment';
@@ -101,6 +102,10 @@ class IndexView extends Component {
 
     onListRef = (ref) =>{
         this.listchild = ref;
+    }
+
+    onRejectInfoListRef = (ref) =>{
+        this.listRejectInfo = ref;
     }
 
     onsearchRef = (ref) =>{
@@ -210,6 +215,37 @@ class IndexView extends Component {
     }
 
     /**
+     * 联查审批意见
+     */
+    getRejectedInfo = (key) => {
+        singleRecordOper(this.props.selectedList,(param) => {  //查看选中项数据前进行一次单选校验
+            actions.communicationInvoice.updateState({showRejectInfoTableModal : true});
+            this.listRejectInfo.getList(this.props.selectedList[0]);
+        })
+    }
+    
+    /**
+    * 发送凭证
+    */
+    OnSendVoucher = (key) => {
+        multiRecordOper(this.props.selectedList,(param) => {  //查看选中项数据前进行一次单选校验
+            let _list = deepClone(this.props.selectedList);
+            let flage = true;
+            _list.map((item)=>{
+                if(item.billstatus != 9 ){
+                    let status = item.billstatus == 8?"【审核未通过】":item.billstatus == 204?"【审核中】":"【暂存】";
+                    Warning("合同编码为【"+ item.contCode +"】的数据，是"+ status  +"状态,不可生成凭证!");
+                    flage = false;
+                    return flage;
+                }
+            });
+            if(flage) {
+                actions.communicationInvoice.sendVoucher(this.props.selectedList);
+            }
+        })
+    }
+
+    /**
      * 导出数据按钮 使用GridMain组件中定义的引用ref直接调用即可导出数据
      */
     onAuditExport = () => {
@@ -217,7 +253,8 @@ class IndexView extends Component {
         let flage = true;
         _list.map((item)=>{
             if(item.billstatus != 204 ){
-                Warning("合同编码为【"+ item.contCode +"】的数据，单据状态为【审核中】,不可以导出维护!");
+                let status = item.billstatus == 8?"【审核未通过】":item.billstatus == 9?"【审核通过】":"【暂存】";
+                Warning("合同编码为【"+ item.contCode +"】的数据，是"+ status  +"状态,不可以导出维护!");
                 flage = false;
                 return flage;
             }
@@ -233,7 +270,7 @@ class IndexView extends Component {
     async onInvoiceApply() {
         let _list = deepClone(this.props.selectedList);
         if(_list == undefined || _list.length < 1){
-            Warning("请选择开票数据!");
+            Warning("您当前选中 0 条数据,请选择数据后再进行操作!");
             return false;
         }else {
             let flage = true;
@@ -260,9 +297,51 @@ class IndexView extends Component {
     }
 
     /**
+     * 驳回
+     */
+    OnRejected() {
+        let _list = deepClone(this.props.selectedList);
+        if(_list == undefined || _list.length < 1){
+            Warning("您当前选中 0 条数据,请选择数据后再进行操作!");
+            return false;
+        }else {
+            let flage = true;
+            _list.map((item)=>{
+                if(item.billstatus != 204 ){
+                    let status = item.billstatus == 8?"【审核未通过】":item.billstatus == 9?"【审核通过】":"【暂存】";
+                    Warning("合同编码为【"+ item.contCode +"】的数据，是"+ status  +"状态,不可以驳回!");
+                    flage = false;
+                    return flage;
+                }
+            });
+            if(flage){
+                //填出新增窗口
+                actions.communicationInvoice.updateState({showRejectedModal : true});
+            }
+        }
+    }
+
+    /**
+    * 修改单据状态为 驳回
+    * @param {需要更新的记录} selectedList
+    */
+   async updateRejectInfo(object) {
+        actions.communicationInvoice.updateState({showLoading: true});
+        let selectedList = this.props.selectedList;
+        selectedList.map((item)=>{
+            return item.rejectInfo = object.rejectInfo;
+        });
+        let data = processData(await api.updateBillstatusRejected(selectedList));
+        if (data.success === true) {
+            success("操作成功!")
+        }
+        this.listchild.componentDidMount();
+    }
+
+    /**
      * 返回按钮
      */
-    onReturn = () =>{
+    onReturn = () => {
         if(this.state.isEdit){
             this.switchEdit();
         }
@@ -304,7 +383,10 @@ class IndexView extends Component {
                         Query= {this.onQuery}
                         Export={this.onClickExport}
                         InvoiceApply = {this.onInvoiceApply.bind(this)}
+                        Rejected = {this.OnRejected.bind(this)}
                         AuditExport = {this.onAuditExport}
+                        RejectedInfo = {this.getRejectedInfo.bind(this)}
+                        SendVoucher = {this.OnSendVoucher.bind(this)}
                         {...this.props}
                     />
                 </div>
@@ -312,11 +394,14 @@ class IndexView extends Component {
                 <div style={{display:this.state.showListView}}>
                     <ListView {...this.props}　onListRef={this.onListRef} />
                 </div>
-                <div style={{display:this.state.showFormView}}>
-                    <FormView {...this.props} onRef={this.onRef}/>
-                </div>
                 <div>
-                    <AddFormView { ...this.props } />
+                    <RejectInfoTableView { ...this.props } onRejectInfoListRef={this.onRejectInfoListRef}/>
+                </div>
+                {/* <div style={{display:this.state.showFormView}}>
+                    <FormView {...this.props} onRef={this.onRef}/>
+                </div> */}
+                <div>
+                    <RejectInfoView { ...this.props } updateRejectInfo = {this.updateRejectInfo.bind(this)} />
                 </div>
                 <div>
                    <SearchPanel {...this.props} IfShow = {this.state.showSearchPanel} onRef = {this.onsearchRef} closeSearch={this.oncloseSearch} alterSerach={this.onalterSearch}/>

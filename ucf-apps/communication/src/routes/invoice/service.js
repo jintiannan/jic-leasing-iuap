@@ -9,7 +9,9 @@ const URL = {
     "SUB_NOT_INVOICE_LIST": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/subNotInvoice`,
     "SAVE": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/save`,
     "UPDATE_STATUS": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/updateBillstatus`,
-
+    "UPDATE_STATUS_REJECTED": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/updateBillstatusRejected`,
+    "LIST_REJECT_INFO": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/getListRejectInfo`,
+    "SEND_VOUCHER": `${GROBAL_HTTP_CTX}/communication/cbInvoiceApply/sendVoucher`,
 }
 
 /**
@@ -35,5 +37,16 @@ export const save = (selected) => {
 
 export const updateBillstatus = (selected) => {
     return requestBusiness(selected, URL.UPDATE_STATUS);
+};
+
+export const updateBillstatusRejected = (selectedList) => {
+    return requestBusiness(selectedList, URL.UPDATE_STATUS_REJECTED);
+};
+
+export const getListRejectInfo = (params) => {
+    return requestBusiness(params, URL.LIST_REJECT_INFO);
+};
+export const sendVoucher = (params) => {
+    return requestBusiness(params, URL.SEND_VOUCHER);
 };
 

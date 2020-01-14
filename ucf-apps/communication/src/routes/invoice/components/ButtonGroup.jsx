@@ -191,6 +191,9 @@ class ButtonGroup extends Component {
                         </Button>
                     </Upload>
                 </div>
+                <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.Rejected}><Icon type="uf-reject-2" />驳回</Button>
+                <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.SendVoucher}><Icon type="uf-send" />生成凭证</Button>
+                <Button visible={_props.isGrid} className="ml8 yl-r-b" colors="primary" onClick={_props.RejectedInfo}><Icon type="uf-listset" />联查审批意见</Button>
             </div>
 
         );

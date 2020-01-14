@@ -68,6 +68,9 @@ export default {
         //是否加载 详情修改页
         showForm:false,
         exportData:[],
+        showRejectedModal: false, //是否显示 驳回页面
+        showRejectInfoTableModal: false, //是否显示 驳回意见 列表
+        rejectInfoList: [],
     },
     reducers: {
         /**
@@ -169,5 +172,36 @@ export default {
             }
             actions.communicationInvoice.updateState({list:_list});
         },
+
+         /**
+         * 加载现金流量列表
+         * @param {*} param
+         * @param {*} getState
+         */
+        async getListRejectInfo(param) {
+            // 正在加载数据，显示加载 Loading 图标
+            actions.communicationInvoice.updateState({showLoading: true});
+            let data = processData(await api.getListRejectInfo(param));  // 调用 getList 请求数据
+            let updateData = {showLoading: false};
+            updateData.rejectInfoList = data.data;
+            actions.communicationInvoice.updateState(updateData); // 更新数据和查询条件
+        },
+
+         /**
+         * 发送凭证
+         * @param {*} param
+         * @param {*} getState
+         */
+        async sendVoucher(param) {
+            // 正在加载数据，显示加载 Loading 图标
+            actions.communicationInvoice.updateState({showLoading: true});
+            let data = processData(await api.sendVoucher(param));  // 调用 getList 请求数据
+            if(data.success = true){
+                success("发送成功!")
+            }
+            let updateData = {showLoading: false};
+            actions.communicationInvoice.updateState(updateData); // 更新数据和查询条件
+        },
+        
     }
 };
