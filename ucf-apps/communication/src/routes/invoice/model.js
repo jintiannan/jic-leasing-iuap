@@ -7,7 +7,7 @@ import * as api from "./service";
  * processData : 调用service.js中的请求数据的承接
  * deepClone : 克隆当前指定对象的数据 通常用于数据更新
  */
-import {processData,deepClone,Info} from "utils";
+import {processData,deepClone, Info, success} from "utils";
 import {consoleData} from "utils/service";
 import {Message} from "tinper-bee";
 
@@ -196,7 +196,7 @@ export default {
             // 正在加载数据，显示加载 Loading 图标
             actions.communicationInvoice.updateState({showLoading: true});
             let data = processData(await api.sendVoucher(param));  // 调用 getList 请求数据
-            if(data.success = true){
+            if(data.success == true){
                 success("发送成功!")
             }
             let updateData = {showLoading: false};
