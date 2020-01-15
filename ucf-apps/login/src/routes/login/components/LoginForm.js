@@ -20,7 +20,7 @@ class LoginForm extends Component {
                 var canOpen = window.localStorage.getItem("canOpen");
                 if(canOpen === "true" || canOpen === null) {
                     window.localStorage.setItem("canOpen",false);
-                    window.open(`/${GROBAL_PORTAL_ID}/home`, "_self");
+                    window.open(`/home`, "_self");
                 }
             }
         }, 1000);

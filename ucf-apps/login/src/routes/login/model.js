@@ -78,7 +78,7 @@ export default {
                 localStorage.setItem("paramType", JSON.stringify(paramType));
                 //成功登陆
                 window.localStorage.setItem("canOpen","true");
-                window.open(`/${GROBAL_PORTAL_ID}/home`, "_self");
+                window.open(`/home`, "_self");
             }else{
                 actions.login.updateState({errMsg:'用户名或密码错误'})
             }

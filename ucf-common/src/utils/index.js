@@ -52,7 +52,7 @@ export const processData = (response, successMsg) => {
         }
         if(String(response.status) == '500'){   //处理后台抛出异常  如果是登录token失效 则跳转回登录页  否则显示异常信息 结果集为null
             if(typeof(response.data.message) == 'string' && response.data.message.indexOf("token") != -1){
-                window.top.location.href = `/${GROBAL_PORTAL_ID}/login`;  //登录token失效  返回登录页
+                window.top.location.href = `/login`;  //登录token失效  返回登录页
             }
             Error(`错误:${(response.data.message)}`);
             return {data:null};
@@ -60,7 +60,7 @@ export const processData = (response, successMsg) => {
         if (response.status == '200') {
             let data = response.data;
             if(typeof(data) == 'string'&&data.indexOf("token") != -1 ){
-                window.top.location.href = `/${GROBAL_PORTAL_ID}/login`;  //token验证失败  返回登录页
+                window.top.location.href = `/login`;  //token验证失败  返回登录页
             }
             if (successMsg) {
                 success(successMsg);

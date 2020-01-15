@@ -4,7 +4,7 @@
   "description": "中建投租赁业务系统",
   "main": "index.js",
   "scripts": {
-    "start": "ucf-scripts start --homepage=leasing/login --port=3008",
+    "start": "ucf-scripts start --homepage=/login --port=3008",
     "build": "ucf-scripts build"
   },
   "repository": {

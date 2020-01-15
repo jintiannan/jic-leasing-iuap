@@ -368,7 +368,7 @@ export default {
           let res = processData(await api.logout({user:user}));     //后端注销  移除session
           localStorage.removeItem("user");                   //前端session 移除登陆用户
           localStorage.removeItem("currentSystem");          //前端session 移除当前选择系统
-          window.top.location.href = `/${GROBAL_PORTAL_ID}/login`;   //重定向回登录页
+          window.top.location.href = `/login`;   //重定向回登录页
         }    
     },
   }

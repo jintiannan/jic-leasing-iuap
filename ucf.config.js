@@ -8,22 +8,22 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = (env, argv) => {
     const isBuild = argv[0] === 'build';
     return {
-        context: 'leasing',
+        context: '',
         // 启动所有模块，默认这个配置，速度慢的时候使用另外的配置
         bootList: true,
         // 启动这两个模块，启动调试、构建
         bootList: [
             "login",
             "home",
-            "project",
-            "testdemo",
-            "contract",
-            "settings",
-            'customer',
-            "calculator",
-            "finance",
-            "portal",
-            "projectInfo",
+            // "project",
+            // "testdemo",
+            // "contract",
+            // "settings",
+            // 'customer',
+            // "calculator",
+            // "finance",
+            // "portal",
+            // "projectInfo",
             "testdemo",
             "communication",
         ],

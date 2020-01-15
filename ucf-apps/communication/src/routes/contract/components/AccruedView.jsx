@@ -47,12 +47,12 @@ class AccruedView extends Component {
 
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
-        { title: '计提月', key: 'month', type: '0', width: '180', sorter: 0},
-        { title: '利息', key: 'inter', type: '0', width: '180' , sorter: 0},
-        { title: '手续费', key: 'srv', type: '0', width: '180' , sorter: 0},
-        { title: '其他收入', key: 'pri', type: '7', digit: 2 , width: '180' },
-        { title: '其他支出', key: 'bus', type: '7', digit: 2 , width: '180' },
-        { title: '是否已计提', key: 'ifBegin', type: '6', enumType: '1000003' , width: '180', sorter: 0 },
+        { title: '计提月', key: 'month', type: '0', width: '150', sorter: 0},
+        { title: '利息', key: 'inter', type: '7', width: '150' , digit: 2 },
+        { title: '手续费', key: 'srv', type: '7', width: '150' , digit: 2 },
+        { title: '其他收入', key: 'pri', type: '7', digit: 2 , width: '150' },
+        { title: '其他支出', key: 'bus', type: '7', digit: 2 , width: '150' },
+        { title: '是否已计提', key: 'ifBegin', type: '6', enumType: '1000003' , width: '150' },
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];

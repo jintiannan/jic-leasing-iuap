@@ -19,7 +19,7 @@ export default class App extends Component {
             <div className="route-content">
                 <div className="templates-route">
                     {/*配置根路由记载节点*/}
-                    {<Route exact path={'/leasing/home'} component={ConnectedApp} />}
+                    {<Route exact path={'/home'} component={ConnectedApp} />}
                 </div>
             </div>
         )
