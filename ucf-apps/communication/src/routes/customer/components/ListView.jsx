@@ -147,7 +147,7 @@ class ListView extends Component {
         { title: '子女上学情况', key: 'childrenSchoolStatus', type: '0' },
         { title: '行业类型', key: 'industryType', type: '6', enumType:'000277' },
         { title: '职称', key: 'officalTitle', type: '6',enumType:'1001644' },
-        { title: '职业', key: 'job', type: '6',enumType:'1001640' },
+        { title: '职业', key: 'job', type: '6',enumType:'1001652' },
         { title: '户籍地址', key: 'permanentAddress', type: '0' },
         { title: '居住地址', key: 'homeAddr', type: '0' },
         { title: '单位名称', key: 'employerName', type: '0' },

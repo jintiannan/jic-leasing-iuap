@@ -73,7 +73,7 @@ export function enumConstant(type) {
 
 export function enumConstantValue(type, value) {
     let array = enumConstant(type);
-    let request = '未定义';
+    let request = '';
     array.map((item) =>{
         if(item.value == value){
             request = item.key;
