@@ -10,6 +10,9 @@ const URL = {
     "LIST":  `${GROBAL_HTTP_CTX}/communication/accrued/queryForGrid`,
     "ON_ADD": `${GROBAL_HTTP_CTX}/communication/accrued/onAdd`,
     "ON_SAVE": `${GROBAL_HTTP_CTX}/communication/accrued/save`,
+    "ON_SUBMIT": `${GROBAL_HTTP_CTX}/communication/accrued/submit`,
+    "ON_CHECKPASS": `${GROBAL_HTTP_CTX}/communication/accrued/checkPass`,
+    "ON_CHECKUNPASS": `${GROBAL_HTTP_CTX}/communication/accrued/checkUnPass`,
     "FIND_CHILD_BY_PK": `${GROBAL_HTTP_CTX}/communication/accrued/findChildByPk`,
 }
 
@@ -44,4 +47,29 @@ export const onAdd = (params) => {
 export const onSave = (params) => {
     return requestBusiness(params, URL.ON_SAVE);
 }
+
+/**
+ * 提交
+ * @param {*} params
+ */
+export const onSubmit = (params) => {
+    return requestBusiness(params, URL.ON_SUBMIT);
+}
+
+/**
+ * 审核通过
+ * @param {*} params
+ */
+export const onCheckPass = (params) => {
+    return requestBusiness(params, URL.ON_CHECKPASS);
+}
+
+/**
+ * 审核未通过
+ * @param {*} params
+ */
+export const onCheckUnPass = (params) => {
+    return requestBusiness(params, URL.ON_CHECKUNPASS);
+}
+
 

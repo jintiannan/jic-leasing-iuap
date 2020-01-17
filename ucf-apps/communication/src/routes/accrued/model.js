@@ -209,5 +209,47 @@ export default {
             actions.communicationAccrued.updateState(updateData); // 更新数据和查询条件
         },
 
+        /**
+         * 提交
+         * @param {*} param
+         * @param {*} getState
+         */
+        async onSubmit(param,getState) {
+            let {queryParam} = getState().communicationAccrued;
+            let data = processData(await api.onSubmit({pk:param})); 
+            if(data.success == true){
+                success("操作成功!");
+            }
+            actions.communicationAccrued.loadList(queryParam);
+        },
+
+        /**
+         * 复核通过
+         * @param {*} param
+         * @param {*} getState
+         */
+        async onCheckPass(param,getState) {
+            let {queryParam} = getState().communicationAccrued;
+            let data = processData(await api.onCheckPass({pk:param})); 
+            if(data.success == true){
+                success("操作成功!");
+            }
+            actions.communicationAccrued.loadList(queryParam);
+        },
+
+        /**
+         * 复核不通过
+         * @param {*} param
+         * @param {*} getState
+         */
+        async onCheckUnPass(param,getState) {
+            let {queryParam} = getState().communicationAccrued;
+            let data = processData(await api.onCheckUnPass({pk:param})); 
+            if(data.success == true){
+                success("操作成功!");
+            }
+            actions.communicationAccrued.loadList(queryParam);
+        },
+
     }
 };

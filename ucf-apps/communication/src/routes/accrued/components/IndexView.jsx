@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import { Loading,Form } from 'tinper-bee';
+import { Loading,Form,Modal  } from 'tinper-bee';
 import {actions} from 'mirrorx';
 import {singleRecordOper} from "utils/service";
 import { deepClone,Info } from "utils";
@@ -23,7 +23,7 @@ class IndexView extends Component {
         super(props);
         //在路由时带出此节点权限按钮  后续会从后台传入
         /**临时测试数据 */
-        props.powerButton = ['Query','Export','Save','Return','Add'];
+        props.powerButton = ['Query','Export','Save','Return','Add','Check','Submit'];
         props.ifPowerBtn = true;
 
         //在路由时带出此节点字段权限  后续会从后台传入
@@ -210,6 +210,33 @@ class IndexView extends Component {
         this.switchEdit();
     }
 
+    // 提交选中计提数据 单据状态变更为审核中(不允许批量提交 此处做控制)
+    onSubmit = () => {
+        let accruallist = deepClone(this.props.selectedList);
+        singleRecordOper(accruallist,(param) => {  //查看选中项数据前进行一次单选校验
+            actions.communicationAccrued.onSubmit(accruallist[0].pk);  //提交单据
+        });     
+    }
+
+    // 复核选中计提数据 通过发凭证 不通过即修改为审核未通过 不发凭证
+    onCheck = () => {
+        let accruallist = deepClone(this.props.selectedList);
+        singleRecordOper(accruallist,(param) => {  //查看选中项数据前进行一次单选校验
+            Modal.confirm({
+                title: '请选择复核类型',
+                content: '选择后不可更改,请谨慎选择',
+                okText: '通过',
+                cancelText: '驳回',
+                onOk() {
+                    actions.communicationAccrued.onCheckPass(accruallist[0].pk); //复核通过单据
+                },
+                onCancel() {
+                    actions.communicationAccrued.onCheckUnPass(accruallist[0].pk); //复核未通过单据
+                },
+            })
+        });  
+    }
+
     /**
      * 导出数据按钮 使用GridMain组件中定义的引用ref直接调用即可导出数据
      */
@@ -243,6 +270,8 @@ class IndexView extends Component {
                         Export={this.onClickExport}
                         // Edit= {this.onEdit}
                         Add= {this.onAdd}
+                        Submit={this.onSubmit}
+                        Check={this.onCheck}
                         //View={this.onView}
                         Return={this.onReturn}
                         Save={this.onSave}
