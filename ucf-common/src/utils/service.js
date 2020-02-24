@@ -23,11 +23,12 @@ const dateTimeFormat = "YYYY-MM-DD HH:mm:ss";
  */
 export function genGridColumn(param){
     let gridColumn = param.map(function(element,index,param){
-        let{type,title,key,width,digit,enumType,ifshow,sorter} = element;
+        let{type,title,key,width,digit,enumType,ifshow,sorter,sumCol} = element;
         if(ifshow == null) ifshow = true; //ifshow:false 不显示该列  默认显示
         if(width == null) width = 120;
         if(digit == null) digit = 0;
         if(sorter == null) sorter = 1;   //默认1 排序   0不排序
+        if(sumCol == null) sumCol = false;  //默认不统计合计
 
         switch(type){
             case TYPE_STRING :
@@ -178,6 +179,7 @@ export function genGridColumn(param){
                     ifshow:ifshow,
                     width: width,
                     type: 'currency',
+                    sumCol: sumCol,
                     render: (text, record, index) => {
                         return (<span style={{'float':'right'}}>{(typeof text)==='number'? text.toFixed(digit).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'):""}</span>)
                     }
@@ -402,13 +404,13 @@ var changeData = function changeData(data, filter, column) {
                 let data = getRefValue(obj, filter[i]);
                 one.push(data);
              }else if(column[i].type == 'number'){
-                let data = obj[filter[i]] ? obj[filter[i]].toFixed(column[i].digit) :"";
+                let data = obj[filter[i]] ? obj[filter[i]].toFixed(column[i].digit ? column[i].digit : 2) :"";
                 one.push(data);
              }else if(column[i].type == 'percent'){
-                let data = obj[filter[i]] ? (obj[filter[i]] * 100).toFixed(column[i].digit).toString + '%' : "";
+                let data = obj[filter[i]] ? (obj[filter[i]] * 100).toFixed(column[i].digit ? column[i].digit : 2).toString + '%' : "";
                 one.push(data);
              }else if(column[i].type == 'currency'){
-                let data = obj[filter[i]] ? obj[filter[i]].toFixed(column[i].digit).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'):"";
+                let data = obj[filter[i]] ? obj[filter[i]].toFixed(column[i].digit ? column[i].digit : 2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'):"0.00";
                 one.push(data);
              }else{
                 one.push(obj[filter[i]] ? obj[filter[i]] : "");

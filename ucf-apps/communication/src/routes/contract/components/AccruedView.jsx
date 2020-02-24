@@ -40,6 +40,11 @@ class AccruedView extends Component {
     getList = (obj) => {
         actions.communicationContract.getListAccrued(obj);
     }
+
+    //导出当前界面数据
+    export = () => {
+        this.accrualviewgrid.exportExcel(2);
+    }
     //关闭模态框
     close = () => {
         actions.communicationContract.updateState({ showAccruedModal: false });
@@ -48,10 +53,10 @@ class AccruedView extends Component {
     //主表  列属性定义 ifshow:false 不显示该列  默认全显示 true
     grid = [
         { title: '计提月', key: 'month', type: '0', width: '150', sorter: 0},
-        { title: '利息', key: 'inter', type: '7', width: '150' , digit: 2 },
-        { title: '手续费', key: 'srv', type: '7', width: '150' , digit: 2 },
-        { title: '其他收入', key: 'pri', type: '7', digit: 2 , width: '150' },
-        { title: '其他支出', key: 'bus', type: '7', digit: 2 , width: '150' },
+        { title: '利息', key: 'inter', type: '7', width: '150' , digit: 2, sumCol:true },
+        { title: '手续费', key: 'srv', type: '7', width: '150' , digit: 2, sumCol:true },
+        { title: '其他收入', key: 'pri', type: '7', digit: 2 , width: '150', sumCol:true },
+        { title: '其他支出', key: 'bus', type: '7', digit: 2 , width: '150', sumCol:true },
         { title: '是否已计提', key: 'ifBegin', type: '6', enumType: '1000003' , width: '150' },
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
@@ -98,11 +103,15 @@ class AccruedView extends Component {
                                  */}
                                 
                                 <GridMain
+                                    ref={(el) => this.accrualviewgrid = el} //存模版
                                     columns={this.state.gridColumn} //字段定义
                                     data={this.props.accruedList} //数据数组                     
                                     tableHeight={4} //表格高度 1主表 2单表 3子表
+                                    exportFileName= {this.props.formObject['contName']+'-计提数据表'}　  //导出表格名称
+                                    exportData={this.props.accruedList}      //导出表格数据
                                     multiSelect= {{ type:"false" }}  //false 单选，默认多选 
                                     columnFilterAble = {false}
+                                    canSum={true} 
                                     //分页对象 不分页
                                     paginationObj={{
                                         verticalPosition: 'none'
@@ -110,9 +119,8 @@ class AccruedView extends Component {
                                 />
                             </div>
                             <div className="steps-action">
-                            {
+                                <Button className="ml8" style={{ marginRight: 8 }} onClick={() => this.export()} colors="primary"><Icon type='uf-symlist'/>导出</Button>
                                 <Button colors="secondary" onClick={() => this.close()}> 关闭 </Button>
-                            }
                             </div>
 
                         </Modal.Body>

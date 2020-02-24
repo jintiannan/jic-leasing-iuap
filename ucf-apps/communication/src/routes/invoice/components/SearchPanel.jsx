@@ -1,12 +1,12 @@
 import React from 'react';
-import {Button, Icon, Modal, Table, Tree} from 'tinper-bee';
+import {Button, Icon, Modal, Table, Tree, Select} from 'tinper-bee';
 import StringModel from 'components/GridCompnent/StringModel';
 import EnumModel from 'components/GridCompnent/EnumModel';
 import DateModel from 'components/GridCompnent/DateModel';
 import RefModel from 'components/GridCompnent/RefModel'
 import {deepClone} from "utils";
 
-
+const Option = Select.Option;
 const TreeNode = Tree.TreeNode;   //树节点使用组件定义
 const transData = [               //树节点使用假数据定义 后续从后端传入
     {
@@ -41,6 +41,24 @@ const transData = [               //树节点使用假数据定义 后续从后�
         type:'String',
         between:false,
       },
+      {
+        title: "开票状态",
+        key: "billingStatus",
+        _edit:true,
+        fixcon:true,
+        type:'Enum',
+        between:false,
+        enumType:'billingStatus',
+      },
+      {
+        title: "核销状态",
+        key: "verificationStatus",
+        _edit:true,
+        fixcon:true,
+        type:'Enum',
+        between:false,
+        enumType:'verificationStatus',
+    },
 
 ];
 
@@ -109,6 +127,23 @@ class SearchPanel extends React.Component {
                             <DateModel text={text} record={record} index={index} dateFormat={"YYYY-MM-DD"} dataIndex={'content1'}  /></div>
                     }else if(record.type=='Ref'){
                         return <div className = "ref_model"><RefModel  record={record} index={index} dataIndex={'content'}/></div>
+                    }else if(record.type=='Enum'){
+                        if(record.enumType == 'billingStatus'){
+                            return <Select placeholder="请选择开票状态" onChange = {this.handleChange.bind(this,index)}>
+                                        <Option value="0">未开票</Option>
+                                        <Option value="1">部分开票</Option>
+                                        <Option value="2">已开票</Option>
+                                    </Select>
+                        }else if(record.enumType == 'verificationStatus'){
+                            return <Select placeholder="请选择核销状态" onChange = {this.handleChange.bind(this,index)}>
+                                        <Option value="0">未回收</Option>
+                                        <Option value="1">部分回收</Option>
+                                        <Option value="2">已回收</Option>
+                                        <Option value="3">回收中</Option>
+                                        <Option value="4">部分减免</Option>
+                                    </Select>
+                        }
+                        
                     }
                 }
             },
@@ -132,6 +167,7 @@ class SearchPanel extends React.Component {
                     fixcon:true,
                     type:value.type,
                     between:value.between,
+                    enumType:value.enumType,
                     condition:0,
                     content:'',
                 })
@@ -180,10 +216,17 @@ class SearchPanel extends React.Component {
             key:checkedKeys,
             type:e.node.props.ext.type,
             between:e.node.props.ext.between,
+            enumType:e.node.props.ext.enumType,
             condition:0,
             content:'',
         })
         this.setState({ dataSource:_dataSource });
+    }
+
+    handleChange = (index,value) =>{
+        const _dataSource = deepClone(this.state.dataSource);
+        _dataSource[index]['content'] = value;
+        this.setState({ dataSource:_dataSource});
     }
 
     oncancelTable = (index) =>{
@@ -261,7 +304,7 @@ class SearchPanel extends React.Component {
                                 <TreeNode title="所有条件" key="all_condition" icon={<Icon type="uf-treefolder" />}>
                                     {
                                         this.state.transData.map((value,key)=>{
-                                            return <TreeNode title={<span>{value.title}</span>} key={value.key} icon={<Icon type="uf-list-s-o" />}  ext={{'type':value.type,'between':value.between}} />
+                                            return <TreeNode title={<span>{value.title}</span>} key={value.key} icon={<Icon type="uf-list-s-o" />}  ext={{'type':value.type,'between':value.between,'enumType':value.enumType}} />
                                         })
                                     }
                                 </TreeNode>

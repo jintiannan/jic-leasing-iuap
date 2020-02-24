@@ -51,22 +51,27 @@ class AccountingShareView extends Component {
     grid = [
         { title: '期次', key: 'planLeaseTime', type: '0', width: '60', sorter: 0},
         { title: '应收收取日期', key: 'planDate', type: '0', width: '100', sorter: 0 },
-        { title: '交易类别', key: 'pkEventType.eventName', type: '0', width: '100', sorter: 0 },
-        { title: '租金', key: 'divideCash', type: '7', digit: 2 , width: '100' },
-        { title: '利息', key: 'divideInterest', type: '7', digit: 2 , width: '100' },
-        { title: '会计本金', key: 'divideCorpus', type: '7', digit: 2 , width: '100' },
-        { title: '会计本金余额', key: 'divideCorpuscash', type: '7', digit: 2 , width: '100' },
-        { title: '租赁收入', key: 'leaseCashIn', type: '7', digit: 2 , width: '100' },
-        { title: '去税租息', key: 'noTaxInterest', type: '7', digit: 2 , width: '100' },
-        { title: '去税手续续费收入', key: 'noTaxSrvfee', type: '7', digit: 2 , width: '100' },
-        { title: '去税其它收入', key: 'noTaxOtherin', type: '7', digit: 2 , width: '100' },
-        { title: '去税其它支出', key: 'noTaxOtherout', type: '7', digit: 2 , width: '100' },
-        { title: '税金', key: 'sumTax', type: '7', digit: 2 , width: '100' },
-        { title: '进项税差', key: 'inputTaxDiff', type: '7', digit: 2 , width: '100' },
+        { title: '交易类别', key: 'pkEventType.eventName', type: '5', width: '100', sorter: 0 },
+        { title: '租金', key: 'divideCash', type: '7', digit: 2 , width: '100', sumCol:true },
+        { title: '利息', key: 'divideInterest', type: '7', digit: 2 , width: '100', sumCol:true },
+        { title: '会计本金', key: 'divideCorpus', type: '7', digit: 2 , width: '100', sumCol:true },
+        { title: '会计本金余额', key: 'divideCorpuscash', type: '7', digit: 2 , width: '100', sumCol:true },
+        { title: '租赁收入', key: 'leaseCashIn', type: '7', digit: 2 , width: '100', sumCol:true },
+        { title: '去税租息', key: 'noTaxInterest', type: '7', digit: 2 , width: '100', sumCol:true },
+        { title: '去税手续续费收入', key: 'noTaxSrvfee', type: '7', digit: 2 , width: '100', sumCol:true },
+        { title: '去税其它收入', key: 'noTaxOtherin', type: '7', digit: 2 , width: '100', sumCol:true },
+        { title: '去税其它支出', key: 'noTaxOtherout', type: '7', digit: 2 , width: '100', sumCol:true },
+        { title: '税金', key: 'sumTax', type: '7', digit: 2 , width: '100', sumCol:true },
+        { title: '进项税差', key: 'inputTaxDiff', type: '7', digit: 2 , width: '100', sumCol:true },
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
 
+
+    //导出当前界面数据
+    export = () => {
+        this.accountsharegrid.exportExcel(2);
+    }
     //关闭模态框
     close = () => {
         actions.communicationContract.updateState({ showAccountingShareModal: false });
@@ -113,11 +118,15 @@ class AccountingShareView extends Component {
                                  rules表单常用校验规则 内部required 为必输属性控制
                                  */}
                                  <GridMain
+                                    ref={(el) => this.accountsharegrid = el} //存模版
                                     columns={this.state.gridColumn} //字段定义
                                     data={this.props.accountingShareList} //数据数组                     
                                     tableHeight={4} //表格高度 1主表 2单表 3子表
+                                    exportFileName= {this.props.formObject['contName']+'-会计分摊表'}　  //导出表格名称
+                                    exportData={this.props.accountingShareList}      //导出表格数据
                                     multiSelect= {{ type:"false" }}  //false 单选，默认多选 
                                     columnFilterAble = {false}
+                                    canSum={true} 
                                     //分页对象 不分页
                                     paginationObj={{
                                         verticalPosition: 'none'
@@ -126,9 +135,8 @@ class AccountingShareView extends Component {
                                 
                             </div>
                             <div className="steps-action">
-                                {
-                                    <Button colors="secondary" onClick={() => this.close()}> 关闭 </Button>
-                                }
+                                <Button className="ml8" style={{ marginRight: 8 }} onClick={() => this.export()} colors="primary"><Icon type='uf-symlist'/>导出</Button>
+                                <Button colors="secondary" onClick={() => this.close()}> 关闭 </Button>
                             </div>
 
                         </Modal.Body>

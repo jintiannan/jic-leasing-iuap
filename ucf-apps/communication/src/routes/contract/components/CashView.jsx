@@ -45,6 +45,11 @@ class CashView extends Component {
         actions.communicationContract.getListCash(Obj);
     }
 
+    //导出当前界面数据
+    export = () => {
+        this.cashviewgrid.exportExcel(2);
+    }
+
     //关闭模态框
     close = () => {
         actions.communicationContract.updateState({ showCashModal: false });
@@ -54,10 +59,11 @@ class CashView extends Component {
     grid = [
         { title: '期次', key: 'planLeaseTime', type: '0', width: '60', sorter: 0},
         { title: '计划收取日期', key: 'planDate', type: '0', width: '180', sorter: 0 },
-        { title: '交易类别', key: 'pkEventType.eventName', type: '0', width: '180', sorter: 0 },
-        { title: '租金', key: 'planAmount', type: '7', digit: 2 , width: '180' },
-        { title: '利息', key: 'planInterest', type: '7', digit: 2 , width: '180' },
-        { title: '本金', key: 'planLeaseCorpus', type: '7', digit: 2 , width: '180' },
+        { title: '交易类别', key: 'pkEventType.eventName', type: '5', width: '180', sorter: 0 },
+        { title: '租金', key: 'planAmount', type: '7', digit: 2 , width: '180', sumCol:true},
+        { title: '利息', key: 'planInterest', type: '7', digit: 2 , width: '180', sumCol:true },
+        { title: '本金', key: 'planLeaseCorpus', type: '7', digit: 2 , width: '180', sumCol:true },
+        { title: '收付状态', key: 'payStatus', type: '6', enumType: '1000316' , width: '150' },
     ]
     //主表 列属性定义=>通过前端service工具类自动生成
     gridColumn = [];
@@ -101,13 +107,16 @@ class CashView extends Component {
                                  initiaValue为表单初始默认值
                                  rules表单常用校验规则 内部required 为必输属性控制
                                  */}
-                                
                                 <GridMain
+                                    ref={(el) => this.cashviewgrid = el} //存模版
                                     columns={this.state.gridColumn} //字段定义
                                     data={this.props.cashList} //数据数组                     
                                     tableHeight={4} //表格高度 1主表 2单表 3子表
+                                    exportFileName= {this.props.formObject['contName']+'-现金流量表'}　  //导出表格名称
+                                    exportData={this.props.cashList}      //导出表格数据
                                     multiSelect= {{ type:"false" }}  //false 单选，默认多选 
                                     columnFilterAble = {false}
+                                    canSum={true} 
                                     //分页对象 不分页
                                     paginationObj={{
                                         verticalPosition: 'none'
@@ -116,9 +125,8 @@ class CashView extends Component {
 
                             </div>
                             <div className="steps-action">
-                                {
+                                    <Button className="ml8" style={{ marginRight: 8 }} onClick={() => this.export()} colors="primary"><Icon type='uf-symlist'/>导出</Button>
                                     <Button colors="secondary" onClick={() => this.close()}> 关闭 </Button>
-                                }
                             </div>
 
                         </Modal.Body>
